@@ -10,25 +10,18 @@
 #include <math.h>
 #include <iostream>
 #include <vector>
-#include "Entity.h"
-#include "glDisplay.h"
+//~ #include "Entity.h"
+//~ #include "glDisplay.h"
+#include "glFunctions.h"
 #include "DataFile.h"
 #include "E.h"
 
 #include "../include/Leap.h"
 
 //~ using namespace std;
-
-
-    //Create an instance of Entity
-    //~ Entity titi;
-    //~ Entity *toto= & titi;
-
-//~ std::vector<E*> E::search_result;
-
+// TODO check if commenting line above creates problem, track std functions and add std:: if needed
 
 // use of arguments for testing: e execute main for new class e, no argument execute the normal main for Entity.
- 
 
 int main (int argc, char **argv) {
 
@@ -41,10 +34,13 @@ int main (int argc, char **argv) {
 if (argc==1){
     
     //~ //Create an instance of Entity
-    Entity titi;
-    Entity *toto= & titi;    
+    //~ Entity titi;
+    //~ Entity *toto= & titi;    
 
-    titi.newEntity();
+    E masterEntity;
+    E *pt_masterEntity = &masterEntity;
+
+    masterEntity.newEntity();
     dataFile::load_File = false;
 
 

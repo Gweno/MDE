@@ -16,6 +16,8 @@
 //~ GLfloat LightPos[] = {-1.0,1.0,0.0,0.0};
 float rotx=0.0f;
 
+std::string choice;
+
 //Cube primitive
 void drawCube() {
     glPushMatrix();
@@ -40,6 +42,19 @@ void drawSphere() {
 
 static const float arr1[] = {1.0f,1.0f,1.0f, 1.0f};
 std::vector<float> vec1 (arr1, arr1 + sizeof(arr1) / sizeof(arr1[0]) );
+
+    std::vector< std::vector< std::vector <float> > > testCube;
+
+    std::vector<float> coordinate;
+    std::vector<float> colors;
+    
+    //~ std::vector<int> index_color;
+    //~ std::vector<int> index;
+    
+    std::vector< vector <float> > vertex;
+    std::vector< vector <float> > color_faces;
+    
+
 
 std::vector<std::vector<float> > vCube
 {
@@ -246,7 +261,7 @@ void cubeVec (){
     }
 
     glEnd();
-
+    
     }
     
 void cubeVec2 (){
@@ -276,7 +291,8 @@ void cubeVec2 (){
     }
     
     
-void cubeVec3 (std::vector< std::vector < std::vector <float> > >& vect){
+void cubeVec3 (std::vector< std::vector < std::vector <float> > >& vect)
+{
 
     glTranslatef (0.0,0.0,0.0);
     glEnable (GL_BLEND);
@@ -300,8 +316,35 @@ void cubeVec3 (std::vector< std::vector < std::vector <float> > >& vect){
     }
 
     glEnd();
+}
+
+void cubeVec4 (std::vector<std::vector<float> > & vect_colors, std::vector< std::vector < std::vector <float> > >& vect_coord)
+{
+
+    glTranslatef (0.0,0.0,0.0);
+    glEnable (GL_BLEND);
+    glEnable(GL_COLOR_MATERIAL);
+
+    int it_color;    
+    glBegin(GL_QUADS);
+    
+    std::vector< std::vector< std::vector<float> > >::iterator it;
+    std::vector< std::vector<float> >::iterator itf;
+    
+    for (it=vect_coord.begin();it!=vect_coord.end();++it)
+    {
+        it_color = it-vect_coord.begin();
+        //~ std::cout << "it_color" << it_color << std::endl;
+        glColor3fv(vect_colors[it_color].data());
+
+        for (itf=(*it).begin();itf!=(*it).end();++itf)
+        {
+            glVertex3fv((*itf).data());
+        }
     }
 
+    glEnd();
+}
 
 void reshape(int w, int h){
     glViewport (0, 0, (GLsizei)w, (GLsizei)h);
@@ -313,7 +356,7 @@ void reshape(int w, int h){
 
 void update(){
     glRotatef(rotx,1.0,1.0,0.0);
-    if(rotx<360) rotx+=0.025;
+    if(rotx<360) rotx+=0.05;
     else rotx=0;
     }
 
@@ -329,10 +372,18 @@ void display(void)
     //~ glClearColor(0,0,0,1);
     glTranslatef (0,0,-10);
     update();
+    
     //~ drawSphere();
     //~ drawCube();
     //~ cubeV();
-    cubeVec2();
+    //~ cubeVec2();
+    //~ if (strcmp(choice, "0")) cubeVec2();
+    //~ if (strcmp(choice, "3")) cubeVec3(testCube);
+    //~ if (strcmp(choice, "4")) cubeVec4(color_faces, testCube);
+    if (choice=="2") cubeVec2();
+    if (choice=="3") cubeVec3(testCube);
+    if (choice=="4") cubeVec4(color_faces, testCube);
+    //~ cubeVec4(color_faces, testCube);
     
     
     // Vector Position and Matrix Model (vec4 has 4 elements x,y,z and w.
@@ -406,6 +457,26 @@ void testVector_Display(std::vector< std::vector< std::vector <float> > > &testV
     };
 }
 
+void testVector_Display_2d(std::vector< std::vector <float> > &testVector)
+{
+    // iterators for testVector:
+    std::vector< std::vector <float> >::iterator color_faces;
+    std::vector <float>::iterator colors;
+    
+    // nested loops
+        for (color_faces = testVector.begin(); color_faces != testVector.end();++color_faces)
+        {
+            std::cout << "Color for face " << (color_faces - testVector.begin()) + 1 << " : " ;
+            std::cout << " (";
+            for (colors = (*color_faces).begin(); colors != (*color_faces).end(); ++colors)
+            {
+                std::cout << (*colors);
+                if (colors != (*color_faces).end()-1) std::cout << ", ";
+            }
+            std:: cout << ")" << std::endl;
+        }
+}
+
 /*
 void setVector(std::vector< std::vector< std::vector <float> > > &testVector)
 {
@@ -430,45 +501,87 @@ void setVector(std::vector< std::vector< std::vector <float> > > &testVector)
 }
 */
 
+
 //Main program
 int main(int argc, char **argv)
 {
-
+    
     E testEntity;
-    testEntity.load_XML_File_to_E("../datafiles/testCube.xml");
     
-    std::vector< std::vector< std::vector <float> > > testCube;
-
-    //~ testVector_Display(vCube2);
-
-    
-    std::vector<float> coordinate;
-    
+    std::vector<int> index_color;
     std::vector<int> index;
-    
-    //~ index = {0,1};
-    
-    //~ std::cout << testEntity.vE_get_by_index(index, index.begin())-> name <<  testEntity.vE_get_by_index(index, index.begin())-> data<< std::endl;
-    //~ (testEntity.vE_get_by_index(index, index.begin()))->vE_copy_To_Vector_Float(coordinate);
-    
-    std::vector< vector <float> > vertex;
-    
-    for (int f=0; f < 6 ; ++f)
+
+    std::cout << argc << "arguments " << std::endl;
+    for (int i = 0; i < argc; ++i) 
     {
-        for (int v=0; v < 4; ++v)
-        {
-            index = {f,v};
-            std::cout << testEntity.vE_get_by_index(index, index.begin())-> name <<  testEntity.vE_get_by_index(index, index.begin())-> data<< std::endl;
-            (testEntity.vE_get_by_index(index, index.begin()))->vE_copy_To_Vector_Float(coordinate);
-            vertex.push_back(coordinate);
-            coordinate.clear();
-        }
-        testCube.push_back(vertex);
-        vertex.clear();
+        std::cout << "for i: " << i << " : ";
+        std::cout << argv[i] << std::endl;
     }
-    testVector_Display(testCube);
+    if (argc>1) choice= std::string(argv[1]);
+    else choice = "2";
+    //~ for (size_t i = 1; i < args.size(); ++i)
+    //~ {
+      //~ if (args[i] == "yes") {
+          //~ // do something
+      //~ }
+    //~ }
+    //~ std::cout <<"check 1" << std::endl;
+    //~ if (argc>1) strcpy(choice, argv[1]);
+    //~ else strcpy(choice, "0");
+    std::cout <<"check 2" << std::endl;
     
-    cubeVec3(testCube);
+    //~ if (!strcmp(choice,"3"))
+    if (choice=="3")
+    {
+        std::cout << "testCube0" << std::endl;
+        testEntity.load_XML_File_to_E("../datafiles/testCube0.xml");
+        testEntity.E_display_all(0);
+        for (int f=0; f < 6 ; ++f)
+        {
+            for (int v=0; v < 4; ++v)
+            {
+                index = {f,v};
+                std::cout << testEntity.vE_get_by_index(index, index.begin())-> name <<  testEntity.vE_get_by_index(index, index.begin())-> data<< std::endl;
+                (testEntity.vE_get_by_index(index, index.begin()))->vE_copy_To_Vector_Float(coordinate);
+                vertex.push_back(coordinate);
+                coordinate.clear();
+            }
+            testCube.push_back(vertex);
+            vertex.clear();
+        }
+        testVector_Display(testCube);
+    }
+    //~ if (!strcmp(choice,"4"))
+    if (choice=="4")
+    {
+        std::cout << "testCube" << std::endl;
+        testEntity.load_XML_File_to_E("../datafiles/testCube.xml");
+        testEntity.E_display_all(0);
+        for (int f=0; f < 6 ; ++f)
+        {
+            //~ for (int v=0; v < 4; ++v)
+            
+            index = {f,0};
+            std::cout << testEntity.vE_get_by_index(index, index.begin())-> name <<  testEntity.vE_get_by_index(index, index.begin())-> data<< std::endl;
+            (testEntity.vE_get_by_index(index, index.begin()))->vE_copy_To_Vector_Float(colors);
+            color_faces.push_back(colors);
+            colors.clear();
+            
+            
+            for (int v=1; v < 5; ++v)
+            {
+                index = {f,v};
+                std::cout << testEntity.vE_get_by_index(index, index.begin())-> name <<  testEntity.vE_get_by_index(index, index.begin())-> data<< std::endl;
+                (testEntity.vE_get_by_index(index, index.begin()))->vE_copy_To_Vector_Float(coordinate);
+                vertex.push_back(coordinate);
+                coordinate.clear();
+            }
+            testCube.push_back(vertex);
+            vertex.clear();
+        }
+        testVector_Display(testCube);
+        testVector_Display_2d(color_faces);
+    }
 
 //*    
   glutInit(&argc, argv);
