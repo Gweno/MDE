@@ -48,12 +48,10 @@ std::vector<float> vec1 (arr1, arr1 + sizeof(arr1) / sizeof(arr1[0]) );
     std::vector<float> coordinate;
     std::vector<float> colors;
     
-    //~ std::vector<int> index_color;
-    //~ std::vector<int> index;
-    
     std::vector< vector <float> > vertex;
     std::vector< vector <float> > color_faces;
-    
+
+
 
 
 std::vector<std::vector<float> > vCube
@@ -179,10 +177,109 @@ std::vector<std::vector<float> > vColor
 
 //~ std::vector<float> vec;
 
+std::vector< std::vector<float> > GLtriangle_half_cubeFace
+{
+    {1.0f,1.0f,1.0f},
+    {-1.0f,1.0f,1.0f},
+    {-1.0f,1.0f,-1.0f}
+};
 
+
+
+std::vector< std::vector<float> > GLtriangle_cubeFace
+{
+    {1.0f,1.0f,1.0f},
+    {-1.0f,1.0f,1.0f},
+    {-1.0f,1.0f,-1.0f},
+    {-1.0f,1.0f,-1.0f},
+    {1.0f,1.0f,-1.0f},
+    {1.0f,1.0f,1.0f}
+};
+
+std::vector<std::vector<float> > vTriangle_face;
+
+std::vector<std::vector<float> > vQuaq_face
+{
+    // vertices
+    {1.0f,1.0f,1.0f},
+    {-1.0f,1.0f,1.0f},
+    {-1.0f,1.0f,-1.0f},
+    {1.0f,1.0f,-1.0f}
+};
 
 // Cube with Vertices
 
+void half_faceV_0 ()
+{
+
+    glTranslatef (0.0,0.0,0.0);
+    glEnable (GL_BLEND);
+    glEnable(GL_COLOR_MATERIAL);
+    
+    glBegin(GL_TRIANGLES);
+    glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
+    //~ glVertex3fv(GLtriangle_half_cubeFace.data());
+    glVertex3f(-1.0f,1.0f,1.0f);
+    glVertex3f(-1.0f,1.0f,-1.0f);
+    glVertex3f(1.0f,1.0f,-1.0f);
+    glEnd();
+} 
+
+void half_faceV ()
+{
+
+    glTranslatef (0.0,0.0,0.0);
+    glEnable (GL_BLEND);
+    glEnable(GL_COLOR_MATERIAL);
+    
+    glBegin(GL_TRIANGLES);
+    glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
+    std::vector< std::vector<float> >::iterator it;
+    
+    for (it=GLtriangle_half_cubeFace.begin();it!=GLtriangle_half_cubeFace.end();++it)
+    {
+        glVertex3fv((*it).data());
+    }
+    glEnd();
+}
+
+
+
+void faceV ()
+{
+    glTranslatef (0.0,0.0,0.0);
+    glEnable (GL_BLEND);
+    glEnable(GL_COLOR_MATERIAL);
+    
+    glBegin(GL_TRIANGLES);
+    glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
+    std::vector< std::vector<float> >::iterator it;
+    
+    //~ for (it=GLtriangle_cubeFace.begin();it!=GLtriangle_cubeFace.end();++it)
+    for (it=vTriangle_face.begin();it!=vTriangle_face.end();++it)
+    {
+        glVertex3fv((*it).data());
+    }
+    glEnd();
+}
+
+
+
+void quads_to_triangles(std::vector< std::vector<float> > & vect_quads, std::vector< std::vector<float> > & vect_triangles)
+{
+    //~ for (std::vector< std::vector<float> >::iterator qit = vect_quads.begin();qit != vect_quads.end(); ++qit)
+    //~ {
+        //~ vect_triangles.push_back((*qit));
+    //~ }
+    vect_triangles.push_back(vect_quads.front());
+    vect_triangles.push_back(vect_quads[1]);
+    vect_triangles.push_back(vect_quads[2]);
+    vect_triangles.push_back(vect_quads[2]);
+    vect_triangles.push_back(vect_quads.back());
+    vect_triangles.push_back(vect_quads.front());
+}
+
+    
 void cubeV (){
 
     glTranslatef (0.0,0.0,0.0);
@@ -380,6 +477,9 @@ void display(void)
     //~ if (strcmp(choice, "0")) cubeVec2();
     //~ if (strcmp(choice, "3")) cubeVec3(testCube);
     //~ if (strcmp(choice, "4")) cubeVec4(color_faces, testCube);
+    if (choice=="t0") half_faceV_0();
+    if (choice=="t") half_faceV();
+    if (choice=="f" || choice=="q2f") faceV();
     if (choice=="2") cubeVec2();
     if (choice=="3") cubeVec3(testCube);
     if (choice=="4") cubeVec4(color_faces, testCube);
@@ -508,7 +608,6 @@ int main(int argc, char **argv)
     
     E testEntity;
     
-    std::vector<int> index_color;
     std::vector<int> index;
 
     std::cout << argc << "arguments " << std::endl;
@@ -519,21 +618,9 @@ int main(int argc, char **argv)
     }
     if (argc>1) choice= std::string(argv[1]);
     else choice = "2";
-    //~ for (size_t i = 1; i < args.size(); ++i)
-    //~ {
-      //~ if (args[i] == "yes") {
-          //~ // do something
-      //~ }
-    //~ }
-    //~ std::cout <<"check 1" << std::endl;
-    //~ if (argc>1) strcpy(choice, argv[1]);
-    //~ else strcpy(choice, "0");
-    std::cout <<"check 2" << std::endl;
     
-    //~ if (!strcmp(choice,"3"))
     if (choice=="3")
     {
-        std::cout << "testCube0" << std::endl;
         testEntity.load_XML_File_to_E("../datafiles/testCube0.xml");
         testEntity.E_display_all(0);
         for (int f=0; f < 6 ; ++f)
@@ -541,7 +628,7 @@ int main(int argc, char **argv)
             for (int v=0; v < 4; ++v)
             {
                 index = {f,v};
-                std::cout << testEntity.vE_get_by_index(index, index.begin())-> name <<  testEntity.vE_get_by_index(index, index.begin())-> data<< std::endl;
+                //~ std::cout << testEntity.vE_get_by_index(index, index.begin())-> name <<  testEntity.vE_get_by_index(index, index.begin())-> data<< std::endl;
                 (testEntity.vE_get_by_index(index, index.begin()))->vE_copy_To_Vector_Float(coordinate);
                 vertex.push_back(coordinate);
                 coordinate.clear();
@@ -562,7 +649,7 @@ int main(int argc, char **argv)
             //~ for (int v=0; v < 4; ++v)
             
             index = {f,0};
-            std::cout << testEntity.vE_get_by_index(index, index.begin())-> name <<  testEntity.vE_get_by_index(index, index.begin())-> data<< std::endl;
+            //~ std::cout << testEntity.vE_get_by_index(index, index.begin())-> name <<  testEntity.vE_get_by_index(index, index.begin())-> data<< std::endl;
             (testEntity.vE_get_by_index(index, index.begin()))->vE_copy_To_Vector_Float(colors);
             color_faces.push_back(colors);
             colors.clear();
@@ -571,7 +658,7 @@ int main(int argc, char **argv)
             for (int v=1; v < 5; ++v)
             {
                 index = {f,v};
-                std::cout << testEntity.vE_get_by_index(index, index.begin())-> name <<  testEntity.vE_get_by_index(index, index.begin())-> data<< std::endl;
+                //~ std::cout << testEntity.vE_get_by_index(index, index.begin())-> name <<  testEntity.vE_get_by_index(index, index.begin())-> data<< std::endl;
                 (testEntity.vE_get_by_index(index, index.begin()))->vE_copy_To_Vector_Float(coordinate);
                 vertex.push_back(coordinate);
                 coordinate.clear();
@@ -582,6 +669,19 @@ int main(int argc, char **argv)
         testVector_Display(testCube);
         testVector_Display_2d(color_faces);
     }
+    
+    if (choice=="f") vTriangle_face = GLtriangle_cubeFace;
+    
+    if (choice=="q2f")
+    {
+        quads_to_triangles(vQuaq_face,vTriangle_face);
+        std::cout << std::endl;
+        std::cout << "vQuaq_face" << std::endl;
+        testVector_Display_2d(vQuaq_face);
+        std::cout << "vTriangle_face" << std::endl;
+        testVector_Display_2d(vTriangle_face);
+    }
+
 
 //*    
   glutInit(&argc, argv);
