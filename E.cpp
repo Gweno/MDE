@@ -5,16 +5,28 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-//~ #include <deque>
 #include "E.h"
 #include <sstream>
 #include <string.h>
 #include <string>
+#include "glFunctions.h"
 
-//~ #include <stdexcept>
+//~ E::E()
+//~ {
+    //~ std::cout << "do nothing" << std::endl;
+//~ };
 
-//~ using namespace std;
+E::E(){};
 
+E::E(std::string init_name, std::string init_data, std::vector<E*> init_vE)
+{
+    this->name = init_name;
+    this->data = init_data;
+    for (std::vector<E*>::iterator it=init_vE.begin(); it != init_vE.end(); ++it)
+    {
+        this->vE.push_back(*it);
+    }
+}
 
 // Destructors:
 // Destructor at one level:
@@ -92,7 +104,9 @@ void E::set_last_vEe_data(string vData)
 
 void E::set_vEe_name(int index_vEe,string vName)
 {
+    std::cout << "before" << std::endl;
     this->vE.at(index_vEe)->name = vName;
+    std::cout << "after" << std::endl;
 };
 
 // Entity set data for an Entity in its vector of pointers
@@ -230,42 +244,28 @@ void E::E_save_to_file(){
 
 
 
-void E::fetch_search_result()
+void E::fetch_search_result(std::vector<E**> &search_result)
 {
-    if (E::search_result.size()!=0)
+    if (search_result.size()!=0)
     {
-        for (std::vector<E*>::iterator it=E::search_result.begin();it!=E::search_result.end();++it)
+        for (std::vector<E**>::iterator it=search_result.begin();it!=search_result.end();++it)
         {
-            std::cout << (*it)->data << std::endl;
-            //~ std::cout << E::search_result.back()->data << std::endl;
+            //~ std::cout << (*(*it))->data << std::endl;
+            (*(*it))->print_formatted_E(0,"<",">","</",">");
+            std::cout << endl;
         }
     }
     else std::cout << "Not found" <<std::endl;
 }
 
-
-E * E::search_For(string searchName)
-{
-    if (this->name==searchName) return this;
-    else (this->simple_loop_VE(searchName));
-    this->fetch_search_result();
-    if (E::search_result.size()==0)
-    {
-        std::cout << "Returning caller" << std::endl; //not ideal...
-        return this;
-    }
-    std::cout << "Found " << E::search_result.size() << " Entities with name " << searchName << std::endl;
-    std::cout << "Returning 1st one" << std::endl;
-    return E::search_result.front();
-}
-
-E * E::search_For2(int & index, int & level, string searchName)
+void E::search_For(int & index, int & level, string searchName)
 {
     if (this->name==searchName)
     {
-        std::cout << "index: " << index << std::endl;
-        std::cout << "level: " << level << std::endl;
-        return this;
+        std::cout << "Found " << searchName << " at (level,index): " << "(" << level  << "," << index << ")" << std::endl;
+        std::cout << std::endl;
+        E** ptr_to_ptr_to_E = new E*(this);
+        E::search_result.push_back(ptr_to_ptr_to_E);
     }
     else
     {
@@ -273,26 +273,12 @@ E * E::search_For2(int & index, int & level, string searchName)
         index=0;
         (this->simple_loop_VE(searchName));
     }
-    this->fetch_search_result();
     if (E::search_result.size()==0)
     {
-        std::cout << "Returning caller" << std::endl; //not ideal...
-        std::cout << "index: " << index << std::endl;
-        std::cout << "level: " << level << std::endl;
-        return this;
+        std::cout << "No results" << std::endl; //not ideal...
     }
     std::cout << "Found " << E::search_result.size() << " Entities with name " << searchName << std::endl;
-    std::cout << "Returning 1st one" << std::endl;
-    std::cout << "index: " << index << std::endl;
-    std::cout << "level: " << level << std::endl;
-    return E::search_result.front();
 }
-
-//~ void search(string searchName)
-//~ {
-    //~ this->new_vE_element();
-    //~ this->simple_loop_VE(searchName);
-//~ }
 
 void E::simple_loop_VE(string searchName)
 {
@@ -300,13 +286,9 @@ void E::simple_loop_VE(string searchName)
     {
         if ((*it)->name==searchName)
         {
-            std::cout << "Found:" << (*it)->name << std::endl;
-            std::cout << "Data:" << (*it)->data << std::endl;
-            E::search_result.push_back(*it);
-            //~ return;  // if return -> only 1 occurence will be stored
-
+            E** ptr_to_ptr_to_E = new E*(*it);
+            E::search_result.push_back(ptr_to_ptr_to_E);
         }
-        else std::cout << "Not found:" << (*it)->name << std::endl;
     }
     this->simple_loop_VE_next_level(searchName);
 }
@@ -395,7 +377,6 @@ void E::load_File3()
     strcpy(FileNameIn, FileName);
     strcat(FileNameIn, ExtensionXML);
     strcat(FullNameFileIn, FileNameIn);
-    //~ std::cout << " FullNameFileIn " << FullNameFileIn << std::endl;
     
     ifstream fileEntity;
 
@@ -418,8 +399,6 @@ void E::load_File3()
         char *bufferChar2 = new char[32];
         char *bufferChar3 = new char[32];
         
-
-
         while (strlen(bufferLineChar)>0)
         {
             pch = strchr(bufferLineChar,'<');
@@ -432,13 +411,10 @@ void E::load_File3()
             if (bufferChar[0]=='/') 
             {
                 printf("(closing tag)%s\n",bufferChar);
-                //~ pn=pn-1;
             }
             else
             { 
             printf("(opening tag)%s\n",bufferChar);
-            //~ this->set_vEe_name(&pn,bufferChar);
-            
             }
             
             if (bufferChar2[0]!='<') 
@@ -753,36 +729,10 @@ void E::load_File_token()
         delete [] bufferLineChar;
         delete [] tag;
         
-        //~ char* bufferLineChar = new char[pch2+1];
         strcpy(bufferLineChar,pch2);
         
         std::cout << bufferLineChar << std::endl;
         
-        //~ // data
-        //~ pch1=strchr(bufferLineChar,'<');
-        //~ pch2=strchr(bufferLineChar,'>');
-        //~ char * tag = new char[pch2-pch1-1];
-        
-        //~ strncpy(tag,pch1+1,pch2-pch1-1);
-        //~ printf(tag);
-        
-        //~ char* tag= new char[pch1 - pch2 + 1];
-        
-        //~ bufferTag = bufferString(pch1-bufferLineChar+1,pch2-bufferLineChar+1);
-        //~ std::cout << bufferTag << std::endl;
-        
-        //~ std::cout << bufferLineChar.substr(pch1,pch2);
-        //~ .substr(pch2));
-        //~ bufferChar = strtok (bufferLineChar,"<");
-        //~ printf ("%s\n",bufferChar);
-        //~ bufferChar = strtok (NULL,">");
-        //~ printf ("%s\n",bufferChar);
-        
-            //~ while (bufferChar != NULL)
-            //~ {
-                //~ printf ("%s\n",bufferChar);
-                //~ bufferChar = strtok (NULL, ">");
-            //~ }
         delete bufferLineChar;
           }
     fileEntity.close();           // close file
@@ -873,12 +823,6 @@ E * E::test(int level, std::vector<int> index) {
     std::cout << "Check level " << level << std::endl;
     for (int i = 0; i < level; ++i) {
         std::cout << index.at(i) << std::endl;
-        //~ for(std::vector<E*>::const_iterator it=this->vE.begin();it!=this->vE.end();++it)
-        //~ {
-            //~ index.pop_front();
-            //~ (*it)->test(level-1,index);
-        //~ }
-        //~ return this->index.at(0);
     }
         
 }
@@ -893,73 +837,6 @@ void E::display_vector_int(std::vector<int>& vect_index) {
     }
     std::cout << ")" ;
 }
-
-/*
-E * E::vE_get_by_index2(std::deque<int> index) {
-    int index_vE;
-    int level = index.size();
-    for (int i = 0; i < level; ++i){
-        index_vE=index.at(i);
-        if (index.size()>1) {
-            index.pop_front();
-            return (this->vE.at(index_vE))->vE_get_by_index2(index);
-        }
-        else {
-            return this->vE.at(index_vE);
-        }
-    }
-}
-
-void E::set_last_vEe_name_by_index(std::deque<int> index, string vName) {
-    std::cout << "control start  set_last_vEe_name_by_index" << std::endl;
-    int index_vE;
-    std::cout << "control 1 set_last_vEe_name_by_index " << std::endl;
-    int level = index.size();
-    std::cout << "control 1 : index.size() " << index.size() << std::endl;
-    for (int i = 0; i < level; ++i){
-        std::cout << "control 2 set_last_vEe_name_by_index " << i << std::endl;
-        std::cout << "control 2 : index.size() " << index.size() << std::endl;
-        std::cout << "control 2 level " << level << std::endl;
-        std::cout << "control 2 : index.at(i) " << index.at(i) << std::endl;
-        //~ index_vE=index.at(i);
-        if (index.size()>1 && index.size()>level) {
-            std::cout << "control 3 set_last_vEe_name_by_index " << i << std::endl;
-            std::cout << "control 3 level " << level << std::endl;
-            std::cout << "control 3 index.at(i) " << index.at(i) << std::endl;
-            index_vE=index.at(i);
-            index.pop_front();
-            std::cout << "control 3b index.at(i) " << index.at(i) << std::endl;
-            //~ return (this->vE.at(index_vE))->set_last_vEe_name_by_index(index, vName);
-            (this->vE.at(index_vE))->set_last_vEe_name_by_index(index, vName);
-        }
-        else {
-            std::cout << "control 4 set_last_vEe_name_by_index " << i << std::endl;
-            this->vE.push_back(new E);
-            this->set_last_vEe_name(vName);
-            //~ return this;
-        }
-    }
-}
-E * E::E_set_name_by_index(std::deque<int> index, string eName) {
-    int index_vE;
-    int level = index.size();
-    if (index.size()>0) {
-        for (int i = 0; i < level; ++i){
-            index_vE=index.at(i);
-            std::cout << "level " << level << std::endl;
-            std::cout << "recursivity " << i << std::endl;
-            std::cout << "index_vE " << index_vE << std::endl;
-            index.pop_front();
-            return (this->vE.at(index_vE))->E_set_name_by_index(index, eName);
-        }
-    }
-    else {
-        std::cout << "end" << std::endl;
-        this->E_set_name(eName);
-        return this;
-    }
-}
-*/
 
 E * E::vE_get_by_index(std::vector<int>& vect_index, std::vector<int>::const_iterator it)
 {
@@ -994,27 +871,9 @@ void E::vE_copy_To_Vector_Float(std::vector<float>& vFloat)
     }
 }
 
-/*
-E * E::set_last_vEe_data_by_index(std::deque<int> index, string vData) {
-    int index_vE;
-    int level = index.size();
-    for (int i = 0; i < level; ++i){
-        index_vE=index.at(i);
-        if (index.size()>1) {
-            index.pop_front();
-            return (this->vE.at(index_vE))->set_last_vEe_data_by_index(index, vData);
-        }
-        else {
-            this->set_last_vEe_data(vData);
-            return this;
-        }
-    }
-}
-*/
 //  Index management
 
 std::vector<int> E::set_vector_of_indexes(std::string list_indexes)
-//~ void E::set_vector_of_indexes(std::string list_indexes)
 {
     std::vector<int> vect_index;
     std::string delimiter = ",";
@@ -1036,120 +895,45 @@ std::vector<int> E::set_vector_of_indexes(std::string list_indexes)
     return vect_index;
 }
 
-/*
-void E::get_index_of_name(std::vector<int> & list_index)
+void E::extractEColorDataToGL(
+                            std::vector<float> &colors,
+                            std::vector< vector <float> > &color_faces)
 {
-    /* start  from the index list
-     * 
-     * 
-     *
-    
-}
-*/
-
-std::vector<E*> E::search_result;
-
-/*
-int main()
-{
-
-    // variables
-    string key_input;
-    int n=0;
-    
-    E newEntity;
-
-    while (key_input!="quit")
+    std::vector<int> index;
+    for (int f=0; f < 6 ; ++f)
     {
-        std::cout << std::endl;
-        std::cout << "This is session " << ++n << std::endl;
-        std::cout << std::endl;
-        std::cout << "Load testing set or User Input (or quit)? ('t'/'u'/'quit')" << std::endl;
-        std::cout << "Or load testing file to display for testing ('l')?" << std::endl;
-        std::cin >> key_input;
-        if (key_input=="quit") return 0;
-        else if (key_input=="t") newEntity.testing();
-        else if (key_input=="u")
-        {
-            std:: cout << "Enter name:" << std::endl;
-            std:: cout << "(Or type 'quit' anytime to quit)" << std::endl;
-            std:: cout << "(Or type 'end' in name when it is the last entity of the current level)" << std::endl;
-            std:: cin >> key_input;
-        
-            if (key_input!="quit")
-            {
-                newEntity.E_set_name(key_input);
-                std::cout << "enter data" << std::endl;
-                cin.ignore(); 
-                std:: getline(std:: cin, key_input);
-                if (key_input!="quit")
-                {
-                    newEntity.E_set_data(key_input);
-                }
-                else return 0;
-            }
-            else return 0;
-            newEntity.input_E();
-            
-            std::cout << std::endl;
-            newEntity.print_formatted_E(0,"<",">","</",">");
-            std::cout << std::endl;
-            std::cout << "Do you want to save the file?(y)" << std::endl;
-            std::cin >> key_input;
-            if (key_input=="y") newEntity.E_save_to_file();
-        }
-        else if (key_input=="l")
-        {
-            newEntity.load_XML_File_to_E("../datafiles/testCube.xml");
-            //~ newEntity.E_display_all(0);
-            newEntity.print_formatted_E(0,"<",">","</",">");
-            int index=0;
-            int level=0;
-            //~ int * pIndex=&index;
-            //~ int * pLevel=&level;
-
-            
-            //~ (newEntity.search_For2(index , level, "toto"))->E_display_all(0);
-            //~ (newEntity.search_For("toto"))->E_display_all(0);
-        }
-        else if (key_input=="+")
-        {
-            std::vector<int> test_vect;
-            test_vect.push_back(0);
-            test_vect.push_back(2);
-            test_vect.push_back(0);
-            newEntity.display_vector_int(test_vect);
-        }
-        else if (key_input=="i")
-        {
-            std:cout<<"Enter the list of indexes separated by comma:" << std::endl;
-            std::cin >> key_input;
-            //~ std::vector<int> vect_index=newEntity.set_vector_of_indexes("1,2,3,4");
-            std::vector<int> vect_index=newEntity.set_vector_of_indexes(key_input);
-            newEntity.display_vector_int(vect_index);
-            
-        }
-        if (key_input=="t")
-        {
-            //~ newEntity.E_display_all(0);
-            std::cout << std::endl;
-            newEntity.print_formatted_E(0,"<",">","</",">");
-            std::cout << std::endl;
-            std::cout << "Do you want to save the file?(y)" << std::endl;
-            std::cin >> key_input;
-            if (key_input=="y") newEntity.E_save_to_file();
-        
-        }
-    newEntity.vE_clear_all();
-    newEntity.E_clear_name();
-    newEntity.E_clear_data();
+        index = {f,0};
+        (this->vE_get_by_index(index, index.begin()))->vE_copy_To_Vector_Float(colors);
+        color_faces.push_back(colors);
+        colors.clear();
     }
-    
-    
-
-    
-    return 0;
+    testVector_Display_2d(color_faces);
 }
-//*/
+ 
+void E::extractEVertexToGL(
+            std::vector<float> &coordinate,
+            std::vector< vector <float> > &vertex,
+            std::vector< std::vector< std::vector <float> > > &vCube)
+{
+    std::vector<std::vector<float> > vTriangle_face;
+    std::vector<int> index;
+    for (int f=0; f < 6 ; ++f)
+    {
+        for (int v=1; v < 5; ++v)
+        {
+            index = {f,v};
+            (this->vE_get_by_index(index, index.begin()))->vE_copy_To_Vector_Float(coordinate);
+            vertex.push_back(coordinate);
+            coordinate.clear();
+        }
+        quads_to_triangles(vertex, vTriangle_face);
+        vCube.push_back(vTriangle_face);
+        vTriangle_face.clear();
+        vertex.clear();
+    }
+    testVector_Display(vCube);
+}
+
+std::vector<E**> E::search_result;
 
 #endif /*E.cpp*/

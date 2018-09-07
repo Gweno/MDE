@@ -1,7 +1,7 @@
 //------------- glFunctions.cpp-----------
 
-#ifndef GLFUNCTIONS_CPP
-#define GLFUNCTIONS_CPP
+//~ #ifndef GLFUNCTIONS_CPP
+//~ #define GLFUNCTIONS_CPP
 
 #define GLUT_DISABLE_ATEXIT_HACK 
 //#include <windows.h>
@@ -16,7 +16,7 @@
 #include <vector>
 
 //~ #include "Entity.h"
-#include "glFunction.h"
+#include "glFunctions.h"
 //~ #include "DataFile.h"
 
 // Include GLM
@@ -26,8 +26,6 @@
 
     
 //~ using namespace std;
-
-//Init Static member from glDisplay
 
 int array_size;
 char keyChoice;
@@ -42,6 +40,12 @@ bool keyboard=false;
 bool grabHand = false;
 bool grabbed = false;
 std::string input_text;
+static bool load_File;
+
+GLfloat LightPos[] = {-1.0,1.0,0.0,0.0};
+std::vector< std::vector< std::vector <float> > > vCube;
+std::vector< vector <float> > vColors;
+
 
 //int maxCol = 10;
 char storeNameGl[10][24];
@@ -79,9 +83,9 @@ TVector* ColEntity::OldPos;
 // init for  lighting
 bool LightEnabled = true;
 
-GLfloat MatSpec[] = {1.0,1.0,1.0,1.0};
-GLfloat MatShininess[] = {128.0};
-GLfloat LightPos[] = {-1.0,1.0,0.0,0.0};
+//~ GLfloat MatSpec[] = {1.0,1.0,1.0,1.0};
+//~ GLfloat MatShininess[] = {128.0};
+//~ GLfloat LightPos[] = {-1.0,1.0,0.0,0.0};
 
 // init for camera
 float x_pos = 0, y_pos = 0, z_pos = 0, x_rot = 0, y_rot = 0, angle=0.0;
@@ -121,7 +125,7 @@ float xrotrad = 0, yrotrad = 0;
 float red=1, green=0, blue=0;
 
 // init for iterator for Moving Entity
-unsigned int index=0;
+unsigned int E_index=0;
 
 const unsigned char tmp[10] = "Entity";
 
@@ -141,6 +145,16 @@ GLfloat matrix[16];
 
 // --------init functions--------
 
+
+void vect2vect(std::vector< std::vector< std::vector <float> > > & vCubeSouce)
+{
+    vCube = vCubeSouce;
+}
+
+void vect2vect_colors(std::vector< std::vector <float> > & vColorSouce)
+{
+    vColors = vColorSouce;
+}
 void drawAxes(GLdouble length)
 {
 	  // Draw a red x-axis, a green y-axis, and a blue z-axis.  Each of the
@@ -157,22 +171,26 @@ void drawAxes(GLdouble length)
 void vertex_Lines()
 {
 
+
+    // TODO new coordinates system here as well
 	glBegin(GL_LINE_STRIP);
 	glColor3f(1, 0, 0);
-	for (int i = 0; i < int(Xpos.size()); i++)
-	    {
-		glVertex3d(Xpos.at(i), Ypos.at(i),Zpos.at(i));
-	    }
-	glVertex3d(Xpos.at(0), Ypos.at(0),Zpos.at(0));
+	//~ for (int i = 0; i < int(Xpos.size()); i++)
+	    //~ {
+		//~ glVertex3d(Xpos.at(i), Ypos.at(i),Zpos.at(i));
+	    //~ }
+	//~ glVertex3d(Xpos.at(0), Ypos.at(0),Zpos.at(0));
 	glEnd();
 	glFlush();
 	}
 
 void update(){
 
-	Xpos.at(index)=double(xpos2);
-	Ypos.at(index)=double(ypos2);
-	Zpos.at(index)=double(zpos2);
+    // TODO replace with instance of E or single vector for coordinate/new way of dealing ith coordinates
+	//~ Xpos.at(index)=double(xpos2);
+	//~ Ypos.at(index)=double(ypos2);
+	//~ Zpos.at(index)=double(zpos2);
+    
 
 }
 
@@ -206,118 +224,158 @@ void draw3DCursor(){
 void draw(){
 
 //double XposCumul;
-    
-for (int i = 0; i < int(Xpos.size()); i++)
-    {
-
+    // TODO replace with new coordinate system here as well
 	glPushMatrix();
-    glTranslatef (Xpos.at(i), Ypos.at(i),Zpos.at(i));
+    //~ glTranslatef (Xpos.at(i), Ypos.at(i),Zpos.at(i));
+    glTranslatef(0.0f,0.0f,0.0f);
     glEnable (GL_BLEND);
     glEnable(GL_COLOR_MATERIAL);
 //    glColor4f(red, green, blue, 1.0f);
-    glColor4f(fRed.at(i), fGreen.at(i), fBlue.at(i), fAlpha.at(i));
-    glutSolidSphere (0.3,20,20);
-
-
-/*
-
-GLint viewport[4];
-GLdouble modelview[16];
-GLdouble projection[16];
-glGetIntegerv(GL_VIEWPORT, viewport);
-glGetDoublev(GL_MODELVIEW_MATRIX, modelview);
-glGetDoublev(GL_PROJECTION_MATRIX, projection);
-
-	std::cout << "MODELVIEW0: " << i << std::endl;
-	cout << " " << modelview[0] << " " << modelview[4] << " " << modelview[8] <<  " " << modelview[12] <<endl;
-	cout << " " << modelview[1] << " " << modelview[5] << " " << modelview[9] <<  " " << modelview[13] <<endl;
-	cout << " " << modelview[2] << " " << modelview[6] << " " << modelview[10] <<  " " << modelview[14] <<endl;
-	cout << " " << modelview[3] << " " << modelview[7] << " " << modelview[11] <<  " " << modelview[15] <<endl;
-	cout << endl;
-
-GLdouble coordE[4];
-coordE[0]=Xpos.at(i);
-coordE[1]=Ypos.at(i);
-coordE[2]=Zpos.at(i);
-coordE[3]=1.0;
-
-GLdouble oppIdentity[16];
-oppIdentity[0]=-1.0;
-oppIdentity[1]= 0;
-oppIdentity[2]= 0;
-oppIdentity[3]= 0;
-
-oppIdentity[4]=0;
-oppIdentity[5]=-1.0;
-oppIdentity[6]= 0;
-oppIdentity[7]= 0;
-
-oppIdentity[8]=0;
-oppIdentity[9]=0;
-oppIdentity[10]=-1.0;
-oppIdentity[11]=0;
-
-oppIdentity[12]=1.0;
-oppIdentity[13]=1.0;
-oppIdentity[12]=1.0;
-oppIdentity[13]=1.0;
-
-glMultMatrixd(oppIdentity);
-glMultMatrixd(coordE);
-
-		//~ std::cout << "x_rot(1): " << x_rot << std::endl;
-		//~ std::cout << "y_rot(1): " << y_rot << std::endl;
-
-	//~ std::cout << "VIEWPORT:" << std::endl;
-//~ for (int j=0; j<4;j++){
-	//~ cout << " " << viewport[j];
-//~ }
-	//~ cout << endl;
-
-
-
-	std::cout << "MODELVIEW1: " << i << std::endl;
-	cout << " " << modelview[0] << " " << modelview[4] << " " << modelview[8] <<  " " << modelview[12] <<endl;
-	cout << " " << modelview[1] << " " << modelview[5] << " " << modelview[9] <<  " " << modelview[13] <<endl;
-	cout << " " << modelview[2] << " " << modelview[6] << " " << modelview[10] <<  " " << modelview[14] <<endl;
-	cout << " " << modelview[3] << " " << modelview[7] << " " << modelview[11] <<  " " << modelview[15] <<endl;
-	cout << endl;
-
-
-	//~ std::cout << "PROJECTION: " << i << std::endl;
-	//~ cout << " " << projection[0] << " " << projection[4] << " " << projection[8] <<  " " << projection[12] <<endl;
-	//~ cout << " " << projection[1] << " " << projection[5] << " " << projection[9] <<  " " << projection[13] <<endl;
-	//~ cout << " " << projection[2] << " " << projection[6] << " " << projection[10] <<  " " << projection[14] <<endl;
-	//~ cout << " " << projection[3] << " " << projection[7] << " " << projection[11] <<  " " << projection[15] <<endl;
-	//~ cout << endl;
-*/
-
-	
-
-
-    glRasterPos2i(-2, -2);
-    glColor4f(0, 1, 0, 1.0f);
-
-
-    sprintf(PrintAll[0], "index:%i",i);
-    sprintf(PrintAll[1], "x:%2.3f",Xpos.at(i));
-    sprintf(PrintAll[2], "y:%2.3f",Ypos.at(i));
-    sprintf(PrintAll[3], "z:%2.3f",Zpos.at(i));
-    drawString(GLUT_BITMAP_HELVETICA_18, PrintAll[0], x_text, y_text, z_text);
-    drawString(GLUT_BITMAP_HELVETICA_18, PrintAll[1], x_text, y_text-0.5, z_text);
-    drawString(GLUT_BITMAP_HELVETICA_18, PrintAll[2],x_text, y_text-1, z_text);
-    drawString(GLUT_BITMAP_HELVETICA_18, PrintAll[3],x_text, y_text-1.5, z_text);
-
-	if (text.size()>0) {
-		sprintf (PrintAll[4], "text:%s",text.at(i).c_str());
-	    drawString(GLUT_BITMAP_HELVETICA_18, PrintAll[4], x_text, y_text-2.0, z_text);
-	}
-	
+    //~ glColor4f(fRed.at(i), fGreen.at(i), fBlue.at(i), fAlpha.at(i));
+    glColor4f(1.0f, 0.0f, 0.0,1.0f);
+    //~ glutSolidSphere (0.3,20,20);
+    
     glPopMatrix();
 }
 
+//~ std::vector< vector <float> > vertex;
+
+//~ std::vector<float> coordinate;
+
+//~ std::vector< std::vector< std::vector <float> > > vCube3;
+
+std::vector<std::vector<float> > vColor =
+{
+// top
+{0.0f, 1.0f, 0.0f},
+
+// bottom
+{0.5f, 0.0f, 0.5f},
+
+// front
+{1.0f, 0.0f, 0.0f},
+
+// back
+{0.0f, 0.0f, 1.0f},
+
+// left
+{0.0f, 0.5f, 0.5f},
+
+// right
+{0.5f, 0.5f, 0.0f}
+};
+
+void glTrianlges_cubeVec5 (std::vector< std::vector < std::vector <float> > >& vect)
+{
+
+    glTranslatef (0.0,0.0,0.0);
+    glEnable (GL_BLEND);
+    glEnable(GL_COLOR_MATERIAL);
+
+    int it_color;    
+    glBegin(GL_TRIANGLES);
+    
+    std::vector< std::vector< std::vector<float> > >::iterator it;
+    std::vector< std::vector<float> >::iterator itf;
+    
+    for (it=vect.begin();it!=vect.end();++it)
+    {
+        it_color = it-vect.begin();
+        glColor3fv(vColor[it_color].data());
+
+        for (itf=(*it).begin();itf!=(*it).end();++itf)
+        {
+            glVertex3fv((*itf).data());
+        }
+    }
+    glEnd();
 }
 
+void glTrianlges_cubeVec6 (
+                        std::vector<std::vector<float> > & vect_colors,
+            std::vector< std::vector < std::vector <float> > >& vect)
+{
+
+    glTranslatef (0.0,0.0,0.0);
+    glEnable (GL_BLEND);
+    glEnable(GL_COLOR_MATERIAL);
+
+    int it_color;    
+    glBegin(GL_TRIANGLES);
+    
+    std::vector< std::vector< std::vector<float> > >::iterator it;
+    std::vector< std::vector<float> >::iterator itf;
+    for (it=vect.begin();it!=vect.end();++it)
+    {
+        it_color = it-vect.begin();
+        glColor3fv(vect_colors[it_color].data());
+
+        for (itf=(*it).begin();itf!=(*it).end();++itf)
+        {
+            glVertex3fv((*itf).data());
+        }
+    }
+    glEnd();
+}
+
+void quads_to_triangles(std::vector< std::vector<float> > & vect_quads,
+                    std::vector< std::vector<float> > & vect_triangles)
+{
+    //~ for (std::vector< std::vector<float> >::iterator qit = vect_quads.begin();qit != vect_quads.end(); ++qit)
+    //~ {
+        //~ vect_triangles.push_back((*qit));
+    //~ }
+    vect_triangles.push_back(vect_quads.front());
+    vect_triangles.push_back(vect_quads[1]);
+    vect_triangles.push_back(vect_quads[2]);
+    vect_triangles.push_back(vect_quads[2]);
+    vect_triangles.push_back(vect_quads.back());
+    vect_triangles.push_back(vect_quads.front());
+}
+
+void testVector_Display_2d(std::vector< std::vector <float> > &testVector)
+{
+    // iterators for testVector:
+    std::vector< std::vector <float> >::iterator color_faces;
+    std::vector <float>::iterator colors;
+    
+    // nested loops
+        for (color_faces = testVector.begin(); color_faces != testVector.end();++color_faces)
+        {
+            std::cout << "Color for face " << (color_faces - testVector.begin()) + 1 << " : " ;
+            std::cout << " (";
+            for (colors = (*color_faces).begin(); colors != (*color_faces).end(); ++colors)
+            {
+                std::cout << (*colors);
+                if (colors != (*color_faces).end()-1) std::cout << ", ";
+            }
+            std:: cout << ")" << std::endl;
+        }
+}
+void testVector_Display(std::vector< std::vector< std::vector <float> > > &testVector)
+{
+    // iterators for testVector:
+    std::vector< std::vector< std::vector <float> > >::iterator face;
+    std::vector< std::vector <float> >::iterator it_vertex;
+    std::vector <float>::iterator coordinate;
+    
+    // nested loops
+    for (face = testVector.begin(); face != testVector.end(); ++face)
+    {
+        std::cout << "face " << (face - testVector.begin()) + 1 << " : " << std::endl;
+        for (it_vertex = (*face).begin(); it_vertex != (*face).end();++it_vertex)
+        {
+            std::cout << "    vertex " << (it_vertex - (*face).begin()) + 1 << " : " << std::endl;
+            std::cout << "            (";
+            for (coordinate = (*it_vertex).begin(); coordinate != (*it_vertex).end(); ++coordinate)
+            {
+                std::cout << (*coordinate);
+                if (coordinate != (*it_vertex).end()-1) std::cout << ", ";
+            }
+            std:: cout << ")" << std::endl;
+        }
+    };
+}
 
 void stillObject(void){
 	/// testing fixed object
@@ -360,7 +418,7 @@ void stillObject(void){
 	drawString(GLUT_BITMAP_HELVETICA_18, PrintAll[16],x_text, y_text-4, z_text);
 	drawString(GLUT_BITMAP_HELVETICA_18, PrintAll[5],x_text, y_text-4.5, z_text);
 
-	sprintf(PrintAll[17], "Entity selected : %i",index);
+	sprintf(PrintAll[17], "Entity selected : %i",E_index);
 	drawString(GLUT_BITMAP_HELVETICA_18, PrintAll[17],x_text, y_text-5, z_text);
 
 
@@ -393,6 +451,10 @@ void display(void){
     draw();
     vertex_Lines();
     stillObject();
+    
+    //~ glTrianlges_cubeVec5(vCube);
+    glTrianlges_cubeVec6(vColors, vCube);
+    
     //~ projectEntity();
     //~ grabEntity();
     glutSwapBuffers();
@@ -429,16 +491,16 @@ void mouseMovement(int x, int y) {
 	mouse_button_down = false;
 	mouseMove = true;
 	process_move(x,y);
-    //~ grabEntity(x,y);
 	}
 	
 void mouseMovement_Rclick(int x, int y){
 	mouse_button_down = true;
 	mouseMove = true;
 	process_move(x,y);
-	grabEntity(x,y);
+    // TODO will need to manage coord for grabEntity and decomment when ok
+	//~ grabEntity(x,y);
     }
-
+/*
 void projectEntity()
 {
     int it_yz;
@@ -454,7 +516,10 @@ void projectEntity()
         
     }
 }
+*/
 
+/*
+ * TODO manage new coordinates here too
 void grabEntity(int x, int y)
 {
     if (!grabHand) return;
@@ -481,7 +546,7 @@ void grabEntity(int x, int y)
         }
     }
     }
-}
+}*/
 
 void process_move(int x, int y){
     unsigned char key;
@@ -637,7 +702,8 @@ if (!text_input_on){
         text_input_on = false;
         grabHand = false;
         glutSetCursor(GLUT_CURSOR_INFO);
-        warpCursorFromEntity(Xpos.at(index),Ypos.at(index),Zpos.at(index));
+        // TODO !!! function here to be managed through new coord system too
+        //~ warpCursorFromEntity(Xpos.at(index),Ypos.at(index),Zpos.at(index));
     break;
 
     case 'm':
@@ -666,8 +732,8 @@ if (!text_input_on){
     default:
     break;
     }
+
     if (cameraMoveEnable) {
-        
         mouse = false;
         keyboard = true;
         //~ std::cout << "key2 x y"  << x << "," << y << std::endl;
@@ -701,7 +767,8 @@ if (!text_input_on){
             case';':
                 zpos2 += 1;
             break;
-
+/*  
+ * TODO the 2 following cases ned to be revisited
             case'-':
                 if (index!=0) index-=1;
                     xpos2=Xpos.at(index);
@@ -740,6 +807,7 @@ if (!text_input_on){
                     fAlpha.at(index)=1.0;
                     warpCursorFromEntity(xpos2,ypos2,zpos2);
                     break;
+*/
         }
     }
     
@@ -754,32 +822,36 @@ if (!text_input_on){
 
 // !!! following section need re-work from here
 
+/*
             case 'n':                                   //new
                 newGlObject();
-                index=0;
+                E_index=0;
                 text_input_on = true;
                 break;
-
+*/
+/*
             case 'v':                                   //copy
                 copy();
                 if ( Xpos.size()!=0 ) {
-                        index=Xpos.size()-1;
+                        E_index=Xpos.size()-1;
                     }
                 else {
-                            index=0;
+                            E_index=0;
                     };
                 text_input_on = true;
             break;
-
+*/
+/*
             case 'b':                                   //delete
                 deleteObject();
-                index=0;
+                E_index=0;
             break;
-
+*/
             case '1':
             case '2':
             case 't':                                   //to load file just turn on bool loadFile
-                dataFile::load_File = true;
+                //~ dataFile::load_File = true;
+                load_File = true;
             break;
 
         }
@@ -827,6 +899,9 @@ if(diffy>0) ypos2 += ((float) diffy-250)/500;
 }
 
 // need rework
+
+/*
+ * TODO change coord sstem here too
 void::coordinate(Entity * objEntity){
 
 Xpos.clear();
@@ -849,7 +924,7 @@ text.clear();
                 text.push_back(objEntity->textEntity.at(i));
         }
 }
-
+*/
 
 //~ void::glCoordinateToglEntity_All(){
 //~ valueEntity=Xpos;
@@ -874,8 +949,8 @@ text.clear();
 
 //~ }
 
-
-void load(Entity *objEntity) {
+/*
+void load(E *objE) {
 if ( (!text_input_on) && displayMenu) {
 
 //	if ( (!text_input_on) && displayMenu && (keyChoice=='t') ){
@@ -883,9 +958,9 @@ if ( (!text_input_on) && displayMenu) {
     dataFile dataGlEntity(0);
     //~ Entity newTiti;
     resetIndex();
-    dataGlEntity.loadFile('t',objEntity);
+    dataGlEntity.loadFile('t',objE);
     //~ dataGlEntity.loadFile('t',toto);
-    coordinate(objEntity);
+    coordinate(objE);
     //~ dataToGl(dataGlEntity);
     //~ coordinate_glDisplay();
     keyChoice='\0';
@@ -922,15 +997,17 @@ if(keyChoice=='s'){
 
 }
 }
+*/
 
-void::resetIndex(){
-index=0;
+void resetIndex()
+{
+    E_index=0;
 }
 
 /* test */
 
 
-void::drawString (void * font, char *s, float x, float y, float z){
+void drawString (void * font, char *s, float x, float y, float z){
  unsigned int i;
 //     glTranslatef (X, Y, Z);
  glRasterPos3f(x, y, z);
@@ -939,14 +1016,14 @@ void::drawString (void * font, char *s, float x, float y, float z){
       glutBitmapCharacter (font, s[i]);
 }
 
-void::mouseMotionForGlut(int x, int y){
+void mouseMotionForGlut(int x, int y){
  double xloc = x;
  double yloc = y;
  sprintf(gMouseXLoc, "x:%2.3f", xloc);
  sprintf(gMouseYLoc, "y:%2.3f", yloc);
 }
 
-
+/*
 void::newGlObject(){
 Xpos.push_back(0);
 Ypos.push_back(0);
@@ -956,21 +1033,24 @@ fGreen.push_back(0.0);
 fBlue.push_back(0.0);
 fAlpha.push_back(1.0);
 text.push_back("Enter Text");
-
 }
-void::copy(){
-Xpos.push_back(Xpos.at(index));
-Ypos.push_back(Ypos.at(index));
-Zpos.push_back(Zpos.at(index));
-fRed.push_back(1.0);
-fGreen.push_back(0.0);
-fBlue.push_back(0.0);
-fAlpha.push_back(1.0);
-text.push_back("Enter Text");
-}
+*/
 
+// CHECK check if this is to be used in new version
+//~ void::copy(){
+//~ Xpos.push_back(Xpos.at(index));
+//~ Ypos.push_back(Ypos.at(index));
+//~ Zpos.push_back(Zpos.at(index));
+//~ fRed.push_back(1.0);
+//~ fGreen.push_back(0.0);
+//~ fBlue.push_back(0.0);
+//~ fAlpha.push_back(1.0);
+//~ text.push_back("Enter Text");
+//~ }
+
+/*
 void::deleteObject(){
-unsigned int iterator =index;
+unsigned int iterator =E_index;
 if (Xpos.size()>1){
 
 Xpos.erase(Xpos.begin() + iterator);
@@ -985,6 +1065,7 @@ text.erase(text.begin() + iterator);
 }
 
 }
+*/
 
 //~ void dataToGl (dataFile objData){
     //~ structureEntity=objData.structureEntity;
@@ -1073,4 +1154,4 @@ gluUnProject(winX, winY, z_cursor, modelview, projection, viewport, &xpos2, &ypo
 //~ }
 
 
-#endif /*glFunctions.cpp*/
+//~ #endif /*glFunctions.cpp*/

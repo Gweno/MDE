@@ -22,7 +22,10 @@ class E {
         
     public:
         
-        static std::vector<E*> search_result;
+        static std::vector<E**> search_result;
+
+        E();
+        E(std::string init_name, std::string init_data, std::vector<E*> init_vE);
         
         //Destructors;
 /*
@@ -91,10 +94,9 @@ class E {
         
         void E_display_all(int n_space);
 
-        void fetch_search_result();
+        void fetch_search_result(std::vector<E**> &search_result);
 
-        E * search_For(string searchName);
-        E * search_For2(int & index, int & level, string searchName);
+        void search_For(int & index, int & level, string searchName);
 
         void simple_loop_VE(string searchName);
         
@@ -201,12 +203,6 @@ class E {
         void print_flat_E();
         
         E * test(int,std::vector<int>);
-        //~ E * test2(int,std::deque<int>);
-        //~ E * vE_get_by_index2(std::deque<int>);
-        //~ E * set_last_vEe_name_by_index(std::deque<int>,string);
-        //~ void set_last_vEe_name_by_index(std::deque<int>,string);
-        //~ E * set_last_vEe_data_by_index(std::deque<int>,string);
-        //~ E * E_set_name_by_index(std::deque<int>,string);
         
         E * vE_get_by_index(std::vector<int>&, std::vector<int>::const_iterator);
         void display_vector_int(std::vector<int>& vect_index);
@@ -214,6 +210,13 @@ class E {
         std::vector<int> set_vector_of_indexes(std::string);
 
         void vE_copy_To_Vector_Float(std::vector<float>& vFloat);
+        void extractEColorDataToGL(
+                            std::vector<float> &colors,
+                            std::vector< vector <float> > &color_faces);
+        void extractEVertexToGL(
+                std::vector<float> &coordinate,
+                std::vector< vector <float> > &vertex,
+            std::vector< std::vector< std::vector <float> > > &vCube);
 };
 
 #endif /*E.h*/

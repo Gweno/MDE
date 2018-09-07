@@ -43,7 +43,9 @@ void drawSphere() {
 static const float arr1[] = {1.0f,1.0f,1.0f, 1.0f};
 std::vector<float> vec1 (arr1, arr1 + sizeof(arr1) / sizeof(arr1[0]) );
 
-    std::vector< std::vector< std::vector <float> > > testCube;
+    std::vector< std::vector< std::vector <float> > > vCube1;
+    std::vector< std::vector< std::vector <float> > > vCube2;
+    std::vector< std::vector< std::vector <float> > > vCube3;
 
     std::vector<float> coordinate;
     std::vector<float> colors;
@@ -93,7 +95,7 @@ std::vector<std::vector<float> > vCube
 {1.0f,1.0f,1.0f}
 };
 
-std::vector<std::vector<std::vector<float> > > vCube2
+std::vector<std::vector<std::vector<float> > > vectCube2
 {
     // top
     {
@@ -154,7 +156,7 @@ std::vector<std::vector<std::vector<float> > > vCube2
     }
 };
 
-std::vector<std::vector<float> > vColor
+std::vector<std::vector<float> > vColor =
 {
 // top
 {0.0f, 1.0f, 0.0f},
@@ -258,12 +260,11 @@ void faceV ()
     //~ for (it=GLtriangle_cubeFace.begin();it!=GLtriangle_cubeFace.end();++it)
     for (it=vTriangle_face.begin();it!=vTriangle_face.end();++it)
     {
+        std::cout << "vertex " << (*it).data() << std::endl;
         glVertex3fv((*it).data());
     }
     glEnd();
 }
-
-
 
 void quads_to_triangles(std::vector< std::vector<float> > & vect_quads, std::vector< std::vector<float> > & vect_triangles)
 {
@@ -279,14 +280,22 @@ void quads_to_triangles(std::vector< std::vector<float> > & vect_quads, std::vec
     vect_triangles.push_back(vect_quads.front());
 }
 
+void update(){
+    glRotatef(rotx,1.0,1.0,0.0);
+    if(rotx<360) rotx+=0.05;
+    else rotx=0;
+    }
     
 void cubeV (){
 
-    glTranslatef (0.0,0.0,0.0);
+    glPushMatrix();
+    
+    glTranslatef (-5.0,5.0,-5.0);
+    update();
     glEnable (GL_BLEND);
     glEnable(GL_COLOR_MATERIAL);
 
-        
+    
     glBegin(GL_QUADS);
     // top
     glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
@@ -336,14 +345,21 @@ void cubeV (){
      
     glEnd();
 
+    glPopMatrix();
+
     }
 
 void cubeVec (){
 
-    glTranslatef (0.0,0.0,0.0);
+    glPushMatrix();
+
+    glTranslatef (0.0,5.0,-5.0);
+    update();
     glEnable (GL_BLEND);
     glEnable(GL_COLOR_MATERIAL);
 
+    
+    
     int it_color;    
     glBegin(GL_QUADS);
     
@@ -359,23 +375,29 @@ void cubeVec (){
 
     glEnd();
     
+    glPopMatrix();
+    
     }
     
-void cubeVec2 (){
+void cubeVec2 ()
+{
 
-    glTranslatef (0.0,0.0,0.0);
+    int it_color;    
+    std::vector< std::vector< std::vector<float> > >::iterator it;
+    std::vector< std::vector<float> >::iterator itf;
+
+    glPushMatrix();
+
+    glTranslatef (5.0,5.0,-5.0);
+    update();
     glEnable (GL_BLEND);
     glEnable(GL_COLOR_MATERIAL);
 
-    int it_color;    
     glBegin(GL_QUADS);
     
-    std::vector< std::vector< std::vector<float> > >::iterator it;
-    std::vector< std::vector<float> >::iterator itf;
-    
-    for (it=vCube2.begin();it!=vCube2.end();++it)
+    for (it=vectCube2.begin();it!=vectCube2.end();++it)
     {
-        it_color = it-vCube2.begin();
+        it_color = it-vectCube2.begin();
         glColor3fv(vColor[it_color].data());
 
         for (itf=(*it).begin();itf!=(*it).end();++itf)
@@ -385,10 +407,45 @@ void cubeVec2 (){
     }
 
     glEnd();
-    }
+    
+    glPopMatrix();
+    
+}
     
     
 void cubeVec3 (std::vector< std::vector < std::vector <float> > >& vect)
+{
+
+    std::vector< std::vector< std::vector<float> > >::iterator it;
+    std::vector< std::vector<float> >::iterator itf;
+
+    glPushMatrix();
+
+    glTranslatef (-5.0,0.0,-5.0);
+    update();
+    glEnable (GL_BLEND);
+    glEnable(GL_COLOR_MATERIAL);
+
+    int it_color;    
+    glBegin(GL_QUADS);
+    
+   
+    for (it=vect.begin();it!=vect.end();++it)
+    {
+        it_color = it-vect.begin();
+        glColor3fv(vColor[it_color].data());
+
+        for (itf=(*it).begin();itf!=(*it).end();++itf)
+        {
+            glVertex3fv((*itf).data());
+        }
+    }
+    glEnd();
+    
+    glPopMatrix();
+}
+
+void glTrianlges_cubeVec5 (std::vector< std::vector < std::vector <float> > >& vect)
 {
 
     glTranslatef (0.0,0.0,0.0);
@@ -396,7 +453,7 @@ void cubeVec3 (std::vector< std::vector < std::vector <float> > >& vect)
     glEnable(GL_COLOR_MATERIAL);
 
     int it_color;    
-    glBegin(GL_QUADS);
+    glBegin(GL_TRIANGLES);
     
     std::vector< std::vector< std::vector<float> > >::iterator it;
     std::vector< std::vector<float> >::iterator itf;
@@ -411,14 +468,16 @@ void cubeVec3 (std::vector< std::vector < std::vector <float> > >& vect)
             glVertex3fv((*itf).data());
         }
     }
-
     glEnd();
 }
 
 void cubeVec4 (std::vector<std::vector<float> > & vect_colors, std::vector< std::vector < std::vector <float> > >& vect_coord)
 {
 
-    glTranslatef (0.0,0.0,0.0);
+    glPushMatrix();
+
+    glTranslatef (0.0,0.0,-5.0);
+    update();
     glEnable (GL_BLEND);
     glEnable(GL_COLOR_MATERIAL);
 
@@ -428,11 +487,13 @@ void cubeVec4 (std::vector<std::vector<float> > & vect_colors, std::vector< std:
     std::vector< std::vector< std::vector<float> > >::iterator it;
     std::vector< std::vector<float> >::iterator itf;
     
+    glColor3f(0.0f,1.0f,0.0f);
+    
     for (it=vect_coord.begin();it!=vect_coord.end();++it)
     {
         it_color = it-vect_coord.begin();
         //~ std::cout << "it_color" << it_color << std::endl;
-        glColor3fv(vect_colors[it_color].data());
+        //~ glColor3fv(vect_colors[it_color].data());
 
         for (itf=(*it).begin();itf!=(*it).end();++itf)
         {
@@ -441,6 +502,8 @@ void cubeVec4 (std::vector<std::vector<float> > & vect_colors, std::vector< std:
     }
 
     glEnd();
+    
+    glPopMatrix();
 }
 
 void reshape(int w, int h){
@@ -451,11 +514,7 @@ void reshape(int w, int h){
     glMatrixMode (GL_MODELVIEW);
 }
 
-void update(){
-    glRotatef(rotx,1.0,1.0,0.0);
-    if(rotx<360) rotx+=0.05;
-    else rotx=0;
-    }
+
 
 //Drawing function
 void display(void)
@@ -468,22 +527,27 @@ void display(void)
     //Background color
     //~ glClearColor(0,0,0,1);
     glTranslatef (0,0,-10);
-    update();
+    //~ update();
     
     //~ drawSphere();
     //~ drawCube();
     //~ cubeV();
-    //~ cubeVec2();
-    //~ if (strcmp(choice, "0")) cubeVec2();
-    //~ if (strcmp(choice, "3")) cubeVec3(testCube);
-    //~ if (strcmp(choice, "4")) cubeVec4(color_faces, testCube);
     if (choice=="t0") half_faceV_0();
     if (choice=="t") half_faceV();
     if (choice=="f" || choice=="q2f") faceV();
+    if (choice=="0")
+    {
+        cubeV();
+        cubeVec();
+        cubeVec2();
+        cubeVec3(vCube1);
+        //~ cubeVec4(color_faces, vCube2);
+    }
+    if (choice=="1") cubeVec();
     if (choice=="2") cubeVec2();
-    if (choice=="3") cubeVec3(testCube);
-    if (choice=="4") cubeVec4(color_faces, testCube);
-    //~ cubeVec4(color_faces, testCube);
+    if (choice=="3") cubeVec3(vCube1);
+    if (choice=="4") cubeVec4(color_faces, vCube2);
+    if (choice=="5") glTrianlges_cubeVec5(vCube3);
     
     
     // Vector Position and Matrix Model (vec4 has 4 elements x,y,z and w.
@@ -619,7 +683,7 @@ int main(int argc, char **argv)
     if (argc>1) choice= std::string(argv[1]);
     else choice = "2";
     
-    if (choice=="3")
+    if (choice=="3" || choice == "0")
     {
         testEntity.load_XML_File_to_E("../datafiles/testCube0.xml");
         testEntity.E_display_all(0);
@@ -633,10 +697,11 @@ int main(int argc, char **argv)
                 vertex.push_back(coordinate);
                 coordinate.clear();
             }
-            testCube.push_back(vertex);
+            vCube1.push_back(vertex);
+            testVector_Display_2d(vertex);
             vertex.clear();
         }
-        testVector_Display(testCube);
+        testVector_Display(vCube1);
     }
     //~ if (!strcmp(choice,"4"))
     if (choice=="4")
@@ -663,10 +728,10 @@ int main(int argc, char **argv)
                 vertex.push_back(coordinate);
                 coordinate.clear();
             }
-            testCube.push_back(vertex);
+            vCube2.push_back(vertex);
             vertex.clear();
         }
-        testVector_Display(testCube);
+        testVector_Display(vCube2);
         testVector_Display_2d(color_faces);
     }
     
@@ -683,6 +748,30 @@ int main(int argc, char **argv)
     }
 
 
+    if (choice == "5")
+    {
+        testEntity.load_XML_File_to_E("../datafiles/testCube0.xml");
+        testEntity.E_display_all(0);
+        for (int f=0; f < 6 ; ++f)
+        {
+            
+            for (int v=0; v < 4; ++v)
+            {
+                index = {f,v};
+                (testEntity.vE_get_by_index(index, index.begin()))->vE_copy_To_Vector_Float(coordinate);
+                vertex.push_back(coordinate);
+                //~ testVector_Display_2d(vertex);
+                coordinate.clear();
+            }
+            quads_to_triangles(vertex, vTriangle_face);
+            testVector_Display_2d(vertex);
+            testVector_Display_2d(vTriangle_face);
+            vCube3.push_back(vTriangle_face);
+            vTriangle_face.clear();
+            vertex.clear();
+        }
+        testVector_Display(vCube3);
+    }
 //*    
   glutInit(&argc, argv);
   //Simple buffer
