@@ -99,7 +99,11 @@ std::vector<std::vector<float> > vTriangle_face;
         
         testEntity.load_XML_File_to_E("../datafiles/testCube.xml");
         testEntity.E_display_all(0);
-        testEntity.extractEColorDataToGL(colors, color_faces);
+        //~ testEntity.extractEColorDataToGL(colors, color_faces);
+        int index=0;
+        int level=0;
+        testEntity.search_For(index , level, "color");
+        testEntity.SearchResultsToVectorFloat(colors, color_faces);
         testEntity.extractEVertexToGL(coordinate, vertex, vCube);
         // transfer extracted data to vector in glFunctions scope
         vect2vect(vCube);
@@ -241,7 +245,8 @@ std::vector<std::vector<float> > vTriangle_face;
                 newEntity.print_formatted_E(0,"<",">","</",">");
                 int index=0;
                 int level=0;
-                (newEntity.search_For(index , level, "vertex"));
+                (newEntity.search_For(index , level, "color"));
+                //~ (newEntity.search_For(index , level, "vertex"));
                 newEntity.fetch_search_result(E::search_result);
             }
             else if (key_input=="+")

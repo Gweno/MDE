@@ -141,7 +141,8 @@ class E {
          * 
          * @see E_save_to_file()
          */
-        void E_write_to_file(std::string start_opening_tag,
+        //~ void E_write_to_file(std::string start_opening_tag,
+        void E_write_to_file(int &n_space, std::string start_opening_tag,
             std::string end_opening_tag, std::string start_closing_tag,
             std::string end_closing_tag, ostream &file);
             
@@ -217,6 +218,10 @@ class E {
                 std::vector<float> &coordinate,
                 std::vector< vector <float> > &vertex,
             std::vector< std::vector< std::vector <float> > > &vCube);
+            
+        void SearchResultsToVectorFloat(std::vector<float> &v_float, std::vector< vector <float> > &v_v_float);            
 };
+
+
 
 #endif /*E.h*/

@@ -104,9 +104,7 @@ void E::set_last_vEe_data(string vData)
 
 void E::set_vEe_name(int index_vEe,string vName)
 {
-    std::cout << "before" << std::endl;
     this->vE.at(index_vEe)->name = vName;
-    std::cout << "after" << std::endl;
 };
 
 // Entity set data for an Entity in its vector of pointers
@@ -171,9 +169,7 @@ void E::print_formatted_E(int n_space, std::string start_opening_tag,
     std::cout << this->name;
     std::cout<< end_opening_tag;
     std::cout << endl;
-    
     std::cout << N_space;
-    std::cout << "    ";
     std::cout << this->data;
     std::cout << endl;
 
@@ -190,14 +186,14 @@ void E::print_formatted_E(int n_space, std::string start_opening_tag,
     std::cout<< end_closing_tag;
     return;
 };
-
+/*
 void E::E_write_to_file(std::string start_opening_tag,
             std::string end_opening_tag, std::string start_closing_tag,
             std::string end_closing_tag, ostream &file)
 {
     file << start_opening_tag;
     file << this->name;
-    file << end_opening_tag; 
+    file << end_opening_tag;
     file << this->data;
     for (std::vector<E*>::iterator it=this->vE.begin();it!=this->vE.end();++it)
         {
@@ -207,6 +203,38 @@ void E::E_write_to_file(std::string start_opening_tag,
     file << start_closing_tag;
     file << this->name;
     file << end_closing_tag;
+    return;
+};
+*/
+void E::E_write_to_file(int &n_space, std::string start_opening_tag,
+            std::string end_opening_tag, std::string start_closing_tag,
+            std::string end_closing_tag, ostream &file)
+{
+    
+    std::string N_space(n_space*4,' ');
+    file << N_space;
+    file << start_opening_tag;
+    file << this->name;
+    file << end_opening_tag;
+    file << std::endl;
+    file << N_space;
+    file << this->data;
+    file << std::endl;
+    
+    if (this->vE.size()!=0) n_space++;
+    for (std::vector<E*>::iterator it=this->vE.begin();it!=this->vE.end();++it)
+        {
+            (*it)->E_write_to_file(n_space, start_opening_tag,
+            end_opening_tag, start_closing_tag, end_closing_tag, file);
+            if (it == this->vE.end()-1) n_space--;
+            
+        }
+    
+    file << N_space;
+    file << start_closing_tag;
+    file << this->name;
+    file << end_closing_tag;
+    file << std::endl;
     return;
 };
 
@@ -230,6 +258,7 @@ void E::E_save_to_file(){
     char *FileNameOut = new char[75];
     char *ExtensionXML = new char[4];
     char *Path = new char[50];
+    int nb_space = 0;
     FileNameOut[0]=0;                   // to clear the array of Char
     strcpy(ExtensionXML,".xml");
     strcpy(Path,"../datafiles/");
@@ -239,7 +268,10 @@ void E::E_save_to_file(){
     strcat(FileNameOut,FileName);
     strcat(FileNameOut, ExtensionXML);
     std::ofstream file(FileNameOut);
-    this->E_write_to_file("<",">","</",">", file);
+    //~ this->E_write_to_file("<",">","</",">", file);
+    
+    //~ this->E_write_to_file(0,"<",">","</",">", file);
+    this->E_write_to_file(nb_space,"<",">","</",">", file);
 }
 
 
@@ -909,7 +941,18 @@ void E::extractEColorDataToGL(
     }
     testVector_Display_2d(color_faces);
 }
- 
+
+
+void E::SearchResultsToVectorFloat(std::vector<float> &v_float, std::vector< vector <float> > &v_v_float)
+{
+    for (std::vector<E**>::iterator it=E::search_result.begin(); it != E::search_result.end(); ++it)
+    {
+        (*(*it))->vE_copy_To_Vector_Float(v_float);
+        v_v_float.push_back(v_float);
+        v_float.clear();
+    }
+    
+}
 void E::extractEVertexToGL(
             std::vector<float> &coordinate,
             std::vector< vector <float> > &vertex,
