@@ -474,137 +474,65 @@ void E::load_File3()
     delete ExtensionXML;
     delete bufferChar;
     }
-    
 
-void E::load_File5()
+void E::str_token_tag(std::string & buffer_Input,
+ std::string & output_Tag, std::string & buffer_Output,
+  char delimiter1, char delimiter2)
 {
-    char *FileName = new char[32];
-    char *FileNameIn = new char[128];
-    char *PathToFile = new char[128];
-    char *FullNameFileIn = new char[256];
-    char *ExtensionXML = new char[8];
-    char *bufferChar = new char[32];
-    char *bufferChar2 = new char[300];
-    char *bufferChar3 = new char[32];
-    
-    int n=0;
-    int m=0;
-    
-    string bufferString;
-    string bufferString2;
-
-    strcpy(FileName, "perma");
-    strcpy(PathToFile, "../datafiles/");
-    strcpy(ExtensionXML,".xml");
-    strcpy(FullNameFileIn,PathToFile);
-    strcpy(FileNameIn, FileName);
-    strcat(FileNameIn, ExtensionXML);
-    strcat(FullNameFileIn, FileNameIn);
-    
-    ifstream fileEntity;
-
-    fileEntity.open(FullNameFileIn, ios::in);
-
-    fileEntity.clear();                   // absolutly needed otherwise the file is flagged at eof, and good=0   
-    fileEntity.seekg(0, ios::beg);        // set cursor at 0 from start of file
-
-    std::vector<int> vect_index;
-    
-    while ((fileEntity.good()) && (!fileEntity.eof()))     // loop while extraction from file is possible
-    {
-        std::getline(fileEntity, bufferString);
-        char* bufferLineChar = new char[bufferString.length()+1];
-        strcpy(bufferLineChar,bufferString.c_str());
-        
-        while (strlen(bufferLineChar)>0)
-        {
-            this->str_token_tag(bufferLineChar,bufferChar,bufferChar2,'<','>');
-
-            // closing tag
-            if (bufferChar[0]=='/') 
-            {
-                if (vect_index.size()>1)
-                {
-                    vect_index.pop_back();
-                    n=vect_index.back()+1;
-                    vect_index.back()=n;
-                }
-            }
-            // opening tag
-            else
-            { 
-                n=0;
-                if (vect_index.size()!=0)
-                {
-                    m=vect_index.back();
-                    vect_index.pop_back();
-                    (this->vE_get_by_index(vect_index,vect_index.begin()))->new_vE_element();
-                    vect_index.push_back(m);
-                }
-                // store name
-                this->vE_get_by_index(vect_index,vect_index.begin())->name=bufferChar;
-                if (bufferChar2[0]!='<') 
-                {
-                    if (strlen(bufferLineChar)>0 && strlen(bufferChar2)>0) strcpy(bufferLineChar,bufferChar2);
-                    else break;
-                    this->str_token_tag(bufferLineChar,bufferChar3,bufferChar2,0,'<');
-                    this->vE_get_by_index(vect_index,vect_index.begin())->data=bufferChar3;
-                }
-                vect_index.push_back(0);
-            }
-            if (strlen(bufferLineChar)>0 && strlen(bufferChar2)>0)
-            {
-                strcpy(bufferLineChar,bufferChar2);
-            }
-            else break;
-        }
-            // delete[] the line buffer
-            delete[] bufferLineChar;
-    }
-    fileEntity.close();           // close file
-
-    delete[] FileName;
-    delete[] FileNameIn;
-    delete[] PathToFile;
-    delete[] FullNameFileIn;
-    delete[] ExtensionXML;
-    delete[] bufferChar;
-    delete[] bufferChar2;
-    delete[] bufferChar3;
-}
-
-void E::str_token_tag(char* buffer_Input, char* output_Tag, char* buffer_Output, int delimiter1, int delimiter2)
-{
-    char *pch=NULL;
-    char *pch2=NULL;
+    size_t pos1=0;
+    size_t pos2=0;
     if (delimiter1!=0)
     {
-        pch = strchr(buffer_Input,delimiter1);
-        pch2 = strchr(buffer_Input,delimiter2);
-        memcpy(output_Tag,pch+1,pch2-pch - 1);
-        output_Tag[pch2-pch - 1]='\0';
-        memcpy(buffer_Output,pch2+1,strlen(buffer_Input)-strlen(output_Tag)); // Including nullcharacter at the end
-    } 
+        pos1 = buffer_Input.find_first_of(delimiter1);
+        if (pos1!=std::string::npos)
+        {
+        pos2 = buffer_Input.find_first_of(delimiter2,pos1);
+        output_Tag = buffer_Input.substr(pos1+1,pos2-pos1-1);
+        buffer_Output = buffer_Input.substr(pos2+1);
+        }
+        else
+        {
+            output_Tag="";
+            buffer_Output = buffer_Input;
+        }
+    }
+    // tag/data with one delimiter at the end
     else
     {
-        pch = buffer_Input;
-        pch2 = strchr(buffer_Input,delimiter2);
-        memcpy(output_Tag,pch,pch2-pch);
-        output_Tag[pch2-pch]='\0';
-        memcpy(buffer_Output,pch2,strlen(buffer_Input)-strlen(output_Tag)+1); // Including nullcharacter at the end
+        pos1 = buffer_Input.find_first_of(delimiter2);
+        if (pos1!=std::string::npos)
+        {
+        output_Tag = buffer_Input.substr(0,pos1);
+        buffer_Output = buffer_Input.substr(pos1);
+        if (output_Tag.size()>0) this->trim_leading_space(output_Tag);       // trimming leading spaces
+        }
+        else
+        {
+            output_Tag="";
+            buffer_Output = buffer_Input;
+        }
     }
-
 }
 
+void E::trim_leading_space(std::string & io_string)
+{
+    size_t pos = 0;
+    pos = io_string.find_first_not_of(' ');
+    if (pos)
+    {
+        io_string = io_string.substr(pos);
+    }
+}
 
-
-
-
-void E::load_XML_File_to_E(std::string fullFileName)
+void E::load_XML_File_to_E(const std::string & fullFileName)
 {
     // Declaring Array of char to store the tags
-    char *buffer_Opening_Tag = new char[32];
-    char *buffer_Closing_Tag = new char[32];
+    //~ char *buffer_Opening_Tag = new char[32];
+    //~ char *buffer_Closing_Tag = new char[32];
+    //~ std::string buffer_Opening_Tag;
+    std::string buffer_Tag;
+    std::string buffer_Data;
+    //~ std::string buffer_Closing_Tag;
 
     // Declaring integers for holding indexes temporarily
     int n=0;
@@ -613,16 +541,21 @@ void E::load_XML_File_to_E(std::string fullFileName)
     // the string buffers to hold the tokens
     std::string bufferString;
 
+    bool opening_tag = false;
+    bool closing_tag = false;
+    bool is_data = false;
+
     // the vector of indexes
     std::vector<int> vect_index;
     
     // Declaring an array of char for the path+name of the file
-    char* FullNameFileIn = new char[fullFileName.length()+1];
-    strcpy(FullNameFileIn,fullFileName.c_str());
+    //~ char* FullNameFileIn = new char[fullFileName.length()+1];
+    //~ strcpy(FullNameFileIn,fullFileName.c_str());
     
     // Processing file
     ifstream fileEntity;
-    fileEntity.open(FullNameFileIn, ios::in);
+    //~ fileEntity.open(FullNameFileIn, ios::in);
+    fileEntity.open(fullFileName.c_str(), ios::in);
 
     fileEntity.clear();                   // absolutly needed otherwise the file is flagged at eof, and good=0   
     fileEntity.seekg(0, ios::beg);        // set cursor at 0 from start of file
@@ -630,85 +563,340 @@ void E::load_XML_File_to_E(std::string fullFileName)
     
     while ((fileEntity.good()) && (!fileEntity.eof()))     // loop while extraction from file is possible
     {
-        // get a line form the file
+        // get a line from the file
         std::getline(fileEntity, bufferString);
         
+        //~ std::cout << "line:" << bufferString << std::endl;
+        
         // this is needed to transfer the string content in the char*
-        char* bufferLineChar = new char[bufferString.length()+1];
-        strcpy(bufferLineChar,bufferString.c_str());
-        char *buffer_End_of_Line = new char[bufferString.length()+1];
+        std::string bufferLine;
+        bufferLine = bufferString;
+        std::string buffer_End_of_Line;
+        
         
         // loop on the line in the buffer
-        while (strlen(bufferLineChar)>0)
+        //~ while (strlen(bufferLineChar)>0)
+        while (bufferLine.size()>0)
         {
             // from the line in the buffer, get a token between char < and > 
             // copy what's after the data token into the buffer for processing the rest of the line
-            this->str_token_tag(bufferLineChar,buffer_Opening_Tag,buffer_End_of_Line,'<','>');
-            
+            //~ std::cout << bufferLine << std::endl;
+            std::cout << "control Start" << std::endl;
+            this->str_token_tag(bufferLine,buffer_Tag,buffer_End_of_Line,'<','>');
+            //~ std::cout << "bufferLine" << bufferLine << std::endl;
+            std::cout << "Buffer tag size: " << buffer_Tag.size() << std::endl;
+            //~ std::cout << "buffer_End_of_Line size" << buffer_End_of_Line.size() << std::endl;
             // token is a closing tag
-            if (buffer_Opening_Tag[0]=='/') 
+            if (buffer_Tag.size()>0)
             {
-                // take off the last index and increment the value of the last element (which was second from last)
-                if (vect_index.size()>1)
+                std::cout << "Control 0" <<std::endl;
+                std::cout << "Control opening_tag" << opening_tag << std::endl;
+                std::cout << "Control closing_tag" << closing_tag << std::endl;
+                std::cout << "Control is_data" << is_data << std::endl;
+                std::cout << "Control buffer_Tag" << buffer_Tag << std::endl;
+                std::cout << "Control bufferLine" << bufferLine << std::endl;
+                std::cout << "Control buffer_End_of_Line" << buffer_End_of_Line << std::endl;
+                if (buffer_Tag[0]!='/')
                 {
-                    vect_index.pop_back();
-                    n=vect_index.back()+1;
-                    vect_index.back()=n;
+                    std::cout << "Control 1" <<std::endl;
+                    std::cout << "Control opening_tag" << opening_tag << std::endl;
+                    std::cout << "Control closing_tag" << closing_tag << std::endl;
+                    std::cout << "Control is_data" << is_data << std::endl;
+                    std::cout << "Control buffer_Tag" << buffer_Tag << std::endl;
+                    std::cout << "Control bufferLine" << bufferLine << std::endl;
+                    std::cout << "Control buffer_End_of_Line" << buffer_End_of_Line << std::endl;
+                    n=0;
+                    
+                    // if the vector of indexes is not empty create a new vE element at the wanted index.
+                    // the process used is to get the instance E that holds vE by reducing the vector of index
+                    // using pop_back(), storing first its last element (.back()) then restoring it.
+                    if (is_data)                // this test if last loopended up in a data (even if empty)
+                    {
+                    std::cout << "Control test" << std::endl;
+                    std::cout << "Control opening_tag" << opening_tag << std::endl;
+                    std::cout << "Control closing_tag" << closing_tag << std::endl;
+                    std::cout << "Control is_data" << is_data << std::endl;
+                    std::cout << "Control buffer_Tag" << buffer_Tag << std::endl;
+                    std::cout << "Control bufferLine" << bufferLine << std::endl;
+                    std::cout << "Control buffer_End_of_Line" << buffer_End_of_Line << std::endl;
+                        vect_index.push_back(0);
+                        is_data = false;
+                    }
+                    if (vect_index.size()!=0)
+                    {
+                        std::cout << "Control 2" <<std::endl;
+                        std::cout << "2.1: "<< std::endl;
+                        this->display_vector_int(vect_index);
+                        std::cout << std::endl;
+                       
+                        
+                        m=vect_index.back();
+                        vect_index.pop_back();
+
+                        std::cout << "2.2" << std::endl;
+                        this->display_vector_int(vect_index);
+                        std::cout << std::endl;
+                    //~ std::cout << "Control " <<std::endl;
+                    std::cout << "Control opening_tag" << opening_tag << std::endl;
+                    std::cout << "Control closing_tag" << closing_tag << std::endl;
+                    std::cout << "Control is_data" << is_data << std::endl;
+                    std::cout << "Control buffer_Tag" << buffer_Tag << std::endl;
+                    std::cout << "Control bufferLine" << bufferLine << std::endl;
+                    std::cout << "Control buffer_End_of_Line" << buffer_End_of_Line << std::endl;
+
+
+                        (this->vE_get_by_index(vect_index,vect_index.begin()))->new_vE_element();
+                        vect_index.push_back(m);
+                        
+                        std::cout << "2.3" << std::endl;
+                        this->display_vector_int(vect_index);
+                        //~ std::cout << std::endl;
+
+                    }
+                    opening_tag = true;
+                    is_data = false;
+                    closing_tag = false;
+                    // store name
+                    this->vE_get_by_index(vect_index,vect_index.begin())->name=buffer_Tag;
+                    //~ std::cout << std::endl;
+                    //~ this->display_vector_int(vect_index);
+                    //~ std::cout << std::endl;
+                    //~ this->print_flat_E();
+                    //~ std::cout << std::endl;
+                    std::cout << "buffer_Tag: " << buffer_Tag << std::endl;
+                } 
+                else if (buffer_Tag[0]=='/') 
+                {
+                    opening_tag = false;
+                    closing_tag = true;
+                    is_data = false;
+                    std::cout << "Control 3" <<std::endl;
+                    std::cout << "Control opening_tag" << opening_tag << std::endl;
+                    std::cout << "Control closing_tag" << closing_tag << std::endl;
+                    std::cout << "Control is_data" << is_data << std::endl;
+                    std::cout << "Control buffer_Tag" << buffer_Tag << std::endl;
+                    std::cout << "Control bufferLine" << bufferLine << std::endl;
+                    std::cout << "Control buffer_End_of_Line" << buffer_End_of_Line << std::endl;
+                    // take off the last index and increment the value of the last element (which was second from last)
+                    if (vect_index.size()>1)
+                    {
+                        //~ std::cout << "3.0 index: " << std::endl;
+                        //~ this->display_vector_int(vect_index);
+                        //~ std::cout << std::endl;
+                        
+                        vect_index.pop_back();
+                        
+                        //~ std::cout << std::endl;
+                        //~ std::cout << "3.1 index: " << std::endl;
+                        //~ std::cout << std::endl;
+                        //~ this->display_vector_int(vect_index);
+                        
+                        n=vect_index.back()+1;
+                        vect_index.back()=n;
+                        
+                        //~ std::cout << std::endl;
+                        //~ std::cout << "3.2 index: " << std::endl;
+                        //~ this->display_vector_int(vect_index) ;
+                        //~ std::cout << std::endl;
+                        
+                        //there can't be any data coming after a closing tag
+                        //So we store end of line in buffer line
+                        //And we empty end_of_line to avoid the data
+                        //processing;
+                        bufferLine = buffer_End_of_Line;
+                        
+                    }
+                }
+                // after a tag we check if there is data coming next.
+                // and bufferLine is reduces to be hat is buffer_Enf_of_Line
+                if (buffer_End_of_Line.size()>0 && !closing_tag) 
+                {
+                    bufferLine = buffer_End_of_Line;
+                    std::cout << "Control 4" <<std::endl;
+                    this->str_token_tag(bufferLine,buffer_Data,buffer_End_of_Line,0,'<');
+                    opening_tag = false;
+                    closing_tag = false;
+                    is_data = true;
+                    //~ std::cout << "0 bufferLine: " << bufferLine << std::endl;
+                    //~ std::cout << "0 buffer_Data: " << buffer_Data << std::endl;
+                    //~ std::cout << "0 buffer_End_of_Line: " << buffer_End_of_Line << std::endl;
+                    //~ if (buffer_Data.size()>0)
+                    //~ {
+                        //~ std::cout << "Control 5" <<std::endl;
+                        this->vE_get_by_index(vect_index,vect_index.begin())->data=buffer_Data;
+                    //~ }
+
+                        std::cout << "control 1 bufferLine" << bufferLine << std::endl;
+                        std::cout << "control 1 buffer_Data" << buffer_Data << std::endl;                    
+                    if (buffer_End_of_Line.size()>0) bufferLine = buffer_End_of_Line;
+                    //~ std::cout << "1 bufferLine: " << bufferLine << std::endl;
+                    //~ std::cout << "1 buffer_Data: " << buffer_Data << std::endl;
+                    //~ std::cout << "1 buffer_End_of_Line: " << buffer_End_of_Line << std::endl;
+                    //~ std::cout << "index of current: " << std::endl;
+                    //~ this->display_vector_int(vect_index);
+                    //~ std::cout << std::endl;
+                    //~ this->print_flat_E();
+                    //~ std::cout << std::endl;
+                    
+                    //~ vect_index.push_back(0);
+                    
+                    //~ std::cout << "index of next: " << std::endl;
+                    //~ this->display_vector_int(vect_index);
+                    //~ std::cout << std::endl;
+                }
+                else if(buffer_End_of_Line.size()==0 && !is_data)
+                {
+                    std::cout << "Control Here" << std::endl;
+                    //~ vect_index.push_back(0);
+                    //~ vect_index.push_back(0);
+                    opening_tag = false;
+                    closing_tag = false;
+                    is_data = true;
+                    break;
+                    
                 }
             }
-            // token is an opening tag
-            else
-            { 
-                n=0;
-                
-                // if the vector of indexes is not empty create a new vE element at the wanted index.
-                // the process used is to get the instance E that holds vE by reducing the vector of index
-                // using pop_back(), storing first its last element (.back()) then restoring it.
-                if (vect_index.size()!=0)
-                {
-                    m=vect_index.back();
-                    vect_index.pop_back();
-                    (this->vE_get_by_index(vect_index,vect_index.begin()))->new_vE_element();
-                    vect_index.push_back(m);
-            
-                }
-                // store name
-                this->vE_get_by_index(vect_index,vect_index.begin())->name=buffer_Opening_Tag;
-                // check if the token holds data, by testing if no '<' at the start of the token
-                if (buffer_End_of_Line[0]!='<') 
-                {
-                    // copy the array of char after the token and delimiters to continue
-                    // the process and extract data
-                    if (strlen(bufferLineChar)>0 && strlen(buffer_End_of_Line)>0) strcpy(bufferLineChar,buffer_End_of_Line);
-                    else break;
-                    // from the line in the buffer, get a token between the start and char < 
-                    // copy what's after the data token into the buffer for processing the rest
-                    
-                    this->str_token_tag(bufferLineChar,buffer_Closing_Tag,buffer_End_of_Line,0,'<');
-                    
-                    // write data in
-                    this->vE_get_by_index(vect_index,vect_index.begin())->data=buffer_Closing_Tag;
-                    
-                }
-                vect_index.push_back(0);
-            }
-            if (strlen(bufferLineChar)>0 && strlen(buffer_End_of_Line)>0)
+            else // if  buffer_Tag is empty
             {
-                // copying the buffer holding the rest of the file for processing ina new loop
-                strcpy(bufferLineChar,buffer_End_of_Line);
+                std::cout << "buffer_tag is empty" << std::endl;
+                if (buffer_End_of_Line.size()>0)
+                {
+                    if (buffer_End_of_Line[0]!='<') 
+                    {
+                        // copy the array of char after the token and delimiters to continue
+                        // the process and extract data
+                        //~ if (strlen(bufferLineChar)>0 && strlen(buffer_End_of_Line)>0) strcpy(bufferLineChar,buffer_End_of_Line);
+                        if (bufferLine.size()>0 && buffer_End_of_Line.size()>0) bufferLine = buffer_End_of_Line;
+                        else break;
+                        // from the line in the buffer, get a token between the start and char < 
+                        // copy what's after the data token into the buffer for processing the rest
+                        
+                        this->str_token_tag(bufferLine,buffer_Data,buffer_End_of_Line,0,'<');
+                        
+                        // write data in
+                        std::cout << "control CONTROL" << std::endl;
+                        this->vE_get_by_index(vect_index,vect_index.begin())->data=buffer_Data;
+                        std::cout << "control 2 bufferLine" << bufferLine << std::endl;
+                        std::cout << "control 2 buffer_Data" << buffer_Data << std::endl;
+                        opening_tag = false;
+                        closing_tag = false;
+                        is_data = true;
+                        
+                    }
+                    //~ vect_index.push_back(0);
+                    
+                }
+                else break;
+            }
+            std::cout << "control A" << std::endl;
+            //~ if (strlen(bufferLineChar)>0 && strlen(buffer_End_of_Line)>0)
+            //~ closing_tag = false;
+            //~ is_data = false;
+            if (bufferLine.size()>0 && buffer_End_of_Line.size()>0)
+            {
+                // copying the buffer holding the rest of the file for processing in a new loop
+                bufferLine = buffer_End_of_Line;
+                std::cout << "control B" << std::endl;
             }
             else break;
         }
-            // delete[] the line buffer char[]*
-            delete[] bufferLineChar;
-            delete[] buffer_End_of_Line;
     }
     fileEntity.close();           // close file
     
-    // delete[] all the other char*[]
-    delete[] FullNameFileIn;
-    delete[] buffer_Opening_Tag;
-    delete[] buffer_Closing_Tag;
+}
+
+void E::extractDataFromFile(const std::string & fullFileName)
+{
+    std::string bufferString;
+    std::string bufferLine;
+    std::string buffer_Tag;
+    std::string element;
+    std::string buffer_End_of_Line;
+    
+    // Processing file
+    ifstream fileEntity;
+    fileEntity.open(fullFileName.c_str(), ios::in);
+
+    fileEntity.clear();                   // absolutly needed otherwise the file is flagged at eof, and good=0   
+    fileEntity.seekg(0, ios::beg);        // set cursor at 0 from start of file
+
+    this->name = "File";
+    this->data = fullFileName;
+    
+    while ((fileEntity.good()) && (!fileEntity.eof()))     // loop while extraction from file is possible
+    {
+        // get a line from the file
+        std::getline(fileEntity, bufferString);
+
+        bufferLine = bufferString;
+        
+        while (bufferLine.size()>0)
+        {
+            this->trim_leading_space(bufferLine);
+            if (bufferLine[0]=='<')
+            {
+                this->str_token_tag(bufferLine,buffer_Tag,buffer_End_of_Line,'<','>');
+                element ="tag";
+                this->check_token(buffer_Tag, element);
+            }
+            else
+            {
+                this->str_token_tag(bufferLine,buffer_Tag,buffer_End_of_Line,0,'<');
+                element = "data";
+                if(buffer_Tag.size()==0)
+                {
+                    if ( bufferLine.size() == buffer_End_of_Line.size())
+                    {
+                        buffer_Tag = buffer_End_of_Line;
+                        buffer_End_of_Line = "";                        
+                    }
+                    else
+                    {
+                        buffer_Tag = "";
+                    }
+                }
+                this->check_token(buffer_Tag, element);                         // buffer_End_of_Line helps to decide if data is empty or not
+                
+            }
+            bufferLine = buffer_End_of_Line;
+            
+            //now store into vE
+            this->new_vE_element();
+            this->vE.back()->name = element;
+            this->vE.back()->data = buffer_Tag;
+            
+            
+        }
+    
+    }
+}
+
+void E::check_token(const std::string & token, std::string & element)
+{
+    if(token.size()>0)
+    {
+        if(element=="tag")
+        {
+            if(token[0]=='/') element = "closing_tag";
+            else element = "opening_tag";
+        }
+        //~ if(element=="data") break;          //if data not empty do nothing
+    }
+    else
+    {
+        //~ if(element=="tag") element ="null_tag";
+        //~ if(element=="data") element = "null_data";
+        element = "null_" + element;
+    }
+}
+
+
+void E::process_rule(E * E_to_process)
+{
+    this->new_vE_element();
+    this->vE.back() = E_to_process;
+    this->name ="test";
+    this->data = "importing xml file";
 }
 
 
@@ -850,14 +1038,15 @@ void E::testing()
     this->vE.at(0)->vE.at(0)->set_vEe_data(0,"999");
 }
 
-
+/*
 E * E::test(int level, std::vector<int> index) {
     std::cout << "Check level " << level << std::endl;
     for (int i = 0; i < level; ++i) {
         std::cout << index.at(i) << std::endl;
     }
-        
+    
 }
+*/
 
 void E::display_vector_int(std::vector<int>& vect_index) {
     

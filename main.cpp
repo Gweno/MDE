@@ -97,7 +97,7 @@ std::vector<std::vector<float> > vTriangle_face;
         std::vector<float> colors;
         std::vector< vector <float> > color_faces;
         
-        testEntity.load_XML_File_to_E("../datafiles/testCube.xml");
+        //~ testEntity.load_XML_File_to_E("../datafiles/testCube.xml");
         testEntity.E_display_all(0);
         //~ testEntity.extractEColorDataToGL(colors, color_faces);
         int index=0;
@@ -191,7 +191,7 @@ std::vector<std::vector<float> > vTriangle_face;
 
 // else argc
 
-    else if(argc=1 || choice=="e")
+    else if(argc==1 || choice=="e")
     {
 
     // variables
@@ -241,13 +241,25 @@ std::vector<std::vector<float> > vTriangle_face;
             }
             else if (key_input=="l")
             {
-                newEntity.load_XML_File_to_E("../datafiles/testCube.xml");
+                std::cout << "1 for single line XML or 2 for multiline, 3 for both" << std::endl; 
+                std::cin >> key_input;
+                //~ if (key_input=="1") newEntity.load_XML_File_to_E("../datafiles/merte.xml");
+                //~ if (key_input=="2") newEntity.load_XML_File_to_E("../datafiles/testEOF7.xml");
+                //~ if (key_input=="3") newEntity.load_XML_File_to_E("../datafiles/testAny.xml");
+                if (key_input=="1") newEntity.extractDataFromFile("../datafiles/merte.xml");
+                if (key_input=="2") newEntity.extractDataFromFile("../datafiles/testEOF7.xml");
+                if (key_input=="3") newEntity.extractDataFromFile("../datafiles/testAny.xml");
+                
+                
+                //~ newEntity.load_XML_File_to_E("../datafiles/testCube.xml");
+                //~ newEntity.load_XML_File_to_E("../datafiles/testEOF7.xml");
+                newEntity.print_flat_E();
                 newEntity.print_formatted_E(0,"<",">","</",">");
-                int index=0;
-                int level=0;
-                (newEntity.search_For(index , level, "color"));
+                //~ int index=0;
+                //~ int level=0;
+                //~ (newEntity.search_For(index , level, "color"));
                 //~ (newEntity.search_For(index , level, "vertex"));
-                newEntity.fetch_search_result(E::search_result);
+                //~ newEntity.fetch_search_result(E::search_result);
             }
             else if (key_input=="+")
             {
@@ -259,12 +271,32 @@ std::vector<std::vector<float> > vTriangle_face;
             }
             else if (key_input=="i")
             {
-                std:cout<<"Enter the list of indexes separated by comma:" << std::endl;
+                std::cout<<"Enter the list of indexes separated by comma:" << std::endl;
                 std::cin >> key_input;
                 //~ std::vector<int> vect_index=newEntity.set_vector_of_indexes("1,2,3,4");
                 std::vector<int> vect_index=newEntity.set_vector_of_indexes(key_input);
                 newEntity.display_vector_int(vect_index);
                 
+            }
+            if (key_input=="o")
+            {
+                std::string toto="toto est parti <la bas>               prout <caca>";
+                std::string tata;
+                std::string titi;
+                
+                newEntity.str_token_tag(toto,tata,titi,'<','>');
+                std::cout << "In: "<< toto << std::endl;
+                std::cout << "tag: " << tata << std::endl;
+                std::cout << "Out: " << titi << std::endl;
+                toto = titi;
+                newEntity.str_token_tag(toto,tata,titi,0,'>');
+                std::cout << "In: " << toto << std::endl;
+                std::cout << "tag: " << tata << std::endl;
+                std::cout << "Out: " << titi << std::endl;
+                newEntity.str_token_tag(toto,tata,titi,'<','>');                
+                std::cout << "In: "<< toto << std::endl;
+                std::cout << "tag: " << tata << std::endl;
+                std::cout << "Out: " << titi << std::endl;  
             }
             if (key_input=="t")
             {
@@ -277,6 +309,21 @@ std::vector<std::vector<float> > vTriangle_face;
                 if (key_input=="y") newEntity.E_save_to_file();
             
             }
+            if (key_input=="p")
+            {
+                E xmlFile;
+                E * ptXmlFile = &xmlFile;
+                
+                xmlFile.extractDataFromFile("../datafiles/testAny.xml");
+                newEntity.process_rule(ptXmlFile);
+                //~ newEntity.print_flat_E();
+                newEntity.print_formatted_E(0,"<",">","</",">");
+                xmlFile.vE_clear_all();
+                xmlFile.E_clear_name();
+                xmlFile.E_clear_data();
+                
+            }
+            
             newEntity.vE_clear_all();
             newEntity.E_clear_name();
             newEntity.E_clear_data();

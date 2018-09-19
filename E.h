@@ -180,22 +180,26 @@ class E {
          * 
          * @see str_token_tag()
          */
-        void load_XML_File_to_E(std::string fullFileName);
+        void load_XML_File_to_E(const std::string & fullFileName);
 
         /**
          * 
          * ##name: str_token_tag()
-         * @param buffer_Input is a pointer an array of char that holds the line input
-         * @param output_Tag is a pointer an array of char for the token extracted
-         * @param buffer_Output is a pointer an array of char for the remainder of the line input minus the token extracted and after the delimiter2
-         * @param delimiter1 is an integer corresponding to the char used as the front delimiter for the token
-         * @param delimiter2 is an integer corresponding to the char used as the end delimiter for the token
+         * @param buffer_Input is is a string that holds the line input
+         * @param output_Tag is a string for the token extracted
+         * @param buffer_Output is a string for the remainder of the line input minus the token extracted and after the delimiter2
+         * @param delimiter1 is an char corresponding to the char used as the front delimiter for the token
+         * @param delimiter2 is an char corresponding to the char used as the end delimiter for the token
          * 
          * @return void
          * 
          */
-        void str_token_tag(char* buffer_Input, char* output_Tag, char* buffer_Output, int delimiter1, int delimiter2);
-        
+        void str_token_tag(std::string & buffer_Input
+        , std::string & output_Tag, std::string & buffer_Output
+        , char delimiter1, char delimiter2);
+
+        void trim_leading_space(std::string & io_string);
+
         void load_File_token();
 
         void testing();
@@ -203,7 +207,7 @@ class E {
         // saving
         void print_flat_E();
         
-        E * test(int,std::vector<int>);
+        //E * test(int,std::vector<int>);
         
         E * vE_get_by_index(std::vector<int>&, std::vector<int>::const_iterator);
         void display_vector_int(std::vector<int>& vect_index);
@@ -220,6 +224,9 @@ class E {
             std::vector< std::vector< std::vector <float> > > &vCube);
             
         void SearchResultsToVectorFloat(std::vector<float> &v_float, std::vector< vector <float> > &v_v_float);            
+        void extractDataFromFile(const std::string & fullFileName);
+        void check_token(const std::string & token, std::string & element);
+        void process_rule(E * E_to_process);
 };
 
 

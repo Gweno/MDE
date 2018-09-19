@@ -1,0 +1,20 @@
+all: esv8
+
+esv8: main.o E.o glFunctions.o
+#~ 	g++ -o esv8 main.o E.o glFunctions.o -L/usr/include/GL -lGL -lglut -lGLU -I../include ../lib/x64/libLeap.so -Wl,-rpath,../lib/x64
+	g++ -g -o esv8 main.o E.o glFunctions.o -L/usr/include/GL -lGL -lglut -lGLU -I../include ../lib/x64/libLeap.so -Wl,-rpath,../lib/x64
+
+main.o: main.cpp
+#~ 	g++ -std=c++11 -c main.cpp
+	g++ -std=c++11 -g -c -Wall main.cpp
+
+E.o: E.cpp E.h
+#~ 	g++ -std=c++11 -c E.cpp
+	g++ -std=c++11 -g -c -Wall E.cpp
+
+glFunctions.o: glFunctions.cpp glFunctions.h
+#~ 	g++ -std=c++11 -c glFunctions.cpp
+	g++ -std=c++11 -g -c -Wall glFunctions.cpp
+
+clean:
+	rm -rf *o esv8
