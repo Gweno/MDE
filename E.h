@@ -162,10 +162,6 @@ class E {
          */
         void E_save_to_file();
         
-        void load_File2();
-        void load_File4();
-        void load_File5();
-        
          /**
          * 
          * ##name: load_XML_File_to_E()
@@ -194,8 +190,6 @@ class E {
         void str_token_tag(std::string & buffer_Input
         , std::string & output_Tag, std::string & buffer_Output
         , char delimiter1, char delimiter2);
-
-        void load_XML_File_to_E_old(const std::string & fullFileName);
 
         void trim_leading_space(std::string & io_string);
 
