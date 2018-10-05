@@ -39,11 +39,53 @@ E::~E()
     }
 };
 // :
-void E::vE_clear_all()
+
+void E::delete_all_recursive()
+{
+    if (!this->vE.empty())
+    {
+        for (std::vector<E*>::iterator it_all=this->vE.begin();it_all!=this->vE.end();++it_all)
+        {
+            (*it_all)->delete_all_recursive();
+        }
+        this->vE.clear();
+    }
+    else delete this;
+    
+}
+
+void E::delete_all_pt()
 {
     for (std::vector<E*>::iterator it_all=this->vE.begin();it_all!=this->vE.end();++it_all)
     {
-        (*it_all)->vE_clear_all();
+        delete (*it_all);
+    }
+}
+
+void E::destructor_E()
+{
+    this->delete_all_pt();
+    this->vE.clear();
+    this->name = "";
+    this->data = "";
+}
+
+void E::vE_clear_all()
+{
+    for (std::vector<E*>::iterator it_all=this->vE.begin();it_all!=this->vE.end()-1;++it_all)
+    {
+        if (!this->vE.empty())
+        {
+            E * pt_to_E = (*it_all);
+            delete pt_to_E;
+            (*it_all)->vE_clear_all();
+            
+        }
+        else 
+        {
+            this->vE.clear();
+            break;
+        }
     }
     this->vE.clear();
 }
@@ -237,7 +279,37 @@ void E::E_write_to_file(int &n_space, std::string start_opening_tag,
     file << std::endl;
     return;
 };
-
+/*
+void E::E_write_to_E()
+{
+    
+    std::string N_space(n_space*4,' ');
+    file << N_space;
+    file << start_opening_tag;
+    file << this->name;
+    file << end_opening_tag;
+    file << std::endl;
+    file << N_space;
+    file << this->data;
+    file << std::endl;
+    
+    if (this->vE.size()!=0) n_space++;
+    for (std::vector<E*>::iterator it=this->vE.begin();it!=this->vE.end();++it)
+        {
+            (*it)->E_write_to_file(n_space, start_opening_tag,
+            end_opening_tag, start_closing_tag, end_closing_tag, file);
+            if (it == this->vE.end()-1) n_space--;
+            
+        }
+    
+    file << N_space;
+    file << start_closing_tag;
+    file << this->name;
+    file << end_closing_tag;
+    file << std::endl;
+    return;
+};
+*/
 
 void E::print_flat_E()
 {
@@ -333,148 +405,6 @@ void E::simple_loop_VE_next_level(string searchName)
     }
 }
 
-void E::load_File()
-
-{
-    char *FileName = new char[32];
-    char *FileNameIn = new char[128];
-    char *PathToFile = new char[128];
-    char *FullNameFileIn = new char[256];
-    char *ExtensionXML = new char[8];
-    char *bufferChar = new char[32];
-    string bufferString;
-
-    strcpy(FileName, "perma");
-    strcpy(PathToFile, "../datafiles/");
-    strcpy(ExtensionXML,".xml");
-    strcpy(FullNameFileIn,PathToFile);
-    strcpy(FileNameIn, FileName);
-    strcat(FileNameIn, ExtensionXML);
-    strcat(FullNameFileIn, FileNameIn);
-    std::cout << " FullNameFileIn " << FullNameFileIn << std::endl;
-    
-    ifstream fileEntity;
-
-    fileEntity.open(FullNameFileIn, ios::in);
-
-    fileEntity.clear();                   // absolutly needed otherwise the file is flagged at eof, and good=0   
-    fileEntity.seekg(0, ios::beg);        // set cursor at 0 from start of file
-
-    while ((fileEntity.good()) && (!fileEntity.eof()))     // loop while extraction from file is possible
-    {
-        std::getline(fileEntity, bufferString);
-        char* bufferLineChar = new char[bufferString.length()+1];
-        strcpy(bufferLineChar,bufferString.c_str());
-        bufferChar = strtok (bufferLineChar,"</>");
-        
-            while (bufferChar != NULL)
-            {
-                printf ("%s\n",bufferChar);
-                bufferChar = strtok (NULL, "</>");
-            }
-        delete bufferLineChar;
-          }
-    fileEntity.close();           // close file
-    delete FileName;
-    delete FileNameIn;
-    delete PathToFile;
-    delete FullNameFileIn;
-    delete ExtensionXML;
-    delete bufferChar;
-    }
-    
-
-void E::load_File3()
-
-{
-    char *FileName = new char[32];
-    char *FileNameIn = new char[128];
-    char *PathToFile = new char[128];
-    char *FullNameFileIn = new char[256];
-    char *ExtensionXML = new char[8];
-    char *bufferChar = new char[32];
-    
-    char *pch;
-    char *pch2;
-    char *pch3;
-    
-    long int * pn;
-    
-    string bufferString;
-
-    strcpy(FileName, "perma");
-    strcpy(PathToFile, "../datafiles/");
-    strcpy(ExtensionXML,".xml");
-    strcpy(FullNameFileIn,PathToFile);
-    strcpy(FileNameIn, FileName);
-    strcat(FileNameIn, ExtensionXML);
-    strcat(FullNameFileIn, FileNameIn);
-    
-    ifstream fileEntity;
-
-    fileEntity.open(FullNameFileIn, ios::in);
-
-    fileEntity.clear();                   // absolutly needed otherwise the file is flagged at eof, and good=0   
-    fileEntity.seekg(0, ios::beg);        // set cursor at 0 from start of file
-
-    this->E_set_name("File");
-    this->E_set_data(FullNameFileIn);
-
-    pn = 0;
-
-    while ((fileEntity.good()) && (!fileEntity.eof()))     // loop while extraction from file is possible
-    {
-        std::cout << "Start!" << std::endl;
-        std::getline(fileEntity, bufferString);
-        char* bufferLineChar = new char[bufferString.length()+1];
-        strcpy(bufferLineChar,bufferString.c_str());
-        char *bufferChar2 = new char[32];
-        char *bufferChar3 = new char[32];
-        
-        while (strlen(bufferLineChar)>0)
-        {
-            pch = strchr(bufferLineChar,'<');
-            pch2 = strchr(bufferLineChar,'>');
-            memcpy(bufferChar,pch+1,pch2-pch - 1);
-            bufferChar[pch2-pch - 1]='\0';
-            memcpy(bufferChar2,pch2+1,bufferString.length()-(pch2-pch));
-            bufferChar2[bufferString.length()-(pch2-pch)+1]='\0';
-
-            if (bufferChar[0]=='/') 
-            {
-                printf("(closing tag)%s\n",bufferChar);
-            }
-            else
-            { 
-            printf("(opening tag)%s\n",bufferChar);
-            }
-            
-            if (bufferChar2[0]!='<') 
-                {
-                if (strlen(bufferLineChar)>0 && strlen(bufferChar2)>0) strcpy(bufferLineChar,bufferChar2);
-                else break;
-                pch3 = strchr(bufferLineChar,'<');
-                memcpy(bufferChar3,bufferLineChar, pch3-bufferLineChar);
-                bufferChar3[pch3-bufferLineChar]='\0';
-                std::cout << "(data)" << bufferChar3 << std::endl;
-                
-                memcpy(bufferChar2,pch3,bufferString.length()-(pch3-pch));
-                bufferChar2[bufferString.length()-(pch3-pch)+1]='\0';
-                }
-                
-            if (strlen(bufferLineChar)>0 && strlen(bufferChar2)>0) strcpy(bufferLineChar,bufferChar2);
-            else break;
-           }
-          }
-    fileEntity.close();           // close file
-    delete FileName;
-    delete FileNameIn;
-    delete PathToFile;
-    delete FullNameFileIn;
-    delete ExtensionXML;
-    delete bufferChar;
-    }
-
 void E::str_token_tag(std::string & buffer_Input,
  std::string & output_Tag, std::string & buffer_Output,
   char delimiter1, char delimiter2)
@@ -526,13 +456,21 @@ void E::trim_leading_space(std::string & io_string)
 
 void E::load_XML_File_to_E(const std::string & fullFileName)
 {
+    E xmlFile;
+    std::stack<E**> stack_E_pt;
+    
+    xmlFile.extract_File_to_Flat_E(fullFileName);
+    std::vector<E*>::iterator it_start = xmlFile.vE.begin();
+    this->process_flat_E_to_E(it_start, xmlFile, stack_E_pt);
+    xmlFile.destructor_E();
+}
+
+
+void E::load_XML_File_to_E_old(const std::string & fullFileName)
+{
     // Declaring Array of char to store the tags
-    //~ char *buffer_Opening_Tag = new char[32];
-    //~ char *buffer_Closing_Tag = new char[32];
-    //~ std::string buffer_Opening_Tag;
     std::string buffer_Tag;
     std::string buffer_Data;
-    //~ std::string buffer_Closing_Tag;
 
     // Declaring integers for holding indexes temporarily
     int n=0;
@@ -541,7 +479,6 @@ void E::load_XML_File_to_E(const std::string & fullFileName)
     // the string buffers to hold the tokens
     std::string bufferString;
 
-    bool opening_tag = false;
     bool closing_tag = false;
     bool is_data = false;
 
@@ -549,12 +486,9 @@ void E::load_XML_File_to_E(const std::string & fullFileName)
     std::vector<int> vect_index;
     
     // Declaring an array of char for the path+name of the file
-    //~ char* FullNameFileIn = new char[fullFileName.length()+1];
-    //~ strcpy(FullNameFileIn,fullFileName.c_str());
     
     // Processing file
     ifstream fileEntity;
-    //~ fileEntity.open(FullNameFileIn, ios::in);
     fileEntity.open(fullFileName.c_str(), ios::in);
 
     fileEntity.clear();                   // absolutly needed otherwise the file is flagged at eof, and good=0   
@@ -566,8 +500,6 @@ void E::load_XML_File_to_E(const std::string & fullFileName)
         // get a line from the file
         std::getline(fileEntity, bufferString);
         
-        //~ std::cout << "line:" << bufferString << std::endl;
-        
         // this is needed to transfer the string content in the char*
         std::string bufferLine;
         bufferLine = bufferString;
@@ -575,36 +507,16 @@ void E::load_XML_File_to_E(const std::string & fullFileName)
         
         
         // loop on the line in the buffer
-        //~ while (strlen(bufferLineChar)>0)
         while (bufferLine.size()>0)
         {
             // from the line in the buffer, get a token between char < and > 
             // copy what's after the data token into the buffer for processing the rest of the line
-            //~ std::cout << bufferLine << std::endl;
-            std::cout << "control Start" << std::endl;
             this->str_token_tag(bufferLine,buffer_Tag,buffer_End_of_Line,'<','>');
-            //~ std::cout << "bufferLine" << bufferLine << std::endl;
-            std::cout << "Buffer tag size: " << buffer_Tag.size() << std::endl;
-            //~ std::cout << "buffer_End_of_Line size" << buffer_End_of_Line.size() << std::endl;
             // token is a closing tag
             if (buffer_Tag.size()>0)
             {
-                std::cout << "Control 0" <<std::endl;
-                std::cout << "Control opening_tag" << opening_tag << std::endl;
-                std::cout << "Control closing_tag" << closing_tag << std::endl;
-                std::cout << "Control is_data" << is_data << std::endl;
-                std::cout << "Control buffer_Tag" << buffer_Tag << std::endl;
-                std::cout << "Control bufferLine" << bufferLine << std::endl;
-                std::cout << "Control buffer_End_of_Line" << buffer_End_of_Line << std::endl;
                 if (buffer_Tag[0]!='/')
                 {
-                    std::cout << "Control 1" <<std::endl;
-                    std::cout << "Control opening_tag" << opening_tag << std::endl;
-                    std::cout << "Control closing_tag" << closing_tag << std::endl;
-                    std::cout << "Control is_data" << is_data << std::endl;
-                    std::cout << "Control buffer_Tag" << buffer_Tag << std::endl;
-                    std::cout << "Control bufferLine" << bufferLine << std::endl;
-                    std::cout << "Control buffer_End_of_Line" << buffer_End_of_Line << std::endl;
                     n=0;
                     
                     // if the vector of indexes is not empty create a new vE element at the wanted index.
@@ -612,93 +524,32 @@ void E::load_XML_File_to_E(const std::string & fullFileName)
                     // using pop_back(), storing first its last element (.back()) then restoring it.
                     if (is_data)                // this test if last loopended up in a data (even if empty)
                     {
-                    std::cout << "Control test" << std::endl;
-                    std::cout << "Control opening_tag" << opening_tag << std::endl;
-                    std::cout << "Control closing_tag" << closing_tag << std::endl;
-                    std::cout << "Control is_data" << is_data << std::endl;
-                    std::cout << "Control buffer_Tag" << buffer_Tag << std::endl;
-                    std::cout << "Control bufferLine" << bufferLine << std::endl;
-                    std::cout << "Control buffer_End_of_Line" << buffer_End_of_Line << std::endl;
                         vect_index.push_back(0);
                         is_data = false;
                     }
                     if (vect_index.size()!=0)
                     {
-                        std::cout << "Control 2" <<std::endl;
-                        std::cout << "2.1: "<< std::endl;
-                        this->display_vector_int(vect_index);
-                        std::cout << std::endl;
-                       
-                        
                         m=vect_index.back();
                         vect_index.pop_back();
-
-                        std::cout << "2.2" << std::endl;
-                        this->display_vector_int(vect_index);
-                        std::cout << std::endl;
-                    //~ std::cout << "Control " <<std::endl;
-                    std::cout << "Control opening_tag" << opening_tag << std::endl;
-                    std::cout << "Control closing_tag" << closing_tag << std::endl;
-                    std::cout << "Control is_data" << is_data << std::endl;
-                    std::cout << "Control buffer_Tag" << buffer_Tag << std::endl;
-                    std::cout << "Control bufferLine" << bufferLine << std::endl;
-                    std::cout << "Control buffer_End_of_Line" << buffer_End_of_Line << std::endl;
-
-
                         (this->vE_get_by_index(vect_index,vect_index.begin()))->new_vE_element();
                         vect_index.push_back(m);
-                        
-                        std::cout << "2.3" << std::endl;
-                        this->display_vector_int(vect_index);
-                        //~ std::cout << std::endl;
-
                     }
-                    opening_tag = true;
                     is_data = false;
                     closing_tag = false;
                     // store name
                     this->vE_get_by_index(vect_index,vect_index.begin())->name=buffer_Tag;
-                    //~ std::cout << std::endl;
-                    //~ this->display_vector_int(vect_index);
-                    //~ std::cout << std::endl;
-                    //~ this->print_flat_E();
-                    //~ std::cout << std::endl;
-                    std::cout << "buffer_Tag: " << buffer_Tag << std::endl;
                 } 
                 else if (buffer_Tag[0]=='/') 
                 {
-                    opening_tag = false;
                     closing_tag = true;
                     is_data = false;
-                    std::cout << "Control 3" <<std::endl;
-                    std::cout << "Control opening_tag" << opening_tag << std::endl;
-                    std::cout << "Control closing_tag" << closing_tag << std::endl;
-                    std::cout << "Control is_data" << is_data << std::endl;
-                    std::cout << "Control buffer_Tag" << buffer_Tag << std::endl;
-                    std::cout << "Control bufferLine" << bufferLine << std::endl;
-                    std::cout << "Control buffer_End_of_Line" << buffer_End_of_Line << std::endl;
                     // take off the last index and increment the value of the last element (which was second from last)
                     if (vect_index.size()>1)
                     {
-                        //~ std::cout << "3.0 index: " << std::endl;
-                        //~ this->display_vector_int(vect_index);
-                        //~ std::cout << std::endl;
-                        
                         vect_index.pop_back();
-                        
-                        //~ std::cout << std::endl;
-                        //~ std::cout << "3.1 index: " << std::endl;
-                        //~ std::cout << std::endl;
-                        //~ this->display_vector_int(vect_index);
-                        
                         n=vect_index.back()+1;
                         vect_index.back()=n;
-                        
-                        //~ std::cout << std::endl;
-                        //~ std::cout << "3.2 index: " << std::endl;
-                        //~ this->display_vector_int(vect_index) ;
-                        //~ std::cout << std::endl;
-                        
+
                         //there can't be any data coming after a closing tag
                         //So we store end of line in buffer line
                         //And we empty end_of_line to avoid the data
@@ -712,44 +563,14 @@ void E::load_XML_File_to_E(const std::string & fullFileName)
                 if (buffer_End_of_Line.size()>0 && !closing_tag) 
                 {
                     bufferLine = buffer_End_of_Line;
-                    std::cout << "Control 4" <<std::endl;
                     this->str_token_tag(bufferLine,buffer_Data,buffer_End_of_Line,0,'<');
-                    opening_tag = false;
                     closing_tag = false;
                     is_data = true;
-                    //~ std::cout << "0 bufferLine: " << bufferLine << std::endl;
-                    //~ std::cout << "0 buffer_Data: " << buffer_Data << std::endl;
-                    //~ std::cout << "0 buffer_End_of_Line: " << buffer_End_of_Line << std::endl;
-                    //~ if (buffer_Data.size()>0)
-                    //~ {
-                        //~ std::cout << "Control 5" <<std::endl;
-                        this->vE_get_by_index(vect_index,vect_index.begin())->data=buffer_Data;
-                    //~ }
-
-                        std::cout << "control 1 bufferLine" << bufferLine << std::endl;
-                        std::cout << "control 1 buffer_Data" << buffer_Data << std::endl;                    
+                    this->vE_get_by_index(vect_index,vect_index.begin())->data=buffer_Data;
                     if (buffer_End_of_Line.size()>0) bufferLine = buffer_End_of_Line;
-                    //~ std::cout << "1 bufferLine: " << bufferLine << std::endl;
-                    //~ std::cout << "1 buffer_Data: " << buffer_Data << std::endl;
-                    //~ std::cout << "1 buffer_End_of_Line: " << buffer_End_of_Line << std::endl;
-                    //~ std::cout << "index of current: " << std::endl;
-                    //~ this->display_vector_int(vect_index);
-                    //~ std::cout << std::endl;
-                    //~ this->print_flat_E();
-                    //~ std::cout << std::endl;
-                    
-                    //~ vect_index.push_back(0);
-                    
-                    //~ std::cout << "index of next: " << std::endl;
-                    //~ this->display_vector_int(vect_index);
-                    //~ std::cout << std::endl;
                 }
                 else if(buffer_End_of_Line.size()==0 && !is_data)
                 {
-                    std::cout << "Control Here" << std::endl;
-                    //~ vect_index.push_back(0);
-                    //~ vect_index.push_back(0);
-                    opening_tag = false;
                     closing_tag = false;
                     is_data = true;
                     break;
@@ -765,7 +586,6 @@ void E::load_XML_File_to_E(const std::string & fullFileName)
                     {
                         // copy the array of char after the token and delimiters to continue
                         // the process and extract data
-                        //~ if (strlen(bufferLineChar)>0 && strlen(buffer_End_of_Line)>0) strcpy(bufferLineChar,buffer_End_of_Line);
                         if (bufferLine.size()>0 && buffer_End_of_Line.size()>0) bufferLine = buffer_End_of_Line;
                         else break;
                         // from the line in the buffer, get a token between the start and char < 
@@ -774,29 +594,19 @@ void E::load_XML_File_to_E(const std::string & fullFileName)
                         this->str_token_tag(bufferLine,buffer_Data,buffer_End_of_Line,0,'<');
                         
                         // write data in
-                        std::cout << "control CONTROL" << std::endl;
                         this->vE_get_by_index(vect_index,vect_index.begin())->data=buffer_Data;
-                        std::cout << "control 2 bufferLine" << bufferLine << std::endl;
-                        std::cout << "control 2 buffer_Data" << buffer_Data << std::endl;
-                        opening_tag = false;
                         closing_tag = false;
                         is_data = true;
                         
                     }
-                    //~ vect_index.push_back(0);
                     
                 }
                 else break;
             }
-            std::cout << "control A" << std::endl;
-            //~ if (strlen(bufferLineChar)>0 && strlen(buffer_End_of_Line)>0)
-            //~ closing_tag = false;
-            //~ is_data = false;
             if (bufferLine.size()>0 && buffer_End_of_Line.size()>0)
             {
                 // copying the buffer holding the rest of the file for processing in a new loop
                 bufferLine = buffer_End_of_Line;
-                std::cout << "control B" << std::endl;
             }
             else break;
         }
@@ -805,7 +615,7 @@ void E::load_XML_File_to_E(const std::string & fullFileName)
     
 }
 
-void E::extractDataFromFile(const std::string & fullFileName)
+void E::extract_File_to_Flat_E(const std::string & fullFileName)
 {
     std::string bufferString;
     std::string bufferLine;
@@ -880,90 +690,12 @@ void E::check_token(const std::string & token, std::string & element)
             if(token[0]=='/') element = "closing_tag";
             else element = "opening_tag";
         }
-        //~ if(element=="data") break;          //if data not empty do nothing
     }
     else
     {
-        //~ if(element=="tag") element ="null_tag";
-        //~ if(element=="data") element = "null_data";
         element = "null_" + element;
     }
 }
-
-
-void E::process_rule(E * E_to_process)
-{
-    this->new_vE_element();
-    this->vE.back() = E_to_process;
-    this->name ="test";
-    this->data = "importing xml file";
-}
-
-
-void E::load_File_token()
-
-{
-    char *FileName = new char[32];
-    char *FileNameIn = new char[128];
-    char *PathToFile = new char[128];
-    char *FullNameFileIn = new char[256];
-    char *ExtensionXML = new char[8];
-    char *bufferChar = new char[32];
-    string bufferString;
-    string bufferTag;
-
-    strcpy(FileName, "perma");
-    strcpy(PathToFile, "../datafiles/");
-    strcpy(ExtensionXML,".xml");
-    strcpy(FullNameFileIn,PathToFile);
-    strcpy(FileNameIn, FileName);
-    strcat(FileNameIn, ExtensionXML);
-    strcat(FullNameFileIn, FileNameIn);
-    std::cout << " FullNameFileIn " << FullNameFileIn << std::endl;
-    
-    ifstream fileEntity;
-
-    fileEntity.open(FullNameFileIn, ios::in);
-
-    fileEntity.clear();                   // absolutly needed otherwise the file is flagged at eof, and good=0   
-    fileEntity.seekg(0, ios::beg);        // set cursor at 0 from start of file
-
-    while ((fileEntity.good()) && (!fileEntity.eof()))     // loop while extraction from file is possible
-    {
-        std::getline(fileEntity, bufferString);
-        char* bufferLineChar = new char[bufferString.length()+1];
-        
-        char* pch1;
-        char* pch2;
-        
-        
-        strcpy(bufferLineChar,bufferString.c_str());
-        pch1=strchr(bufferLineChar,'<');
-        pch2=strchr(bufferLineChar,'>');
-        char * tag = new char[pch2-pch1-1];
-        strncpy(tag,pch1+1,pch2-pch1-1);
-        
-        std::cout << tag << std::endl;
-        std::cout << tag[2]<< std::endl;
-        
-        delete [] bufferLineChar;
-        delete [] tag;
-        
-        strcpy(bufferLineChar,pch2);
-        
-        std::cout << bufferLineChar << std::endl;
-        
-        delete bufferLineChar;
-          }
-    fileEntity.close();           // close file
-    delete FileName;
-    delete FileNameIn;
-    delete PathToFile;
-    delete FullNameFileIn;
-    delete ExtensionXML;
-    delete bufferChar;
-    }
-
 
 void E::input_E()
 {
@@ -1004,6 +736,76 @@ void E::input_E()
     
 }
 
+void E::proc_it(E & E_proc, std::stack<E**> & stack_E_pt)
+{
+    std::vector<E*>::iterator it_start = E_proc.vE.begin();
+    this->process_flat_E_to_E(it_start, E_proc, stack_E_pt);
+}
+
+E * E::process_flat_E_to_E(std::vector<E*>::iterator & it, E & E_source, std::stack<E**> & stack_E_pt)
+{
+
+    while (it!=E_source.vE.end())
+    {
+        if ((*it)->name=="opening_tag")
+        {
+            this->name=(*it)->data;
+            ++it;
+            E** ptr_to_ptr_to_E = new E*(this);
+            stack_E_pt.push(ptr_to_ptr_to_E);
+
+            if ((it!=E_source.vE.end()) && ((*it)->name=="data"))
+            {
+                this->data=(*it)->data;
+                ++it;
+                
+                if ((it!=E_source.vE.end()) && ((*it)->name=="closing_tag"))
+                {
+                    return this->process_flat_E_to_E(it, E_source, stack_E_pt);
+                }
+                else
+                {
+                    this->new_vE_element();
+                    return this->vE.back()->process_flat_E_to_E(it, E_source, stack_E_pt);
+                }
+                
+            }
+            else if ((it!=E_source.vE.end()) && ((*it)->name=="closing_tag"))
+            {
+                return this->process_flat_E_to_E(it, E_source, stack_E_pt);
+            }
+            else                // else  if next is 'data'
+            {
+                this->data="";
+                this->new_vE_element();
+                return this->vE.back()->process_flat_E_to_E(it, E_source, stack_E_pt);
+            }
+        }
+        else if(((*it)->name=="closing_tag") && it!=E_source.vE.begin());
+        {
+            ++it;
+            E** ptr_to_ptr_to_E = stack_E_pt.top();
+            delete ptr_to_ptr_to_E;
+            stack_E_pt.pop();
+            // tricky: if next element is opening tag we create
+            // a new vE element in the element at teh top of the stack 
+            // (which should be the parent element of this current one)
+            if ((it!=E_source.vE.end()) && ((*it)->name=="opening_tag"))
+            {
+                (*(stack_E_pt.top()))->new_vE_element();
+                return (*(stack_E_pt.top()))->vE.back()->process_flat_E_to_E(it, E_source, stack_E_pt);
+            }
+            else
+            {
+                if (!stack_E_pt.empty()) return (*(stack_E_pt.top()))->process_flat_E_to_E(it, E_source, stack_E_pt);
+                else return this;
+            }
+        }
+    }
+    return this;
+}
+
+        
 void E::try_copy(int index)
 {
     this->vE.back()->vE.push_back(this->vE.at(index));
@@ -1038,16 +840,6 @@ void E::testing()
     this->vE.at(0)->vE.at(0)->set_vEe_data(0,"999");
 }
 
-/*
-E * E::test(int level, std::vector<int> index) {
-    std::cout << "Check level " << level << std::endl;
-    for (int i = 0; i < level; ++i) {
-        std::cout << index.at(i) << std::endl;
-    }
-    
-}
-*/
-
 void E::display_vector_int(std::vector<int>& vect_index) {
     
     std::cout << "(" ;
@@ -1058,6 +850,7 @@ void E::display_vector_int(std::vector<int>& vect_index) {
     }
     std::cout << ")" ;
 }
+
 
 E * E::vE_get_by_index(std::vector<int>& vect_index, std::vector<int>::const_iterator it)
 {

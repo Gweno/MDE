@@ -6,6 +6,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <stack>
 //~ #include <stdexcept>
 
 
@@ -161,11 +162,7 @@ class E {
          */
         void E_save_to_file();
         
-        void load_File();
-        
         void load_File2();
-        
-        void load_File3();
         void load_File4();
         void load_File5();
         
@@ -198,17 +195,14 @@ class E {
         , std::string & output_Tag, std::string & buffer_Output
         , char delimiter1, char delimiter2);
 
-        void trim_leading_space(std::string & io_string);
+        void load_XML_File_to_E_old(const std::string & fullFileName);
 
-        void load_File_token();
+        void trim_leading_space(std::string & io_string);
 
         void testing();
         
         // saving
         void print_flat_E();
-        
-        //E * test(int,std::vector<int>);
-        
         E * vE_get_by_index(std::vector<int>&, std::vector<int>::const_iterator);
         void display_vector_int(std::vector<int>& vect_index);
         
@@ -219,14 +213,21 @@ class E {
                             std::vector<float> &colors,
                             std::vector< vector <float> > &color_faces);
         void extractEVertexToGL(
-                std::vector<float> &coordinate,
-                std::vector< vector <float> > &vertex,
+            std::vector<float> &coordinate,
+            std::vector< vector <float> > &vertex,
             std::vector< std::vector< std::vector <float> > > &vCube);
             
         void SearchResultsToVectorFloat(std::vector<float> &v_float, std::vector< vector <float> > &v_v_float);            
-        void extractDataFromFile(const std::string & fullFileName);
+        void extract_File_to_Flat_E(const std::string & fullFileName);
         void check_token(const std::string & token, std::string & element);
         void process_rule(E * E_to_process);
+        E * flat_E_to_E(E * & vector_to_process, std::vector<E *>::iterator it);
+        E * process_flat_E_to_E(std::vector<E*>::iterator & it, E & E_source, std::stack<E**> & stack_E_pt);
+        void proc_it(E & E_proc, std::stack<E**> & stack_E_pt);
+        void print_stack(std::stack<E**> & stack);
+        void delete_all_pt();
+        void destructor_E();
+        void delete_all_recursive();
 };
 
 

@@ -10,19 +10,14 @@
 #include <math.h>
 #include <iostream>
 #include <vector>
-//~ #include "Entity.h"
-//~ #include "glDisplay.h"
+#include <stack>
 #include "glFunctions.h"
-//~ #include "DataFile.h"
 #include "E.h"
 
-#include "../include/Leap.h"
 
-
-//~ using namespace std;
-// TODO check if commenting line above creates problem, track std functions and add std:: if needed
-
-// use of arguments for testing: e execute main for new class e, no argument execute the normal main for Entity.
+// use of arguments for testing: '-e' execute main for new class E,
+// no argument execute the normal main for Entity,
+// "-gl" option is for the openGL testing
 
 int main (int argc, char **argv)
 {
@@ -34,7 +29,7 @@ int main (int argc, char **argv)
     }
     if (argc>1) choice= std::string(argv[1]);
     //~ if (argc==1){
-    if (choice=="gl")
+    if (choice=="-gl")
     {
     
     //~ //Create an instance of Entity
@@ -191,7 +186,7 @@ std::vector<std::vector<float> > vTriangle_face;
 
 // else argc
 
-    else if(argc==1 || choice=="e")
+    else if(argc==1 || choice=="-e")
     {
 
     // variables
@@ -208,8 +203,10 @@ std::vector<std::vector<float> > vTriangle_face;
             std::cout << "Load testing set or User Input (or quit)? ('t'/'u'/'quit')" << std::endl;
             std::cout << "Or load testing file to display for testing ('l')?" << std::endl;
             std::cin >> key_input;
-            if (key_input=="quit") return 0;
-            else if (key_input=="t") newEntity.testing();
+            if (key_input=="quit") 
+            {
+                return 0;
+            }
             else if (key_input=="u")
             {
                 std:: cout << "Enter name:" << std::endl;
@@ -238,28 +235,24 @@ std::vector<std::vector<float> > vTriangle_face;
                 std::cout << "Do you want to save the file?(y)" << std::endl;
                 std::cin >> key_input;
                 if (key_input=="y") newEntity.E_save_to_file();
+                
+            newEntity.delete_all_recursive();
+            newEntity.E_clear_name();
+            newEntity.E_clear_data();                
             }
             else if (key_input=="l")
             {
                 std::cout << "1 for single line XML or 2 for multiline, 3 for both" << std::endl; 
                 std::cin >> key_input;
-                //~ if (key_input=="1") newEntity.load_XML_File_to_E("../datafiles/merte.xml");
-                //~ if (key_input=="2") newEntity.load_XML_File_to_E("../datafiles/testEOF7.xml");
-                //~ if (key_input=="3") newEntity.load_XML_File_to_E("../datafiles/testAny.xml");
-                if (key_input=="1") newEntity.extractDataFromFile("../datafiles/merte.xml");
-                if (key_input=="2") newEntity.extractDataFromFile("../datafiles/testEOF7.xml");
-                if (key_input=="3") newEntity.extractDataFromFile("../datafiles/testAny.xml");
-                
-                
-                //~ newEntity.load_XML_File_to_E("../datafiles/testCube.xml");
-                //~ newEntity.load_XML_File_to_E("../datafiles/testEOF7.xml");
-                newEntity.print_flat_E();
+                if (key_input=="1") newEntity.load_XML_File_to_E("../datafiles/merte.xml");
+                if (key_input=="2") newEntity.load_XML_File_to_E("../datafiles/testEOF7.xml");
+                if (key_input=="3") newEntity.load_XML_File_to_E("../datafiles/testAny.xml");
                 newEntity.print_formatted_E(0,"<",">","</",">");
-                //~ int index=0;
-                //~ int level=0;
-                //~ (newEntity.search_For(index , level, "color"));
-                //~ (newEntity.search_For(index , level, "vertex"));
-                //~ newEntity.fetch_search_result(E::search_result);
+
+                //cleare and delete
+                newEntity.delete_all_recursive();
+                newEntity.E_clear_name();
+                newEntity.E_clear_data();
             }
             else if (key_input=="+")
             {
@@ -268,6 +261,10 @@ std::vector<std::vector<float> > vTriangle_face;
                 test_vect.push_back(2);
                 test_vect.push_back(0);
                 newEntity.display_vector_int(test_vect);
+                
+            newEntity.delete_all_recursive();
+            newEntity.E_clear_name();
+            newEntity.E_clear_data();
             }
             else if (key_input=="i")
             {
@@ -277,56 +274,28 @@ std::vector<std::vector<float> > vTriangle_face;
                 std::vector<int> vect_index=newEntity.set_vector_of_indexes(key_input);
                 newEntity.display_vector_int(vect_index);
                 
+            newEntity.delete_all_recursive();
+            newEntity.E_clear_name();
+            newEntity.E_clear_data();
             }
-            if (key_input=="o")
+            else if (key_input=="t")
             {
-                std::string toto="toto est parti <la bas>               prout <caca>";
-                std::string tata;
-                std::string titi;
-                
-                newEntity.str_token_tag(toto,tata,titi,'<','>');
-                std::cout << "In: "<< toto << std::endl;
-                std::cout << "tag: " << tata << std::endl;
-                std::cout << "Out: " << titi << std::endl;
-                toto = titi;
-                newEntity.str_token_tag(toto,tata,titi,0,'>');
-                std::cout << "In: " << toto << std::endl;
-                std::cout << "tag: " << tata << std::endl;
-                std::cout << "Out: " << titi << std::endl;
-                newEntity.str_token_tag(toto,tata,titi,'<','>');                
-                std::cout << "In: "<< toto << std::endl;
-                std::cout << "tag: " << tata << std::endl;
-                std::cout << "Out: " << titi << std::endl;  
-            }
-            if (key_input=="t")
-            {
-                //~ newEntity.E_display_all(0);
+                newEntity.testing();
                 std::cout << std::endl;
                 newEntity.print_formatted_E(0,"<",">","</",">");
                 std::cout << std::endl;
                 std::cout << "Do you want to save the file?(y)" << std::endl;
                 std::cin >> key_input;
                 if (key_input=="y") newEntity.E_save_to_file();
-            
+                
+                newEntity.delete_all_recursive();
+                newEntity.E_clear_name();
+                newEntity.E_clear_data();
             }
-            if (key_input=="p")
+            else
             {
-                E xmlFile;
-                E * ptXmlFile = &xmlFile;
-                
-                xmlFile.extractDataFromFile("../datafiles/testAny.xml");
-                newEntity.process_rule(ptXmlFile);
-                //~ newEntity.print_flat_E();
-                newEntity.print_formatted_E(0,"<",">","</",">");
-                xmlFile.vE_clear_all();
-                xmlFile.E_clear_name();
-                xmlFile.E_clear_data();
-                
+                std::cout << "No comprendo" << std::endl;
             }
-            
-            newEntity.vE_clear_all();
-            newEntity.E_clear_name();
-            newEntity.E_clear_data();
         }
         
     

@@ -1,0 +1,2490 @@
+GNU gdb (Ubuntu 7.11.1-0ubuntu1~16.5) 7.11.1
+Copyright (C) 2016 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from ./esv8_debug...done.
+(gdb) r
+Starting program: /home/gweno/Documents/Project/Cpp/ESV8/Source/esv8_debug 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+Have 1 arguments:
+/home/gweno/Documents/Project/Cpp/ESV8/Source/esv8_debug
+
+This is session 1
+
+Load testing set or User Input (or quit)? ('t'/'u'/'quit')
+Or load testing file to display for testing ('l')?
+<File>
+../datafiles/testAny.xml
+    <opening_tag>
+    master
+    </opening_tag>
+    <data>
+    123
+    </data>
+    <opening_tag>
+    tata
+    </opening_tag>
+    <data>
+    1
+    </data>
+    <opening_tag>
+    toto
+    </opening_tag>
+    <data>
+    11
+    </data>
+    <opening_tag>
+    truc
+    </opening_tag>
+    <data>
+    999
+    </data>
+    <closing_tag>
+    /truc
+    </closing_tag>
+    <closing_tag>
+    /toto
+    </closing_tag>
+    <opening_tag>
+    lili
+    </opening_tag>
+    <data>
+    12
+    </data>
+    <closing_tag>
+    /lili
+    </closing_tag>
+    <closing_tag>
+    /tata
+    </closing_tag>
+    <opening_tag>
+    titi
+    </opening_tag>
+    <data>
+    2
+    </data>
+    <opening_tag>
+    toto
+    </opening_tag>
+    <data>
+    21
+    </data>
+    <closing_tag>
+    /toto
+    </closing_tag>
+    <opening_tag>
+    lolo
+    </opening_tag>
+    <data>
+    22
+    </data>
+    <closing_tag>
+    /lolo
+    </closing_tag>
+    <closing_tag>
+    /titi
+    </closing_tag>
+    <opening_tag>
+    Design
+    </opening_tag>
+    <data>
+    Food@Home
+    </data>
+    <opening_tag>
+    Author
+    </opening_tag>
+    <data>
+    test
+    </data>
+    <opening_tag>
+    firstName
+    </opening_tag>
+    <data>
+    Gweno
+    </data>
+    <closing_tag>
+    /firstName
+    </closing_tag>
+    <closing_tag>
+    /Author
+    </closing_tag>
+    <opening_tag>
+    Method
+    </opening_tag>
+    <data>
+    Design Web
+    </data>
+    <closing_tag>
+    /Method
+    </closing_tag>
+    <opening_tag>
+    Tools
+    </opening_tag>
+    <opening_tag>
+    Input
+    </opening_tag>
+    <data>
+    output
+    </data>
+    <closing_tag>
+    /Input
+    </closing_tag>
+    <opening_tag>
+    SWOC
+    </opening_tag>
+    <data>
+    Tool to analyse things
+    </data>
+    <closing_tag>
+    /SWOC
+    </closing_tag>
+    <closing_tag>
+    /Tools
+    </closing_tag>
+    <opening_tag>
+    Date
+    </opening_tag>
+    <data>
+    10 February 2018
+    </data>
+    <closing_tag>
+    /Date
+    </closing_tag>
+    <closing_tag>
+    /Design
+    </closing_tag>
+    <closing_tag>
+    /master
+    </closing_tag>
+</File>open data next not close this: master : 123
+open data next not close stack size: 1
+open data next not close top: master : 123
+open data next not close top.vE.back:  : 
+<master>
+123
+    <>
+    
+    </>
+</master>E_source: 
+File : ../datafiles/testAny.xml
+opening_tag : master
+data : 123
+opening_tag : tata
+data : 1
+opening_tag : toto
+data : 11
+opening_tag : truc
+data : 999
+closing_tag : /truc
+closing_tag : /toto
+opening_tag : lili
+data : 12
+closing_tag : /lili
+closing_tag : /tata
+opening_tag : titi
+data : 2
+opening_tag : toto
+data : 21
+closing_tag : /toto
+opening_tag : lolo
+data : 22
+closing_tag : /lolo
+closing_tag : /titi
+opening_tag : Design
+data : Food@Home
+opening_tag : Author
+data : test
+opening_tag : firstName
+data : Gweno
+closing_tag : /firstName
+closing_tag : /Author
+opening_tag : Method
+data : Design Web
+closing_tag : /Method
+opening_tag : Tools
+opening_tag : Input
+data : output
+closing_tag : /Input
+opening_tag : SWOC
+data : Tool to analyse things
+closing_tag : /SWOC
+closing_tag : /Tools
+opening_tag : Date
+data : 10 February 2018
+closing_tag : /Date
+closing_tag : /Design
+closing_tag : /master
+
+1
+open data next not close this: tata : 1
+open data next not close stack size: 2
+open data next not close top: tata : 1
+open data next not close top.vE.back:  : 
+<tata>
+1
+    <>
+    
+    </>
+</tata>E_source: 
+File : ../datafiles/testAny.xml
+opening_tag : master
+data : 123
+opening_tag : tata
+data : 1
+opening_tag : toto
+data : 11
+opening_tag : truc
+data : 999
+closing_tag : /truc
+closing_tag : /toto
+opening_tag : lili
+data : 12
+closing_tag : /lili
+closing_tag : /tata
+opening_tag : titi
+data : 2
+opening_tag : toto
+data : 21
+closing_tag : /toto
+opening_tag : lolo
+data : 22
+closing_tag : /lolo
+closing_tag : /titi
+opening_tag : Design
+data : Food@Home
+opening_tag : Author
+data : test
+opening_tag : firstName
+data : Gweno
+closing_tag : /firstName
+closing_tag : /Author
+opening_tag : Method
+data : Design Web
+closing_tag : /Method
+opening_tag : Tools
+opening_tag : Input
+data : output
+closing_tag : /Input
+opening_tag : SWOC
+data : Tool to analyse things
+closing_tag : /SWOC
+closing_tag : /Tools
+opening_tag : Date
+data : 10 February 2018
+closing_tag : /Date
+closing_tag : /Design
+closing_tag : /master
+
+2
+open data next not close this: toto : 11
+open data next not close stack size: 3
+open data next not close top: toto : 11
+open data next not close top.vE.back:  : 
+<toto>
+11
+    <>
+    
+    </>
+</toto>E_source: 
+File : ../datafiles/testAny.xml
+opening_tag : master
+data : 123
+opening_tag : tata
+data : 1
+opening_tag : toto
+data : 11
+opening_tag : truc
+data : 999
+closing_tag : /truc
+closing_tag : /toto
+opening_tag : lili
+data : 12
+closing_tag : /lili
+closing_tag : /tata
+opening_tag : titi
+data : 2
+opening_tag : toto
+data : 21
+closing_tag : /toto
+opening_tag : lolo
+data : 22
+closing_tag : /lolo
+closing_tag : /titi
+opening_tag : Design
+data : Food@Home
+opening_tag : Author
+data : test
+opening_tag : firstName
+data : Gweno
+closing_tag : /firstName
+closing_tag : /Author
+opening_tag : Method
+data : Design Web
+closing_tag : /Method
+opening_tag : Tools
+opening_tag : Input
+data : output
+closing_tag : /Input
+opening_tag : SWOC
+data : Tool to analyse things
+closing_tag : /SWOC
+closing_tag : /Tools
+opening_tag : Date
+data : 10 February 2018
+closing_tag : /Date
+closing_tag : /Design
+closing_tag : /master
+
+3
+open data next close this: truc : 999
+open data next close stack size: 4
+open data next close top: truc : 999
+<truc>
+999
+</truc>E_source: 
+File : ../datafiles/testAny.xml
+opening_tag : master
+data : 123
+opening_tag : tata
+data : 1
+opening_tag : toto
+data : 11
+opening_tag : truc
+data : 999
+closing_tag : /truc
+closing_tag : /toto
+opening_tag : lili
+data : 12
+closing_tag : /lili
+closing_tag : /tata
+opening_tag : titi
+data : 2
+opening_tag : toto
+data : 21
+closing_tag : /toto
+opening_tag : lolo
+data : 22
+closing_tag : /lolo
+closing_tag : /titi
+opening_tag : Design
+data : Food@Home
+opening_tag : Author
+data : test
+opening_tag : firstName
+data : Gweno
+closing_tag : /firstName
+closing_tag : /Author
+opening_tag : Method
+data : Design Web
+closing_tag : /Method
+opening_tag : Tools
+opening_tag : Input
+data : output
+closing_tag : /Input
+opening_tag : SWOC
+data : Tool to analyse things
+closing_tag : /SWOC
+closing_tag : /Tools
+opening_tag : Date
+data : 10 February 2018
+closing_tag : /Date
+closing_tag : /Design
+closing_tag : /master
+
+4
+close  this: truc : 999
+close  stack size: 3
+close  top: toto : 11
+close top.vE.back: truc : 999
+<truc>
+999
+</truc>E_source: 
+File : ../datafiles/testAny.xml
+opening_tag : master
+data : 123
+opening_tag : tata
+data : 1
+opening_tag : toto
+data : 11
+opening_tag : truc
+data : 999
+closing_tag : /truc
+closing_tag : /toto
+opening_tag : lili
+data : 12
+closing_tag : /lili
+closing_tag : /tata
+opening_tag : titi
+data : 2
+opening_tag : toto
+data : 21
+closing_tag : /toto
+opening_tag : lolo
+data : 22
+closing_tag : /lolo
+closing_tag : /titi
+opening_tag : Design
+data : Food@Home
+opening_tag : Author
+data : test
+opening_tag : firstName
+data : Gweno
+closing_tag : /firstName
+closing_tag : /Author
+opening_tag : Method
+data : Design Web
+closing_tag : /Method
+opening_tag : Tools
+opening_tag : Input
+data : output
+closing_tag : /Input
+opening_tag : SWOC
+data : Tool to analyse things
+closing_tag : /SWOC
+closing_tag : /Tools
+opening_tag : Date
+data : 10 February 2018
+closing_tag : /Date
+closing_tag : /Design
+closing_tag : /master
+
+3
+close next open this: toto : 11
+close next open stack size: 2
+close next open top: tata : 1
+close next open top.vE.back: toto : 11
+<toto>
+11
+    <truc>
+    999
+    </truc>
+</toto>E_source: 
+File : ../datafiles/testAny.xml
+opening_tag : master
+data : 123
+opening_tag : tata
+data : 1
+opening_tag : toto
+data : 11
+opening_tag : truc
+data : 999
+closing_tag : /truc
+closing_tag : /toto
+opening_tag : lili
+data : 12
+closing_tag : /lili
+closing_tag : /tata
+opening_tag : titi
+data : 2
+opening_tag : toto
+data : 21
+closing_tag : /toto
+opening_tag : lolo
+data : 22
+closing_tag : /lolo
+closing_tag : /titi
+opening_tag : Design
+data : Food@Home
+opening_tag : Author
+data : test
+opening_tag : firstName
+data : Gweno
+closing_tag : /firstName
+closing_tag : /Author
+opening_tag : Method
+data : Design Web
+closing_tag : /Method
+opening_tag : Tools
+opening_tag : Input
+data : output
+closing_tag : /Input
+opening_tag : SWOC
+data : Tool to analyse things
+closing_tag : /SWOC
+closing_tag : /Tools
+opening_tag : Date
+data : 10 February 2018
+closing_tag : /Date
+closing_tag : /Design
+closing_tag : /master
+
+2
+open data next close this: lili : 12
+open data next close stack size: 3
+open data next close top: lili : 12
+<lili>
+12
+</lili>E_source: 
+File : ../datafiles/testAny.xml
+opening_tag : master
+data : 123
+opening_tag : tata
+data : 1
+opening_tag : toto
+data : 11
+opening_tag : truc
+data : 999
+closing_tag : /truc
+closing_tag : /toto
+opening_tag : lili
+data : 12
+closing_tag : /lili
+closing_tag : /tata
+opening_tag : titi
+data : 2
+opening_tag : toto
+data : 21
+closing_tag : /toto
+opening_tag : lolo
+data : 22
+closing_tag : /lolo
+closing_tag : /titi
+opening_tag : Design
+data : Food@Home
+opening_tag : Author
+data : test
+opening_tag : firstName
+data : Gweno
+closing_tag : /firstName
+closing_tag : /Author
+opening_tag : Method
+data : Design Web
+closing_tag : /Method
+opening_tag : Tools
+opening_tag : Input
+data : output
+closing_tag : /Input
+opening_tag : SWOC
+data : Tool to analyse things
+closing_tag : /SWOC
+closing_tag : /Tools
+opening_tag : Date
+data : 10 February 2018
+closing_tag : /Date
+closing_tag : /Design
+closing_tag : /master
+
+3
+close  this: lili : 12
+close  stack size: 2
+close  top: tata : 1
+close top.vE.back: lili : 12
+<lili>
+12
+</lili>E_source: 
+File : ../datafiles/testAny.xml
+opening_tag : master
+data : 123
+opening_tag : tata
+data : 1
+opening_tag : toto
+data : 11
+opening_tag : truc
+data : 999
+closing_tag : /truc
+closing_tag : /toto
+opening_tag : lili
+data : 12
+closing_tag : /lili
+closing_tag : /tata
+opening_tag : titi
+data : 2
+opening_tag : toto
+data : 21
+closing_tag : /toto
+opening_tag : lolo
+data : 22
+closing_tag : /lolo
+closing_tag : /titi
+opening_tag : Design
+data : Food@Home
+opening_tag : Author
+data : test
+opening_tag : firstName
+data : Gweno
+closing_tag : /firstName
+closing_tag : /Author
+opening_tag : Method
+data : Design Web
+closing_tag : /Method
+opening_tag : Tools
+opening_tag : Input
+data : output
+closing_tag : /Input
+opening_tag : SWOC
+data : Tool to analyse things
+closing_tag : /SWOC
+closing_tag : /Tools
+opening_tag : Date
+data : 10 February 2018
+closing_tag : /Date
+closing_tag : /Design
+closing_tag : /master
+
+2
+close next open this: tata : 1
+close next open stack size: 1
+close next open top: master : 123
+close next open top.vE.back: tata : 1
+<tata>
+1
+    <toto>
+    11
+        <truc>
+        999
+        </truc>
+    </toto>
+    <lili>
+    12
+    </lili>
+</tata>E_source: 
+File : ../datafiles/testAny.xml
+opening_tag : master
+data : 123
+opening_tag : tata
+data : 1
+opening_tag : toto
+data : 11
+opening_tag : truc
+data : 999
+closing_tag : /truc
+closing_tag : /toto
+opening_tag : lili
+data : 12
+closing_tag : /lili
+closing_tag : /tata
+opening_tag : titi
+data : 2
+opening_tag : toto
+data : 21
+closing_tag : /toto
+opening_tag : lolo
+data : 22
+closing_tag : /lolo
+closing_tag : /titi
+opening_tag : Design
+data : Food@Home
+opening_tag : Author
+data : test
+opening_tag : firstName
+data : Gweno
+closing_tag : /firstName
+closing_tag : /Author
+opening_tag : Method
+data : Design Web
+closing_tag : /Method
+opening_tag : Tools
+opening_tag : Input
+data : output
+closing_tag : /Input
+opening_tag : SWOC
+data : Tool to analyse things
+closing_tag : /SWOC
+closing_tag : /Tools
+opening_tag : Date
+data : 10 February 2018
+closing_tag : /Date
+closing_tag : /Design
+closing_tag : /master
+
+1
+open data next not close this: titi : 2
+open data next not close stack size: 2
+open data next not close top: titi : 2
+open data next not close top.vE.back:  : 
+<titi>
+2
+    <>
+    
+    </>
+</titi>E_source: 
+File : ../datafiles/testAny.xml
+opening_tag : master
+data : 123
+opening_tag : tata
+data : 1
+opening_tag : toto
+data : 11
+opening_tag : truc
+data : 999
+closing_tag : /truc
+closing_tag : /toto
+opening_tag : lili
+data : 12
+closing_tag : /lili
+closing_tag : /tata
+opening_tag : titi
+data : 2
+opening_tag : toto
+data : 21
+closing_tag : /toto
+opening_tag : lolo
+data : 22
+closing_tag : /lolo
+closing_tag : /titi
+opening_tag : Design
+data : Food@Home
+opening_tag : Author
+data : test
+opening_tag : firstName
+data : Gweno
+closing_tag : /firstName
+closing_tag : /Author
+opening_tag : Method
+data : Design Web
+closing_tag : /Method
+opening_tag : Tools
+opening_tag : Input
+data : output
+closing_tag : /Input
+opening_tag : SWOC
+data : Tool to analyse things
+closing_tag : /SWOC
+closing_tag : /Tools
+opening_tag : Date
+data : 10 February 2018
+closing_tag : /Date
+closing_tag : /Design
+closing_tag : /master
+
+2
+open data next close this: toto : 21
+open data next close stack size: 3
+open data next close top: toto : 21
+<toto>
+21
+</toto>E_source: 
+File : ../datafiles/testAny.xml
+opening_tag : master
+data : 123
+opening_tag : tata
+data : 1
+opening_tag : toto
+data : 11
+opening_tag : truc
+data : 999
+closing_tag : /truc
+closing_tag : /toto
+opening_tag : lili
+data : 12
+closing_tag : /lili
+closing_tag : /tata
+opening_tag : titi
+data : 2
+opening_tag : toto
+data : 21
+closing_tag : /toto
+opening_tag : lolo
+data : 22
+closing_tag : /lolo
+closing_tag : /titi
+opening_tag : Design
+data : Food@Home
+opening_tag : Author
+data : test
+opening_tag : firstName
+data : Gweno
+closing_tag : /firstName
+closing_tag : /Author
+opening_tag : Method
+data : Design Web
+closing_tag : /Method
+opening_tag : Tools
+opening_tag : Input
+data : output
+closing_tag : /Input
+opening_tag : SWOC
+data : Tool to analyse things
+closing_tag : /SWOC
+closing_tag : /Tools
+opening_tag : Date
+data : 10 February 2018
+closing_tag : /Date
+closing_tag : /Design
+closing_tag : /master
+
+3
+close next open this: toto : 21
+close next open stack size: 2
+close next open top: titi : 2
+close next open top.vE.back: toto : 21
+<toto>
+21
+</toto>E_source: 
+File : ../datafiles/testAny.xml
+opening_tag : master
+data : 123
+opening_tag : tata
+data : 1
+opening_tag : toto
+data : 11
+opening_tag : truc
+data : 999
+closing_tag : /truc
+closing_tag : /toto
+opening_tag : lili
+data : 12
+closing_tag : /lili
+closing_tag : /tata
+opening_tag : titi
+data : 2
+opening_tag : toto
+data : 21
+closing_tag : /toto
+opening_tag : lolo
+data : 22
+closing_tag : /lolo
+closing_tag : /titi
+opening_tag : Design
+data : Food@Home
+opening_tag : Author
+data : test
+opening_tag : firstName
+data : Gweno
+closing_tag : /firstName
+closing_tag : /Author
+opening_tag : Method
+data : Design Web
+closing_tag : /Method
+opening_tag : Tools
+opening_tag : Input
+data : output
+closing_tag : /Input
+opening_tag : SWOC
+data : Tool to analyse things
+closing_tag : /SWOC
+closing_tag : /Tools
+opening_tag : Date
+data : 10 February 2018
+closing_tag : /Date
+closing_tag : /Design
+closing_tag : /master
+
+2
+open data next close this: lolo : 22
+open data next close stack size: 3
+open data next close top: lolo : 22
+<lolo>
+22
+</lolo>E_source: 
+File : ../datafiles/testAny.xml
+opening_tag : master
+data : 123
+opening_tag : tata
+data : 1
+opening_tag : toto
+data : 11
+opening_tag : truc
+data : 999
+closing_tag : /truc
+closing_tag : /toto
+opening_tag : lili
+data : 12
+closing_tag : /lili
+closing_tag : /tata
+opening_tag : titi
+data : 2
+opening_tag : toto
+data : 21
+closing_tag : /toto
+opening_tag : lolo
+data : 22
+closing_tag : /lolo
+closing_tag : /titi
+opening_tag : Design
+data : Food@Home
+opening_tag : Author
+data : test
+opening_tag : firstName
+data : Gweno
+closing_tag : /firstName
+closing_tag : /Author
+opening_tag : Method
+data : Design Web
+closing_tag : /Method
+opening_tag : Tools
+opening_tag : Input
+data : output
+closing_tag : /Input
+opening_tag : SWOC
+data : Tool to analyse things
+closing_tag : /SWOC
+closing_tag : /Tools
+opening_tag : Date
+data : 10 February 2018
+closing_tag : /Date
+closing_tag : /Design
+closing_tag : /master
+
+3
+close  this: lolo : 22
+close  stack size: 2
+close  top: titi : 2
+close top.vE.back: lolo : 22
+<lolo>
+22
+</lolo>E_source: 
+File : ../datafiles/testAny.xml
+opening_tag : master
+data : 123
+opening_tag : tata
+data : 1
+opening_tag : toto
+data : 11
+opening_tag : truc
+data : 999
+closing_tag : /truc
+closing_tag : /toto
+opening_tag : lili
+data : 12
+closing_tag : /lili
+closing_tag : /tata
+opening_tag : titi
+data : 2
+opening_tag : toto
+data : 21
+closing_tag : /toto
+opening_tag : lolo
+data : 22
+closing_tag : /lolo
+closing_tag : /titi
+opening_tag : Design
+data : Food@Home
+opening_tag : Author
+data : test
+opening_tag : firstName
+data : Gweno
+closing_tag : /firstName
+closing_tag : /Author
+opening_tag : Method
+data : Design Web
+closing_tag : /Method
+opening_tag : Tools
+opening_tag : Input
+data : output
+closing_tag : /Input
+opening_tag : SWOC
+data : Tool to analyse things
+closing_tag : /SWOC
+closing_tag : /Tools
+opening_tag : Date
+data : 10 February 2018
+closing_tag : /Date
+closing_tag : /Design
+closing_tag : /master
+
+2
+close next open this: titi : 2
+close next open stack size: 1
+close next open top: master : 123
+close next open top.vE.back: titi : 2
+<titi>
+2
+    <toto>
+    21
+    </toto>
+    <lolo>
+    22
+    </lolo>
+</titi>E_source: 
+File : ../datafiles/testAny.xml
+opening_tag : master
+data : 123
+opening_tag : tata
+data : 1
+opening_tag : toto
+data : 11
+opening_tag : truc
+data : 999
+closing_tag : /truc
+closing_tag : /toto
+opening_tag : lili
+data : 12
+closing_tag : /lili
+closing_tag : /tata
+opening_tag : titi
+data : 2
+opening_tag : toto
+data : 21
+closing_tag : /toto
+opening_tag : lolo
+data : 22
+closing_tag : /lolo
+closing_tag : /titi
+opening_tag : Design
+data : Food@Home
+opening_tag : Author
+data : test
+opening_tag : firstName
+data : Gweno
+closing_tag : /firstName
+closing_tag : /Author
+opening_tag : Method
+data : Design Web
+closing_tag : /Method
+opening_tag : Tools
+opening_tag : Input
+data : output
+closing_tag : /Input
+opening_tag : SWOC
+data : Tool to analyse things
+closing_tag : /SWOC
+closing_tag : /Tools
+opening_tag : Date
+data : 10 February 2018
+closing_tag : /Date
+closing_tag : /Design
+closing_tag : /master
+
+1
+open data next not close this: Design : Food@Home
+open data next not close stack size: 2
+open data next not close top: Design : Food@Home
+open data next not close top.vE.back:  : 
+<Design>
+Food@Home
+    <>
+    
+    </>
+</Design>E_source: 
+File : ../datafiles/testAny.xml
+opening_tag : master
+data : 123
+opening_tag : tata
+data : 1
+opening_tag : toto
+data : 11
+opening_tag : truc
+data : 999
+closing_tag : /truc
+closing_tag : /toto
+opening_tag : lili
+data : 12
+closing_tag : /lili
+closing_tag : /tata
+opening_tag : titi
+data : 2
+opening_tag : toto
+data : 21
+closing_tag : /toto
+opening_tag : lolo
+data : 22
+closing_tag : /lolo
+closing_tag : /titi
+opening_tag : Design
+data : Food@Home
+opening_tag : Author
+data : test
+opening_tag : firstName
+data : Gweno
+closing_tag : /firstName
+closing_tag : /Author
+opening_tag : Method
+data : Design Web
+closing_tag : /Method
+opening_tag : Tools
+opening_tag : Input
+data : output
+closing_tag : /Input
+opening_tag : SWOC
+data : Tool to analyse things
+closing_tag : /SWOC
+closing_tag : /Tools
+opening_tag : Date
+data : 10 February 2018
+closing_tag : /Date
+closing_tag : /Design
+closing_tag : /master
+
+2
+open data next not close this: Author : test
+open data next not close stack size: 3
+open data next not close top: Author : test
+open data next not close top.vE.back:  : 
+<Author>
+test
+    <>
+    
+    </>
+</Author>E_source: 
+File : ../datafiles/testAny.xml
+opening_tag : master
+data : 123
+opening_tag : tata
+data : 1
+opening_tag : toto
+data : 11
+opening_tag : truc
+data : 999
+closing_tag : /truc
+closing_tag : /toto
+opening_tag : lili
+data : 12
+closing_tag : /lili
+closing_tag : /tata
+opening_tag : titi
+data : 2
+opening_tag : toto
+data : 21
+closing_tag : /toto
+opening_tag : lolo
+data : 22
+closing_tag : /lolo
+closing_tag : /titi
+opening_tag : Design
+data : Food@Home
+opening_tag : Author
+data : test
+opening_tag : firstName
+data : Gweno
+closing_tag : /firstName
+closing_tag : /Author
+opening_tag : Method
+data : Design Web
+closing_tag : /Method
+opening_tag : Tools
+opening_tag : Input
+data : output
+closing_tag : /Input
+opening_tag : SWOC
+data : Tool to analyse things
+closing_tag : /SWOC
+closing_tag : /Tools
+opening_tag : Date
+data : 10 February 2018
+closing_tag : /Date
+closing_tag : /Design
+closing_tag : /master
+
+3
+open data next close this: firstName : Gweno
+open data next close stack size: 4
+open data next close top: firstName : Gweno
+<firstName>
+Gweno
+</firstName>E_source: 
+File : ../datafiles/testAny.xml
+opening_tag : master
+data : 123
+opening_tag : tata
+data : 1
+opening_tag : toto
+data : 11
+opening_tag : truc
+data : 999
+closing_tag : /truc
+closing_tag : /toto
+opening_tag : lili
+data : 12
+closing_tag : /lili
+closing_tag : /tata
+opening_tag : titi
+data : 2
+opening_tag : toto
+data : 21
+closing_tag : /toto
+opening_tag : lolo
+data : 22
+closing_tag : /lolo
+closing_tag : /titi
+opening_tag : Design
+data : Food@Home
+opening_tag : Author
+data : test
+opening_tag : firstName
+data : Gweno
+closing_tag : /firstName
+closing_tag : /Author
+opening_tag : Method
+data : Design Web
+closing_tag : /Method
+opening_tag : Tools
+opening_tag : Input
+data : output
+closing_tag : /Input
+opening_tag : SWOC
+data : Tool to analyse things
+closing_tag : /SWOC
+closing_tag : /Tools
+opening_tag : Date
+data : 10 February 2018
+closing_tag : /Date
+closing_tag : /Design
+closing_tag : /master
+
+4
+close  this: firstName : Gweno
+close  stack size: 3
+close  top: Author : test
+close top.vE.back: firstName : Gweno
+<firstName>
+Gweno
+</firstName>E_source: 
+File : ../datafiles/testAny.xml
+opening_tag : master
+data : 123
+opening_tag : tata
+data : 1
+opening_tag : toto
+data : 11
+opening_tag : truc
+data : 999
+closing_tag : /truc
+closing_tag : /toto
+opening_tag : lili
+data : 12
+closing_tag : /lili
+closing_tag : /tata
+opening_tag : titi
+data : 2
+opening_tag : toto
+data : 21
+closing_tag : /toto
+opening_tag : lolo
+data : 22
+closing_tag : /lolo
+closing_tag : /titi
+opening_tag : Design
+data : Food@Home
+opening_tag : Author
+data : test
+opening_tag : firstName
+data : Gweno
+closing_tag : /firstName
+closing_tag : /Author
+opening_tag : Method
+data : Design Web
+closing_tag : /Method
+opening_tag : Tools
+opening_tag : Input
+data : output
+closing_tag : /Input
+opening_tag : SWOC
+data : Tool to analyse things
+closing_tag : /SWOC
+closing_tag : /Tools
+opening_tag : Date
+data : 10 February 2018
+closing_tag : /Date
+closing_tag : /Design
+closing_tag : /master
+
+3
+close next open this: Author : test
+close next open stack size: 2
+close next open top: Design : Food@Home
+close next open top.vE.back: Author : test
+<Author>
+test
+    <firstName>
+    Gweno
+    </firstName>
+</Author>E_source: 
+File : ../datafiles/testAny.xml
+opening_tag : master
+data : 123
+opening_tag : tata
+data : 1
+opening_tag : toto
+data : 11
+opening_tag : truc
+data : 999
+closing_tag : /truc
+closing_tag : /toto
+opening_tag : lili
+data : 12
+closing_tag : /lili
+closing_tag : /tata
+opening_tag : titi
+data : 2
+opening_tag : toto
+data : 21
+closing_tag : /toto
+opening_tag : lolo
+data : 22
+closing_tag : /lolo
+closing_tag : /titi
+opening_tag : Design
+data : Food@Home
+opening_tag : Author
+data : test
+opening_tag : firstName
+data : Gweno
+closing_tag : /firstName
+closing_tag : /Author
+opening_tag : Method
+data : Design Web
+closing_tag : /Method
+opening_tag : Tools
+opening_tag : Input
+data : output
+closing_tag : /Input
+opening_tag : SWOC
+data : Tool to analyse things
+closing_tag : /SWOC
+closing_tag : /Tools
+opening_tag : Date
+data : 10 February 2018
+closing_tag : /Date
+closing_tag : /Design
+closing_tag : /master
+
+2
+open data next close this: Method : Design Web
+open data next close stack size: 3
+open data next close top: Method : Design Web
+<Method>
+Design Web
+</Method>E_source: 
+File : ../datafiles/testAny.xml
+opening_tag : master
+data : 123
+opening_tag : tata
+data : 1
+opening_tag : toto
+data : 11
+opening_tag : truc
+data : 999
+closing_tag : /truc
+closing_tag : /toto
+opening_tag : lili
+data : 12
+closing_tag : /lili
+closing_tag : /tata
+opening_tag : titi
+data : 2
+opening_tag : toto
+data : 21
+closing_tag : /toto
+opening_tag : lolo
+data : 22
+closing_tag : /lolo
+closing_tag : /titi
+opening_tag : Design
+data : Food@Home
+opening_tag : Author
+data : test
+opening_tag : firstName
+data : Gweno
+closing_tag : /firstName
+closing_tag : /Author
+opening_tag : Method
+data : Design Web
+closing_tag : /Method
+opening_tag : Tools
+opening_tag : Input
+data : output
+closing_tag : /Input
+opening_tag : SWOC
+data : Tool to analyse things
+closing_tag : /SWOC
+closing_tag : /Tools
+opening_tag : Date
+data : 10 February 2018
+closing_tag : /Date
+closing_tag : /Design
+closing_tag : /master
+
+3
+close next open this: Method : Design Web
+close next open stack size: 2
+close next open top: Design : Food@Home
+close next open top.vE.back: Method : Design Web
+<Method>
+Design Web
+</Method>E_source: 
+File : ../datafiles/testAny.xml
+opening_tag : master
+data : 123
+opening_tag : tata
+data : 1
+opening_tag : toto
+data : 11
+opening_tag : truc
+data : 999
+closing_tag : /truc
+closing_tag : /toto
+opening_tag : lili
+data : 12
+closing_tag : /lili
+closing_tag : /tata
+opening_tag : titi
+data : 2
+opening_tag : toto
+data : 21
+closing_tag : /toto
+opening_tag : lolo
+data : 22
+closing_tag : /lolo
+closing_tag : /titi
+opening_tag : Design
+data : Food@Home
+opening_tag : Author
+data : test
+opening_tag : firstName
+data : Gweno
+closing_tag : /firstName
+closing_tag : /Author
+opening_tag : Method
+data : Design Web
+closing_tag : /Method
+opening_tag : Tools
+opening_tag : Input
+data : output
+closing_tag : /Input
+opening_tag : SWOC
+data : Tool to analyse things
+closing_tag : /SWOC
+closing_tag : /Tools
+opening_tag : Date
+data : 10 February 2018
+closing_tag : /Date
+closing_tag : /Design
+closing_tag : /master
+
+2
+open next data this: Tools : 
+open next data stack size: 3
+open next data top: Tools : 
+open next data top.vE.back:  : 
+<Tools>
+
+    <>
+    
+    </>
+</Tools>E_source: 
+File : ../datafiles/testAny.xml
+opening_tag : master
+data : 123
+opening_tag : tata
+data : 1
+opening_tag : toto
+data : 11
+opening_tag : truc
+data : 999
+closing_tag : /truc
+closing_tag : /toto
+opening_tag : lili
+data : 12
+closing_tag : /lili
+closing_tag : /tata
+opening_tag : titi
+data : 2
+opening_tag : toto
+data : 21
+closing_tag : /toto
+opening_tag : lolo
+data : 22
+closing_tag : /lolo
+closing_tag : /titi
+opening_tag : Design
+data : Food@Home
+opening_tag : Author
+data : test
+opening_tag : firstName
+data : Gweno
+closing_tag : /firstName
+closing_tag : /Author
+opening_tag : Method
+data : Design Web
+closing_tag : /Method
+opening_tag : Tools
+opening_tag : Input
+data : output
+closing_tag : /Input
+opening_tag : SWOC
+data : Tool to analyse things
+closing_tag : /SWOC
+closing_tag : /Tools
+opening_tag : Date
+data : 10 February 2018
+closing_tag : /Date
+closing_tag : /Design
+closing_tag : /master
+
+3
+open data next close this: Input : output
+open data next close stack size: 4
+open data next close top: Input : output
+<Input>
+output
+</Input>E_source: 
+File : ../datafiles/testAny.xml
+opening_tag : master
+data : 123
+opening_tag : tata
+data : 1
+opening_tag : toto
+data : 11
+opening_tag : truc
+data : 999
+closing_tag : /truc
+closing_tag : /toto
+opening_tag : lili
+data : 12
+closing_tag : /lili
+closing_tag : /tata
+opening_tag : titi
+data : 2
+opening_tag : toto
+data : 21
+closing_tag : /toto
+opening_tag : lolo
+data : 22
+closing_tag : /lolo
+closing_tag : /titi
+opening_tag : Design
+data : Food@Home
+opening_tag : Author
+data : test
+opening_tag : firstName
+data : Gweno
+closing_tag : /firstName
+closing_tag : /Author
+opening_tag : Method
+data : Design Web
+closing_tag : /Method
+opening_tag : Tools
+opening_tag : Input
+data : output
+closing_tag : /Input
+opening_tag : SWOC
+data : Tool to analyse things
+closing_tag : /SWOC
+closing_tag : /Tools
+opening_tag : Date
+data : 10 February 2018
+closing_tag : /Date
+closing_tag : /Design
+closing_tag : /master
+
+4
+close next open this: Input : output
+close next open stack size: 3
+close next open top: Tools : 
+close next open top.vE.back: Input : output
+<Input>
+output
+</Input>E_source: 
+File : ../datafiles/testAny.xml
+opening_tag : master
+data : 123
+opening_tag : tata
+data : 1
+opening_tag : toto
+data : 11
+opening_tag : truc
+data : 999
+closing_tag : /truc
+closing_tag : /toto
+opening_tag : lili
+data : 12
+closing_tag : /lili
+closing_tag : /tata
+opening_tag : titi
+data : 2
+opening_tag : toto
+data : 21
+closing_tag : /toto
+opening_tag : lolo
+data : 22
+closing_tag : /lolo
+closing_tag : /titi
+opening_tag : Design
+data : Food@Home
+opening_tag : Author
+data : test
+opening_tag : firstName
+data : Gweno
+closing_tag : /firstName
+closing_tag : /Author
+opening_tag : Method
+data : Design Web
+closing_tag : /Method
+opening_tag : Tools
+opening_tag : Input
+data : output
+closing_tag : /Input
+opening_tag : SWOC
+data : Tool to analyse things
+closing_tag : /SWOC
+closing_tag : /Tools
+opening_tag : Date
+data : 10 February 2018
+closing_tag : /Date
+closing_tag : /Design
+closing_tag : /master
+
+3
+open data next close this: SWOC : Tool to analyse things
+open data next close stack size: 4
+open data next close top: SWOC : Tool to analyse things
+<SWOC>
+Tool to analyse things
+</SWOC>E_source: 
+File : ../datafiles/testAny.xml
+opening_tag : master
+data : 123
+opening_tag : tata
+data : 1
+opening_tag : toto
+data : 11
+opening_tag : truc
+data : 999
+closing_tag : /truc
+closing_tag : /toto
+opening_tag : lili
+data : 12
+closing_tag : /lili
+closing_tag : /tata
+opening_tag : titi
+data : 2
+opening_tag : toto
+data : 21
+closing_tag : /toto
+opening_tag : lolo
+data : 22
+closing_tag : /lolo
+closing_tag : /titi
+opening_tag : Design
+data : Food@Home
+opening_tag : Author
+data : test
+opening_tag : firstName
+data : Gweno
+closing_tag : /firstName
+closing_tag : /Author
+opening_tag : Method
+data : Design Web
+closing_tag : /Method
+opening_tag : Tools
+opening_tag : Input
+data : output
+closing_tag : /Input
+opening_tag : SWOC
+data : Tool to analyse things
+closing_tag : /SWOC
+closing_tag : /Tools
+opening_tag : Date
+data : 10 February 2018
+closing_tag : /Date
+closing_tag : /Design
+closing_tag : /master
+
+4
+close  this: SWOC : Tool to analyse things
+close  stack size: 3
+close  top: Tools : 
+close top.vE.back: SWOC : Tool to analyse things
+<SWOC>
+Tool to analyse things
+</SWOC>E_source: 
+File : ../datafiles/testAny.xml
+opening_tag : master
+data : 123
+opening_tag : tata
+data : 1
+opening_tag : toto
+data : 11
+opening_tag : truc
+data : 999
+closing_tag : /truc
+closing_tag : /toto
+opening_tag : lili
+data : 12
+closing_tag : /lili
+closing_tag : /tata
+opening_tag : titi
+data : 2
+opening_tag : toto
+data : 21
+closing_tag : /toto
+opening_tag : lolo
+data : 22
+closing_tag : /lolo
+closing_tag : /titi
+opening_tag : Design
+data : Food@Home
+opening_tag : Author
+data : test
+opening_tag : firstName
+data : Gweno
+closing_tag : /firstName
+closing_tag : /Author
+opening_tag : Method
+data : Design Web
+closing_tag : /Method
+opening_tag : Tools
+opening_tag : Input
+data : output
+closing_tag : /Input
+opening_tag : SWOC
+data : Tool to analyse things
+closing_tag : /SWOC
+closing_tag : /Tools
+opening_tag : Date
+data : 10 February 2018
+closing_tag : /Date
+closing_tag : /Design
+closing_tag : /master
+
+3
+close next open this: Tools : 
+close next open stack size: 2
+close next open top: Design : Food@Home
+close next open top.vE.back: Tools : 
+<Tools>
+
+    <Input>
+    output
+    </Input>
+    <SWOC>
+    Tool to analyse things
+    </SWOC>
+</Tools>E_source: 
+File : ../datafiles/testAny.xml
+opening_tag : master
+data : 123
+opening_tag : tata
+data : 1
+opening_tag : toto
+data : 11
+opening_tag : truc
+data : 999
+closing_tag : /truc
+closing_tag : /toto
+opening_tag : lili
+data : 12
+closing_tag : /lili
+closing_tag : /tata
+opening_tag : titi
+data : 2
+opening_tag : toto
+data : 21
+closing_tag : /toto
+opening_tag : lolo
+data : 22
+closing_tag : /lolo
+closing_tag : /titi
+opening_tag : Design
+data : Food@Home
+opening_tag : Author
+data : test
+opening_tag : firstName
+data : Gweno
+closing_tag : /firstName
+closing_tag : /Author
+opening_tag : Method
+data : Design Web
+closing_tag : /Method
+opening_tag : Tools
+opening_tag : Input
+data : output
+closing_tag : /Input
+opening_tag : SWOC
+data : Tool to analyse things
+closing_tag : /SWOC
+closing_tag : /Tools
+opening_tag : Date
+data : 10 February 2018
+closing_tag : /Date
+closing_tag : /Design
+closing_tag : /master
+
+2
+open data next close this: Date : 10 February 2018
+open data next close stack size: 3
+open data next close top: Date : 10 February 2018
+<Date>
+10 February 2018
+</Date>E_source: 
+File : ../datafiles/testAny.xml
+opening_tag : master
+data : 123
+opening_tag : tata
+data : 1
+opening_tag : toto
+data : 11
+opening_tag : truc
+data : 999
+closing_tag : /truc
+closing_tag : /toto
+opening_tag : lili
+data : 12
+closing_tag : /lili
+closing_tag : /tata
+opening_tag : titi
+data : 2
+opening_tag : toto
+data : 21
+closing_tag : /toto
+opening_tag : lolo
+data : 22
+closing_tag : /lolo
+closing_tag : /titi
+opening_tag : Design
+data : Food@Home
+opening_tag : Author
+data : test
+opening_tag : firstName
+data : Gweno
+closing_tag : /firstName
+closing_tag : /Author
+opening_tag : Method
+data : Design Web
+closing_tag : /Method
+opening_tag : Tools
+opening_tag : Input
+data : output
+closing_tag : /Input
+opening_tag : SWOC
+data : Tool to analyse things
+closing_tag : /SWOC
+closing_tag : /Tools
+opening_tag : Date
+data : 10 February 2018
+closing_tag : /Date
+closing_tag : /Design
+closing_tag : /master
+
+3
+close  this: Date : 10 February 2018
+close  stack size: 2
+close  top: Design : Food@Home
+close top.vE.back: Date : 10 February 2018
+<Date>
+10 February 2018
+</Date>E_source: 
+File : ../datafiles/testAny.xml
+opening_tag : master
+data : 123
+opening_tag : tata
+data : 1
+opening_tag : toto
+data : 11
+opening_tag : truc
+data : 999
+closing_tag : /truc
+closing_tag : /toto
+opening_tag : lili
+data : 12
+closing_tag : /lili
+closing_tag : /tata
+opening_tag : titi
+data : 2
+opening_tag : toto
+data : 21
+closing_tag : /toto
+opening_tag : lolo
+data : 22
+closing_tag : /lolo
+closing_tag : /titi
+opening_tag : Design
+data : Food@Home
+opening_tag : Author
+data : test
+opening_tag : firstName
+data : Gweno
+closing_tag : /firstName
+closing_tag : /Author
+opening_tag : Method
+data : Design Web
+closing_tag : /Method
+opening_tag : Tools
+opening_tag : Input
+data : output
+closing_tag : /Input
+opening_tag : SWOC
+data : Tool to analyse things
+closing_tag : /SWOC
+closing_tag : /Tools
+opening_tag : Date
+data : 10 February 2018
+closing_tag : /Date
+closing_tag : /Design
+closing_tag : /master
+
+2
+close  this: Design : Food@Home
+close  stack size: 1
+close  top: master : 123
+close top.vE.back: Design : Food@Home
+<Design>
+Food@Home
+    <Author>
+    test
+        <firstName>
+        Gweno
+        </firstName>
+    </Author>
+    <Method>
+    Design Web
+    </Method>
+    <Tools>
+    
+        <Input>
+        output
+        </Input>
+        <SWOC>
+        Tool to analyse things
+        </SWOC>
+    </Tools>
+    <Date>
+    10 February 2018
+    </Date>
+</Design>E_source: 
+File : ../datafiles/testAny.xml
+opening_tag : master
+data : 123
+opening_tag : tata
+data : 1
+opening_tag : toto
+data : 11
+opening_tag : truc
+data : 999
+closing_tag : /truc
+closing_tag : /toto
+opening_tag : lili
+data : 12
+closing_tag : /lili
+closing_tag : /tata
+opening_tag : titi
+data : 2
+opening_tag : toto
+data : 21
+closing_tag : /toto
+opening_tag : lolo
+data : 22
+closing_tag : /lolo
+closing_tag : /titi
+opening_tag : Design
+data : Food@Home
+opening_tag : Author
+data : test
+opening_tag : firstName
+data : Gweno
+closing_tag : /firstName
+closing_tag : /Author
+opening_tag : Method
+data : Design Web
+closing_tag : /Method
+opening_tag : Tools
+opening_tag : Input
+data : output
+closing_tag : /Input
+opening_tag : SWOC
+data : Tool to analyse things
+closing_tag : /SWOC
+closing_tag : /Tools
+opening_tag : Date
+data : 10 February 2018
+closing_tag : /Date
+closing_tag : /Design
+closing_tag : /master
+
+1
+close  this: master : 123
+close  stack size: 0
+<master>
+123
+    <tata>
+    1
+        <toto>
+        11
+            <truc>
+            999
+            </truc>
+        </toto>
+        <lili>
+        12
+        </lili>
+    </tata>
+    <titi>
+    2
+        <toto>
+        21
+        </toto>
+        <lolo>
+        22
+        </lolo>
+    </titi>
+    <Design>
+    Food@Home
+        <Author>
+        test
+            <firstName>
+            Gweno
+            </firstName>
+        </Author>
+        <Method>
+        Design Web
+        </Method>
+        <Tools>
+        
+            <Input>
+            output
+            </Input>
+            <SWOC>
+            Tool to analyse things
+            </SWOC>
+        </Tools>
+        <Date>
+        10 February 2018
+        </Date>
+    </Design>
+</master>E_source: 
+File : ../datafiles/testAny.xml
+opening_tag : master
+data : 123
+opening_tag : tata
+data : 1
+opening_tag : toto
+data : 11
+opening_tag : truc
+data : 999
+closing_tag : /truc
+closing_tag : /toto
+opening_tag : lili
+data : 12
+closing_tag : /lili
+closing_tag : /tata
+opening_tag : titi
+data : 2
+opening_tag : toto
+data : 21
+closing_tag : /toto
+opening_tag : lolo
+data : 22
+closing_tag : /lolo
+closing_tag : /titi
+opening_tag : Design
+data : Food@Home
+opening_tag : Author
+data : test
+opening_tag : firstName
+data : Gweno
+closing_tag : /firstName
+closing_tag : /Author
+opening_tag : Method
+data : Design Web
+closing_tag : /Method
+opening_tag : Tools
+opening_tag : Input
+data : output
+closing_tag : /Input
+opening_tag : SWOC
+data : Tool to analyse things
+closing_tag : /SWOC
+closing_tag : /Tools
+opening_tag : Date
+data : 10 February 2018
+closing_tag : /Date
+closing_tag : /Design
+closing_tag : /master
+
+
+testing rule processing
+
+<master>
+123
+    <tata>
+    1
+        <toto>
+        11
+            <truc>
+            999
+            </truc>
+        </toto>
+        <lili>
+        12
+        </lili>
+    </tata>
+    <titi>
+    2
+        <toto>
+        21
+        </toto>
+        <lolo>
+        22
+        </lolo>
+    </titi>
+    <Design>
+    Food@Home
+        <Author>
+        test
+            <firstName>
+            Gweno
+            </firstName>
+        </Author>
+        <Method>
+        Design Web
+        </Method>
+        <Tools>
+        
+            <Input>
+            output
+            </Input>
+            <SWOC>
+            Tool to analyse things
+            </SWOC>
+        </Tools>
+        <Date>
+        10 February 2018
+        </Date>
+    </Design>
+</master><File>
+../datafiles/testAny.xml
+    <opening_tag>
+    master
+    </opening_tag>
+    <data>
+    123
+    </data>
+    <opening_tag>
+    tata
+    </opening_tag>
+    <data>
+    1
+    </data>
+    <opening_tag>
+    toto
+    </opening_tag>
+    <data>
+    11
+    </data>
+    <opening_tag>
+    truc
+    </opening_tag>
+    <data>
+    999
+    </data>
+    <closing_tag>
+    /truc
+    </closing_tag>
+    <closing_tag>
+    /toto
+    </closing_tag>
+    <opening_tag>
+    lili
+    </opening_tag>
+    <data>
+    12
+    </data>
+    <closing_tag>
+    /lili
+    </closing_tag>
+    <closing_tag>
+    /tata
+    </closing_tag>
+    <opening_tag>
+    titi
+    </opening_tag>
+    <data>
+    2
+    </data>
+    <opening_tag>
+    toto
+    </opening_tag>
+    <data>
+    21
+    </data>
+    <closing_tag>
+    /toto
+    </closing_tag>
+    <opening_tag>
+    lolo
+    </opening_tag>
+    <data>
+    22
+    </data>
+    <closing_tag>
+    /lolo
+    </closing_tag>
+    <closing_tag>
+    /titi
+    </closing_tag>
+    <opening_tag>
+    Design
+    </opening_tag>
+    <data>
+    Food@Home
+    </data>
+    <opening_tag>
+    Author
+    </opening_tag>
+    <data>
+    test
+    </data>
+    <opening_tag>
+    firstName
+    </opening_tag>
+    <data>
+    Gweno
+    </data>
+    <closing_tag>
+    /firstName
+    </closing_tag>
+    <closing_tag>
+    /Author
+    </closing_tag>
+    <opening_tag>
+    Method
+    </opening_tag>
+    <data>
+    Design Web
+    </data>
+    <closing_tag>
+    /Method
+    </closing_tag>
+    <opening_tag>
+    Tools
+    </opening_tag>
+    <opening_tag>
+    Input
+    </opening_tag>
+    <data>
+    output
+    </data>
+    <closing_tag>
+    /Input
+    </closing_tag>
+    <opening_tag>
+    SWOC
+    </opening_tag>
+    <data>
+    Tool to analyse things
+    </data>
+    <closing_tag>
+    /SWOC
+    </closing_tag>
+    <closing_tag>
+    /Tools
+    </closing_tag>
+    <opening_tag>
+    Date
+    </opening_tag>
+    <data>
+    10 February 2018
+    </data>
+    <closing_tag>
+    /Date
+    </closing_tag>
+    <closing_tag>
+    /Design
+    </closing_tag>
+    <closing_tag>
+    /master
+    </closing_tag>
+</File>
+end
+--1--
+name: opening_tag
+data: master
+--2--
+--1--
+name: data
+data: 123
+--2--
+--1--
+name: opening_tag
+data: tata
+--2--
+--1--
+name: data
+data: 1
+--2--
+--1--
+name: opening_tag
+data: toto
+--2--
+--1--
+name: data
+data: 11
+--2--
+--1--
+name: opening_tag
+data: truc
+--2--
+--1--
+name: data
+data: 999
+--2--
+--1--
+name: closing_tag
+data: /truc
+--2--
+--1--
+name: closing_tag
+data: /toto
+--2--
+--1--
+name: opening_tag
+data: lili
+--2--
+--1--
+name: data
+data: 12
+--2--
+--1--
+name: closing_tag
+data: /lili
+--2--
+--1--
+name: closing_tag
+data: /tata
+--2--
+--1--
+name: opening_tag
+data: titi
+--2--
+--1--
+name: data
+data: 2
+--2--
+--1--
+name: opening_tag
+data: toto
+--2--
+--1--
+name: data
+data: 21
+--2--
+--1--
+name: closing_tag
+data: /toto
+--2--
+--1--
+name: opening_tag
+data: lolo
+--2--
+--1--
+name: data
+data: 22
+--2--
+--1--
+name: closing_tag
+data: /lolo
+--2--
+--1--
+name: closing_tag
+data: /titi
+--2--
+--1--
+name: opening_tag
+data: Design
+--2--
+--1--
+name: data
+data: Food@Home
+--2--
+--1--
+name: opening_tag
+data: Author
+--2--
+--1--
+name: data
+data: test
+--2--
+--1--
+name: opening_tag
+data: firstName
+--2--
+--1--
+name: data
+data: Gweno
+--2--
+--1--
+name: closing_tag
+data: /firstName
+--2--
+--1--
+name: closing_tag
+data: /Author
+--2--
+--1--
+name: opening_tag
+data: Method
+--2--
+--1--
+name: data
+data: Design Web
+--2--
+--1--
+name: closing_tag
+data: /Method
+--2--
+--1--
+name: opening_tag
+data: Tools
+--2--
+--1--
+name: opening_tag
+data: Input
+--2--
+--1--
+name: data
+data: output
+--2--
+--1--
+name: closing_tag
+data: /Input
+--2--
+--1--
+name: opening_tag
+data: SWOC
+--2--
+--1--
+name: data
+data: Tool to analyse things
+--2--
+--1--
+name: closing_tag
+data: /SWOC
+--2--
+--1--
+name: closing_tag
+data: /Tools
+--2--
+--1--
+name: opening_tag
+data: Date
+--2--
+--1--
+name: data
+data: 10 February 2018
+--2--
+--1--
+name: closing_tag
+data: /Date
+--2--
+--1--
+name: closing_tag
+data: /Design
+--2--
+--1--
+name: closing_tag
+data: /master
+--2--
+A
+B
+C
+Clearing name and Data
+Very end
+
+This is session 2
+
+Load testing set or User Input (or quit)? ('t'/'u'/'quit')
+Or load testing file to display for testing ('l')?
+[Inferior 1 (process 3237) exited normally]
+(gdb) q
