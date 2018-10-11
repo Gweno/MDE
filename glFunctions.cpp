@@ -141,7 +141,7 @@ float z_text=1;
 
 GLfloat matrix[16];
 
-//Init all method from glDisplay including constructors, destructors, static and non-static methodes
+//Init all member function from glDisplay including constructors, destructors, static and non-static member functions
 
 // --------init functions--------
 
@@ -857,7 +857,7 @@ if (!text_input_on){
         }
     }
 
-// ... to here: used to have method inherited from Entity -> not anymore as independant class now
+// ... to here: used to have member function inherited from Entity -> not anymore as independant class now
 
 }	// end of 'when text_input_on is off'
 

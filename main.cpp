@@ -61,7 +61,7 @@ std::vector<std::vector<float> > vTriangle_face;
         //~ std::vector<float> coordinate;
         std::vector<int> index;
         testEntity.load_XML_File_to_E("../datafiles/testCube0.xml");
-        testEntity.E_display_all(0);
+        testEntity.display_all(0);
         for (int f=0; f < 6 ; ++f)
         {
             
@@ -92,8 +92,9 @@ std::vector<std::vector<float> > vTriangle_face;
         std::vector<float> colors;
         std::vector< vector <float> > color_faces;
         
-        //~ testEntity.load_XML_File_to_E("../datafiles/testCube.xml");
-        testEntity.E_display_all(0);
+        testEntity.load_XML_File_to_E("../datafiles/testCube.xml");
+        const int n_space = 4;
+        testEntity.display_all(0, n_space);
         //~ testEntity.extractEColorDataToGL(colors, color_faces);
         int index=0;
         int level=0;
@@ -192,7 +193,7 @@ std::vector<std::vector<float> > vTriangle_face;
     // variables
         string key_input;
         int n=0;
-        
+        const int n_space = 2;
         E newEntity;
     
         while (key_input!="quit")
@@ -216,13 +217,13 @@ std::vector<std::vector<float> > vTriangle_face;
             
                 if (key_input!="quit")
                 {
-                    newEntity.E_set_name(key_input);
+                    newEntity.set_name(key_input);
                     std::cout << "enter data" << std::endl;
                     cin.ignore(); 
                     std:: getline(std:: cin, key_input);
                     if (key_input!="quit")
                     {
-                        newEntity.E_set_data(key_input);
+                        newEntity.set_data(key_input);
                     }
                     else return 0;
                 }
@@ -230,15 +231,15 @@ std::vector<std::vector<float> > vTriangle_face;
                 newEntity.input_E();
                 
                 std::cout << std::endl;
-                newEntity.print_formatted_E(0,"<",">","</",">");
+                newEntity.format_display(0,n_space,"<",">","</",">");
                 std::cout << std::endl;
                 std::cout << "Do you want to save the file?(y)" << std::endl;
                 std::cin >> key_input;
                 if (key_input=="y") newEntity.E_save_to_file();
                 
-            newEntity.delete_all_recursive();
-            newEntity.E_clear_name();
-            newEntity.E_clear_data();                
+            newEntity.clear_all_vE();
+            newEntity.clear_name();
+            newEntity.clear_data();                
             }
             else if (key_input=="l")
             {
@@ -247,50 +248,28 @@ std::vector<std::vector<float> > vTriangle_face;
                 if (key_input=="1") newEntity.load_XML_File_to_E("../datafiles/merte.xml");
                 if (key_input=="2") newEntity.load_XML_File_to_E("../datafiles/testEOF7.xml");
                 if (key_input=="3") newEntity.load_XML_File_to_E("../datafiles/testAny.xml");
-                newEntity.print_formatted_E(0,"<",">","</",">");
+                //~ newEntity.format_display(0,"<",">","</",">");
+                
+                newEntity.display_all(0, n_space);
 
-                //cleare and delete
-                newEntity.delete_all_recursive();
-                newEntity.E_clear_name();
-                newEntity.E_clear_data();
-            }
-            else if (key_input=="+")
-            {
-                std::vector<int> test_vect;
-                test_vect.push_back(0);
-                test_vect.push_back(2);
-                test_vect.push_back(0);
-                newEntity.display_vector_int(test_vect);
-                
-            newEntity.delete_all_recursive();
-            newEntity.E_clear_name();
-            newEntity.E_clear_data();
-            }
-            else if (key_input=="i")
-            {
-                std::cout<<"Enter the list of indexes separated by comma:" << std::endl;
-                std::cin >> key_input;
-                //~ std::vector<int> vect_index=newEntity.set_vector_of_indexes("1,2,3,4");
-                std::vector<int> vect_index=newEntity.set_vector_of_indexes(key_input);
-                newEntity.display_vector_int(vect_index);
-                
-            newEntity.delete_all_recursive();
-            newEntity.E_clear_name();
-            newEntity.E_clear_data();
+                //~ //cleare and delete
+                newEntity.clear_all_vE();
+                newEntity.clear_name();
+                newEntity.clear_data();
             }
             else if (key_input=="t")
             {
                 newEntity.testing();
                 std::cout << std::endl;
-                newEntity.print_formatted_E(0,"<",">","</",">");
+                newEntity.format_display(0,n_space,"<",">","</",">");
                 std::cout << std::endl;
                 std::cout << "Do you want to save the file?(y)" << std::endl;
                 std::cin >> key_input;
                 if (key_input=="y") newEntity.E_save_to_file();
                 
-                newEntity.delete_all_recursive();
-                newEntity.E_clear_name();
-                newEntity.E_clear_data();
+                newEntity.clear_all_vE();
+                newEntity.clear_name();
+                newEntity.clear_data();
             }
             else
             {

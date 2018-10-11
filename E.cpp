@@ -11,11 +11,8 @@
 #include <string>
 #include "glFunctions.h"
 
-//~ E::E()
-//~ {
-    //~ std::cout << "do nothing" << std::endl;
-//~ };
 
+//Constructors:
 E::E(){};
 
 E::E(std::string init_name, std::string init_data, std::vector<E*> init_vE)
@@ -28,8 +25,9 @@ E::E(std::string init_name, std::string init_data, std::vector<E*> init_vE)
     }
 }
 
+
 // Destructors:
-// Destructor at one level:
+
 E::~E()
 {
     // delete all memory pointed to in vE;
@@ -38,20 +36,67 @@ E::~E()
         delete *it;
     }
 };
-// :
 
-void E::delete_all_recursive()
+// member function to create new Entity
+
+void E::new_vE_element()
+{
+    this->vE.push_back(new E);
+};
+
+void E::set_name(std::string eName)
+{
+    this->name=eName;
+}
+
+void E::set_data(std::string data)
+{
+    this->data=data;
+}
+
+void E::set_name_vE_back(std::string vName)
+{
+    this->vE.back()->name = vName;
+};
+
+void E::set_data_vE_back(std::string vData)
+{
+    this->vE.back()->data = vData;
+};
+
+void E::set_name_vE_index(int index_vEe,string vName)
+{
+    this->vE.at(index_vEe)->name = vName;
+};
+
+void E::set_data_vE_index(int index_vEe,string vData)
+{
+    this->vE.at(index_vEe)->data = vData;
+};
+
+// Clear member functions;
+
+void E::clear_name()
+    {
+        this->set_name("");
+    }
+
+void E::clear_data()
+    {
+    this->set_data("");
+    }
+
+void E::clear_all_vE()
 {
     if (!this->vE.empty())
     {
         for (std::vector<E*>::iterator it_all=this->vE.begin();it_all!=this->vE.end();++it_all)
         {
-            (*it_all)->delete_all_recursive();
+            (*it_all)->clear_all_vE();
         }
         this->vE.clear();
     }
     else delete this;
-    
 }
 
 void E::delete_all_pt()
@@ -70,142 +115,62 @@ void E::destructor_E()
     this->data = "";
 }
 
-void E::vE_clear_all()
-{
-    for (std::vector<E*>::iterator it_all=this->vE.begin();it_all!=this->vE.end()-1;++it_all)
-    {
-        if (!this->vE.empty())
-        {
-            E * pt_to_E = (*it_all);
-            delete pt_to_E;
-            (*it_all)->vE_clear_all();
-            
-        }
-        else 
-        {
-            this->vE.clear();
-            break;
-        }
-    }
-    this->vE.clear();
-}
 
-void E::E_clear_name()
-    {
-        this->E_set_name("");
-    }
 
-void E::E_clear_data()
-    {
-    this->E_set_data("");
-    }
         
-// public methods
+// public member functions
 
 
-// E methods
-
-// Methode to create new Entity
-
-void E::new_vE_element()
-// Entity creates a new (pointers to) Entity in the vector vE
-// with a push_back.        
-{
-    this->vE.push_back(new E);
-};
-
-// set a name from a string into member 'name' of an instance of
-// an object of class E
-void E::E_set_name(string eName)
-{
-    this->name=eName;
-}
-
-// set a single data from a string into member 'data' of 
-//an instance of an object of class E
-void E::E_set_data(string data)
-{
-    this->data=data;
-}
-
-// Entity set name for its last Entity in the vector vE
-
-void E::set_last_vEe_name(string vName)
-{
-    this->vE.back()->name = vName;
-};
-// Entity set data for its last Entity in the vector vE
-
-void E::set_last_vEe_data(string vData)
-{
-    this->vE.back()->data = vData;
-};
-
-// Entity set name for an Entity in its vector of pointers
-// of Entities at a given index (no exception handling)
-
-void E::set_vEe_name(int index_vEe,string vName)
-{
-    this->vE.at(index_vEe)->name = vName;
-};
-
-// Entity set data for an Entity in its vector of pointers
-// of Entities at a given index (no exception handling)
-
-void E::set_vEe_data(int index_vEe,string vData)
-{
-    this->vE.at(index_vEe)->data = vData;
-};
 
 
-// get methods
+// get member functions
 
-void E::E_display_name()
+void E::display_name()
 // Entity gets its own name and display
 {
     std::cout << this->name << std::endl;
 }
 
-void E::E_display_data()
+void E::display_data()
 // Entity gets its own data and display
 {
     std::cout << this->data << std::endl;
 }
 
-void E::vE_display_all_names()
+void E::display_vE_names()
 {
     for (std::vector<E*>::iterator it=this->vE.begin();it!=this->vE.end();++it){
-        (*it)->E_display_name();
+        (*it)->display_name();
     }
 };
 
-void E::vE_display_all_data()
+void E::display_vE_data()
 {
     for (std::vector<E*>::iterator it=this->vE.begin();it!=this->vE.end();++it){
-        (*it)->E_display_data();
+        (*it)->display_data();
     }
 };
 
 
-void E::E_display_all(int n_space)
+void E::display_all(int n_indent, const int & n_space)
 {
-    std::string N_space(n_space*4,' ');
+    std::string N_space(n_indent*n_space,' ');
     std::cout << N_space ;
     std::cout << this->name << " : " << this->data << std::endl;
-    if (this->vE.size()!=0) n_space++;
+    if (this->vE.size()!=0) n_indent++;
     for (std::vector<E*>::iterator it_vE=this->vE.begin();it_vE!=this->vE.end();++it_vE)
         {
-            (*it_vE)->E_display_all(n_space);
+            (*it_vE)->display_all(n_indent, n_space);
         }
     return;
 };
 
-void E::print_formatted_E(int n_space, std::string start_opening_tag,
+void E::format_display(int n_indent, const int & n_space, std::string start_opening_tag,
             std::string end_opening_tag, std::string start_closing_tag,
             std::string end_closing_tag)
 {
     
-    std::string N_space(n_space*4,' ');
+    std::string N_space(n_indent*n_space,' ');
     std::cout << N_space ;
     std::cout<< start_opening_tag;
     std::cout << this->name;
@@ -215,10 +180,10 @@ void E::print_formatted_E(int n_space, std::string start_opening_tag,
     std::cout << this->data;
     std::cout << endl;
 
-    if (this->vE.size()!=0) n_space++;
+    if (this->vE.size()!=0) n_indent++;
     for (std::vector<E*>::iterator it=this->vE.begin();it!=this->vE.end();++it)
         {
-            (*it)->print_formatted_E(n_space, start_opening_tag,
+            (*it)->format_display(n_indent, n_space, start_opening_tag,
             end_opening_tag, start_closing_tag, end_closing_tag);
             std::cout << endl;
         }
@@ -248,12 +213,13 @@ void E::E_write_to_file(std::string start_opening_tag,
     return;
 };
 */
-void E::E_write_to_file(int &n_space, std::string start_opening_tag,
-            std::string end_opening_tag, std::string start_closing_tag,
-            std::string end_closing_tag, ostream &file)
+void E::E_write_to_file(int n_indent, const int & n_space,
+            std::string start_opening_tag, std::string end_opening_tag,
+            std::string start_closing_tag, std::string end_closing_tag,
+            ostream &file)
 {
     
-    std::string N_space(n_space*4,' ');
+    std::string N_space(n_indent*n_space,' ');
     file << N_space;
     file << start_opening_tag;
     file << this->name;
@@ -263,12 +229,12 @@ void E::E_write_to_file(int &n_space, std::string start_opening_tag,
     file << this->data;
     file << std::endl;
     
-    if (this->vE.size()!=0) n_space++;
+    if (this->vE.size()!=0) n_indent++;
     for (std::vector<E*>::iterator it=this->vE.begin();it!=this->vE.end();++it)
         {
-            (*it)->E_write_to_file(n_space, start_opening_tag,
+            (*it)->E_write_to_file(n_indent, n_space, start_opening_tag,
             end_opening_tag, start_closing_tag, end_closing_tag, file);
-            if (it == this->vE.end()-1) n_space--;
+            if (it == this->vE.end()-1) n_indent--;
             
         }
     
@@ -279,6 +245,7 @@ void E::E_write_to_file(int &n_space, std::string start_opening_tag,
     file << std::endl;
     return;
 };
+
 /*
 void E::E_write_to_E()
 {
@@ -330,7 +297,8 @@ void E::E_save_to_file(){
     char *FileNameOut = new char[75];
     char *ExtensionXML = new char[4];
     char *Path = new char[50];
-    int nb_space = 0;
+    int n_indent = 0;
+    const int n_space = 2;
     FileNameOut[0]=0;                   // to clear the array of Char
     strcpy(ExtensionXML,".xml");
     strcpy(Path,"../datafiles/");
@@ -343,19 +311,19 @@ void E::E_save_to_file(){
     //~ this->E_write_to_file("<",">","</",">", file);
     
     //~ this->E_write_to_file(0,"<",">","</",">", file);
-    this->E_write_to_file(nb_space,"<",">","</",">", file);
+    this->E_write_to_file(n_indent, n_space,"<",">","</",">", file);
 }
-
 
 
 void E::fetch_search_result(std::vector<E**> &search_result)
 {
+    const int n_space = 2;
     if (search_result.size()!=0)
     {
         for (std::vector<E**>::iterator it=search_result.begin();it!=search_result.end();++it)
         {
             //~ std::cout << (*(*it))->data << std::endl;
-            (*(*it))->print_formatted_E(0,"<",">","</",">");
+            (*(*it))->format_display(0,n_space,"<",">","</",">");
             std::cout << endl;
         }
     }
@@ -566,13 +534,13 @@ void E::input_E()
         if (key_input!="quit" && key_input!="end")
         {
             this->new_vE_element();
-            this->set_vEe_name(index,key_input);
+            this->set_name_vE_index(index,key_input);
             std::cout << "enter data" << std::endl;
             cin.ignore(); 
             std:: getline(std:: cin, key_input);                
             if (key_input!="quit")
             {
-                this->set_vEe_data(index,key_input);
+                this->set_data_vE_index(index,key_input);
                 index++;
             }
         }
@@ -671,25 +639,25 @@ void E::testing()
     this->vE.at(0)->new_vE_element();
     this->vE.at(1)->new_vE_element();
     this->vE.at(1)->new_vE_element();
-    this->E_set_name("master");
-    this->E_set_data("123");
-    this->set_vEe_name(0,"tata");
-    this->set_vEe_data(0,"1");
-    this->set_vEe_name(1,"titi");
-    this->set_vEe_data(1,"2");
-    //~ this->vE.at(0)->set_vEe_name(0,"lala");
-    this->vE.at(0)->set_vEe_name(0,"toto");
-    this->vE.at(0)->set_vEe_data(0,"11");
-    this->vE.at(0)->set_vEe_name(1,"lili");
-    this->vE.at(0)->set_vEe_data(1,"12");
-    this->vE.at(1)->set_vEe_name(0,"toto");
-    this->vE.at(1)->set_vEe_data(0,"21");
-    this->vE.at(1)->set_vEe_name(1,"lolo");
-    this->vE.at(1)->set_vEe_data(1,"22");
+    this->set_name("master");
+    this->set_data("123");
+    this->set_name_vE_index(0,"tata");
+    this->set_data_vE_index(0,"1");
+    this->set_name_vE_index(1,"titi");
+    this->set_data_vE_index(1,"2");
+    //~ this->vE.at(0)->set_name_vE_index(0,"lala");
+    this->vE.at(0)->set_name_vE_index(0,"toto");
+    this->vE.at(0)->set_data_vE_index(0,"11");
+    this->vE.at(0)->set_name_vE_index(1,"lili");
+    this->vE.at(0)->set_data_vE_index(1,"12");
+    this->vE.at(1)->set_name_vE_index(0,"toto");
+    this->vE.at(1)->set_data_vE_index(0,"21");
+    this->vE.at(1)->set_name_vE_index(1,"lolo");
+    this->vE.at(1)->set_data_vE_index(1,"22");
     
     this->vE.at(0)->vE.at(0)->new_vE_element();
-    this->vE.at(0)->vE.at(0)->set_vEe_name(0,"truc");
-    this->vE.at(0)->vE.at(0)->set_vEe_data(0,"999");
+    this->vE.at(0)->vE.at(0)->set_name_vE_index(0,"truc");
+    this->vE.at(0)->vE.at(0)->set_data_vE_index(0,"999");
 }
 
 void E::display_vector_int(std::vector<int>& vect_index) {
