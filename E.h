@@ -82,6 +82,7 @@ class E {
         ~E();
         
         // member functione to create new Entity:
+
          /**
          * 
          * ##name: new_vE_element()
@@ -363,19 +364,24 @@ class E {
             std::string end_opening_tag, std::string start_closing_tag,
             std::string end_closing_tag);
         
-        void fetch_search_result(std::vector<E**> &search_result);
-
-        void search_For(int & index, int & level, string searchName);
-
-        void simple_loop_VE(string searchName);
+        //TODO improve user_input_V() by using vector iterator instead of index
+         /**
+         * 
+         * ##name: user_input_V()
+         * 
+         * @param No arguments.
+         * @return Nothing is returned (void).
+         * @see set_name_vE_index().
+         * @see set_data_vE_index().
+         * @exception No exception handling.
+         * @brief This function member is for user to enter manually
+         * 'name' and 'data' of the main instance of E and recursively
+         * all sub-entities until 'end' is entered.
+         * The V is for Vertically because user enters higher level of
+         * instances of E first, then sub-entities for each instances.
+         */
+        void user_input_V();
         
-        void simple_loop_VE_next_level(string searchName);
-        
-        void input_E();
-    
-        void try_copy(int index);
-        
-
          /**
          * 
          * ##name: E_write_to_file()
@@ -384,17 +390,29 @@ class E {
          * @param start_closing_tag is a standard string corresponding to the start of the closing tag ("<\" for xml).
          * @param end_closing_tag is a standard string corresponding to the end of the closing tag (">" for xml).
          * @param &file (address of a file) is an ostream corresponding to the name of the file .
-         *  
          * @return Nothing is returned (void)
-         * 
+         * @see E_save_to_file()
+         * @exception No exception handling.
          * @brief This member function is to save the instance of a class into an XML file.
          * 
-         * @see E_save_to_file()
          */
-        //~ void E_write_to_file(std::string start_opening_tag,
+         
         void E_write_to_file(int n_indent, const int & n_space, std::string start_opening_tag,
             std::string end_opening_tag, std::string start_closing_tag,
             std::string end_closing_tag, ostream &file);
+        
+        void fetch_search_result(std::vector<E**> &search_result);
+
+        void search_For(int & index, int & level, string searchName);
+
+        void simple_loop_VE(string searchName);
+        
+        void simple_loop_VE_next_level(string searchName);
+        
+        
+    
+        void try_copy(int index);
+        
             
          /**
          * 

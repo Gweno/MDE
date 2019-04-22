@@ -3,21 +3,48 @@
 #define MAIN
 
 #define GLUT_DISABLE_ATEXIT_HACK
-#include <GL/gl.h>
-#include <GL/glut.h>
-#include <GL/freeglut.h>
+#define GLM_FORCE_RADIANS
+
 #include <stdio.h>
 #include <math.h>
 #include <iostream>
 #include <vector>
 #include <stack>
-#include "glFunctions.h"
 #include "E.h"
+
+#include <stdlib.h>
+#include <GL/glew.h>
+#include <GL/freeglut.h>
+#include <GL/glut.h>
+#include <GL/gl.h>
+#include <GL/freeglut.h>
+
+#include "glFunctions.h"
+#include "text.h"
+
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
+#include <ft2build.h>
+#include FT_FREETYPE_H
+
+#include "./common/shader_utils.h"
+
+// declarationfor text.cpp
+int window_width=800, window_height=600;
+const char *userText;
+uint userFontSize;
+GLfloat userRed,userGreen,userBlue;
+//~ FT_Library ft;
+//~ FT_Face face;
+const char *userFontFilename;
 
 
 // use of arguments for testing: '-e' execute main for new class E,
 // no argument execute the normal main for Entity,
 // "-gl" option is for the openGL testing
+// "-t" execute the text GL display with argument text,font size, r,g,b,font name.
 
 int main (int argc, char **argv)
 {
@@ -32,58 +59,10 @@ int main (int argc, char **argv)
     if (choice=="-gl")
     {
     
-    //~ //Create an instance of Entity
-    //~ Entity titi;
-    //~ Entity *toto= & titi;    
-
-    //~ E masterEntity;
-    //~ E *pt_masterEntity = &masterEntity;
-
-    //~ masterEntity.newEntity();
-    //~ dataFile::load_File = false;
-
         E testEntity;
 
         GLfloat MatSpec[] = {1.0,1.0,1.0,1.0};
         GLfloat MatShininess[] = {128.0};
-//~ GLfloat LightPos[] = {-1.0,1.0,0.0,0.0};
-//
-
-
-/*
-std::vector< vector <float> > vertex;
-std::vector<float> coordinate;
-std::vector< std::vector< std::vector <float> > > vCube3;
-std::vector<std::vector<float> > vTriangle_face;
-
-
-        //~ std::vector< vector <float> > vertex;
-        //~ std::vector<float> coordinate;
-        std::vector<int> index;
-        testEntity.load_XML_File_to_E("../datafiles/testCube0.xml");
-        testEntity.display_all(0);
-        for (int f=0; f < 6 ; ++f)
-        {
-            
-            for (int v=0; v < 4; ++v)
-            {
-                index = {f,v};
-                (testEntity.vE_get_by_index(index, index.begin()))->vE_copy_To_Vector_Float(coordinate);
-                vertex.push_back(coordinate);
-                //~ testVector_Display_2d(vertex);
-                coordinate.clear();
-            }
-            quads_to_triangles(vertex, vTriangle_face);
-            testVector_Display_2d(vertex);
-            testVector_Display_2d(vTriangle_face);
-            vCube3.push_back(vTriangle_face);
-            vTriangle_face.clear();
-            vertex.clear();
-        }
-        testVector_Display(vCube3);
-//      
-        vect2vect(vCube3);
-*/
 
         std::vector< vector <float> > vertex;
         std::vector<float> coordinate;
@@ -95,7 +74,6 @@ std::vector<std::vector<float> > vTriangle_face;
         testEntity.load_XML_File_to_E("../datafiles/testCube.xml");
         const int n_space = 4;
         testEntity.display_all(0, n_space);
-        //~ testEntity.extractEColorDataToGL(colors, color_faces);
         int index=0;
         int level=0;
         testEntity.search_For(index , level, "color");
@@ -104,10 +82,6 @@ std::vector<std::vector<float> > vTriangle_face;
         // transfer extracted data to vector in glFunctions scope
         vect2vect(vCube);
         vect2vect_colors(color_faces);
-    
-        // Create an instance of glDisplay Class
-        //~ glDisplay tata;
-        //~ dataFile dataGlEntity(0);
     
         // Initialise GLUT and setup the window
         int cursor = GLUT_CURSOR_INHERIT;
@@ -120,34 +94,25 @@ std::vector<std::vector<float> > vTriangle_face;
         glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE,
                       GLUT_ACTION_CONTINUE_EXECUTION);
 
-        // initialise the instance of glDisplay Class
-        //~ tata.initDisplay();
+        // initialise the glut Depth and Lighting
         initDisplay();
 
         // call the glut display functions
-        //~ glutDisplayFunc (tata.display);
         glutDisplayFunc (display);
-        //~ glutIdleFunc (tata.display);
         glutIdleFunc (display);
-        //~ glutReshapeFunc (tata.reshape);
         glutReshapeFunc (reshape);
     
         // Lighting option
         glShadeModel(GL_SMOOTH);
         glEnable(GL_DEPTH_TEST);
-        //~ glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, tata.MatSpec);
         glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, MatSpec);
-        //~ glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, tata.MatShininess);
         glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, MatShininess);
         glEnable(GL_LIGHTING);
         glEnable(GL_LIGHT0);
     
         // check glut event: keyboard and mouse
-        //~ glutPassiveMotionFunc(tata.mouseMovement); //check for Mouse movement with button up
         glutPassiveMotionFunc(mouseMovement); //check for Mouse movement with button up
-        //~ glutMotionFunc(tata.mouseMovement_Rclick); //check for Mouse movement with button down
         glutMotionFunc(mouseMovement_Rclick); //check for Mouse movement with button down
-        //~ glutKeyboardFunc(tata.keyDown);
         glutKeyboardFunc(keyDown);
     
         // set Mouse cursor image
@@ -185,8 +150,85 @@ std::vector<std::vector<float> > vTriangle_face;
         }
     }
 
+// argument is -t for text
+    else if(choice=="-t"){
+        glutInit(&argc, argv);
+        glutInitContextVersion(2,0);
+        //~ glutInitDisplayMode(GLUT_RGB);
+        glutInitDisplayMode(GLUT_RGBA|GLUT_ALPHA|GLUT_DOUBLE|GLUT_DEPTH);    
+        //~ glutInitWindowSize(640, 480);
+        glutInitWindowSize(window_width, window_height);
+        glutCreateWindow("Basic Text");
+    
+        if (argc > 2)
+            userText=argv[2];
+        else{
+            
+            std::cout << "Enter text" << std::endl;
+            std::string strtmp;
+            std::cin >> strtmp;
+            userText = strtmp.c_str();
+        }
+        if (argc > 3)
+            userFontSize=atoi(argv[3]);
+        else
+            userFontSize=48;
+            
+        if (argc > 4)
+            userRed = atof(argv[4]);
+        else
+            userRed = 1;
+        if (argc > 5)
+            userGreen = atof(argv[5]);
+        else
+            userGreen = 1;
+        if (argc > 6)
+            userBlue = atof(argv[6]);
+        else
+            userBlue = 1;
+    
+        std::cout << userRed << std::endl;
+        std::cout << userGreen << std::endl;
+        std::cout << userBlue << std::endl;
+        
+        if (argc > 7)
+            userFontFilename = argv[7];
+        else
+            userFontFilename = "./fonts/FreeSans.ttf";
+    
+        GLenum glew_status = glewInit();
+        
+        if (GLEW_OK != glew_status) {
+            fprintf(stderr, "Error: %s\n", glewGetErrorString(glew_status));
+            return 1;
+        }
+        
+        if (!GLEW_VERSION_2_0) {
+            fprintf(stderr, "No support for OpenGL 2.0 found\n");
+            return 1;
+        }
+        
+        if (init_font(userFontSize, userFontFilename)  && init_program()) {
+            //~ init_background(inputText,0,0);
+            init_color(userRed,userBlue,userGreen);
+            init_cube(userText,0,0,0);
+            
+            glutDisplayFunc(textDisplay);
+            glutIdleFunc(onIdle);
+            glEnable(GL_BLEND);
+            glEnable(GL_DEPTH_TEST);;
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            glutMainLoop();
+    
+        }
+        
+        free_resources();
+        return 0;
+    }
+
 // else argc
 
+// argument is -e for entity
     else if(argc==1 || choice=="-e")
     {
 
@@ -228,7 +270,7 @@ std::vector<std::vector<float> > vTriangle_face;
                     else return 0;
                 }
                 else return 0;
-                newEntity.input_E();
+                newEntity.user_input_V();
                 
                 std::cout << std::endl;
                 newEntity.format_display(0,n_space,"<",">","</",">");
@@ -279,6 +321,7 @@ std::vector<std::vector<float> > vTriangle_face;
         
     
     }
+    
     exit(0);
 }
 

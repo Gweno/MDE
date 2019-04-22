@@ -193,26 +193,46 @@ void E::format_display(int n_indent, const int & n_space, std::string start_open
     std::cout<< end_closing_tag;
     return;
 };
-/*
-void E::E_write_to_file(std::string start_opening_tag,
-            std::string end_opening_tag, std::string start_closing_tag,
-            std::string end_closing_tag, ostream &file)
+
+void E::user_input_V()
 {
-    file << start_opening_tag;
-    file << this->name;
-    file << end_opening_tag;
-    file << this->data;
-    for (std::vector<E*>::iterator it=this->vE.begin();it!=this->vE.end();++it)
+    string key_input;
+    int index=0;
+    
+    std::cout<< "Does Entity " << this->name << " : " << this->data << " has sub-entities (y/n)?" << std::endl;
+    std:: cin >> key_input;
+    if (key_input!="y") return;
+    
+    // loop to enter Entities at index > 0
+    while (key_input!="quit" && key_input!="end")
+    {
+        std::cout << "enter a name" << std::endl;
+        std:: cin >> key_input;
+        if (key_input!="quit" && key_input!="end")
         {
-            (*it)->E_write_to_file(start_opening_tag,
-            end_opening_tag, start_closing_tag, end_closing_tag, file);
+            this->new_vE_element();
+            this->set_name_vE_index(index,key_input);
+            std::cout << "enter data" << std::endl;
+            cin.ignore(); 
+            std:: getline(std:: cin, key_input);                
+            if (key_input!="quit")
+            {
+                this->set_data_vE_index(index,key_input);
+                index++;
+            }
         }
-    file << start_closing_tag;
-    file << this->name;
-    file << end_closing_tag;
+        else if (key_input=="end")
+        {
+            for (std::vector<E*>::iterator it=this->vE.begin();it!=this->vE.end();++it)
+            {
+                (*it)->user_input_V();                           //Where recursivity happen...
+            }
+        }
+    }
     return;
-};
-*/
+}
+
+
 void E::E_write_to_file(int n_indent, const int & n_space,
             std::string start_opening_tag, std::string end_opening_tag,
             std::string start_closing_tag, std::string end_closing_tag,
@@ -246,38 +266,6 @@ void E::E_write_to_file(int n_indent, const int & n_space,
     return;
 };
 
-/*
-void E::E_write_to_E()
-{
-    
-    std::string N_space(n_space*4,' ');
-    file << N_space;
-    file << start_opening_tag;
-    file << this->name;
-    file << end_opening_tag;
-    file << std::endl;
-    file << N_space;
-    file << this->data;
-    file << std::endl;
-    
-    if (this->vE.size()!=0) n_space++;
-    for (std::vector<E*>::iterator it=this->vE.begin();it!=this->vE.end();++it)
-        {
-            (*it)->E_write_to_file(n_space, start_opening_tag,
-            end_opening_tag, start_closing_tag, end_closing_tag, file);
-            if (it == this->vE.end()-1) n_space--;
-            
-        }
-    
-    file << N_space;
-    file << start_closing_tag;
-    file << this->name;
-    file << end_closing_tag;
-    file << std::endl;
-    return;
-};
-*/
-
 void E::print_flat_E()
 {
     std::cout << this->name << " : " << this->data << std::endl;
@@ -308,9 +296,6 @@ void E::E_save_to_file(){
     strcat(FileNameOut,FileName);
     strcat(FileNameOut, ExtensionXML);
     std::ofstream file(FileNameOut);
-    //~ this->E_write_to_file("<",">","</",">", file);
-    
-    //~ this->E_write_to_file(0,"<",">","</",">", file);
     this->E_write_to_file(n_indent, n_space,"<",">","</",">", file);
 }
 
@@ -322,7 +307,6 @@ void E::fetch_search_result(std::vector<E**> &search_result)
     {
         for (std::vector<E**>::iterator it=search_result.begin();it!=search_result.end();++it)
         {
-            //~ std::cout << (*(*it))->data << std::endl;
             (*(*it))->format_display(0,n_space,"<",">","</",">");
             std::cout << endl;
         }
@@ -517,44 +501,7 @@ void E::check_token(const std::string & token, std::string & element)
     }
 }
 
-void E::input_E()
-{
-    string key_input;
-    int index=0;
-    
-    std::cout<< "Does Entity " << this->name << " : " << this->data << " has sub-entities (y/n)?" << std::endl;
-    std:: cin >> key_input;
-    if (key_input!="y") return;
-    
-    // loop to enter Entities at index > 0
-    while (key_input!="quit" && key_input!="end")
-    {
-        std::cout << "enter a name" << std::endl;
-        std:: cin >> key_input;
-        if (key_input!="quit" && key_input!="end")
-        {
-            this->new_vE_element();
-            this->set_name_vE_index(index,key_input);
-            std::cout << "enter data" << std::endl;
-            cin.ignore(); 
-            std:: getline(std:: cin, key_input);                
-            if (key_input!="quit")
-            {
-                this->set_data_vE_index(index,key_input);
-                index++;
-            }
-        }
-        else if (key_input=="end")
-        {
-            for (std::vector<E*>::iterator it=this->vE.begin();it!=this->vE.end();++it)
-            {
-                (*it)->input_E();                           //Where recursivity happen...
-            }
-        }
-    }
-    return;
-    
-}
+
 
 void E::proc_it(E & E_proc, std::stack<E**> & stack_E_pt)
 {
@@ -718,7 +665,6 @@ std::vector<int> E::set_vector_of_indexes(std::string list_indexes)
     while ((pos = list_indexes.find(delimiter)) != std::string::npos) {
         token = list_indexes.substr(0, pos);
         std::cout << token;
-        //~ int num = std::stoi(token);         // convert string to int
         if(!(istringstream(token)>>num)) num=0;
         vect_index.push_back(num);
         list_indexes.erase(0, pos + delimiter.length());

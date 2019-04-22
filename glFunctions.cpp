@@ -901,7 +901,7 @@ if(diffy>0) ypos2 += ((float) diffy-250)/500;
 // need rework
 
 /*
- * TODO change coord sstem here too
+ * TODO change coord system here too
 void::coordinate(Entity * objEntity){
 
 Xpos.clear();
