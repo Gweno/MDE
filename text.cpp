@@ -640,12 +640,12 @@ void draw_cube(){
   //~ glDrawArrays(GL_TRIANGLES, 0, 3);
   
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_cube_elements);
-  int size;  glGetBufferParameteriv(GL_ELEMENT_ARRAY_BUFFER, GL_BUFFER_SIZE, &size);
-  glDrawElements(GL_TRIANGLES, size/sizeof(GLushort), GL_UNSIGNED_SHORT, 0);
-
-  glDisableVertexAttribArray(attribute_coord3d);
-  glDisableVertexAttribArray(attribute_v_color);
-  glutSwapBuffers();
+    int size;  glGetBufferParameteriv(GL_ELEMENT_ARRAY_BUFFER, GL_BUFFER_SIZE, &size);
+    glDrawElements(GL_TRIANGLES, size/sizeof(GLushort), GL_UNSIGNED_SHORT, 0);
+    
+    glDisableVertexAttribArray(attribute_coord3d);
+    glDisableVertexAttribArray(attribute_v_color);
+    glutSwapBuffers();
 }
 
 void textDisplay() {
@@ -679,7 +679,8 @@ void textDisplay() {
     FT_Set_Pixel_Sizes(face, 0, fontSize);
     glUniform4fv(uniform_color, 1, black);
     glUniform4fv(uniform_bgcolor, 1, bg_rgb);
-    render_text(inputText, 0.0, 0.0, sx, sy);
+    //~ render_text(inputText, 0.0, 0.0, sx, sy);
+    render_text(inputText, -1.5, 0.0, sx, sy);
 
     /* Drawing a cube */
     glUseProgram(program_cube);
@@ -717,6 +718,7 @@ void onIdle() {
 
 void onIdle() {
   float angle = glutGet(GLUT_ELAPSED_TIME) / 1000.0 * 45;  // 45° per second
+  //~ float angle = 0;
   screen_width=glutGet(GLUT_WINDOW_WIDTH);
   screen_height=glutGet(GLUT_WINDOW_HEIGHT);
   glm::vec3 axis_y(0, 1, 0);

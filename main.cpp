@@ -50,278 +50,349 @@ int main (int argc, char **argv)
 {
 
     std::string choice;
+    
+    // display arguments
     std::cout << "Have " << argc << " arguments:" << std::endl;
     for (int i = 0; i < argc; ++i) {
         std::cout << argv[i] << std::endl;
     }
+    
+    // execute different code corresponding to initial argument
     if (argc>1) choice= std::string(argv[1]);
     //~ if (argc==1){
-    if (choice=="-gl")
-    {
-    
-        E testEntity;
 
-        GLfloat MatSpec[] = {1.0,1.0,1.0,1.0};
-        GLfloat MatShininess[] = {128.0};
-
-        std::vector< vector <float> > vertex;
-        std::vector<float> coordinate;
-        std::vector< std::vector< std::vector <float> > > vCube;
-        std::vector<std::vector<float> > vTriangle_face;
-        std::vector<float> colors;
-        std::vector< vector <float> > color_faces;
-        
-        testEntity.load_XML_File_to_E("../datafiles/testCube.xml");
-        const int n_space = 4;
-        testEntity.display_all(0, n_space);
-        int index=0;
-        int level=0;
-        testEntity.search_For(index , level, "color");
-        testEntity.SearchResultsToVectorFloat(colors, color_faces);
-        testEntity.extractEVertexToGL(coordinate, vertex, vCube);
-        // transfer extracted data to vector in glFunctions scope
-        vect2vect(vCube);
-        vect2vect_colors(color_faces);
-    
-        // Initialise GLUT and setup the window
-        int cursor = GLUT_CURSOR_INHERIT;
-        
-        glutInit (&argc, argv);
-        glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
-        glutInitWindowSize (500, 500);
-        glutInitWindowPosition (700, 300);
-        glutCreateWindow ("Universe");
-        glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE,
-                      GLUT_ACTION_CONTINUE_EXECUTION);
-
-        // initialise the glut Depth and Lighting
-        initDisplay();
-
-        // call the glut display functions
-        glutDisplayFunc (display);
-        glutIdleFunc (display);
-        glutReshapeFunc (reshape);
-    
-        // Lighting option
-        glShadeModel(GL_SMOOTH);
-        glEnable(GL_DEPTH_TEST);
-        glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, MatSpec);
-        glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, MatShininess);
-        glEnable(GL_LIGHTING);
-        glEnable(GL_LIGHT0);
-    
-        // check glut event: keyboard and mouse
-        glutPassiveMotionFunc(mouseMovement); //check for Mouse movement with button up
-        glutMotionFunc(mouseMovement_Rclick); //check for Mouse movement with button down
-        glutKeyboardFunc(keyDown);
-    
-        // set Mouse cursor image
-        glutSetCursor(cursor);
-        
-        while (1)
+        // argument is -gl for openGL
+        if (choice=="-gl")
         {
-            // glut Loop
-            glutMainLoopEvent();
+        
+            E testEntity;
     
-            // Load "internal" file 1,2 or t
-            // TODO need to think about keeping dataFile class or not
-            /*
-            if (dataFile::load_File){
-                pt_masterEntity->clearEntity();
-                //~ glDisplay::resetIndex();
-                resetIndex();
-                //~ dataGlEntity.loadFile(glDisplay::keyChoice,toto);
-                dataGlEntity.loadFile(keyChoice,pt_masterEntity);
-                //~ tata.coordinate(toto);
-                // TODO need to replace coordinate function with new coord system
-                coordinate(pt_masterEntity);
-                // resetting keys
-                dataFile::load_File = false;
-                //~ glDisplay::keyChoice='\0';
-                keyChoice='\0';
-             }
-             */
+            GLfloat MatSpec[] = {1.0,1.0,1.0,1.0};
+            GLfloat MatShininess[] = {128.0};
     
-             
-             
-            //~ tata.display();
-            display();
-    
-        }
-    }
-
-// argument is -t for text
-    else if(choice=="-t"){
-        glutInit(&argc, argv);
-        glutInitContextVersion(2,0);
-        //~ glutInitDisplayMode(GLUT_RGB);
-        glutInitDisplayMode(GLUT_RGBA|GLUT_ALPHA|GLUT_DOUBLE|GLUT_DEPTH);    
-        //~ glutInitWindowSize(640, 480);
-        glutInitWindowSize(window_width, window_height);
-        glutCreateWindow("Basic Text");
-    
-        if (argc > 2)
-            userText=argv[2];
-        else{
+            std::vector< vector <float> > vertex;
+            std::vector<float> coordinate;
+            std::vector< std::vector< std::vector <float> > > vCube;
+            std::vector<std::vector<float> > vTriangle_face;
+            std::vector<float> colors;
+            std::vector< vector <float> > color_faces;
             
-            std::cout << "Enter text" << std::endl;
-            std::string strtmp;
-            std::cin >> strtmp;
-            userText = strtmp.c_str();
-        }
-        if (argc > 3)
-            userFontSize=atoi(argv[3]);
-        else
-            userFontSize=48;
+            testEntity.load_XML_File_to_E("../datafiles/testCube.xml");
+            const int n_space = 4;
+            testEntity.display_all(0, n_space);
+            int index=0;
+            int level=0;
+            testEntity.search_For(index , level, "color");
+            testEntity.SearchResultsToVectorFloat(colors, color_faces);
+            testEntity.extractEVertexToGL(coordinate, vertex, vCube);
+            // transfer extracted data to vector in glFunctions scope
+            vect2vect(vCube);
+            vect2vect_colors(color_faces);
+        
+            // Initialise GLUT and setup the window
+            int cursor = GLUT_CURSOR_INHERIT;
             
-        if (argc > 4)
-            userRed = atof(argv[4]);
-        else
-            userRed = 1;
-        if (argc > 5)
-            userGreen = atof(argv[5]);
-        else
-            userGreen = 1;
-        if (argc > 6)
-            userBlue = atof(argv[6]);
-        else
-            userBlue = 1;
+            glutInit (&argc, argv);
+            glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
+            glutInitWindowSize (500, 500);
+            glutInitWindowPosition (700, 300);
+            glutCreateWindow ("Universe");
+            glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE,
+                          GLUT_ACTION_CONTINUE_EXECUTION);
     
-        std::cout << userRed << std::endl;
-        std::cout << userGreen << std::endl;
-        std::cout << userBlue << std::endl;
-        
-        if (argc > 7)
-            userFontFilename = argv[7];
-        else
-            userFontFilename = "./fonts/FreeSans.ttf";
+            // initialise the glut Depth and Lighting
+            initDisplay();
     
-        GLenum glew_status = glewInit();
+            // call the glut display functions
+            glutDisplayFunc (display);
+            glutIdleFunc (display);
+            glutReshapeFunc (reshape);
         
-        if (GLEW_OK != glew_status) {
-            fprintf(stderr, "Error: %s\n", glewGetErrorString(glew_status));
-            return 1;
-        }
+            // Lighting option
+            glShadeModel(GL_SMOOTH);
+            glEnable(GL_DEPTH_TEST);
+            glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, MatSpec);
+            glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, MatShininess);
+            glEnable(GL_LIGHTING);
+            glEnable(GL_LIGHT0);
         
-        if (!GLEW_VERSION_2_0) {
-            fprintf(stderr, "No support for OpenGL 2.0 found\n");
-            return 1;
-        }
+            // check glut event: keyboard and mouse
+            glutPassiveMotionFunc(mouseMovement); //check for Mouse movement with button up
+            glutMotionFunc(mouseMovement_Rclick); //check for Mouse movement with button down
+            glutKeyboardFunc(keyDown);
         
-        if (init_font(userFontSize, userFontFilename)  && init_program()) {
-            //~ init_background(inputText,0,0);
-            init_color(userRed,userBlue,userGreen);
-            init_cube(userText,0,0,0);
+            // set Mouse cursor image
+            glutSetCursor(cursor);
             
-            glutDisplayFunc(textDisplay);
-            glutIdleFunc(onIdle);
-            glEnable(GL_BLEND);
-            glEnable(GL_DEPTH_TEST);;
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-            glutMainLoop();
-    
-        }
-        
-        free_resources();
-        return 0;
-    }
-
-// else argc
-
-// argument is -e for entity
-    else if(argc==1 || choice=="-e")
-    {
-
-    // variables
-        string key_input;
-        int n=0;
-        const int n_space = 2;
-        E newEntity;
-    
-        while (key_input!="quit")
-        {
-            std::cout << std::endl;
-            std::cout << "This is session " << ++n << std::endl;
-            std::cout << std::endl;
-            std::cout << "Load testing set or User Input (or quit)? ('t'/'u'/'quit')" << std::endl;
-            std::cout << "Or load testing file to display for testing ('l')?" << std::endl;
-            std::cin >> key_input;
-            if (key_input=="quit") 
+            while (1)
             {
-                return 0;
+                // glut Loop
+                glutMainLoopEvent();
+        
+                // Load "internal" file 1,2 or t
+                // TODO need to think about keeping dataFile class or not
+                /*
+                if (dataFile::load_File){
+                    pt_masterEntity->clearEntity();
+                    //~ glDisplay::resetIndex();
+                    resetIndex();
+                    //~ dataGlEntity.loadFile(glDisplay::keyChoice,toto);
+                    dataGlEntity.loadFile(keyChoice,pt_masterEntity);
+                    //~ tata.coordinate(toto);
+                    // TODO need to replace coordinate function with new coord system
+                    coordinate(pt_masterEntity);
+                    // resetting keys
+                    dataFile::load_File = false;
+                    //~ glDisplay::keyChoice='\0';
+                    keyChoice='\0';
+                 }
+                 */
+        
+                 
+                 
+                //~ tata.display();
+                display();
+        
             }
-            else if (key_input=="u")
-            {
-                std:: cout << "Enter name:" << std::endl;
-                std:: cout << "(Or type 'quit' anytime to quit)" << std::endl;
-                std:: cout << "(Or type 'end' in name when it is the last entity of the current level)" << std::endl;
-                std:: cin >> key_input;
+        }
+    
+        // argument is -t for text
+        else if(choice=="-t"){
+            glutInit(&argc, argv);
+            glutInitContextVersion(2,0);
+            //~ glutInitDisplayMode(GLUT_RGB);
+            glutInitDisplayMode(GLUT_RGBA|GLUT_ALPHA|GLUT_DOUBLE|GLUT_DEPTH);    
+            //~ glutInitWindowSize(640, 480);
+            glutInitWindowSize(window_width, window_height);
+            glutCreateWindow("Basic Text");
+        
+            if (argc > 2)
+                userText=argv[2];
+            else{
+                
+                std::cout << "Enter text" << std::endl;
+                std::string strtmp;
+                std::cin >> strtmp;
+                userText = strtmp.c_str();
+            }
+            if (argc > 3)
+                userFontSize=atoi(argv[3]);
+            else
+                userFontSize=48;
+                
+            if (argc > 4)
+                userRed = atof(argv[4]);
+            else
+                userRed = 1;
+            if (argc > 5)
+                userGreen = atof(argv[5]);
+            else
+                userGreen = 1;
+            if (argc > 6)
+                userBlue = atof(argv[6]);
+            else
+                userBlue = 1;
+        
+            std::cout << userRed << std::endl;
+            std::cout << userGreen << std::endl;
+            std::cout << userBlue << std::endl;
             
-                if (key_input!="quit")
+            if (argc > 7)
+                userFontFilename = argv[7];
+            else
+                userFontFilename = "./fonts/FreeSans.ttf";
+        
+            GLenum glew_status = glewInit();
+            
+            if (GLEW_OK != glew_status) {
+                fprintf(stderr, "Error: %s\n", glewGetErrorString(glew_status));
+                return 1;
+            }
+            
+            if (!GLEW_VERSION_2_0) {
+                fprintf(stderr, "No support for OpenGL 2.0 found\n");
+                return 1;
+            }
+            
+            if (init_font(userFontSize, userFontFilename)  && init_program()) {
+                //~ init_background(inputText,0,0);
+                init_color(userRed,userBlue,userGreen);
+                init_cube(userText,0,0,0);
+                
+                glutDisplayFunc(textDisplay);
+                glutIdleFunc(onIdle);
+                glEnable(GL_BLEND);
+                glEnable(GL_DEPTH_TEST);;
+                glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+                glutMainLoop();
+        
+            }
+            
+            free_resources();
+            return 0;
+        }
+    
+        // argument is -e for entity
+        else if(argc==1 || choice=="-e")
+        {
+    
+        // variables
+            string key_input;
+            int n=0;
+            const int n_space = 2;
+            E newEntity;
+        
+            while (key_input!="quit")
+            {
+                std::cout << std::endl;
+                std::cout << "This is session " << ++n << std::endl;
+                std::cout << std::endl;
+                std::cout << "Load testing set or User Input (or quit)? ('t'/'u'/'quit')" << std::endl;
+                std::cout << "Or load testing file to display for testing ('l')?" << std::endl;
+                std::cout << "Or load testing file and display with cubes ('c')?" << std::endl;
+                std::cin >> key_input;
+                if (key_input=="quit") 
                 {
-                    newEntity.set_name(key_input);
-                    std::cout << "enter data" << std::endl;
-                    cin.ignore(); 
-                    std:: getline(std:: cin, key_input);
+                    return 0;
+                }
+                else if (key_input=="u")
+                {
+                    std:: cout << "Enter name:" << std::endl;
+                    std:: cout << "(Or type 'quit' anytime to quit)" << std::endl;
+                    std:: cout << "(Or type 'end' in name when it is the last entity of the current level)" << std::endl;
+                    std:: cin >> key_input;
+                
                     if (key_input!="quit")
                     {
-                        newEntity.set_data(key_input);
+                        newEntity.set_name(key_input);
+                        std::cout << "enter data" << std::endl;
+                        cin.ignore(); 
+                        std:: getline(std:: cin, key_input);
+                        if (key_input!="quit")
+                        {
+                            newEntity.set_data(key_input);
+                        }
+                        else return 0;
                     }
                     else return 0;
+                    newEntity.user_input_V();
+                    
+                    std::cout << std::endl;
+                    newEntity.format_display(0,n_space,"<",">","</",">");
+                    std::cout << std::endl;
+                    std::cout << "Do you want to save the file?(y)" << std::endl;
+                    std::cin >> key_input;
+                    if (key_input=="y") newEntity.E_save_to_file();
+                    
+                newEntity.clear_all_vE();
+                newEntity.clear_name();
+                newEntity.clear_data();                
                 }
-                else return 0;
-                newEntity.user_input_V();
+                else if (key_input=="l")
+                {
+                    std::cout << "1 for single line XML or 2 for multiline, 3 for both" << std::endl; 
+                    std::cin >> key_input;
+                    if (key_input=="1") newEntity.load_XML_File_to_E("../datafiles/merte.xml");
+                    if (key_input=="2") newEntity.load_XML_File_to_E("../datafiles/testEOF7.xml");
+                    if (key_input=="3") newEntity.load_XML_File_to_E("../datafiles/testAny.xml");
+                    //~ newEntity.format_display(0,"<",">","</",">");
+                    
+                    newEntity.display_all(0, n_space);
+    
+                    //~ //cleare and delete
+                    newEntity.clear_all_vE();
+                    newEntity.clear_name();
+                    newEntity.clear_data();
+                }
+                else if (key_input=="t")
+                {
+                    newEntity.testing();
+                    std::cout << std::endl;
+                    newEntity.format_display(0,n_space,"<",">","</",">");
+                    std::cout << std::endl;
+                    std::cout << "Do you want to save the file?(y)" << std::endl;
+                    std::cin >> key_input;
+                    if (key_input=="y") newEntity.E_save_to_file();
+                    
+                    newEntity.clear_all_vE();
+                    newEntity.clear_name();
+                    newEntity.clear_data();
+                }
+                else if (key_input=="c")
+                {
+                    E newEntity;
+                    std::string inText;
+                    std::string inText2;
+                    std::string inText3;
+                    std::cout << "1 for single line XML or 2 for multiline, 3 for both" << std::endl; 
+                    std::cin >> key_input;
+                    if (key_input=="1") newEntity.load_XML_File_to_E("../datafiles/merte.xml");
+                    if (key_input=="2") newEntity.load_XML_File_to_E("../datafiles/testEOF7.xml");
+                    if (key_input=="3") newEntity.load_XML_File_to_E("../datafiles/testAny.xml");
+                    //~ newEntity.format_display(0,"<",">","</",">");
+                    
+                    newEntity.display_all(0, n_space);
+    
+                    glutInit(&argc, argv);
+                    glutInitContextVersion(2,0);
+                    glutInitDisplayMode(GLUT_RGBA|GLUT_ALPHA|GLUT_DOUBLE|GLUT_DEPTH);    
+                    glutInitWindowSize(window_width, window_height);
+                    glutCreateWindow("Basic Text");
+        
+                    inText = newEntity.name;
+                    inText2 = newEntity.data;
+                    inText3 = newEntity.get_name_vE_by_index(0);
+                    userFontSize=48;
+                    userRed = 0;
+                    userGreen = 1;
+                    userBlue = 1;
+                    userFontFilename = "./fonts/FreeSans.ttf";
+        
+                    GLenum glew_status = glewInit();
+                    
+                    if (GLEW_OK != glew_status) {
+                        fprintf(stderr, "Error: %s\n", glewGetErrorString(glew_status));
+                        return 1;
+                    }
+            
+                    if (!GLEW_VERSION_2_0) {
+                        fprintf(stderr, "No support for OpenGL 2.0 found\n");
+                        return 1;
+                    }
+            
+                    if (init_font(userFontSize, userFontFilename)  && init_program()) {
+                        //~ init_background(inputText,0,0);
+                        init_color(userRed,userBlue,userGreen);
+                        init_cube(inText.c_str(),-0.5,0,0);
+                        //~ init_cube(inText2.c_str(),0,0,0);
+                        //~ init_cube(inText3.c_str(),10,0,0);
+                        
+                        glutDisplayFunc(textDisplay);
+                        glutIdleFunc(onIdle);
+                        glEnable(GL_BLEND);
+                        glEnable(GL_DEPTH_TEST);;
+                        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+                        glutMainLoop();
                 
-                std::cout << std::endl;
-                newEntity.format_display(0,n_space,"<",">","</",">");
-                std::cout << std::endl;
-                std::cout << "Do you want to save the file?(y)" << std::endl;
-                std::cin >> key_input;
-                if (key_input=="y") newEntity.E_save_to_file();
+                    }
+                    
+                    free_resources();
+                    //~ //clear and delete
+                    newEntity.clear_all_vE();
+                    newEntity.clear_name();
+                    newEntity.clear_data();
+                    
+                }
                 
-            newEntity.clear_all_vE();
-            newEntity.clear_name();
-            newEntity.clear_data();                
+                else
+                {
+                    std::cout << "No comprendo" << std::endl;
+                }
             }
-            else if (key_input=="l")
-            {
-                std::cout << "1 for single line XML or 2 for multiline, 3 for both" << std::endl; 
-                std::cin >> key_input;
-                if (key_input=="1") newEntity.load_XML_File_to_E("../datafiles/merte.xml");
-                if (key_input=="2") newEntity.load_XML_File_to_E("../datafiles/testEOF7.xml");
-                if (key_input=="3") newEntity.load_XML_File_to_E("../datafiles/testAny.xml");
-                //~ newEntity.format_display(0,"<",">","</",">");
-                
-                newEntity.display_all(0, n_space);
-
-                //~ //cleare and delete
-                newEntity.clear_all_vE();
-                newEntity.clear_name();
-                newEntity.clear_data();
-            }
-            else if (key_input=="t")
-            {
-                newEntity.testing();
-                std::cout << std::endl;
-                newEntity.format_display(0,n_space,"<",">","</",">");
-                std::cout << std::endl;
-                std::cout << "Do you want to save the file?(y)" << std::endl;
-                std::cin >> key_input;
-                if (key_input=="y") newEntity.E_save_to_file();
-                
-                newEntity.clear_all_vE();
-                newEntity.clear_name();
-                newEntity.clear_data();
-            }
-            else
-            {
-                std::cout << "No comprendo" << std::endl;
-            }
+            
+        
         }
         
-    
-    }
-    
     exit(0);
 }
 

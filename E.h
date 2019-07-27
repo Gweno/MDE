@@ -174,6 +174,8 @@ class E {
          * to instances of class E.
          */
         void set_name_vE_index(int index_vEe,string vName);
+        
+        std::string get_name_vE_by_index(int index_vEe);
 
          /**
          * 
