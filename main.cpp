@@ -217,7 +217,8 @@ int main (int argc, char **argv)
             if (init_font(userFontSize, userFontFilename)  && init_program()) {
                 //~ init_background(inputText,0,0);
                 init_color(userRed,userBlue,userGreen);
-                init_cube(userText,0,0,0);
+                //~ init_cube(userText,0,0,0);
+                //~ init_cube(userText);
                 
                 glutDisplayFunc(textDisplay);
                 glutIdleFunc(onIdle);
@@ -342,6 +343,7 @@ int main (int argc, char **argv)
                     inText = newEntity.name;
                     inText2 = newEntity.data;
                     inText3 = newEntity.get_name_vE_by_index(0);
+                    
                     userFontSize=48;
                     userRed = 0;
                     userGreen = 1;
@@ -363,12 +365,26 @@ int main (int argc, char **argv)
                     if (init_font(userFontSize, userFontFilename)  && init_program()) {
                         //~ init_background(inputText,0,0);
                         init_color(userRed,userBlue,userGreen);
-                        init_cube(inText.c_str(),-0.5,0,0);
+                        init_text(inText.c_str());
+                        init_text_coordinates(0.5,-0.5, -0.5);
+                        //~ init_cube(inText.c_str(),-0.5,0,0);
                         //~ init_cube(inText2.c_str(),0,0,0);
                         //~ init_cube(inText3.c_str(),10,0,0);
                         
                         glutDisplayFunc(textDisplay);
                         glutIdleFunc(onIdle);
+                        
+                        init_text(inText2.c_str());
+                        init_text_coordinates(1,0.5, 0.0);
+                        //~ init_cube(inText.c_str(),-0.5,0,0);
+                        //~ init_cube(inText2.c_str(),0,0,0);
+                        //~ init_cube(inText3.c_str(),10,0,0);
+                        
+                        glutDisplayFunc(textDisplay);
+                        glutIdleFunc(onIdle);
+                        
+                        
+                        
                         glEnable(GL_BLEND);
                         glEnable(GL_DEPTH_TEST);;
                         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

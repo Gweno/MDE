@@ -67,6 +67,8 @@ struct vertex3D {
 };
 
 
+vertex3D text_coordinates ={0.0,0.0,0.0};
+
 FT_Library ft;
 FT_Face face;
 
@@ -236,6 +238,98 @@ void render_text(const char *text, float x, float y, float sx, float sy) {
     glDeleteTextures(1, &tex);
 }
 
+void render_text_Z(const char *text, float x, float y, float z, float sx, float sy) {
+    const char *p;
+    FT_GlyphSlot g = face->glyph;
+    
+    vertex2D texture_coord[4]={
+        {0,0},
+        {1,0},
+        {0,1},
+        {1,1}
+    };
+    
+    
+    /* Create a texture that will be used to hold one "glyph" */
+    GLuint tex;
+    
+    glActiveTexture(GL_TEXTURE0);
+    glGenTextures(1, &tex);
+    glBindTexture(GL_TEXTURE_2D, tex);
+    glUniform1i(uniform_tex, 0);
+    
+    /* We require 1 byte alignment when uploading texture data */
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    
+    /* Clamping to edges is important to prevent artifacts when scaling */
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    
+    /* Linear filtering usually looks best for text */
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    
+    /* Loop through all characters */
+    for (p = text; *p; p++) {
+        /* Try to load and render the character */
+        if (FT_Load_Char(face, *p, FT_LOAD_RENDER))
+            continue;
+    
+        /* Upload the "bitmap", which contains an 8-bit grayscale image, as an alpha texture */
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, g->bitmap.width, g->bitmap.rows, 0, GL_ALPHA, GL_UNSIGNED_BYTE, g->bitmap.buffer);
+    
+        /* Calculate the vertex and texture coordinates */
+        float x2 = x + g->bitmap_left * sx;
+        float y2 = -y - g->bitmap_top * sy;
+        float w = g->bitmap.width * sx;
+        float h = g->bitmap.rows * sy;
+    
+    //TODO understand the logic for the coordinates here:
+        //~ vertex2D box[4] = {
+            //~ {x2, -y2},
+            //~ {x2 + w, -y2},
+            //~ {x2, -y2 - h},
+            //~ {x2 + w, -y2 - h},
+        //~ };
+        vertex3D box[4] = {
+            {x2, -y2, z},
+            {x2 + w, -y2, z},
+            {x2, -y2 - h, z},
+            {x2 + w, -y2 - h, z},
+        };
+
+    
+    /* Set up the VBO for our vertex data */
+    glEnableVertexAttribArray(attribute_coord);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo_coord);
+    //~ glVertexAttribPointer(attribute_coord, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    glVertexAttribPointer(attribute_coord, 3, GL_FLOAT, GL_FALSE, 0, 0);
+        
+
+    /* Draw the character on the screen */
+    glBufferData(GL_ARRAY_BUFFER, sizeof box, box, GL_DYNAMIC_DRAW);
+        
+    /* Set up the VBO for our vertex data */
+    glEnableVertexAttribArray(attribute_tex_coord);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo_tex_coord);
+    glVertexAttribPointer(attribute_tex_coord, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    glBufferData(GL_ARRAY_BUFFER, sizeof texture_coord, texture_coord, GL_DYNAMIC_DRAW);
+        
+        
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    
+        // Advance the cursor to the start of the next character
+        // The '>> 6' operation is to slice in 2^6=64 bits because
+        // g->advance is measured in 1/64 pixels
+        x += (g->advance.x >> 6) * sx;
+        y += (g->advance.y >> 6) * sy;
+    }
+
+    glDisableVertexAttribArray(attribute_coord);
+    glDisableVertexAttribArray(attribute_tex_coord);
+    glDeleteTextures(1, &tex);
+}
+
 void init_background(const char *text, float x, float y) {
     const char *p;
 
@@ -318,8 +412,19 @@ void init_color(GLfloat colorRed,GLfloat colorGreen,GLfloat colorBlue)
     glBufferData(GL_ARRAY_BUFFER,sizeof(vertices_color), vertices_color, GL_STATIC_DRAW);
 }
 
+void init_text_coordinates(float x, float y, float z) {
+    
+    text_coordinates = {x,y,z};
+    
+}
+
 void init_cube(const char *text, float x, float y, float z) {
+//~ void init_cube(const char *text) {
     const char *p;
+    
+    //~ GLfloat x = text_coordinates.x;
+    //~ GLfloat y = text_coordinates.y;
+    //~ GLfloat z = text_coordinates.z;
     
     inputText=text;
     FT_Set_Pixel_Sizes(face, 0, fontSize);
@@ -346,7 +451,12 @@ for (p = text; *p; p++) {
     }
     
     // to have a gap between border and text, we set up a padding 
-    float padding=0.3;
+    //~ float padding=0.3;
+    float horizontal_padding=0.5;
+    float vertical_padding=0.1;
+    
+    if (x<0.0) horizontal_padding=-horizontal_padding;
+    if (y<0.0) vertical_padding=-vertical_padding;
     
     //We use -y instead of y because we stored the bitmap_top-height in
     // y which is the origin of the y axis in freetype, so it's inverted
@@ -376,29 +486,44 @@ for (p = text; *p; p++) {
         //~ {x + s+padding, s+padding,z-s-padding},
         //~ };
     vertex3D vertex_coord2[8] = {
+        //~ //front
+        //~ {x-padding, -y-padding, z },
+        //~ {x + s+padding, -y-padding, z},
+        //~ {x + s+padding, s+padding,z},
+        //~ {x-padding, s+padding, z},
+        //~ //back
+        //~ {x-padding, -y-padding, z -s-padding },
+        //~ {x + s+padding, -y-padding, z-s-padding},
+        //~ {x + s+padding, s+padding,z-s-padding},
+        //~ {x-padding, s+padding, z-s-padding},
+        //~ };
         //front
-        {x-padding, -y-padding, z },
-        {x + s+padding, -y-padding, z},
-        {x + s+padding, s+padding,z},
-        {x-padding, s+padding, z},
+        {x-horizontal_padding, -y-vertical_padding, z },
+        {x + w+horizontal_padding, -y-vertical_padding, z},
+        {x + w+horizontal_padding, -y + h+vertical_padding,z},
+        {x-horizontal_padding, -y + h+vertical_padding, z},
         //back
-        {x-padding, -y-padding, z -s-padding },
-        {x + s+padding, -y-padding, z-s-padding},
-        {x + s+padding, s+padding,z-s-padding},
-        {x-padding, s+padding, z-s-padding},
+        {x-horizontal_padding, -y-vertical_padding, z -s },
+        {x + w +horizontal_padding, -y-vertical_padding, z-s},
+        {x + w +horizontal_padding, -y + h +vertical_padding,z-s},
+        {x-horizontal_padding, -y + h +vertical_padding, z-s},
         };
 
         //front
-        std::cout << x-padding << " , " << -y-padding << " , " << z  << std::endl;
-        std::cout << x + s+padding << " , " << -y-padding << " , " << z << std::endl;
-        std::cout << x + s+padding << " , " << s+padding << " , " <<z << std::endl;
-        std::cout << x-padding << " , " << s+padding << " , " << z << std::endl;
+        std::cout << x-horizontal_padding << " , " << -y-vertical_padding << " , " << z  << std::endl;
+        std::cout << x + w+horizontal_padding << " , " << -y-vertical_padding << " , " << z << std::endl;
+        std::cout << x + w+horizontal_padding << " , " << -y + h+vertical_padding << " , " <<z << std::endl;
+        std::cout << x-horizontal_padding << " , " << -y + h+vertical_padding << " , " << z << std::endl;
         std::cout << std::endl;
         //back
-        std::cout << x-padding << " , " << -y-padding << " , " << z -s-padding  << std::endl;
-        std::cout << x + s+padding << " , " << -y-padding << " , " << z-s-padding << std::endl;
-        std::cout << x + s+padding << " , " << s+padding << " , " <<z-s-padding << std::endl;
-        std::cout << x-padding << " , " << s+padding << " , " << z-s-padding << std::endl;
+        std::cout << x-horizontal_padding << " , " << -y-vertical_padding << " , " << z -s  << std::endl;
+        std::cout << x + w+horizontal_padding << " , " << -y-vertical_padding << " , " << z-s << std::endl;
+        std::cout << x + w+horizontal_padding << " , " << -y + h+vertical_padding << " , " <<z-s << std::endl;
+        std::cout << x-horizontal_padding << " , " << -y + h+vertical_padding << " , " << z-s << std::endl;
+        
+        //padding
+        std::cout << std::endl;
+        std::cout << horizontal_padding << " , " << vertical_padding << std::endl;
 
 
     glGenBuffers(1,&vbo_vertices);
@@ -648,10 +773,33 @@ void draw_cube(){
     glutSwapBuffers();
 }
 
+
+void init_text(const char *text) {
+    
+    inputText=text;
+    
+}
+
 void textDisplay() {
 
     float sx = 2.0 / glutGet(GLUT_WINDOW_WIDTH);
     float sy = 2.0 / glutGet(GLUT_WINDOW_HEIGHT);
+    
+    //~ float x =  -1.5;
+    //~ float y =  -1.0;
+    //~ float z =  0.0;
+    
+    GLfloat x = text_coordinates.x;
+    GLfloat y = text_coordinates.y;
+    GLfloat z = text_coordinates.z;
+    
+    // working on cube associated
+    //~ init_cube(inText.c_str(),-0.5,0,0);
+    
+    
+    init_cube(inputText, x,-y,z);
+    //~ init_cube(inputText);
+    
     
     /* White background */
     glClearColor(1, 1, 1, 1);
@@ -680,7 +828,9 @@ void textDisplay() {
     glUniform4fv(uniform_color, 1, black);
     glUniform4fv(uniform_bgcolor, 1, bg_rgb);
     //~ render_text(inputText, 0.0, 0.0, sx, sy);
-    render_text(inputText, -1.5, 0.0, sx, sy);
+    //~ render_text(inputText, -1.5, 0.0, sx, sy);
+    //~ render_text(inputText, x, y, sx, sy);
+    render_text_Z(inputText, x, y, z, sx, sy);
 
     /* Drawing a cube */
     glUseProgram(program_cube);
@@ -717,22 +867,25 @@ void onIdle() {
 */
 
 void onIdle() {
-  float angle = glutGet(GLUT_ELAPSED_TIME) / 1000.0 * 45;  // 45° per second
-  //~ float angle = 0;
-  screen_width=glutGet(GLUT_WINDOW_WIDTH);
-  screen_height=glutGet(GLUT_WINDOW_HEIGHT);
-  glm::vec3 axis_y(0, 1, 0);
-  glm::vec3 axis_z(0, 0, 1);
-  glm::mat4 anim = glm::rotate(glm::mat4(1.0f), glm::radians(angle), axis_y);
-  glm::mat4 anim2 = glm::rotate(glm::mat4(1.0f), glm::radians(angle), axis_z);
-
-  glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0, 0.0, -1.0));
-  glm::mat4 view = glm::lookAt(glm::vec3(0.0, 0.0, 2.0), glm::vec3(0.0, 0.0,-1.0), glm::vec3(0.0, 1.0, 0.0));//eye,center,up
-  glm::mat4 projection = glm::perspective(45.0f, 1.0f*screen_width/screen_height, 0.1f, 10.0f);
-
-  glm::mat4 m_transform = projection * view * model * anim2 * anim;
-  //~ glm::mat4 m_transform = projection * view * model;
-
+    float move = sinf(glutGet(GLUT_ELAPSED_TIME) / 1000.0 * (2*3.14) / 10); // -1<->+1 every 5 seconds
+    float angle = glutGet(GLUT_ELAPSED_TIME) / 1000.0 * 45;  // 45° per second
+    //~ float move = 0;
+    //~ float angle = 0;
+    screen_width=glutGet(GLUT_WINDOW_WIDTH);
+    screen_height=glutGet(GLUT_WINDOW_HEIGHT);
+    glm::vec3 axis_y(0, 1, 0);
+    glm::vec3 axis_z(0, 0, 1);
+    glm::mat4 m_translate = glm::translate(glm::mat4(1.0f), glm::vec3(0.0, 0.0 ,move));
+    glm::mat4 anim = glm::rotate(glm::mat4(1.0f), glm::radians(angle), axis_y);
+    glm::mat4 anim2 = glm::rotate(glm::mat4(1.0f), glm::radians(angle), axis_z);
+    
+    glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0, 0.0, -1.0));
+    glm::mat4 view = glm::lookAt(glm::vec3(0.0, 0.0, 2.0), glm::vec3(0.0, 0.0,-1.0), glm::vec3(0.0, 1.0, 0.0));//eye,center,up
+    glm::mat4 projection = glm::perspective(45.0f, 1.0f*screen_width/screen_height, 0.1f, 10.0f);
+    
+    glm::mat4 m_transform = projection * view * model * m_translate * anim2 * anim;
+    //~ glm::mat4 m_transform = projection * view * model;
+    
     // program_bg is for the colored cube
     glUseProgram(program_cube);
     glUniformMatrix4fv(uniform_m_transform, 1, GL_FALSE, glm::value_ptr(m_transform));
@@ -744,9 +897,9 @@ void onIdle() {
     
     glutPostRedisplay();
     
-  //~ glUseProgram(program);
-  //~ glUniformMatrix4fv(uniform_m_transform, 1, GL_FALSE, glm::value_ptr(m_transform));
-  //~ glutPostRedisplay();
+    //~ glUseProgram(program);
+    //~ glUniformMatrix4fv(uniform_m_transform, 1, GL_FALSE, glm::value_ptr(m_transform));
+    //~ glutPostRedisplay();
 }
 
 void free_resources() {
