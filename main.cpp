@@ -325,12 +325,32 @@ int main (int argc, char **argv)
                     std::string inText;
                     std::string inText2;
                     std::string inText3;
-                    std::cout << "1 for single line XML or 2 for multiline, 3 for both" << std::endl; 
-                    std::cin >> key_input;
-                    if (key_input=="1") newEntity.load_XML_File_to_E("../datafiles/merte.xml");
-                    if (key_input=="2") newEntity.load_XML_File_to_E("../datafiles/testEOF7.xml");
-                    if (key_input=="3") newEntity.load_XML_File_to_E("../datafiles/testAny.xml");
+                    //~ std::cout << "1 for single line XML or 2 for multiline, 3 for both" << std::endl; 
+                    //~ std::cin >> key_input;
+                    //~ if (key_input=="1") newEntity.load_XML_File_to_E("../datafiles/merte.xml");
+                    //~ if (key_input=="2") newEntity.load_XML_File_to_E("../datafiles/testEOF7.xml");
+                    //~ if (key_input=="3") newEntity.load_XML_File_to_E("../datafiles/testAny.xml");
+                    newEntity.load_XML_File_to_E("../datafiles/testAny.xml");
                     //~ newEntity.format_display(0,"<",">","</",">");
+                    
+                    std::cout << "Enter coordinates" << std::endl;
+                    float X_user ;
+                    float Y_user ;
+                    float Z_user ;
+                    
+                    std::cin >> X_user ;
+                    std::cin >> Y_user ;
+                    std::cin >> Z_user ;
+                    std::cout << std::endl;
+                    std::cout << "You have chosen coordinates: " << X_user << ", "<< Y_user << ", "<< Z_user << std::endl;
+                    std::cout << "Enter padding" << std::endl;
+                    float H_padding_user ;
+                    float V_padding_user ;
+                    std::cin >> H_padding_user ;
+                    std::cin >> V_padding_user ;
+                    std::cout << "You have chosen padding: " << H_padding_user << ", "<< V_padding_user << std::endl;
+                    
+                    
                     
                     newEntity.display_all(0, n_space);
     
@@ -365,20 +385,23 @@ int main (int argc, char **argv)
                     if (init_font(userFontSize, userFontFilename)  && init_program()) {
                         //~ init_background(inputText,0,0);
                         init_color(userRed,userBlue,userGreen);
-                        init_text(inText.c_str());
-                        init_text_coordinates(0.5,-0.5, -0.5);
+                        //~ init_text(inText.c_str());
+                        //~ init_text_coordinates(0.5,-0.5, -0.5);
                         //~ init_cube(inText.c_str(),-0.5,0,0);
                         //~ init_cube(inText2.c_str(),0,0,0);
                         //~ init_cube(inText3.c_str(),10,0,0);
                         
-                        glutDisplayFunc(textDisplay);
-                        glutIdleFunc(onIdle);
+                        //~ glutDisplayFunc(textDisplay);
+                        //~ glutIdleFunc(onIdle);
                         
-                        init_text(inText2.c_str());
-                        init_text_coordinates(1,0.5, 0.0);
+                        //~ init_text(inText2.c_str());
+                        //~ init_text_coordinates(1,-1.5, -0.5);
+                        //~ init_text_coordinates(X_user,Y_user, Z_user);
+                        init_text(inText.c_str(),X_user,Y_user, Z_user, H_padding_user,V_padding_user);
                         //~ init_cube(inText.c_str(),-0.5,0,0);
                         //~ init_cube(inText2.c_str(),0,0,0);
                         //~ init_cube(inText3.c_str(),10,0,0);
+                        init_cube(inText.c_str(), X_user,-Y_user,Z_user);
                         
                         glutDisplayFunc(textDisplay);
                         glutIdleFunc(onIdle);

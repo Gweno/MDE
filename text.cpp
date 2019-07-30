@@ -68,6 +68,7 @@ struct vertex3D {
 
 
 vertex3D text_coordinates ={0.0,0.0,0.0};
+vertex2D padding ={0.0,0.0};
 
 FT_Library ft;
 FT_Face face;
@@ -412,11 +413,6 @@ void init_color(GLfloat colorRed,GLfloat colorGreen,GLfloat colorBlue)
     glBufferData(GL_ARRAY_BUFFER,sizeof(vertices_color), vertices_color, GL_STATIC_DRAW);
 }
 
-void init_text_coordinates(float x, float y, float z) {
-    
-    text_coordinates = {x,y,z};
-    
-}
 
 void init_cube(const char *text, float x, float y, float z) {
 //~ void init_cube(const char *text) {
@@ -435,6 +431,7 @@ void init_cube(const char *text, float x, float y, float z) {
     FT_GlyphSlot g = face->glyph;
     float w = 0;
     float h = 0;
+    float tot_h=0;
 
 for (p = text; *p; p++) {
         /* Try to load and render the character */
@@ -446,16 +443,21 @@ for (p = text; *p; p++) {
     
         w += (g->advance.x >> 6) * sx;
         h = std::max(h, g->bitmap_top*sy);
-        y = std::max(y, (g->bitmap.rows - g->bitmap_top)*sy);
+        //~ y = std::max(y, (g->bitmap.rows - g->bitmap_top)*sy);
+        tot_h = std::max(tot_h, (g->bitmap.rows - g->bitmap_top)*sy);
+        std::cout << "y: " << y << std::endl;
+        std::cout << "tot_h: " << tot_h << std::endl;
 
     }
     
     // to have a gap between border and text, we set up a padding 
     //~ float padding=0.3;
-    float horizontal_padding=0.5;
-    float vertical_padding=0.1;
+    //~ float horizontal_padding=0.5;
+    //~ float vertical_padding=0.5;
+    float horizontal_padding=padding.x;
+    float vertical_padding=padding.y;
     
-    if (x<0.0) horizontal_padding=-horizontal_padding;
+    //~ if (x<0.0) horizontal_padding=-horizontal_padding;
     if (y<0.0) vertical_padding=-vertical_padding;
     
     //We use -y instead of y because we stored the bitmap_top-height in
@@ -465,6 +467,7 @@ for (p = text; *p; p++) {
     // to get a square we keep the bigger of w and h,
     // it should always be w
     float s=w;
+    h = tot_h;
     //~ if (h>w) s=h;
 
     //~ vertex2D vertex_coord[4] = {
@@ -498,9 +501,13 @@ for (p = text; *p; p++) {
         //~ {x-padding, s+padding, z-s-padding},
         //~ };
         //front
+        //~ {x-horizontal_padding, -y-vertical_padding, z },
+        //~ {x + w+horizontal_padding, -y-vertical_padding, z},
+        //~ {x + w+horizontal_padding, -y + h+vertical_padding,z},
+        //~ {x-horizontal_padding, -y + h+vertical_padding, z},
         {x-horizontal_padding, -y-vertical_padding, z },
-        {x + w+horizontal_padding, -y-vertical_padding, z},
-        {x + w+horizontal_padding, -y + h+vertical_padding,z},
+        {x + w +horizontal_padding, -y-vertical_padding, z},
+        {x + w +horizontal_padding, -y + h+vertical_padding,z},
         {x-horizontal_padding, -y + h+vertical_padding, z},
         //back
         {x-horizontal_padding, -y-vertical_padding, z -s },
@@ -523,7 +530,11 @@ for (p = text; *p; p++) {
         
         //padding
         std::cout << std::endl;
+        std::cout << "horizontal_padding , vertical_padding" << std::endl;
         std::cout << horizontal_padding << " , " << vertical_padding << std::endl;
+        std::cout << "x,y,z,w,h,s" << std::endl;
+        std::cout << x << " , " << y <<" , " << z <<" , " << w <<" , " << h <<" , " << s << std::endl;
+        
 
 
     glGenBuffers(1,&vbo_vertices);
@@ -774,10 +785,12 @@ void draw_cube(){
 }
 
 
-void init_text(const char *text) {
+void init_text(const char *text,float x, float y, float z, float h_padding, float v_padding) {
     
     inputText=text;
-    
+    text_coordinates = {x,y,z};
+    padding = {h_padding,v_padding};
+
 }
 
 void textDisplay() {
@@ -797,7 +810,7 @@ void textDisplay() {
     //~ init_cube(inText.c_str(),-0.5,0,0);
     
     
-    init_cube(inputText, x,-y,z);
+    //~ init_cube(inputText, x,-y,z);
     //~ init_cube(inputText);
     
     
@@ -867,10 +880,10 @@ void onIdle() {
 */
 
 void onIdle() {
-    float move = sinf(glutGet(GLUT_ELAPSED_TIME) / 1000.0 * (2*3.14) / 10); // -1<->+1 every 5 seconds
-    float angle = glutGet(GLUT_ELAPSED_TIME) / 1000.0 * 45;  // 45° per second
-    //~ float move = 0;
-    //~ float angle = 0;
+    //~ float move = sinf(glutGet(GLUT_ELAPSED_TIME) / 1000.0 * (2*3.14) / 10); // -1<->+1 every 5 seconds
+    //~ float angle = glutGet(GLUT_ELAPSED_TIME) / 1000.0 * 45;  // 45° per second
+    float move = 0;
+    float angle = 0;
     screen_width=glutGet(GLUT_WINDOW_WIDTH);
     screen_height=glutGet(GLUT_WINDOW_HEIGHT);
     glm::vec3 axis_y(0, 1, 0);
