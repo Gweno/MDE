@@ -12,6 +12,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <vector>
+#include <array>
 #include <math.h>
 
 #include <GL/glew.h>
@@ -30,13 +32,18 @@
 int screen_width=800, screen_height=600;
 
 GLuint program_text;
+GLuint program_box;
 GLuint program_bg;
 GLuint program_cube;
 
 GLint attribute_coord;
 GLint attribute_tex_coord;
 GLint attribute_coord2d;
+GLint attribute_coord3d;
+GLint attribute_coord3d_box;
 GLint attribute_v_color;
+GLint attribute_v_color_box;
+GLint attribute_v_color_box2;
 
 GLint uniform_tex;
 GLint uniform_color;
@@ -46,11 +53,16 @@ GLint uniform_m_transform;
 GLuint vbo_coord;
 GLuint vbo_tex_coord;
 GLuint vbo_vertices;
+GLuint vbo_vertices_box;
+GLuint vbo_vertices_box2;
 GLuint vbo_vertices_color;
+GLuint vbo_vertices_color_box;
+GLuint vbo_vertices_color_box2;
 
 // for cube:
 GLuint ibo_cube_elements;
-GLint attribute_coord3d;
+GLuint ibo_box_elements;
+GLuint ibo_box_elements2;
 
 const char *inputText;
 uint fontSize=48;
@@ -143,7 +155,19 @@ bool init_program(){
     attribute_v_color = get_attrib(program_cube, "v_color");
 
     //~ if(attribute_coord2d == -1 || attribute_v_color == -1)
-    if(attribute_coord3d == -1 || attribute_v_color == -1)
+    //~ if(attribute_coord3d == -1 || attribute_v_color == -1)
+    if(attribute_coord3d == -1 || attribute_v_color == -1 )
+        return 0;
+
+    // testing boxes
+    program_box = create_program("./shaders/box.v.glsl", "./shaders/box.f.glsl");
+    if(program_box == 0)
+        return 0;
+
+    attribute_coord3d_box = get_attrib(program_box, "coord3d_b");
+    attribute_v_color_box = get_attrib(program_box, "v_color_b");
+
+    if(attribute_coord3d_box == -1 || attribute_v_color_box == -1)
         return 0;
 
     return 1;
@@ -201,7 +225,7 @@ void render_text(const char *text, float x, float y, float sx, float sy) {
         float h = g->bitmap.rows * sy;
     
     //TODO understand the logic for the coordinates here:
-        vertex2D box[4] = {
+        vertex2D text_box[4] = {
             {x2, -y2},
             {x2 + w, -y2},
             {x2, -y2 - h},
@@ -216,7 +240,7 @@ void render_text(const char *text, float x, float y, float sx, float sy) {
         
 
     /* Draw the character on the screen */
-    glBufferData(GL_ARRAY_BUFFER, sizeof box, box, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof text_box, text_box, GL_DYNAMIC_DRAW);
         
     /* Set up the VBO for our vertex data */
     glEnableVertexAttribArray(attribute_tex_coord);
@@ -292,7 +316,7 @@ void render_text_Z(const char *text, float x, float y, float z, float sx, float 
             //~ {x2, -y2 - h},
             //~ {x2 + w, -y2 - h},
         //~ };
-        vertex3D box[4] = {
+        vertex3D text_box[4] = {
             {x2, -y2, z},
             {x2 + w, -y2, z},
             {x2, -y2 - h, z},
@@ -308,7 +332,7 @@ void render_text_Z(const char *text, float x, float y, float z, float sx, float 
         
 
     /* Draw the character on the screen */
-    glBufferData(GL_ARRAY_BUFFER, sizeof box, box, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof text_box, text_box, GL_DYNAMIC_DRAW);
         
     /* Set up the VBO for our vertex data */
     glEnableVertexAttribArray(attribute_tex_coord);
@@ -407,10 +431,84 @@ void init_color(GLfloat colorRed,GLfloat colorGreen,GLfloat colorBlue)
         r,g,b,
         r,g,b
     };
+    
+    GLfloat box_vertices_color[]={
+        // first box
+        1,0.5,0,
+        1,0.5,0,
+        1,0.5,0,
+        1,0.5,0,
+        1,0.5,0,
+        1,0.5,0,
+        1,0.5,0,
+        1,0.5,0,
+        // second box
+        0,0.5,0,
+        1,0.5,0,
+        0,0.5,1,
+        1,0.5,1,
+        0.5,0.5,0,
+        0,0.5,0.5,
+        1,0.5,0.5,
+        0.5,0.5,1,
+        // third box
+        0,0.5,0,
+        0,0.5,0,
+        0,0.5,0,
+        0,0.5,0,
+        0,0.5,0,
+        0,0.5,0,
+        0,0.5,0,
+        0,0.5,0
+    };
 
     glGenBuffers(1,&vbo_vertices_color);
     glBindBuffer(GL_ARRAY_BUFFER,vbo_vertices_color);
     glBufferData(GL_ARRAY_BUFFER,sizeof(vertices_color), vertices_color, GL_STATIC_DRAW);
+    
+    glGenBuffers(1,&vbo_vertices_color_box);
+    glBindBuffer(GL_ARRAY_BUFFER,vbo_vertices_color_box);
+    glBufferData(GL_ARRAY_BUFFER,sizeof(box_vertices_color), box_vertices_color, GL_STATIC_DRAW);
+}
+void init_color2()
+{
+    
+    GLfloat box_vertices_color2[]={
+        // first box
+        0,0.2,0.8,
+        0.2,0,0.2,
+        0.2,0.8,0,
+        0,0.2,0.8,
+        0.2,0.2,0.2,
+        0.2,0.2,0.2,
+        0.2,0.2,0.2,
+        1,1,1
+    };
+
+    std::vector<GLfloat> vect_color;
+
+
+    //~ vect_color.assign(box_vertices_color2,box_vertices_color2+24);   // assigning from array.
+
+    for(int i=0;i<20;i++){
+        //~ vect_color.insert(box_vertices_color2+24*i,box_vertices_color2+24*(i+1));   // assigning from array.
+        vect_color.insert (vect_color.end(), box_vertices_color2, box_vertices_color2+24);
+        }
+    //~ for(int i=0;i<6;i++){
+        //~ for ( auto it = box_vertices_color2.begin(); it != box_vertices_color2.end(); ++it ){
+            //~ vect_index.push_back((*it)+8*i));
+        //~ }
+    //~ }
+
+
+
+    //~ glGenBuffers(1,&vbo_vertices_color_box2);
+    //~ glBindBuffer(GL_ARRAY_BUFFER,vbo_vertices_color_box2);
+    //~ glBufferData(GL_ARRAY_BUFFER,sizeof(box_vertices_color2), box_vertices_color2, GL_STATIC_DRAW);
+    glGenBuffers(1,&vbo_vertices_color_box2);
+    glBindBuffer(GL_ARRAY_BUFFER,vbo_vertices_color_box2);
+    //~ glBufferData(GL_ARRAY_BUFFER,sizeof(box_vertices_color2), box_vertices_color2, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER,vect_color.size() * sizeof(GLfloat),&vect_color.front(),GL_STATIC_DRAW);
 }
 
 
@@ -602,151 +700,211 @@ GLushort cube_elements[] = {
     
 }
 
-//~ int init_resources()
-//~ {
+void init_struct() {
     
-    //~ GLfloat cube_vertices[] = {
-        //~ //top
-        //~ -1.0,-1.0,1.0,
-        //~ 1.0, -1.0,1.0,
-        //~ 1.0,1.0,1.0,
-        //~ -1.0, 1.0,1.0,
-        //~ //back
-        //~ -1.0,-1.0,-1.0,
-        //~ 1.0,-1.0,-1.0,
-        //~ 1.0,1.0,-1.0,
-        //~ -1.0,1.0,-1.0
-    //~ };
+    float init_x=0;
+    float init_y=0;
+    float init_z=0;
+    float init_distance=0;
+    int nb_box=0;
+    int * size_struct;
     
-    //~ GLfloat cube_colors[] = {
-        //~ // front colors
-        //~ 1.0, 0.0, 0.0,
-        //~ 0.0, 1.0, 0.0,
-        //~ 0.0, 0.0, 1.0,
-        //~ 1.0, 1.0, 1.0,
-        //~ // back colors
-        //~ 1.0, 0.0, 0.0,
-        //~ 0.0, 1.0, 0.0,
-        //~ 0.0, 0.0, 1.0,
-        //~ 1.0, 1.0, 1.0,
-      //~ };
-
-  //~ glGenBuffers(1, &vbo_cube_vertices);
-  //~ glBindBuffer(GL_ARRAY_BUFFER, vbo_cube_vertices);
-  //~ glBufferData(GL_ARRAY_BUFFER, sizeof(cube_vertices), cube_vertices, GL_STATIC_DRAW);
-
-  //~ glGenBuffers(1, &vbo_cube_colors);
-  //~ glBindBuffer(GL_ARRAY_BUFFER, vbo_cube_colors);
-  //~ glBufferData(GL_ARRAY_BUFFER, sizeof(cube_colors), cube_colors, GL_STATIC_DRAW);
-
-//~ GLushort cube_elements[] = {
-		//~ // front
-		//~ 0, 1, 2,
-		//~ 2, 3, 0,
-		//~ // right
-		//~ 1, 5, 6,
-		//~ 6, 2, 1,
-		//~ // back
-		//~ 7, 6, 5,
-		//~ 5, 4, 7,
-		//~ // left
-		//~ 4, 0, 3,
-		//~ 3, 7, 4,
-		//~ // bottom
-		//~ 4, 5, 1,
-		//~ 1, 0, 4,
-		//~ // top
-		//~ 3, 2, 6,
-		//~ 6, 7, 3,
-	//~ };
-	//~ glGenBuffers(1, &ibo_cube_elements);
-	//~ glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_cube_elements);
-	//~ glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(cube_elements), cube_elements, GL_STATIC_DRAW);
-
-
-
-  //~ GLint link_ok = GL_FALSE;
-
-  //~ GLuint vs, fs;
-  //~ if ((vs = create_shader("cube.v.glsl", GL_VERTEX_SHADER))   == 0) return 0;
-  //~ if ((fs = create_shader("cube.f.glsl", GL_FRAGMENT_SHADER)) == 0) return 0;
-
-  //~ program = glCreateProgram();
-  //~ glAttachShader(program, vs);
-  //~ glAttachShader(program, fs);
-  //~ glLinkProgram(program);
-  //~ glGetProgramiv(program, GL_LINK_STATUS, &link_ok);
-  //~ if (!link_ok) {
-    //~ fprintf(stderr, "glLinkProgram:");
-    //~ print_log(program);
-    //~ return 0;
-  //~ }
-
-  //~ const char* attribute_name;
-  //~ attribute_name = "coord3d";
-  //~ attribute_coord3d = glGetAttribLocation(program, attribute_name);
-  //~ if (attribute_coord3d == -1) {
-    //~ fprintf(stderr, "Could not bind attribute %s\n", attribute_name);
-    //~ return 0;
-  //~ }
-  //~ attribute_name = "v_color";
-  //~ attribute_v_color = glGetAttribLocation(program, attribute_name);
-  //~ if (attribute_v_color == -1) {
-    //~ fprintf(stderr, "Could not bind attribute %s\n", attribute_name);
-    //~ return 0;
-  //~ }
-  
-  //~ const char* uniform_name;
-  //~ uniform_name = "m_transform";
-  //~ uniform_m_transform = glGetUniformLocation(program, uniform_name);
-  //~ if (uniform_m_transform == -1) {
-    //~ fprintf(stderr, "Could not bind uniform_fade %s\n", uniform_name);
-    //~ return 0;
-  //~ }
-
-  //~ return 1;
-//~ }
-
-
-
-
-
-void draw_square(){
     
-    glEnableVertexAttribArray(attribute_coord2d);
-    glBindBuffer(GL_ARRAY_BUFFER,vbo_vertices);
-    glVertexAttribPointer(
-        attribute_coord2d,
-        2,
-        GL_FLOAT,            // the type of each element
-        GL_FALSE,            // take our values as-is
-        0, 
-        0                    // offset of the first element
-    );
+    vertex3D vertex_Boxes[*size_struct];
     
-    glEnableVertexAttribArray(attribute_v_color);
-    glBindBuffer(GL_ARRAY_BUFFER,vbo_vertices_color);
-    glVertexAttribPointer(
-        attribute_v_color,      // attribute
-        3,                      // number of elements per vertex, here (r,g,b)
-        GL_FLOAT,               // the type of each element
-        GL_FALSE,               // take our values as-is
-        0,
-        0  // offset of first element
-    );
 
-    glDrawArrays(GL_TRIANGLE_STRIP,0,4);
+}
+
+void init_vectors(){
     
-    glDisableVertexAttribArray(attribute_coord2d);
-    glDisableVertexAttribArray(attribute_v_color);
+    float inter_boxes=0.5;
+    std::vector<vertex3D> vertex_coord_box2;
+    
+    //~ vertex_coord_box2.push_back({-2.5, 0, 0 });
+    //~ vertex_coord_box2.push_back({-2.5, 0.5, 0});
+    //~ vertex_coord_box2.push_back({-2, 0.5,0});
+    //~ vertex_coord_box2.push_back({-2,0,0});
+    //~ vertex_coord_box2.push_back({-2.5, 0, -0.5 });
+    //~ vertex_coord_box2.push_back({-2.5, 0.5, -0.5});
+    //~ vertex_coord_box2.push_back({-2, 0.5,-0.5});
+    //~ vertex_coord_box2.push_back({-2,0,-0.5});
+
+    for(int i=0;i<20;i++){
+        vertex_coord_box2.push_back({-2.5, 0, 0+i*inter_boxes });
+        vertex_coord_box2.push_back({-2.5, 0.5, 0+i*inter_boxes});
+        vertex_coord_box2.push_back({-2, 0.5,0+i*inter_boxes});
+        vertex_coord_box2.push_back({-2,0,0+i*inter_boxes});
+        
+        vertex_coord_box2.push_back({-2.5, 0, -0.5+i*inter_boxes });
+        vertex_coord_box2.push_back({-2.5, 0.5, -0.5+i*inter_boxes});
+        vertex_coord_box2.push_back({-2, 0.5,-0.5+i*inter_boxes});
+        vertex_coord_box2.push_back({-2,0,-0.5+i*inter_boxes});
+    }
+
+    glGenBuffers(1,&vbo_vertices_box2);
+    glBindBuffer(GL_ARRAY_BUFFER,vbo_vertices_box2);
+    //~ glBufferData(GL_ARRAY_BUFFER,sizeof vertex_coord_box2, vertex_coord_box2,GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER,vertex_coord_box2.size() * sizeof(vertex3D),&vertex_coord_box2.front(),GL_STATIC_DRAW);
+
+    std::array<GLushort,36> box_elements2 = {
+        // front
+        0, 1, 2,
+        2, 3, 0,
+        // right
+        1, 5, 6,
+        6, 2, 1,
+        // back
+        7, 6, 5,
+        5, 4, 7,
+        // left
+        4, 0, 3,
+        3, 7, 4,
+        // bottom
+        4, 5, 1,
+        1, 0, 4,
+        // top
+        3, 2, 6,
+        6, 7, 3
+        };
+
+    std::vector<GLushort> vect_index;
+
+
+    //~ vect_index.assign(box_elements2,box_elements2+36);   // assigning from array.
+
+    for(GLushort i=0;i<20;i++){
+        for ( auto it = box_elements2.begin(); it != box_elements2.end(); ++it ){
+            vect_index.push_back((*it)+8*i);
+        }
+    }
+
+  //~ for ( auto it = myarray.begin(); it != myarray.end(); ++it )
+    //~ std::cout << ' ' << *it;
+
+    glGenBuffers(1, &ibo_box_elements2);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_box_elements2);
+    //~ glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(box_elements2), box_elements2, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, vect_index.size() * sizeof(GLushort), &vect_index.front(), GL_STATIC_DRAW);
+    
+        
+    }
+
+
+void init_box() {
+
+    vertex3D vertex_coord_box[24] = {
+        //front
+        {-0.5, 0, 0 },
+        {-0.5, 0.5, 0},
+        {0, 0.5,0},
+        {0,0,0},
+        
+        //back
+        {-0.5, 0, -0.5 },
+        {-0.5, 0.5, -0.5},
+        {0, 0.5,-0.5},
+        {0,0,-0.5},
+        
+        //front 2nd box
+        {0.5, 0, 0 },
+        {0.5, 0.5, 0},
+        {1, 0.5,0},
+        {1,0,0},
+        
+        //back 2nd box
+        {0.5, 0, -0.5 },
+        {0.5, 0.5, -0.5},
+        {1, 0.5,-0.5},
+        {1,0,-0.5},
+
+        //front 3rd box
+        {1.5, 0, 0 },
+        {1.5, 0.5, 0},
+        {2, 0.5,0},
+        {2,0,0},
+        
+        //back 3rd box
+        {1.5, 0, -0.5 },
+        {1.5, 0.5, -0.5},
+        {2, 0.5,-0.5},
+        {2,0,-0.5}
+    };
+    
+    glGenBuffers(1,&vbo_vertices_box);
+    glBindBuffer(GL_ARRAY_BUFFER,vbo_vertices_box);
+    glBufferData(GL_ARRAY_BUFFER,sizeof vertex_coord_box, vertex_coord_box,GL_STATIC_DRAW);
+    
+GLushort box_elements[] = {
+        // front
+        0, 1, 2,
+        2, 3, 0,
+        // right
+        1, 5, 6,
+        6, 2, 1,
+        // back
+        7, 6, 5,
+        5, 4, 7,
+        // left
+        4, 0, 3,
+        3, 7, 4,
+        // bottom
+        4, 5, 1,
+        1, 0, 4,
+        // top
+        3, 2, 6,
+        6, 7, 3,
+        
+        // 2nd box
+        // front
+        8,9,10,
+        10,11,8,
+        // right
+        9,13,14,
+        14,10,9,
+        // back
+        15,14,13,
+        13,12,15,
+        // left
+        12,8,11,
+        11,15,12,
+        // bottom
+        12,13,9,
+        9,8,12,
+        // top
+        11,10,14,
+        14,15,11,
+        
+        // 3rd Box
+        // front
+        16, 17, 18, 
+        18, 19, 16, 
+        // right
+        17, 21, 22, 
+        22, 18, 17, 
+        // back
+        23, 22, 21, 
+        21, 20, 23, 
+        // left
+        20, 16, 19, 
+        19, 23, 20, 
+        // bottom
+        20, 21, 17, 
+        17, 16, 20, 
+        // top
+        19, 18, 22, 
+        22, 23, 19
+
+    };
+
+	glGenBuffers(1, &ibo_box_elements);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_box_elements);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(box_elements), box_elements, GL_STATIC_DRAW);
     
 }
 
+
 void draw_cube(){
-    //~ glClearColor(1.0, 1.0, 1.0, 1.0);
-    //~ glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-  
-  //~ glUseProgram(program);
+
   glEnableVertexAttribArray(attribute_coord3d);
   glBindBuffer(GL_ARRAY_BUFFER, vbo_vertices);
   glVertexAttribPointer(
@@ -763,7 +921,8 @@ void draw_cube(){
   glVertexAttribPointer(
     attribute_v_color,      // attribute
     3,                      // number of elements per vertex, here (r,g,b)
-    GL_FLOAT,               // the type of each element
+    GL_FLOAT,             
+      // the type of each element
     GL_FALSE,               // take our values as-is
     0,
     //~ sizeof(struct attributes),  // stride
@@ -781,7 +940,91 @@ void draw_cube(){
     
     glDisableVertexAttribArray(attribute_coord3d);
     glDisableVertexAttribArray(attribute_v_color);
-    glutSwapBuffers();
+    //~ glutSwapBuffers();
+}
+void draw_box(){
+    //~ glClearColor(1.0, 1.0, 1.0, 1.0);
+    //~ glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+  
+  //~ glUseProgram(program);
+  glEnableVertexAttribArray(attribute_coord3d_box);
+  glBindBuffer(GL_ARRAY_BUFFER, vbo_vertices_box);
+  glVertexAttribPointer(
+    attribute_coord3d_box,   // attribute
+    3,                   // number of elements per vertex, here (x,y,z)
+    GL_FLOAT,            // the type of each element
+    GL_FALSE,            // take our values as-is
+    //~ sizeof(struct attributes),  // next coord3d appears every 5 floats
+    0,  // next coord3d appears every 5 floats
+    0                    // offset of first element
+  );
+  glEnableVertexAttribArray(attribute_v_color_box);
+  glBindBuffer(GL_ARRAY_BUFFER, vbo_vertices_color_box);
+  glVertexAttribPointer(
+    attribute_v_color_box,      // attribute
+    3,                      // number of elements per vertex, here (r,g,b)
+    GL_FLOAT,               // the type of each element
+    GL_FALSE,               // take our values as-is
+    0,
+    //~ sizeof(struct attributes),  // stride
+    //(void*) (2 * sizeof(GLfloat))     // offset of first element
+    //~ (void*) offsetof(struct attributes, v_color)  // offset
+    0
+  );
+
+  //~ /* Push each element in buffer_vertices to the vertex shader */
+  //~ glDrawArrays(GL_TRIANGLES, 0, 3);
+  
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_box_elements);
+    int size;
+    glGetBufferParameteriv(GL_ELEMENT_ARRAY_BUFFER, GL_BUFFER_SIZE, &size);
+    glDrawElements(GL_TRIANGLES, size/sizeof(GLushort), GL_UNSIGNED_SHORT, 0);
+    
+    glDisableVertexAttribArray(attribute_coord3d_box);
+    glDisableVertexAttribArray(attribute_v_color_box);
+    //~ glutSwapBuffers();
+}
+void draw_box2(){
+    //~ glClearColor(1.0, 1.0, 1.0, 1.0);
+    //~ glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+  
+  //~ glUseProgram(program);
+  glEnableVertexAttribArray(attribute_coord3d_box);
+  glBindBuffer(GL_ARRAY_BUFFER, vbo_vertices_box2);
+  glVertexAttribPointer(
+    attribute_coord3d_box,   // attribute
+    3,                   // number of elements per vertex, here (x,y,z)
+    GL_FLOAT,            // the type of each element
+    GL_FALSE,            // take our values as-is
+    //~ sizeof(struct attributes),  // next coord3d appears every 5 floats
+    0,  // next coord3d appears every 5 floats
+    0                    // offset of first element
+  );
+  glEnableVertexAttribArray(attribute_v_color_box);
+  glBindBuffer(GL_ARRAY_BUFFER, vbo_vertices_color_box2);
+  glVertexAttribPointer(
+    attribute_v_color_box,      // attribute
+    3,                      // number of elements per vertex, here (r,g,b)
+    GL_FLOAT,               // the type of each element
+    GL_FALSE,               // take our values as-is
+    0,
+    //~ sizeof(struct attributes),  // stride
+    //(void*) (2 * sizeof(GLfloat))     // offset of first element
+    //~ (void*) offsetof(struct attributes, v_color)  // offset
+    0
+  );
+
+  //~ /* Push each element in buffer_vertices to the vertex shader */
+  //~ glDrawArrays(GL_TRIANGLES, 0, 3);
+  
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_box_elements2);
+    int size;
+    glGetBufferParameteriv(GL_ELEMENT_ARRAY_BUFFER, GL_BUFFER_SIZE, &size);
+    glDrawElements(GL_TRIANGLES, size/sizeof(GLushort), GL_UNSIGNED_SHORT, 0);
+    
+    glDisableVertexAttribArray(attribute_coord3d_box);
+    glDisableVertexAttribArray(attribute_v_color_box);
+    //~ glutSwapBuffers();
 }
 
 
@@ -846,8 +1089,14 @@ void textDisplay() {
     render_text_Z(inputText, x, y, z, sx, sy);
 
     /* Drawing a cube */
+    glUseProgram(program_box);
+    draw_box();
     glUseProgram(program_cube);
     draw_cube();
+    glUseProgram(program_box);
+    draw_box2();
+    
+    
 
     glutSwapBuffers();
     
@@ -880,10 +1129,10 @@ void onIdle() {
 */
 
 void onIdle() {
-    //~ float move = sinf(glutGet(GLUT_ELAPSED_TIME) / 1000.0 * (2*3.14) / 10); // -1<->+1 every 5 seconds
-    //~ float angle = glutGet(GLUT_ELAPSED_TIME) / 1000.0 * 45;  // 45° per second
-    float move = 0;
-    float angle = 0;
+    float move = sinf(glutGet(GLUT_ELAPSED_TIME) / 1000.0 * (2*3.14) / 10); // -1<->+1 every 5 seconds
+    float angle = glutGet(GLUT_ELAPSED_TIME) / 1000.0 * 45;  // 45° per second
+    //~ float move = 0;
+    //~ float angle = 0;
     screen_width=glutGet(GLUT_WINDOW_WIDTH);
     screen_height=glutGet(GLUT_WINDOW_HEIGHT);
     glm::vec3 axis_y(0, 1, 0);
@@ -892,8 +1141,8 @@ void onIdle() {
     glm::mat4 anim = glm::rotate(glm::mat4(1.0f), glm::radians(angle), axis_y);
     glm::mat4 anim2 = glm::rotate(glm::mat4(1.0f), glm::radians(angle), axis_z);
     
-    glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0, 0.0, -1.0));
-    glm::mat4 view = glm::lookAt(glm::vec3(0.0, 0.0, 2.0), glm::vec3(0.0, 0.0,-1.0), glm::vec3(0.0, 1.0, 0.0));//eye,center,up
+    glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(1.0, 0.0, -1.0));
+    glm::mat4 view = glm::lookAt(glm::vec3(0.0, 0.0, 5.0), glm::vec3(0.0, 0.0,-1.0), glm::vec3(0.0, 1.0, 0.0));//eye,center,up
     glm::mat4 projection = glm::perspective(45.0f, 1.0f*screen_width/screen_height, 0.1f, 10.0f);
     
     glm::mat4 m_transform = projection * view * model * m_translate * anim2 * anim;
@@ -908,6 +1157,11 @@ void onIdle() {
     glUseProgram(program_text);
     glUniformMatrix4fv(uniform_m_transform, 1, GL_FALSE, glm::value_ptr(m_transform));
     
+    // program_box is for the text
+    glUseProgram(program_box);
+    glUniformMatrix4fv(uniform_m_transform, 1, GL_FALSE, glm::value_ptr(m_transform));
+    
+    
     glutPostRedisplay();
     
     //~ glUseProgram(program);
@@ -917,13 +1171,20 @@ void onIdle() {
 
 void free_resources() {
     glDeleteProgram(program_text);
+    glDeleteProgram(program_box);
     //~ glDeleteProgram(program_bg);
     glDeleteProgram(program_cube);
     glDeleteBuffers(1, &vbo_coord);
     glDeleteBuffers(1, &vbo_tex_coord);
     glDeleteBuffers(1, &vbo_vertices);
+    glDeleteBuffers(1, &vbo_vertices_box);
+    glDeleteBuffers(1, &vbo_vertices_box2);
     glDeleteBuffers(1, &vbo_vertices_color);
+    glDeleteBuffers(1, &vbo_vertices_color_box);
+    glDeleteBuffers(1, &vbo_vertices_color_box2);
     glDeleteBuffers(1, &ibo_cube_elements);
+    glDeleteBuffers(1, &ibo_box_elements);
+    glDeleteBuffers(1, &ibo_box_elements2);
 }
 
 //~ int main(int argc, char *argv[]) {

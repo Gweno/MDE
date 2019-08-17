@@ -385,6 +385,7 @@ int main (int argc, char **argv)
                     if (init_font(userFontSize, userFontFilename)  && init_program()) {
                         //~ init_background(inputText,0,0);
                         init_color(userRed,userBlue,userGreen);
+                        init_color2();
                         //~ init_text(inText.c_str());
                         //~ init_text_coordinates(0.5,-0.5, -0.5);
                         //~ init_cube(inText.c_str(),-0.5,0,0);
@@ -402,6 +403,8 @@ int main (int argc, char **argv)
                         //~ init_cube(inText2.c_str(),0,0,0);
                         //~ init_cube(inText3.c_str(),10,0,0);
                         init_cube(inText.c_str(), X_user,-Y_user,Z_user);
+                        init_box();
+                        init_vectors();
                         
                         glutDisplayFunc(textDisplay);
                         glutIdleFunc(onIdle);
