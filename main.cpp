@@ -384,12 +384,17 @@ int main (int argc, char **argv)
             
                     if (init_font(userFontSize, userFontFilename)  && init_program()) {
                         //~ init_background(inputText,0,0);
+                        //~ init_background(inText.c_str(),0,0);
                         init_color(userRed,userBlue,userGreen);
-                        init_color2();
+                        init_color4(userRed,userBlue,userGreen);
+                        //~ init_color2();
+                        //~ init_color3();
                         //~ init_text(inText.c_str());
                         //~ init_text_coordinates(0.5,-0.5, -0.5);
-                        //~ init_cube(inText.c_str(),-0.5,0,0);
-                        //~ init_cube(inText2.c_str(),0,0,0);
+                        init_text(inText.c_str(),X_user,Y_user, Z_user, H_padding_user,V_padding_user);
+                        init_text(inText2.c_str(),X_user+2.0,Y_user, Z_user, H_padding_user,V_padding_user);
+                        init_cube(inText.c_str(),0,0,0);
+                        init_cube(inText2.c_str(),0,0,0);
                         //~ init_cube(inText3.c_str(),10,0,0);
                         
                         //~ glutDisplayFunc(textDisplay);
@@ -398,18 +403,24 @@ int main (int argc, char **argv)
                         //~ init_text(inText2.c_str());
                         //~ init_text_coordinates(1,-1.5, -0.5);
                         //~ init_text_coordinates(X_user,Y_user, Z_user);
-                        init_text(inText.c_str(),X_user,Y_user, Z_user, H_padding_user,V_padding_user);
-                        //~ init_cube(inText.c_str(),-0.5,0,0);
-                        //~ init_cube(inText2.c_str(),0,0,0);
-                        //~ init_cube(inText3.c_str(),10,0,0);
-                        init_cube(inText.c_str(), X_user,-Y_user,Z_user);
+                        //~ init_resources_test();
+                        init_program_test();
+                        std::cout<<"control testing"<<std::endl;
                         init_box();
                         init_vectors();
+                        //~ std::vector<vertex3D> test3D;
+                        //~ test3D=create_vector3D(testing);
+                        //~ displayV3D(test3D);
+                        //~ init_vectors2(test3D);
+                        init_vectors2();
+                        
+                        //~ vertex3D vect_coord={X_user,Y_user, Z_user};
+                        //~ init_vectors3(vect_coord);
+                        
+                        std::cout<<"control testing"<<std::endl;
                         
                         glutDisplayFunc(textDisplay);
                         glutIdleFunc(onIdle);
-                        
-                        
                         
                         glEnable(GL_BLEND);
                         glEnable(GL_DEPTH_TEST);;
@@ -419,6 +430,7 @@ int main (int argc, char **argv)
                     }
                     
                     free_resources();
+                    free_resources_test();
                     //~ //clear and delete
                     newEntity.clear_all_vE();
                     newEntity.clear_name();
