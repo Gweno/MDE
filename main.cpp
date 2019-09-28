@@ -36,8 +36,6 @@ int window_width=800, window_height=600;
 const char *userText;
 uint userFontSize;
 GLfloat userRed,userGreen,userBlue;
-//~ FT_Library ft;
-//~ FT_Face face;
 const char *userFontFilename;
 
 
@@ -325,14 +323,7 @@ int main (int argc, char **argv)
                     std::string inText;
                     std::string inText2;
                     std::string inText3;
-                    //~ std::cout << "1 for single line XML or 2 for multiline, 3 for both" << std::endl; 
-                    //~ std::cin >> key_input;
-                    //~ if (key_input=="1") newEntity.load_XML_File_to_E("../datafiles/merte.xml");
-                    //~ if (key_input=="2") newEntity.load_XML_File_to_E("../datafiles/testEOF7.xml");
-                    //~ if (key_input=="3") newEntity.load_XML_File_to_E("../datafiles/testAny.xml");
                     newEntity.load_XML_File_to_E("../datafiles/testAny.xml");
-                    //~ newEntity.format_display(0,"<",">","</",">");
-                    
                     std::cout << "Enter coordinates" << std::endl;
                     float X_user ;
                     float Y_user ;
@@ -349,8 +340,6 @@ int main (int argc, char **argv)
                     std::cin >> H_padding_user ;
                     std::cin >> V_padding_user ;
                     std::cout << "You have chosen padding: " << H_padding_user << ", "<< V_padding_user << std::endl;
-                    
-                    
                     
                     newEntity.display_all(0, n_space);
     
@@ -383,45 +372,50 @@ int main (int argc, char **argv)
                     }
             
                     if (init_font(userFontSize, userFontFilename)  && init_program()) {
-                        //~ init_background(inputText,0,0);
-                        //~ init_background(inText.c_str(),0,0);
-                        init_color(userRed,userBlue,userGreen);
-                        init_color4(userRed,userBlue,userGreen);
+                    //~ if (init_font(userFontSize, userFontFilename)  && init_program()) {
+                        //~ init_color(userRed,userBlue,userGreen);
+                        //~ init_color4(userRed,userBlue,userGreen);
                         //~ init_color2();
                         //~ init_color3();
                         //~ init_text(inText.c_str());
                         //~ init_text_coordinates(0.5,-0.5, -0.5);
-                        init_text(inText.c_str(),X_user,Y_user, Z_user, H_padding_user,V_padding_user);
-                        init_text(inText2.c_str(),X_user+2.0,Y_user, Z_user, H_padding_user,V_padding_user);
-                        init_cube(inText.c_str(),0,0,0);
-                        init_cube(inText2.c_str(),0,0,0);
+                        
+                        init_program_test();
+                        //~ init_text(inText.c_str(),X_user,Y_user, Z_user, H_padding_user,V_padding_user);
+                        //~ init_text(inText2.c_str(),X_user,Y_user, Z_user, H_padding_user,V_padding_user);
+                        
+                        //~ init_text_Entity(newEntity,X_user,Y_user, Z_user, H_padding_user,V_padding_user);
+                        
+                        std::cout << "User coordinates: " << X_user << ", "<< Y_user << ", "<< Z_user << std::endl;
+                        vertex3D user_origin={X_user,Y_user, Z_user};
+                        std::vector<vertex3D> offset= {{0.0,0.0,0.0},{0.0,-0.2,0.0},{1.0,0.0,0.0},{0.0,-0.2,0.0}};
+                        vertex2D user_padding = {H_padding_user,V_padding_user};
+                        
+                        vertex3D user_color = {userRed,userBlue,userGreen};
+                        //~ init_text_Entity2(newEntity,user_origin, offset, user_padding);
+                        init_text_Entity3(newEntity,user_origin, offset, user_padding, user_color);
+                        //~ init_color5(user_color);
+                        
+                        //~ init_cube(inText.c_str(),0,0,0);
+                        //~ init_cube(inText2.c_str(),0,0,0);
+                        
                         //~ init_cube(inText3.c_str(),10,0,0);
-                        
-                        //~ glutDisplayFunc(textDisplay);
-                        //~ glutIdleFunc(onIdle);
-                        
                         //~ init_text(inText2.c_str());
                         //~ init_text_coordinates(1,-1.5, -0.5);
                         //~ init_text_coordinates(X_user,Y_user, Z_user);
                         //~ init_resources_test();
-                        init_program_test();
-                        std::cout<<"control testing"<<std::endl;
-                        init_box();
-                        init_vectors();
-                        //~ std::vector<vertex3D> test3D;
-                        //~ test3D=create_vector3D(testing);
-                        //~ displayV3D(test3D);
-                        //~ init_vectors2(test3D);
-                        init_vectors2();
-                        
-                        //~ vertex3D vect_coord={X_user,Y_user, Z_user};
-                        //~ init_vectors3(vect_coord);
+
+                        //~ init_program_test();
+                        //~ std::cout<<"control testing"<<std::endl;
+                        //~ init_box();
+                        //~ init_vectors();
+                        //~ init_vectors2();
+                        //~ init_testing();
                         
                         std::cout<<"control testing"<<std::endl;
                         
                         glutDisplayFunc(textDisplay);
                         glutIdleFunc(onIdle);
-                        
                         glEnable(GL_BLEND);
                         glEnable(GL_DEPTH_TEST);;
                         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

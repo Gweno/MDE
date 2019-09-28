@@ -81,6 +81,11 @@ std::string E::get_name_vE_by_index(int index_vEe)
     return this->vE.at(index_vEe)->name;
 };
 
+std::string E::get_data_vE_by_index(int index_vEe)
+{
+    return this->vE.at(index_vEe)->data;
+};
+
 
 // Clear member functions;
 

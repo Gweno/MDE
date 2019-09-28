@@ -176,6 +176,7 @@ class E {
         void set_name_vE_index(int index_vEe,string vName);
         
         std::string get_name_vE_by_index(int index_vEe);
+        std::string get_data_vE_by_index(int index_vEe);
 
          /**
          * 
@@ -193,6 +194,7 @@ class E {
          * index_vEe of the private member vE, vector of pointers
          * to instances of class E.
          */
+         
         void set_data_vE_index(int index_vEe,string vData);
 
         

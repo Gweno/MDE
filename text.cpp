@@ -29,6 +29,8 @@
 
 #include "./common/shader_utils.h"
 
+#include "E.h"
+
 int screen_width=800, screen_height=600;
 
 GLuint program_test;
@@ -314,7 +316,7 @@ void create_coord_vector(const char *text, atlas * a, float x, float y, float sx
     nb_indices=c;
 }
 
-int nb_indices2=0;
+uint nb_indices2=0;
 int nb_indices3=0;
 
 std::vector<vertex3D> glyphs_box;
@@ -322,6 +324,8 @@ std::vector<vertex2D> glyphs_vertex;
 std::vector<vertex3D> glyphs_box2;
 std::vector<vertex2D> glyphs_vertex2;
 std::vector<point3D> textVect3D;
+
+std::vector<uint> nb_glyphs_per_text;
 
 void create_coord_vector_text(const char *text, atlas * a, float x, float y, float z, float sx, float sy){
     
@@ -409,10 +413,11 @@ void create_coord_vector_text2(const char *text, atlas * a, float x, float y, fl
     
     const uint8_t *p;
     
-    std::cout<<"check vector creation for text" << std::endl;
+    std::cout<<"Control create coord vector text -- start" << std::endl;
+    std::cout<<"number of chars: " << std::strlen(text)<< std::endl;
     
     //~ point coords[6 * strlen(text)];
-    int c = 0;
+    uint c = 0;
     //~ std::cout<<"text: " << text << std::endl;
     //~ std::cout<<"x: " << x << std::endl;
     //~ std::cout<<"a: " << a << std::endl;
@@ -498,8 +503,111 @@ void create_coord_vector_text2(const char *text, atlas * a, float x, float y, fl
         //~ {10,10,0},
         //~ {10,-10,0}
     //~ };
-    
+    nb_glyphs_per_text.push_back(c);
     nb_indices2+=c;
+    std::cout << "c: " << c << std::endl;
+    std::cout << "nb_indices_2: " << nb_indices2 << std::endl;
+    std::cout << "Control create coord vector text -- end" << std::endl;
+}
+void create_coord_vector_text4(const char *text, atlas * a, vertex3D origin, vertex2D &window_coord_scale){
+    
+    const uint8_t *p;
+    
+    std::cout<<"Control create coord vector text -- start" << std::endl;
+    std::cout<<"number of chars: " << std::strlen(text)<< std::endl;
+    
+    //~ point coords[6 * strlen(text)];
+    uint c = 0;
+    //~ std::cout<<"text: " << text << std::endl;
+    //~ std::cout<<"x: " << x << std::endl;
+    //~ std::cout<<"a: " << a << std::endl;
+    //~ std::cout<<"sx: " << sx << std::endl;
+    //~ std::cout<<"sy: " << sy << std::endl;
+    
+    //~ float xmin, xmax = x;
+    //~ float ymin, ymax = y;
+
+
+    /* Loop through all characters */
+
+
+
+    for (p = (const uint8_t *)text; *p; p++) {
+        
+        std::cout<<"check p: " << *p << std::endl;
+        /* Calculate the vertex and texture coordinates */
+        //~ std::cout<<"control 1" << std::endl;
+        float x2 = origin.x + a->c[*p].bl * window_coord_scale.x;
+        float y2 = -origin.y - a->c[*p].bt * window_coord_scale.y;
+        float w = a->c[*p].bw * window_coord_scale.x;
+        float h = a->c[*p].bh * window_coord_scale.y;
+        
+        //~ xmin = std::min(xmin,x2);
+        //~ xmax = std::max(xmax,x2);
+        //~ ymin = std::min(ymin,y2);
+        //~ ymax = std::max(ymax,y2);
+        
+        //~ std::cout << "xmin, xmax, ymin, ymax: " << xmin << ", " <<
+        //~ xmax << ", " << ymin << ", " <<ymax << std::endl;
+        
+        /* Advance the cursor to the start of the next character */
+        origin.x += a->c[*p].ax * window_coord_scale.x;
+        origin.y += a->c[*p].ay * window_coord_scale.y;
+    
+        /* Skip glyphs that have no pixels */
+        if (!w || !h)
+            continue;
+        std::cout<<"check start glyphs_box" << std::endl;
+        c+=6;
+        
+        glyphs_box.push_back((vertex3D) {
+        x2, -y2, origin.z});
+        glyphs_box.push_back((vertex3D) {
+        x2 + w, -y2, origin.z});
+        glyphs_box.push_back((vertex3D) {
+        x2, -y2 - h, origin.z});
+        glyphs_box.push_back((vertex3D) {
+        x2 + w, -y2, origin.z});
+        glyphs_box.push_back((vertex3D) {
+        x2, -y2 - h, origin.z});
+        glyphs_box.push_back((vertex3D) {
+        x2 + w, -y2 - h, origin.z});
+
+        glyphs_vertex.push_back((vertex2D) {
+        a->c[*p].tx, a->c[*p].ty});
+        glyphs_vertex.push_back((vertex2D) {
+        a->c[*p].tx + a->c[*p].bw / a->w, a->c[*p].ty});
+        glyphs_vertex.push_back((vertex2D) {
+        a->c[*p].tx, a->c[*p].ty + a->c[*p].bh / a->h});
+        glyphs_vertex.push_back((vertex2D) {
+        a->c[*p].tx + a->c[*p].bw / a->w, a->c[*p].ty});
+        glyphs_vertex.push_back((vertex2D) {
+        a->c[*p].tx, a->c[*p].ty + a->c[*p].bh / a->h});
+        glyphs_vertex.push_back((vertex2D) {
+        a->c[*p].tx + a->c[*p].bw / a->w, a->c[*p].ty + a->c[*p].bh / a->h});
+
+    }
+    
+    //~ std::vector<vertex3D> background_frame;
+    //~ background_frame.push_back({xmin,ymin,0});
+    //~ vertex3D origin_background={x,y,z};
+    //~ std::vector<vertex3D> background_vertices=create_vector3D(background_frame,origin_background);
+    //~ displayV3D(background_vertices);
+    displayV3D(glyphs_box);
+    //~ displayV3D(glyphs_vertex);
+
+    //~ background_vertices=
+    //~ {
+        //~ {-10,-10,0},
+        //~ {-10,10,0},
+        //~ {10,10,0},
+        //~ {10,-10,0}
+    //~ };
+    nb_glyphs_per_text.push_back(c);
+    nb_indices2+=c;
+    std::cout << "c: " << c << std::endl;
+    std::cout << "nb_indices_2: " << nb_indices2 << std::endl;
+    std::cout << "Control create coord vector text -- end" << std::endl;
 }
 
 void create_coord_vector_text3(const char *text, atlas * a, float x, float y, float z, float sx, float sy){
@@ -595,6 +703,151 @@ void create_coord_vector_text3(const char *text, atlas * a, float x, float y, fl
     //~ };
     
     nb_indices3=c;
+
+}
+// get width and height from the vectors of glyphs_box
+//~ vertex2D text_frame(std::vector<vertex3D> &vector_input){
+void text_frame(std::vector<vertex3D> &vector_input){
+    
+    std::vector<vertex3D>  whd;
+    vertex3D first_vector3D;
+    vertex3D offset={1,0,0};
+    float w=0;
+    float hmin=vector_input.front().y;
+    float hmax=vector_input.front().y;
+    float h=0;
+    float d=0;
+    
+    
+    
+    first_vector3D = vector_input.front();
+    displayV3D(vector_input);
+    std::cout <<"control x front: " << vector_input.front().x << std::endl;
+    std::cout <<"control x back: " << vector_input.back().x << std::endl;
+    w = std::abs(vector_input.back().x-vector_input.front().x);
+    for (std::vector<vertex3D>::iterator it=vector_input.begin(); it!=vector_input.end();++it){
+        std::cout <<"control y: " << (*it).y << std::endl;
+        hmin= std::min(hmin,(*it).y);
+        hmax = std::max(hmax,(*it).y);
+    }
+    h = std::abs(hmax - hmin);
+    d=h;
+    std::cout <<"w,h: " << w << ", " << h <<std::endl;
+    std::cout <<"hmax, hmin: " << hmax << ", " << hmin <<std::endl;
+    //~ return {w,hmax-hmin};
+    first_vector3D.y = hmin;
+    
+    whd.push_back({w,h,d});
+    std::vector<vertex3D> vertex_3D=create_vector3D2(whd, first_vector3D,offset);
+    init_vectors3(vertex_3D);
+}
+void text_frame2(std::vector<vertex3D> &vector_input, std::vector<uint> &nb_glyphs){
+    
+    std::vector<vertex3D>  whd;
+    std::vector<vertex3D> vertex_3D;
+    vertex3D first_vector3D;
+    vertex3D offset={1,0,0};
+    //~ float w=0;
+    //~ float hmin=vector_input.front().y;
+    //~ float hmax=vector_input.front().y;
+    //~ float h=0;
+    //~ float d=0;
+    
+    std::cout << "Control text_frame2 -- start" << std::endl;
+    
+    std::vector<vertex3D>::iterator it=vector_input.begin();
+    std::vector<uint>::iterator it2=nb_glyphs.begin();
+    
+        first_vector3D = (*it);
+        
+    //~ for (std::vector<vertex3D>::iterator it=vector_input.begin(); it!=vector_input.end();std::advance(it,6)){
+    while (it<vector_input.end()){
+        //~ first_vector3D = vector_input.front();
+        float w=0;
+        float hmin=(*it).y;
+        float hmax=(*it).y;
+        float h=0;
+        float d=0;
+        //~ displayV3D(vector_input);
+        std::cout << std::endl;
+        std::cout <<"nb indexes: " << (*it2) << std::endl;
+        std::cout <<"control x front: " << (*it).x << std::endl;
+        std::cout <<"control x back: " << (*(it+(*it2)-1)).x << std::endl;
+        //~ w = std::abs(vector_input.back().x-vector_input.front().x);
+        // the absolute difference between the x coordinate of the right-most vertex and the left-most
+        // of the current box, that are 5 vertices apart
+        w = std::abs(((*(it+(*it2)-1)).x-(*it).x));
+        // loop though each glyphs from current iterator until nb of glyphsfor current text is reach
+        for (std::vector<vertex3D>::iterator it3=it; it3!=(it+(*it2));++it3){
+            std::cout <<"control y: " << (*it3).y << std::endl << std::endl;
+            hmin= std::min(hmin,(*it3).y);
+            hmax = std::max(hmax,(*it3).y);
+        }
+        h = std::abs(hmax - hmin);
+        d=h;
+        std::cout <<"w,h: " << w << ", " << h <<std::endl;
+        std::cout <<"hmax, hmin: " << hmax << ", " << hmin <<std::endl<<std::endl;
+        //~ return {w,hmax-hmin};
+        first_vector3D.y = std::min(first_vector3D.y,hmin);
+        
+        whd.push_back({w,h,d});
+        //~ create_vector3D3(vertex_3D, whd, first_vector3D,offset);
+        std::advance(it,(*it2));
+        std::advance(it2,1);
+    }
+        create_vector3D3(vertex_3D, whd, first_vector3D,offset);
+
+    init_vectors3(vertex_3D);
+    std::cout << "Control text_frame2 -- end" << std::endl;
+}
+void text_frame3(std::vector<vertex3D> &vector_input, std::vector<uint> &nb_glyphs, std::vector<vertex3D> &v_origin){
+    
+    std::vector<vertex3D>  whd;
+    std::vector<vertex3D> vertex_3D;
+    
+    std::cout << "Control text_frame2 -- start" << std::endl;
+    
+    std::vector<vertex3D>::iterator it=vector_input.begin();
+    std::vector<uint>::iterator it2=nb_glyphs.begin();
+    
+    while (it<vector_input.end()){
+        float w=0;
+        float hmin=(*it).y;
+        float hmax=(*it).y;
+        float h=0;
+        float d=0;
+        //~ displayV3D(vector_input);
+        std::cout << std::endl;
+        std::cout <<"nb indexes: " << (*it2) << std::endl;
+        std::cout <<"control x front: " << (*it).x << std::endl;
+        std::cout <<"control x back: " << (*(it+(*it2)-1)).x << std::endl;
+        //~ w = std::abs(vector_input.back().x-vector_input.front().x);
+        // the absolute difference between the x coordinate of the right-most vertex and the left-most
+        // of the current box, that are 5 vertices apart
+        w = std::abs(((*(it+(*it2)-1)).x-(*it).x));
+        // loop though each glyphs from current iterator until nb of glyphsfor current text is reach
+        for (std::vector<vertex3D>::iterator it3=it; it3!=(it+(*it2));++it3){
+            std::cout <<"control y: " << (*it3).y << std::endl << std::endl;
+            hmin= std::min(hmin,(*it3).y);
+            hmax = std::max(hmax,(*it3).y);
+        }
+        h = std::abs(hmax - hmin);
+        d=h;
+        std::cout <<"w,h: " << w << ", " << h <<std::endl;
+        std::cout <<"hmax, hmin: " << hmax << ", " << hmin <<std::endl<<std::endl;
+        //~ return {w,hmax-hmin};
+        
+        // commented for testing, by forcing value of first_vector at start of function
+        
+        whd.push_back({w,h,d});
+        //~ create_vector3D3(vertex_3D, whd, first_vector3D,offset);
+        std::advance(it,(*it2));
+        std::advance(it2,1);
+    }
+    create_vector3D4(vertex_3D, v_origin, whd);
+    displayV3D(whd);
+    init_vectors3(vertex_3D);
+    std::cout << "Control text_frame2 -- end" << std::endl;
 }
 
 void render_text2(atlas * a) {
@@ -1319,22 +1572,45 @@ void init_color4(GLfloat colorRed,GLfloat colorGreen,GLfloat colorBlue)
         r,g,b
     };
     
-    //~ GLfloat box_vertices_color3[]={
-        //~ // first box
-        //~ 1,0.2,0.8,
-        //~ 1.2,0,0.2,
-        //~ 0.2,0.8,0,
-        //~ 0,0.2,0.8,
-        //~ 0.2,0.2,0.2,
-        //~ 0.2,0.2,0.2,
-        //~ 0.2,0.2,0.2,
-        //~ 1,1,1
-    //~ };
-
     std::vector<GLfloat> vect_color3;
 
 
-    int max_loop = testing.size();
+    //~ int max_loop = testing.size();
+    int max_loop = 4;
+    std::cout<<testing.size()<<std::endl;
+    for(int i=0;i<max_loop;i++){
+        vect_color3.insert (vect_color3.end(), box_vertices_color3, box_vertices_color3+24);
+        }
+
+
+    glGenBuffers(1,&vbo_vertices_color_box3);
+    glBindBuffer(GL_ARRAY_BUFFER,vbo_vertices_color_box3);
+    glBufferData(GL_ARRAY_BUFFER,vect_color3.size() * sizeof(GLfloat),&vect_color3.front(),GL_STATIC_DRAW);
+}
+
+void init_color5(vertex3D color, std::vector<vertex3D> &whd)
+{
+    r=color.x;
+    g=color.y;
+    b=color.z;
+    
+    GLfloat box_vertices_color3[]={
+        r,g,b,
+        r,g,b,
+        r,g,b,
+        r,g,b,
+        r,g,b,
+        r,g,b,
+        r,g,b,
+        r,g,b
+    };
+    
+    std::vector<GLfloat> vect_color3;
+
+
+    //~ int max_loop = testing.size();
+    //~ int max_loop = 4;
+    int max_loop = whd.size();
     std::cout<<testing.size()<<std::endl;
     for(int i=0;i<max_loop;i++){
         vect_color3.insert (vect_color3.end(), box_vertices_color3, box_vertices_color3+24);
@@ -1396,6 +1672,138 @@ std::vector<vertex3D> create_vector3D(std::vector<vertex3D> &vector_text_whd, ve
         std::cout<<"loop end"<<std::endl;
         displayV3D(vector3D);
     return vector3D;
+}
+std::vector<vertex3D> create_vector3D2(std::vector<vertex3D> &vector_text_whd, vertex3D &first_vector3D, vertex3D &offset){
+    
+    int n_vect_whd=0;
+    //~ float offset.x=1.5;
+    //~ float offset.y=-0.3;
+    //~ float offset.z=1.0;
+    // first vertex is set to (0,0,0), is the bottom left corner
+    //~ vertex3D first_vector3D = {0.0,0.0,0.0};
+    //~ vertex3D first_vector3D = vector_coordinates;
+    std::vector<vertex3D> vector3D;
+    
+    for(std::vector<vertex3D>::iterator it=vector_text_whd.begin();it!=vector_text_whd.end();++it){
+        std::cout<<"loop"<<std::endl;
+        std::cout<<(*it).x<<std::endl;
+        std::cout<<(*it).y<<std::endl;
+        std::cout<<(*it).z<<std::endl;
+        // 1st vertex
+        vector3D.push_back({first_vector3D.x+n_vect_whd*(offset.x+(*it).x),first_vector3D.y+n_vect_whd*(offset.y+(*it).y),first_vector3D.z+n_vect_whd*(offset.z+(*it).z)});
+        // 2nd vertex, keep 1st vertex x and z, add y from vector2D, to get upper left corner, front face
+        vector3D.push_back({vector3D.back().x,vector3D.back().y+(*it).y,vector3D.back().z});
+        // 3rd vertex, back is now 2nd vertex, so just add y, add x from, to get upper right corner, front face
+        vector3D.push_back({vector3D.back().x+(*it).x,vector3D.back().y,vector3D.back().z});
+        // 4th vertex, back is now 3rd vertex, so deduct y, keeping x, to get bottom right corner, front face
+        vector3D.push_back({vector3D.back().x,vector3D.back().y-(*it).y,vector3D.back().z});
+        // 5th vertex deduct x to come back to bottom left corner, and deduct a depth for z to get back face
+        vector3D.push_back({vector3D.back().x-(*it).x,vector3D.back().y,vector3D.back().z-(*it).z});
+        // 6nd vertex, keep 1st vertex x and z, add y from vector2D, to get upper left corner, back face
+        vector3D.push_back({vector3D.back().x,vector3D.back().y+(*it).y,vector3D.back().z});
+        // 7th vertex, back is now 2nd vertex, so just add y, add x from, to get upper right corner, back face
+        vector3D.push_back({vector3D.back().x+(*it).x,vector3D.back().y,vector3D.back().z});
+        // 8th vertex, back is now 3rd vertex, so deduct y, keeping x, to get bottom right corner, back face
+        vector3D.push_back({vector3D.back().x,vector3D.back().y-(*it).y,vector3D.back().z});
+        n_vect_whd++;
+            }
+        std::cout<<"loop end"<<std::endl;
+        displayV3D(vector3D);
+    return vector3D;
+}
+void create_vector3D3(std::vector<vertex3D> &vector3D, std::vector<vertex3D> &vector_text_whd, vertex3D &first_vector3D, vertex3D &offset){
+    
+    int n_vect_whd=0;
+    //~ float offset.x=1.5;
+    //~ float offset.y=-0.3;
+    //~ float offset.z=1.0;
+    // first vertex is set to (0,0,0), is the bottom left corner
+    //~ vertex3D first_vector3D = {0.0,0.0,0.0};
+    //~ vertex3D first_vector3D = vector_coordinates;
+    //~ std::vector<vertex3D> vector3D;
+    std::cout<<"control create_vector3D3 -- start"<<std::endl;
+    
+    for(std::vector<vertex3D>::iterator it=vector_text_whd.begin();it!=vector_text_whd.end();++it){
+        std::cout<<"loop -- start"<<std::endl;
+        std::cout<<"n_vect_whd: "<<n_vect_whd<<std::endl;
+        std::cout<<first_vector3D.x+n_vect_whd*(offset.x)<<std::endl;
+        std::cout<<(*it).x<<std::endl;
+        std::cout<<first_vector3D.x<<std::endl;
+        std::cout<<offset.x<<std::endl;
+        std::cout<<(first_vector3D.y+n_vect_whd*(offset.y))<<std::endl;
+        std::cout<<(*it).y<<std::endl;
+        std::cout<<first_vector3D.y<<std::endl;
+        std::cout<<offset.y<<std::endl;
+        std::cout<<(first_vector3D.z+n_vect_whd*(offset.z))<<std::endl;
+        std::cout<<(*it).z<<std::endl;
+        std::cout<<first_vector3D.z<<std::endl;
+        std::cout<<offset.z<<std::endl;
+        // 1st vertex
+        //~ vector3D.push_back({first_vector3D.x+n_vect_whd*(offset.x+(*it).x),first_vector3D.y+n_vect_whd*(offset.y+(*it).y),first_vector3D.z+n_vect_whd*(offset.z+(*it).z)});
+        vector3D.push_back({first_vector3D.x+n_vect_whd*(offset.x),first_vector3D.y+n_vect_whd*(offset.y),first_vector3D.z+n_vect_whd*(offset.z)});
+        // 2nd vertex, keep 1st vertex x and z, add y from vector2D, to get upper left corner, front face
+        vector3D.push_back({vector3D.back().x,vector3D.back().y+(*it).y,vector3D.back().z});
+        // 3rd vertex, back is now 2nd vertex, so just add y, add x from, to get upper right corner, front face
+        vector3D.push_back({vector3D.back().x+(*it).x,vector3D.back().y,vector3D.back().z});
+        // 4th vertex, back is now 3rd vertex, so deduct y, keeping x, to get bottom right corner, front face
+        vector3D.push_back({vector3D.back().x,vector3D.back().y-(*it).y,vector3D.back().z});
+        // 5th vertex deduct x to come back to bottom left corner, and deduct a depth for z to get back face
+        vector3D.push_back({vector3D.back().x-(*it).x,vector3D.back().y,vector3D.back().z-(*it).z});
+        // 6nd vertex, keep 1st vertex x and z, add y from vector2D, to get upper left corner, back face
+        vector3D.push_back({vector3D.back().x,vector3D.back().y+(*it).y,vector3D.back().z});
+        // 7th vertex, back is now 2nd vertex, so just add y, add x from, to get upper right corner, back face
+        vector3D.push_back({vector3D.back().x+(*it).x,vector3D.back().y,vector3D.back().z});
+        // 8th vertex, back is now 3rd vertex, so deduct y, keeping x, to get bottom right corner, back face
+        vector3D.push_back({vector3D.back().x,vector3D.back().y-(*it).y,vector3D.back().z});
+        n_vect_whd++;
+        std::cout<<"loop end"<<std::endl;
+            }
+        std::cout<<"control create_vector3D3 -- end"<<std::endl;
+        displayV3D(vector3D);
+}
+void create_vector3D4(std::vector<vertex3D> &vector3D,std::vector<vertex3D> &v_origin, std::vector<vertex3D> &vector_text_whd){
+    
+    //~ int n_vect_whd=0;
+    //~ float offset.x=1.5;
+    //~ float offset.y=-0.3;
+    //~ float offset.z=1.0;
+    // first vertex is set to (0,0,0), is the bottom left corner
+    //~ vertex3D first_vector3D = {0.0,0.0,0.0};
+    //~ vertex3D first_vector3D = vector_coordinates;
+    //~ std::vector<vertex3D> vector3D;
+    std::cout<<"control create_vector3D4 -- start"<<std::endl;
+    std::vector<vertex3D>::iterator whd_it;
+    std::vector<vertex3D>::iterator v_origin_it;
+    for(whd_it=vector_text_whd.begin(),v_origin_it=v_origin.begin() ;whd_it!=vector_text_whd.end() && v_origin_it!=vector_text_whd.end() ;++whd_it, ++v_origin_it){
+        std::cout<<"loop -- start"<<std::endl;
+        //~ std::cout<<"n_vect_whd: "<<n_vect_whd<<std::endl;
+        std::cout<<(*v_origin_it).x<<std::endl;
+        std::cout<<(*whd_it).x<<std::endl;
+        std::cout<<(*whd_it).y<<std::endl;
+        std::cout<<(*v_origin_it).y<<std::endl;
+        std::cout<<(*whd_it).z<<std::endl;
+        std::cout<<(*v_origin_it).z<<std::endl;
+        // 1st vertex
+        vector3D.push_back({(*v_origin_it).x,(*v_origin_it).y,(*v_origin_it).z});
+        // 2nd vertex, keep 1st vertex x and z, add y from vector2D, to get upper left corner, front face
+        vector3D.push_back({vector3D.back().x,vector3D.back().y+(*whd_it).y,vector3D.back().z});
+        // 3rd vertex, back is now 2nd vertex, so just add y, add x from, to get upper right corner, front face
+        vector3D.push_back({vector3D.back().x+(*whd_it).x,vector3D.back().y,vector3D.back().z});
+        // 4th vertex, back is now 3rd vertex, so deduct y, keeping x, to get bottom right corner, front face
+        vector3D.push_back({vector3D.back().x,vector3D.back().y-(*whd_it).y,vector3D.back().z});
+        // 5th vertex deduct x to come back to bottom left corner, and deduct a depth for z to get back face
+        vector3D.push_back({vector3D.back().x-(*whd_it).x,vector3D.back().y,vector3D.back().z-(*whd_it).z});
+        // 6nd vertex, keep 1st vertex x and z, add y from vector2D, to get upper left corner, back face
+        vector3D.push_back({vector3D.back().x,vector3D.back().y+(*whd_it).y,vector3D.back().z});
+        // 7th vertex, back is now 2nd vertex, so just add y, add x from, to get upper right corner, back face
+        vector3D.push_back({vector3D.back().x+(*whd_it).x,vector3D.back().y,vector3D.back().z});
+        // 8th vertex, back is now 3rd vertex, so deduct y, keeping x, to get bottom right corner, back face
+        vector3D.push_back({vector3D.back().x,vector3D.back().y-(*whd_it).y,vector3D.back().z});
+        //~ n_vect_whd++;
+        std::cout<<"loop end"<<std::endl;
+            }
+        std::cout<<"control create_vector3D4 -- end"<<std::endl;
+        displayV3D(vector3D);
 }
 
 void glm_vector(std::vector<vertex3D> &vector_text_whd, vertex3D &first_vector3D){
@@ -1732,6 +2140,49 @@ void init_vectors2(){
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, vect_index.size() * sizeof(GLushort), &vect_index.front(), GL_STATIC_DRAW);
     
     }
+    
+void init_vectors3(std::vector<vertex3D> &vectors_boxes){
+    
+    glGenBuffers(1,&vbo_vertices_box3);
+    glBindBuffer(GL_ARRAY_BUFFER,vbo_vertices_box3);
+    glBufferData(GL_ARRAY_BUFFER,vectors_boxes.size() * sizeof(vertex3D),&vectors_boxes.front(),GL_STATIC_DRAW);
+
+    // set the array of indexes for a rectangle
+    std::array<GLushort,36> box_elements3 = {
+        // front
+        0, 1, 2,
+        2, 3, 0,
+        // right
+        1, 5, 6,
+        6, 2, 1,
+        // back
+        7, 6, 5,
+        5, 4, 7,
+        // left
+        4, 0, 3,
+        3, 7, 4,
+        // bottom
+        4, 5, 1,
+        1, 0, 4,
+        // top
+        3, 2, 6,
+        6, 7, 3
+        };
+
+    std::vector<GLushort> vect_index;
+
+    int max_loop = vectors_boxes.size();
+    for(GLushort i=0;i<max_loop;i++){
+        for ( auto it = box_elements3.begin(); it != box_elements3.end(); ++it ){
+            vect_index.push_back((*it)+8*i);
+        }
+    }
+
+    glGenBuffers(1, &ibo_box_elements3);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_box_elements3);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, vect_index.size() * sizeof(GLushort), &vect_index.front(), GL_STATIC_DRAW);
+    
+    }
 
 
 void init_box() {
@@ -1846,6 +2297,25 @@ GLushort box_elements[] = {
     
 }
 
+void init_testing(){
+    
+    std::vector<vertex3D> testing ={
+    //~ {1.0,0.3,0.5},
+    //~ {1.5,0.5,0.5},
+    //~ {2.2,0.8,0.5}
+    {0.5,0.3,0.2},
+    {0.2,0.3,0.2}
+    };
+    
+    vertex3D origin = {0.0,0.0,0.0};
+    vertex3D offset = {0.5,0.5,0.5};
+    
+    std::vector<vertex3D> boxes=create_vector3D2(testing, origin, offset);
+    displayV3D(boxes);
+    
+    init_vectors3(boxes);
+    
+}
 
 void draw_cube(){
 
@@ -2023,10 +2493,112 @@ void init_text(const char *text,float x, float y, float z, float h_padding, floa
     //~ create_coord_vector_text(inputText, a48, text_coordinates.x, -text_coordinates.y, text_coordinates.z, padding.x,padding.y );
     //~ create_coord_vector_text(inputText, a48, text_coordinates.x, -text_coordinates.y, text_coordinates.z, sx, sy );
     std::cout << "init_text: inputText: " << inputText << std::endl;
-    //~ create_coord_vector_text(inputText, a48, 0, 0, 0, sx, sy );
-    //~ create_coord_vector_text2(inputText, a48, 0, 0, 0, sx, sy );
-    create_coord_vector_text2(inputText, a48, x, y, z, sx, sy );
+    create_coord_vector_text2(inputText, a48, x, -y, z, sx, sy );
+    text_frame(glyphs_box);
+}
 
+void init_text_Entity(E &my_entity,float x, float y, float z, float h_padding, float v_padding) {
+    
+    //~ inputText=text;
+    text_coordinates = {x,y,z};
+    padding = {h_padding,v_padding};
+    
+    /* Create texture atlasses for several font sizes */
+    a48 = new atlas(face, 48);
+    a24 = new atlas(face, 24);
+    a12 = new atlas(face, 12);
+    float sx = 2.0 / glutGet(GLUT_WINDOW_WIDTH);
+    float sy = 2.0 / glutGet(GLUT_WINDOW_HEIGHT);
+    //~ create_coord_vector_text(inputText, a48, text_coordinates.x, -text_coordinates.y, text_coordinates.z, padding.x,padding.y );
+    //~ create_coord_vector_text(inputText, a48, text_coordinates.x, -text_coordinates.y, text_coordinates.z, sx, sy );
+    //~ std::cout << "init_text: inputText: " << inputText << std::endl;
+    create_coord_vector_text2(my_entity.name.c_str(), a48, x, -y, z, sx, sy );
+    create_coord_vector_text2(my_entity.data.c_str(), a48, x+1.0, -y, z, sx, sy );
+    text_frame2(glyphs_box, nb_glyphs_per_text);
+    //~ text_frame(glyphs_box);
+}
+void init_text_Entity2(E &my_entity,vertex3D &origin, vertex3D &offset, vertex2D &padding) {
+    
+    //~ inputText=text;
+    //~ text_coordinates = {x,y,z};
+    //~ padding = {h_padding,v_padding};
+    
+    /* Create texture atlasses for several font sizes */
+    a48 = new atlas(face, 48);
+    a24 = new atlas(face, 24);
+    a12 = new atlas(face, 12);
+    vertex2D window_scale;
+    window_scale.x = 2.0 / glutGet(GLUT_WINDOW_WIDTH);
+    window_scale.y = 2.0 / glutGet(GLUT_WINDOW_HEIGHT);
+    //~ create_coord_vector_text(inputText, a48, text_coordinates.x, -text_coordinates.y, text_coordinates.z, padding.x,padding.y );
+    //~ create_coord_vector_text(inputText, a48, text_coordinates.x, -text_coordinates.y, text_coordinates.z, sx, sy );
+    //~ std::cout << "init_text: inputText: " << inputText << std::endl;
+
+    create_coord_vector_text4(my_entity.name.c_str(), a48, origin, window_scale );
+    origin.x += offset.x;
+    origin.y += offset.y;
+    origin.z += offset.z;
+    create_coord_vector_text4(my_entity.data.c_str(), a48, origin, window_scale );
+    
+    origin.x += offset.x;
+    origin.y += offset.y;
+    origin.z += offset.z;
+    
+    create_coord_vector_text4(my_entity.get_name_vE_by_index(0).c_str(), a48, origin, window_scale );
+    origin.x += offset.x;
+    origin.y += offset.y;
+    origin.z += offset.z;
+    create_coord_vector_text4(my_entity.get_data_vE_by_index(0).c_str(), a48, origin, window_scale );
+    text_frame2(glyphs_box, nb_glyphs_per_text);
+    //~ text_frame3(glyphs_box, nb_glyphs_per_text, offset);
+    //~ text_frame(glyphs_box);
+}
+void init_text_Entity3(E &my_entity,vertex3D &origin, std::vector<vertex3D> &offset, vertex2D &padding, vertex3D color) {
+    
+    //~ inputText=text;
+    //~ text_coordinates = {x,y,z};
+    //~ padding = {h_padding,v_padding};
+    
+    /* Create texture atlasses for several font sizes */
+    a48 = new atlas(face, 48);
+    a24 = new atlas(face, 24);
+    a12 = new atlas(face, 12);
+    vertex2D window_scale;
+    window_scale.x = 2.0 / glutGet(GLUT_WINDOW_WIDTH);
+    window_scale.y = 2.0 / glutGet(GLUT_WINDOW_HEIGHT);
+    //~ create_coord_vector_text(inputText, a48, text_coordinates.x, -text_coordinates.y, text_coordinates.z, padding.x,padding.y );
+    //~ create_coord_vector_text(inputText, a48, text_coordinates.x, -text_coordinates.y, text_coordinates.z, sx, sy );
+    //~ std::cout << "init_text: inputText: " << inputText << std::endl;
+    std::vector<vertex3D> v_origin;
+    vertex3D temp_origin=origin;
+    for(int i=0; i<4;++i){
+        v_origin.push_back({temp_origin.x+offset.at(i).x,temp_origin.y+offset.at(i).y,temp_origin.z+offset.at(i).z});
+        temp_origin=v_origin.back();
+    }
+
+    //~ origin.x += offset.begin()->x;
+    //~ origin.y += offset.begin()->y;
+    //~ origin.z += offset.begin()->z;
+    create_coord_vector_text4(my_entity.name.c_str(), a48, v_origin.at(0), window_scale );
+    //~ origin.x += offset.at(1).x;
+    //~ origin.y += offset.at(1).y;
+    //~ origin.z += offset.at(1).z;
+    create_coord_vector_text4(my_entity.data.c_str(), a48, v_origin.at(1), window_scale );
+    
+    //~ origin.x += offset.at(2).x;
+    //~ origin.y += offset.at(2).y;
+    //~ origin.z += offset.at(2).z;
+    
+    create_coord_vector_text4(my_entity.get_name_vE_by_index(0).c_str(), a48, v_origin.at(2), window_scale );
+    //~ origin.x += offset.at(3).x;
+    //~ origin.y += offset.at(3).y;
+    //~ origin.z += offset.at(3).z;
+    create_coord_vector_text4(my_entity.get_data_vE_by_index(0).c_str(), a48, v_origin.at(3), window_scale );
+    //~ text_frame2(glyphs_box, nb_glyphs_per_text);
+    //~ text_frame3(glyphs_box, nb_glyphs_per_text, offset);
+    text_frame3(glyphs_box, nb_glyphs_per_text, v_origin);
+    init_color5(color,v_origin);
+    //~ text_frame(glyphs_box);
 }
 
 void textDisplay() {
@@ -2063,7 +2635,6 @@ void textDisplay() {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    /* Drawing the text */
     //~ glUseProgram(program_text);
     GLfloat white[4] = { 1, 1, 1, 1 };
     GLfloat green[4] = { 0, 1, 0, 1 };
@@ -2075,8 +2646,8 @@ void textDisplay() {
     GLfloat bg_rgb[4] = { r, g, b, 1 };
     
     FT_Set_Pixel_Sizes(face, 0, fontSize);
-    glUniform4fv(uniform_color, 1, black);
-    glUniform4fv(uniform_bgcolor, 1, bg_rgb);
+    //~ glUniform4fv(uniform_color, 1, black);
+    //~ glUniform4fv(uniform_bgcolor, 1, bg_rgb);
     //~ render_text_Z(inputText, x, y, z, sx, sy);
 
     // Drawing a cube
@@ -2086,19 +2657,19 @@ void textDisplay() {
     //~ draw_cube();
     //~ glUseProgram(program_box);
     //~ draw_box2();
+
+
+    /* Drawing the text */    
+    glUseProgram(program_test);
+    glUniform4fv(uniform_color_test, 1, red);
+    glUniform4fv(uniform_bgcolor_test, 1, bg_rgb);
+    render_text3(a48);
+    
+    // Drawing a box
     glUseProgram(program_box);
     draw_box3();
     
-    glUseProgram(program_test);
-    //~ glUseProgram(program_text);
-    glUniform4fv(uniform_color_test, 1, red);
-    glUniform4fv(uniform_bgcolor_test, 1, bg_rgb);
-    //~ render_text2(a48);
-    render_text3(a48);
-    //~ render_text4(a48);
     
-    
-
     glutSwapBuffers();
     
 }
@@ -2130,10 +2701,10 @@ void onIdle() {
 */
 
 void onIdle() {
-    float move = sinf(glutGet(GLUT_ELAPSED_TIME) / 1000.0 * (2*3.14) / 10); // -1<->+1 every 5 seconds
-    float angle = glutGet(GLUT_ELAPSED_TIME) / 1000.0 * 45;  // 45° per second
-    //~ float move = 0;
-    //~ float angle = 0;
+    //~ float move = sinf(glutGet(GLUT_ELAPSED_TIME) / 1000.0 * (2*3.14) / 5); // -1<->+1 every 2 seconds
+    //~ float angle = glutGet(GLUT_ELAPSED_TIME) / 1000.0 * 25;  // 25° per second
+    float move = 0;
+    float angle = 0;
     screen_width=glutGet(GLUT_WINDOW_WIDTH);
     screen_height=glutGet(GLUT_WINDOW_HEIGHT);
     glm::vec3 axis_y(0, 1, 0);
@@ -2143,7 +2714,7 @@ void onIdle() {
     glm::mat4 anim2 = glm::rotate(glm::mat4(1.0f), glm::radians(angle), axis_z);
     
     glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(1.0, 0.0, -1.0));
-    glm::mat4 view = glm::lookAt(glm::vec3(0.0, 0.0, 5.0), glm::vec3(0.0, 0.0,-1.0), glm::vec3(0.0, 1.0, 0.0));//eye,center,up
+    glm::mat4 view = glm::lookAt(glm::vec3(0.0, 0.0, 1.0), glm::vec3(0.0, 0.0,-1.0), glm::vec3(0.0, 1.0, 0.0));//eye,center,up
     glm::mat4 projection = glm::perspective(45.0f, 1.0f*screen_width/screen_height, 0.1f, 10.0f);
     
     glm::mat4 m_transform = projection * view * model * m_translate * anim2 * anim;
@@ -2194,81 +2765,3 @@ void free_resources() {
     glDeleteBuffers(1, &ibo_box_elements2);
     glDeleteBuffers(1, &ibo_box_elements3);
 }
-
-//~ int main(int argc, char *argv[]) {
-    
-    
-    //~ glutInit(&argc, argv);
-    //~ glutInitContextVersion(2,0);
-    //glutInitDisplayMode(GLUT_RGB);
-    //~ glutInitDisplayMode(GLUT_RGBA|GLUT_ALPHA|GLUT_DOUBLE|GLUT_DEPTH);    
-    //glutInitWindowSize(640, 480);
-    //~ glutInitWindowSize(screen_width, screen_height);
-    //~ glutCreateWindow("Basic Text");
-
-    //~ if (argc > 1)
-        //~ inputText=argv[1];
-    //~ else{
-        
-        //~ std::cout << "Enter text" << std::endl;
-        //~ std::string strtmp;
-        //~ std::cin >> strtmp;
-        //~ inputText = strtmp.c_str();
-    //~ }
-    //~ if (argc > 2)
-        //~ fontSize=atoi(argv[2]);
-    //~ else
-        //~ fontSize=48;
-        
-    //~ if (argc > 3)
-        //~ r = atof(argv[3]);
-    //~ else
-        //~ r = 1;
-    //~ if (argc > 4)
-        //~ g = atof(argv[4]);
-    //~ else
-        //~ g = 1;
-    //~ if (argc > 5)
-        //~ b = atof(argv[5]);
-        
-    //~ else
-        //~ b = 1;
-
-    //~ std::cout << r << std::endl;
-    //~ std::cout << g << std::endl;
-    //~ std::cout << b << std::endl;
-    
-    //~ if (argc > 6)
-        //~ fontfilename = argv[6];
-    //~ else
-        //~ fontfilename = "FreeSans.ttf";
-
-    //~ GLenum glew_status = glewInit();
-    
-    //~ if (GLEW_OK != glew_status) {
-        //~ fprintf(stderr, "Error: %s\n", glewGetErrorString(glew_status));
-        //~ return 1;
-    //~ }
-    
-    //~ if (!GLEW_VERSION_2_0) {
-        //~ fprintf(stderr, "No support for OpenGL 2.0 found\n");
-        //~ return 1;
-    //~ }
-    
-    //~ if (init_font()  && init_program()) {
-        //init_background(inputText,0,0);
-        //~ init_color(r,g,b);
-        //~ init_cube(inputText,0,0,0);
-        
-        //~ glutDisplayFunc(display);
-        //~ glutIdleFunc(onIdle);
-        //~ glEnable(GL_BLEND);
-        //~ glEnable(GL_DEPTH_TEST);;
-        //~ glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        //~ glutMainLoop();
-
-    //~ }
-    
-    //~ free_resources();
-    //~ return 0;
-//~ }
