@@ -11,7 +11,6 @@
 #include <string>
 #include "glFunctions.h"
 
-
 //Constructors:
 E::E(){};
 
@@ -177,7 +176,33 @@ void E::display_all(int n_indent, const int & n_space)
         }
     return;
 };
+GLdata current_GLdata;
 
+void E::extract_E_data_for_v_offset(std::vector<GLdata> & v_E_data, int & level, int index)
+{
+    level++;
+    current_GLdata.level= level;
+    current_GLdata.index= index;
+    current_GLdata.e_member=E_member::name;
+    current_GLdata.E_data=this->name;
+    v_E_data.push_back(current_GLdata);
+    current_GLdata.e_member=E_member::data;
+    current_GLdata.E_data=this->data;
+    v_E_data.push_back(current_GLdata);
+    if (this->vE.size()!=0) {index++; };
+    for (std::vector<E*>::iterator it_vE=this->vE.begin();it_vE!=this->vE.end();++it_vE)
+        {
+            (*it_vE)->extract_E_data_for_v_offset(v_E_data, level, index);
+        }
+    return;
+}
+
+void E::display_v_E_data(std::vector<GLdata> & v_offset){
+    for (std::vector<GLdata>::iterator it=v_offset.begin(); it!=v_offset.end(); ++it){
+        printf("level, index,member,data: %i,%i,%i,%s\n",
+         (*it).level, (*it).index, (*it).e_member, (*it).E_data.c_str());
+    }
+}
 void E::format_display(int n_indent, const int & n_space, std::string start_opening_tag,
             std::string end_opening_tag, std::string start_closing_tag,
             std::string end_closing_tag)
@@ -619,6 +644,7 @@ void E::testing()
     this->vE.at(0)->vE.at(0)->set_name_vE_index(0,"truc");
     this->vE.at(0)->vE.at(0)->set_data_vE_index(0,"999");
 }
+
 
 void E::display_vector_int(std::vector<int>& vect_index) {
     

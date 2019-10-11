@@ -44,8 +44,7 @@ const char *userFontFilename;
 // "-gl" option is for the openGL testing
 // "-t" execute the text GL display with argument text,font size, r,g,b,font name.
 
-int main (int argc, char **argv)
-{
+int main (int argc, char **argv){
 
     std::string choice;
     
@@ -57,11 +56,9 @@ int main (int argc, char **argv)
     
     // execute different code corresponding to initial argument
     if (argc>1) choice= std::string(argv[1]);
-    //~ if (argc==1){
 
         // argument is -gl for openGL
-        if (choice=="-gl")
-        {
+        if (choice=="-gl"){
         
             E testEntity;
     
@@ -122,8 +119,7 @@ int main (int argc, char **argv)
             // set Mouse cursor image
             glutSetCursor(cursor);
             
-            while (1)
-            {
+            while (1){
                 // glut Loop
                 glutMainLoopEvent();
         
@@ -154,86 +150,8 @@ int main (int argc, char **argv)
             }
         }
     
-        // argument is -t for text
-        else if(choice=="-t"){
-            glutInit(&argc, argv);
-            glutInitContextVersion(2,0);
-            //~ glutInitDisplayMode(GLUT_RGB);
-            glutInitDisplayMode(GLUT_RGBA|GLUT_ALPHA|GLUT_DOUBLE|GLUT_DEPTH);    
-            //~ glutInitWindowSize(640, 480);
-            glutInitWindowSize(window_width, window_height);
-            glutCreateWindow("Basic Text");
-        
-            if (argc > 2)
-                userText=argv[2];
-            else{
-                
-                std::cout << "Enter text" << std::endl;
-                std::string strtmp;
-                std::cin >> strtmp;
-                userText = strtmp.c_str();
-            }
-            if (argc > 3)
-                userFontSize=atoi(argv[3]);
-            else
-                userFontSize=48;
-                
-            if (argc > 4)
-                userRed = atof(argv[4]);
-            else
-                userRed = 1;
-            if (argc > 5)
-                userGreen = atof(argv[5]);
-            else
-                userGreen = 1;
-            if (argc > 6)
-                userBlue = atof(argv[6]);
-            else
-                userBlue = 1;
-        
-            std::cout << userRed << std::endl;
-            std::cout << userGreen << std::endl;
-            std::cout << userBlue << std::endl;
-            
-            if (argc > 7)
-                userFontFilename = argv[7];
-            else
-                userFontFilename = "./fonts/FreeSans.ttf";
-        
-            GLenum glew_status = glewInit();
-            
-            if (GLEW_OK != glew_status) {
-                fprintf(stderr, "Error: %s\n", glewGetErrorString(glew_status));
-                return 1;
-            }
-            
-            if (!GLEW_VERSION_2_0) {
-                fprintf(stderr, "No support for OpenGL 2.0 found\n");
-                return 1;
-            }
-            
-            if (init_font(userFontSize, userFontFilename)  && init_program()) {
-                //~ init_background(inputText,0,0);
-                init_color(userRed,userBlue,userGreen);
-                //~ init_cube(userText,0,0,0);
-                //~ init_cube(userText);
-                
-                glutDisplayFunc(textDisplay);
-                glutIdleFunc(onIdle);
-                glEnable(GL_BLEND);
-                glEnable(GL_DEPTH_TEST);;
-                glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-                glutMainLoop();
-        
-            }
-            
-            free_resources();
-            return 0;
-        }
-    
         // argument is -e for entity
-        else if(argc==1 || choice=="-e")
-        {
+        else if(argc==1 || choice=="-e"){
     
         // variables
             string key_input;
@@ -241,8 +159,7 @@ int main (int argc, char **argv)
             const int n_space = 2;
             E newEntity;
         
-            while (key_input!="quit")
-            {
+            while (key_input!="quit"){
                 std::cout << std::endl;
                 std::cout << "This is session " << ++n << std::endl;
                 std::cout << std::endl;
@@ -250,12 +167,10 @@ int main (int argc, char **argv)
                 std::cout << "Or load testing file to display for testing ('l')?" << std::endl;
                 std::cout << "Or load testing file and display with cubes ('c')?" << std::endl;
                 std::cin >> key_input;
-                if (key_input=="quit") 
-                {
+                if (key_input=="quit"){
                     return 0;
                 }
-                else if (key_input=="u")
-                {
+                else if (key_input=="u"){
                     std:: cout << "Enter name:" << std::endl;
                     std:: cout << "(Or type 'quit' anytime to quit)" << std::endl;
                     std:: cout << "(Or type 'end' in name when it is the last entity of the current level)" << std::endl;
@@ -287,24 +202,34 @@ int main (int argc, char **argv)
                 newEntity.clear_name();
                 newEntity.clear_data();                
                 }
-                else if (key_input=="l")
-                {
+                else if (key_input=="l"){
                     std::cout << "1 for single line XML or 2 for multiline, 3 for both" << std::endl; 
                     std::cin >> key_input;
                     if (key_input=="1") newEntity.load_XML_File_to_E("../datafiles/merte.xml");
                     if (key_input=="2") newEntity.load_XML_File_to_E("../datafiles/testEOF7.xml");
                     if (key_input=="3") newEntity.load_XML_File_to_E("../datafiles/testAny.xml");
-                    //~ newEntity.format_display(0,"<",">","</",">");
                     
                     newEntity.display_all(0, n_space);
-    
-                    //~ //cleare and delete
+                    
+                    std::vector<int> test_indexes=newEntity.set_vector_of_indexes("1,2,3");
+                    newEntity.display_vector_int(test_indexes);
+                    std::cout << newEntity.get_name_vE_by_index(2) << std::endl;
+                    std::cout << newEntity.vE[2]->get_name_vE_by_index(0) << std::endl;
+                    
+                    int index=0;
+                    int level=0;
+                    
+                    std::vector<GLdata> v_offset;
+                    newEntity.extract_E_data_for_v_offset(v_offset, level);
+                    newEntity.display_v_E_data(v_offset);
+                    
+                    
+                    //cleare and delete
                     newEntity.clear_all_vE();
                     newEntity.clear_name();
                     newEntity.clear_data();
                 }
-                else if (key_input=="t")
-                {
+                else if (key_input=="t"){
                     newEntity.testing();
                     std::cout << std::endl;
                     newEntity.format_display(0,n_space,"<",">","</",">");
@@ -317,8 +242,7 @@ int main (int argc, char **argv)
                     newEntity.clear_name();
                     newEntity.clear_data();
                 }
-                else if (key_input=="c")
-                {
+                else if (key_input=="c"){
                     E newEntity;
                     std::string inText;
                     std::string inText2;
@@ -372,47 +296,14 @@ int main (int argc, char **argv)
                     }
             
                     if (init_font(userFontSize, userFontFilename)  && init_program()) {
-                    //~ if (init_font(userFontSize, userFontFilename)  && init_program()) {
-                        //~ init_color(userRed,userBlue,userGreen);
-                        //~ init_color4(userRed,userBlue,userGreen);
-                        //~ init_color2();
-                        //~ init_color3();
-                        //~ init_text(inText.c_str());
-                        //~ init_text_coordinates(0.5,-0.5, -0.5);
-                        
-                        init_program_test();
-                        //~ init_text(inText.c_str(),X_user,Y_user, Z_user, H_padding_user,V_padding_user);
-                        //~ init_text(inText2.c_str(),X_user,Y_user, Z_user, H_padding_user,V_padding_user);
-                        
-                        //~ init_text_Entity(newEntity,X_user,Y_user, Z_user, H_padding_user,V_padding_user);
                         
                         std::cout << "User coordinates: " << X_user << ", "<< Y_user << ", "<< Z_user << std::endl;
                         vertex3D user_origin={X_user,Y_user, Z_user};
-                        std::vector<vertex3D> offset= {{0.0,0.0,0.0},{0.0,-0.2,0.0},{1.0,0.0,0.0},{0.0,-0.2,0.0}};
+                        std::vector<vertex3D> offset;
                         vertex2D user_padding = {H_padding_user,V_padding_user};
                         
                         vertex3D user_color = {userRed,userBlue,userGreen};
-                        //~ init_text_Entity2(newEntity,user_origin, offset, user_padding);
-                        init_text_Entity3(newEntity,user_origin, offset, user_padding, user_color);
-                        //~ init_color5(user_color);
-                        
-                        //~ init_cube(inText.c_str(),0,0,0);
-                        //~ init_cube(inText2.c_str(),0,0,0);
-                        
-                        //~ init_cube(inText3.c_str(),10,0,0);
-                        //~ init_text(inText2.c_str());
-                        //~ init_text_coordinates(1,-1.5, -0.5);
-                        //~ init_text_coordinates(X_user,Y_user, Z_user);
-                        //~ init_resources_test();
-
-                        //~ init_program_test();
-                        //~ std::cout<<"control testing"<<std::endl;
-                        //~ init_box();
-                        //~ init_vectors();
-                        //~ init_vectors2();
-                        //~ init_testing();
-                        
-                        std::cout<<"control testing"<<std::endl;
+                        init_text_Entity(newEntity,user_origin, offset, user_padding, user_color);
                         
                         glutDisplayFunc(textDisplay);
                         glutIdleFunc(onIdle);
@@ -424,16 +315,14 @@ int main (int argc, char **argv)
                     }
                     
                     free_resources();
-                    free_resources_test();
-                    //~ //clear and delete
+                    
+                    //clear and delete
                     newEntity.clear_all_vE();
                     newEntity.clear_name();
                     newEntity.clear_data();
                     
                 }
-                
-                else
-                {
+                else{
                     std::cout << "No comprendo" << std::endl;
                 }
             }

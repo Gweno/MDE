@@ -7,21 +7,26 @@
 #include <vector>
 #include <string>
 #include <stack>
-//~ #include <stdexcept>
-
-
-
 
 using namespace std;
+enum E_member {name,data};
+struct GLdata{
+    
+    int level;
+    int index;
+    E_member e_member;
+    std::string E_data;
+};
 
 class E {
     
     private:
     
-        // private members
+        //~ // private members
         std::vector<E *> vE;
         
     public:
+        //~ std::vector<E *> vE;
 
         //public members:
         
@@ -413,6 +418,7 @@ class E {
         
         void simple_loop_VE_next_level(string searchName);
         
+        void test_pt_arithm(E * sub_entity);
         
     
         void try_copy(int index);
@@ -492,7 +498,9 @@ class E {
         void print_stack(std::stack<E**> & stack);
         void delete_all_pt();
         void destructor_E();
-
+        
+        void extract_E_data_for_v_offset(std::vector<GLdata> & v_E_data, int & level, int index = 0);
+        void display_v_E_data(std::vector<GLdata> & v_E_data);
 };
 
 
