@@ -10,7 +10,7 @@
 #include <iostream>
 #include <vector>
 #include <stack>
-#include "E.h"
+#include "MDE.h"
 
 #include <stdlib.h>
 #include <GL/glew.h>
@@ -19,7 +19,6 @@
 #include <GL/gl.h>
 #include <GL/freeglut.h>
 
-#include "glFunctions.h"
 #include "text.h"
 
 #include <glm/glm.hpp>
@@ -31,6 +30,8 @@
 
 #include "./common/shader_utils.h"
 
+#define VERSION_INFO "v0.1.0"
+
 // declarationfor text.cpp
 int window_width=800, window_height=600;
 const char *userText;
@@ -39,297 +40,328 @@ GLfloat userRed,userGreen,userBlue;
 const char *userFontFilename;
 
 
-// use of arguments for testing: '-e' execute main for new class E,
+// use of arguments for testing: '-e' execute main for new class MDE,
 // no argument execute the normal main for Entity,
-// "-gl" option is for the openGL testing
 // "-t" execute the text GL display with argument text,font size, r,g,b,font name.
 
 int main (int argc, char **argv){
 
-    std::string choice;
+    // init/declare string variables
+    std::string choice[argc];
+    std::string filename;
+    std::string datasource_path="../datafiles/";//hardcoded data source
+    std::string fullfilename;
+    std::string default_filename = "testAny.xml";
     
-    // display arguments
+    // set switches default values
+    bool GL_on = false;    // GL_on false by default
+    bool input_file = false;  // No input file by default
+    bool input_color = false;  // input color not implemented yet
+    bool input_coord = true;  // input coordinates set by default
+    bool input_padding= true;  // input padding not implemented yet
+    
+    // set variables default values
+    float X_user = 0.0;
+    float Y_user = 0.0;
+    float Z_user = 0.0;
+    float H_padding_user ;
+    float V_padding_user ;
+
+    // display runtime arguments
     std::cout << "Have " << argc << " arguments:" << std::endl;
     for (int i = 0; i < argc; ++i) {
         std::cout << argv[i] << std::endl;
+        choice[i]=std::string(argv[i]);
     }
     
-    // execute different code corresponding to initial argument
-    if (argc>1) choice= std::string(argv[1]);
-
-        // argument is -gl for openGL
-        if (choice=="-gl"){
-        
-            E testEntity;
+    std::cout << VERSION_INFO << std::endl;
     
-            GLfloat MatSpec[] = {1.0,1.0,1.0,1.0};
-            GLfloat MatShininess[] = {128.0};
-    
-            std::vector< vector <float> > vertex;
-            std::vector<float> coordinate;
-            std::vector< std::vector< std::vector <float> > > vCube;
-            std::vector<std::vector<float> > vTriangle_face;
-            std::vector<float> colors;
-            std::vector< vector <float> > color_faces;
-            
-            testEntity.load_XML_File_to_E("../datafiles/testCube.xml");
-            const int n_space = 4;
-            testEntity.display_all(0, n_space);
-            int index=0;
-            int level=0;
-            testEntity.search_For(index , level, "color");
-            testEntity.SearchResultsToVectorFloat(colors, color_faces);
-            testEntity.extractEVertexToGL(coordinate, vertex, vCube);
-            // transfer extracted data to vector in glFunctions scope
-            vect2vect(vCube);
-            vect2vect_colors(color_faces);
-        
-            // Initialise GLUT and setup the window
-            int cursor = GLUT_CURSOR_INHERIT;
-            
-            glutInit (&argc, argv);
-            glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
-            glutInitWindowSize (500, 500);
-            glutInitWindowPosition (700, 300);
-            glutCreateWindow ("Universe");
-            glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE,
-                          GLUT_ACTION_CONTINUE_EXECUTION);
-    
-            // initialise the glut Depth and Lighting
-            initDisplay();
-    
-            // call the glut display functions
-            glutDisplayFunc (display);
-            glutIdleFunc (display);
-            glutReshapeFunc (reshape);
-        
-            // Lighting option
-            glShadeModel(GL_SMOOTH);
-            glEnable(GL_DEPTH_TEST);
-            glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, MatSpec);
-            glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, MatShininess);
-            glEnable(GL_LIGHTING);
-            glEnable(GL_LIGHT0);
-        
-            // check glut event: keyboard and mouse
-            glutPassiveMotionFunc(mouseMovement); //check for Mouse movement with button up
-            glutMotionFunc(mouseMovement_Rclick); //check for Mouse movement with button down
-            glutKeyboardFunc(keyDown);
-        
-            // set Mouse cursor image
-            glutSetCursor(cursor);
-            
-            while (1){
-                // glut Loop
-                glutMainLoopEvent();
-        
-                // Load "internal" file 1,2 or t
-                // TODO need to think about keeping dataFile class or not
-                /*
-                if (dataFile::load_File){
-                    pt_masterEntity->clearEntity();
-                    //~ glDisplay::resetIndex();
-                    resetIndex();
-                    //~ dataGlEntity.loadFile(glDisplay::keyChoice,toto);
-                    dataGlEntity.loadFile(keyChoice,pt_masterEntity);
-                    //~ tata.coordinate(toto);
-                    // TODO need to replace coordinate function with new coord system
-                    coordinate(pt_masterEntity);
-                    // resetting keys
-                    dataFile::load_File = false;
-                    //~ glDisplay::keyChoice='\0';
-                    keyChoice='\0';
-                 }
-                 */
-        
-                 
-                 
-                //~ tata.display();
-                display();
-        
+    // Check all arguments provided
+    // 'Turn on' Relevant boolean variables and
+    // stores other useful variables.
+    // arguments are:
+    // -f filename : for loading a file before start
+    // -g : for graphic display directly
+    // -c r,g,b : to set text box color with RGB (not implemented yet)
+    // -v: get version 
+    for (int i = 0; i < argc; ++i) {
+        std::cout << "arguments " << i << ": " << choice[i] << std::endl;
+        // get version (then exit)
+        if(choice[i].find("-v", 0) != std::string::npos)
+            {
+                printf("Version: %s\n", VERSION_INFO);
+                return 0;
             }
+        if(choice[i].find("-g", 0) != std::string::npos)
+            {
+                cout << choice[i]<< endl;
+                GL_on = true;  //switch to openGL 3D mode
+                printf("OpenGL 3D mode is switched on\n");
+            }
+        // file
+        if(choice[i].find("-f", 0) != std::string::npos)
+            {
+                cout << choice[i]<< endl;
+                input_file = true;
+                if (i<argc-1){
+                    cout << choice[i+1]<< endl;
+                    filename=choice[i+1];
+                    fullfilename=datasource_path + filename;
+                }
+                else {
+                    printf("Missing File name\n");
+                    printf("Setting default File name\n");
+                }
+            }
+        // colors
+        if(choice[i].find("-c", 0) != std::string::npos)
+            {
+                cout << choice[i]<< endl;
+                input_color= true;                
+                if (i<argc-1){
+                    cout << choice[i+1]<< endl;
+                }
+                else {
+                    printf("Missing Color code\n");
+                }
+            }
+    }
+    
+    // variables
+        string key_input;
+        int n=0;
+        const int n_space = 2;
+        MDE newMDE;
+        
+        // testing if file entered in argument is valid
+        if (input_file){
+            const std::string const_fullfilename=fullfilename;
+            input_file = newMDE.load_XML_File_to_MDE(const_fullfilename);
         }
     
-        // argument is -e for entity
-        else if(argc==1 || choice=="-e"){
-    
-        // variables
-            string key_input;
-            int n=0;
-            const int n_space = 2;
-            E newEntity;
-        
-            while (key_input!="quit"){
-                std::cout << std::endl;
-                std::cout << "This is session " << ++n << std::endl;
-                std::cout << std::endl;
-                std::cout << "Load testing set or User Input (or quit)? ('t'/'u'/'quit')" << std::endl;
-                std::cout << "Or load testing file to display for testing ('l')?" << std::endl;
-                std::cout << "Or load testing file and display with cubes ('c')?" << std::endl;
+        while (key_input!="quit"){
+            
+            std::cout << std::endl;
+            std::cout << "**********************************" << std::endl;
+            std::cout << "*                                *" << std::endl;
+            std::cout << "*         Welcome";
+            if(n) std::cout << " Back!          *" << std::endl;
+            else std::cout << "!               *" << std::endl;
+            std::cout << "*                                *" << std::endl;
+            std::cout << "*                                *" << std::endl;
+            std::cout << "*   This is session " << ++n << "            *" << std::endl;
+            std::cout << "*                                *" << std::endl;
+            std::cout << "**********************************" << std::endl;
+            std::cout << std::endl;
+            
+            if (!input_file){
+                std::cout << "************** Data **************" << std::endl;
+                std::cout << "*                                *" << std::endl;
+                std::cout << "* f)    Load Data File (xml)     *" << std::endl;
+                std::cout << "* s)    Load Data testing Set    *" << std::endl;
+                std::cout << "* u)    User Data Input          *" << std::endl;
+                std::cout << "* quit) Quit                     *" << std::endl;
+                std::cout << "*                                *" << std::endl;
+                std::cout << "**********************************" << std::endl;
+                std::cout << "Your choice:";
                 std::cin >> key_input;
-                if (key_input=="quit"){
-                    return 0;
-                }
-                else if (key_input=="u"){
-                    std:: cout << "Enter name:" << std::endl;
-                    std:: cout << "(Or type 'quit' anytime to quit)" << std::endl;
-                    std:: cout << "(Or type 'end' in name when it is the last entity of the current level)" << std::endl;
-                    std:: cin >> key_input;
-                
+            }
+            else {
+                std::cout <<"filename already set: " << fullfilename << std::endl;
+            }
+            if (key_input=="quit"){
+                return 0;
+            }
+            else if (key_input=="u"){
+                std:: cout << "Enter name:" << std::endl;
+                std:: cout << "(Or type 'quit' anytime to quit )" << std::endl;
+                std:: cout << "(Or type 'end' in name when it is the last entity of the current level)" << std::endl;
+                std:: cin >> key_input;
+            
+                if (key_input!="quit")
+                {
+                    newMDE.set_name(key_input);
+                    std::cout << "enter data" << std::endl;
+                    cin.ignore(); 
+                    std:: getline(std:: cin, key_input);
                     if (key_input!="quit")
                     {
-                        newEntity.set_name(key_input);
-                        std::cout << "enter data" << std::endl;
-                        cin.ignore(); 
-                        std:: getline(std:: cin, key_input);
-                        if (key_input!="quit")
-                        {
-                            newEntity.set_data(key_input);
-                        }
-                        else return 0;
+                        newMDE.set_data(key_input);
                     }
                     else return 0;
-                    newEntity.user_input_V();
-                    
-                    std::cout << std::endl;
-                    newEntity.format_display(0,n_space,"<",">","</",">");
-                    std::cout << std::endl;
-                    std::cout << "Do you want to save the file?(y)" << std::endl;
-                    std::cin >> key_input;
-                    if (key_input=="y") newEntity.E_save_to_file();
-                    
-                newEntity.clear_all_vE();
-                newEntity.clear_name();
-                newEntity.clear_data();                
                 }
-                else if (key_input=="l"){
-                    std::cout << "1 for single line XML or 2 for multiline, 3 for both" << std::endl; 
+                else return 0;
+                newMDE.user_input_vMDE();
+                
+                std::cout << std::endl;
+                newMDE.format_display(0,n_space,"<",">","</",">");
+                std::cout << std::endl;
+                std::cout << "Do you want to save the file?(y)" << std::endl;
+                std::cin >> key_input;
+                if (key_input=="y") newMDE.user_save_to_XML_file();
+            
+            // TODO fix bug if no vMDE -> ! vMDE is private -> need a 'is_empty' function?    
+            }
+            else if (key_input=="f"){
+                while(!input_file){
+                    std::cout << "******************** Load File *********************" << std::endl;
+                    std::cout << "*                                                  *" << std::endl;
+                    std::cout << "* Enter name of xml file (including extension)     *" << std::endl;
+                    std::cout << "* Or choose between examples:                      *" << std::endl; 
+                    std::cout << "* 1: perma.xml (this file is on a single line)     *" << std::endl; 
+                    std::cout << "* 2: bookstore.xml                                 *" << std::endl; 
+                    std::cout << "* 3: activities.xml                                *" << std::endl; 
+                    std::cout << "*                                                  *" << std::endl;
+                    std::cout << "****************************************************" << std::endl;
+                    std::cout << "Your choice:";
                     std::cin >> key_input;
-                    if (key_input=="1") newEntity.load_XML_File_to_E("../datafiles/merte.xml");
-                    if (key_input=="2") newEntity.load_XML_File_to_E("../datafiles/testEOF7.xml");
-                    if (key_input=="3") newEntity.load_XML_File_to_E("../datafiles/testAny.xml");
-                    
-                    newEntity.display_all(0, n_space);
-                    
-                    std::vector<int> test_indexes=newEntity.set_vector_of_indexes("1,2,3");
-                    newEntity.display_vector_int(test_indexes);
-                    std::cout << newEntity.get_name_vE_by_index(2) << std::endl;
-                    std::cout << newEntity.vE[2]->get_name_vE_by_index(0) << std::endl;
-                    
-                    int index=0;
-                    int level=0;
-                    
-                    std::vector<GLdata> v_offset;
-                    newEntity.extract_E_data_for_v_offset(v_offset, level);
-                    newEntity.display_v_E_data(v_offset);
-                    
-                    
-                    //cleare and delete
-                    newEntity.clear_all_vE();
-                    newEntity.clear_name();
-                    newEntity.clear_data();
+                    if (key_input=="1") {
+                        input_file = newMDE.load_XML_File_to_MDE("../datafiles/perma.xml");
+                        fullfilename="../datafiles/perma.xml";
+                    }
+                    else if (key_input=="2") {
+                        input_file = newMDE.load_XML_File_to_MDE("../datafiles/bookstore.xml");
+                        fullfilename="../datafiles/bookstore.xml";
+                    }
+                    else if (key_input=="3") {
+                        input_file = newMDE.load_XML_File_to_MDE("../datafiles/activities.xml");
+                        fullfilename="../datafiles/activities.xml";
+                    }
+                    else {
+                        input_file = newMDE.load_XML_File_to_MDE("../datafiles/"+key_input);
+                        fullfilename="../datafiles/"+key_input;
+                    }
                 }
-                else if (key_input=="t"){
-                    newEntity.testing();
-                    std::cout << std::endl;
-                    newEntity.format_display(0,n_space,"<",">","</",">");
-                    std::cout << std::endl;
-                    std::cout << "Do you want to save the file?(y)" << std::endl;
-                    std::cin >> key_input;
-                    if (key_input=="y") newEntity.E_save_to_file();
-                    
-                    newEntity.clear_all_vE();
-                    newEntity.clear_name();
-                    newEntity.clear_data();
-                }
-                else if (key_input=="c"){
-                    E newEntity;
-                    std::string inText;
-                    std::string inText2;
-                    std::string inText3;
-                    newEntity.load_XML_File_to_E("../datafiles/testAny.xml");
+                
+            }
+            else if (key_input=="s"){
+                newMDE.testing();
+                std::cout << std::endl;
+                newMDE.format_display(0,n_space,"<",">","</",">");
+                std::cout << std::endl;
+                std::cout << "Do you want to save the file?(y)" << std::endl;
+                std::cin >> key_input;
+                if (key_input=="y") newMDE.user_save_to_XML_file();
+                
+            }
+            else{
+                std::cout << "No comprendo" << std::endl;
+            }
+
+            if (!GL_on){
+                std::cout << "File " << fullfilename << " is loaded." << std::endl;
+                std::cout << "********** Display Mode **********" << std::endl;
+                std::cout << "*                                *" << std::endl;
+                std::cout << "* t)    Display in Text mode     *" << std::endl;
+                std::cout << "* g)    Display in Graphic Mode  *" << std::endl;
+                std::cout << "* quit) Quit                     *" << std::endl;
+                std::cout << "*                                *" << std::endl;
+                std::cout << "**********************************" << std::endl;
+                std::cout << "Your choice:";
+                std::cin >> key_input;
+            }
+            else key_input="g";
+            
+            if (key_input=="quit"){
+                return 0;
+            }
+            else if (key_input=="t") {
+                newMDE.display_all(0, n_space);
+                
+            }
+            else if (key_input=="g"){
+                
+                if(!input_coord){
                     std::cout << "Enter coordinates" << std::endl;
-                    float X_user ;
-                    float Y_user ;
-                    float Z_user ;
-                    
                     std::cin >> X_user ;
                     std::cin >> Y_user ;
                     std::cin >> Z_user ;
                     std::cout << std::endl;
                     std::cout << "You have chosen coordinates: " << X_user << ", "<< Y_user << ", "<< Z_user << std::endl;
+                    }
+                        
+                if (!input_padding){
                     std::cout << "Enter padding" << std::endl;
-                    float H_padding_user ;
-                    float V_padding_user ;
                     std::cin >> H_padding_user ;
                     std::cin >> V_padding_user ;
                     std::cout << "You have chosen padding: " << H_padding_user << ", "<< V_padding_user << std::endl;
-                    
-                    newEntity.display_all(0, n_space);
+                }
+                
+                glutInit(&argc, argv);
+                glutInitContextVersion(2,0);
+                glutInitDisplayMode(GLUT_RGBA|GLUT_ALPHA|GLUT_DOUBLE|GLUT_DEPTH);    
+                glutInitWindowSize(window_width, window_height);
+                glutCreateWindow("Basic Text");
     
-                    glutInit(&argc, argv);
-                    glutInitContextVersion(2,0);
-                    glutInitDisplayMode(GLUT_RGBA|GLUT_ALPHA|GLUT_DOUBLE|GLUT_DEPTH);    
-                    glutInitWindowSize(window_width, window_height);
-                    glutCreateWindow("Basic Text");
-        
-                    inText = newEntity.name;
-                    inText2 = newEntity.data;
-                    inText3 = newEntity.get_name_vE_by_index(0);
-                    
-                    userFontSize=48;
+                // set default font and font size
+                userFontSize=48;
+                userFontFilename = "../fonts/FreeSans.ttf";
+                
+                // set default colors
+                if (!input_color){
                     userRed = 0;
                     userGreen = 1;
                     userBlue = 1;
-                    userFontFilename = "./fonts/FreeSans.ttf";
-        
-                    GLenum glew_status = glewInit();
-                    
-                    if (GLEW_OK != glew_status) {
-                        fprintf(stderr, "Error: %s\n", glewGetErrorString(glew_status));
-                        return 1;
-                    }
-            
-                    if (!GLEW_VERSION_2_0) {
-                        fprintf(stderr, "No support for OpenGL 2.0 found\n");
-                        return 1;
-                    }
-            
-                    if (init_font(userFontSize, userFontFilename)  && init_program()) {
-                        
-                        std::cout << "User coordinates: " << X_user << ", "<< Y_user << ", "<< Z_user << std::endl;
-                        vertex3D user_origin={X_user,Y_user, Z_user};
-                        std::vector<vertex3D> offset;
-                        vertex2D user_padding = {H_padding_user,V_padding_user};
-                        
-                        vertex3D user_color = {userRed,userBlue,userGreen};
-                        init_text_Entity(newEntity,user_origin, offset, user_padding, user_color);
-                        
-                        glutDisplayFunc(textDisplay);
-                        glutIdleFunc(onIdle);
-                        glEnable(GL_BLEND);
-                        glEnable(GL_DEPTH_TEST);;
-                        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-                        glutMainLoop();
+                }
+    
+                GLenum glew_status = glewInit();
                 
-                    }
+                if (GLEW_OK != glew_status) {
+                    fprintf(stderr, "Error: %s\n", glewGetErrorString(glew_status));
+                    return 1;
+                }
+        
+                if (!GLEW_VERSION_2_0) {
+                    fprintf(stderr, "No support for OpenGL 2.0 found\n");
+                    return 1;
+                }
+        
+                if (!init_font(userFontSize, userFontFilename)  ||  !init_program()) {
                     
-                    free_resources();
-                    
-                    //clear and delete
-                    newEntity.clear_all_vE();
-                    newEntity.clear_name();
-                    newEntity.clear_data();
+                    fprintf(stderr, "Problem with loading fonts, or program\n");
+                    return 1;
                     
                 }
-                else{
-                    std::cout << "No comprendo" << std::endl;
-                }
+                    
+                std::cout << "User coordinates: " << X_user << ", "<< Y_user << ", "<< Z_user << std::endl;
+                vertex3D user_origin={X_user,Y_user, Z_user};
+                std::vector<vertex3D> offset;
+                //~ vertex2D user_padding = {H_padding_user,V_padding_user};
+                vertex2D user_padding = {0.0,0.0};
+                
+                vertex3D user_color = {userRed,userBlue,userGreen};
+                init_text_MDE(newMDE,user_origin, offset, user_padding, user_color);
+                
+                glutDisplayFunc(textDisplay);
+                glutKeyboardFunc(keyDown);
+                glutIdleFunc(onIdle);
+                glEnable(GL_BLEND);
+                glEnable(GL_DEPTH_TEST);
+                glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+                glutMainLoop();
+                printf("GL Done!");
+                
+                free_resources();
+                            
+            }
+            else{
+                std::cout << "No comprendo" << std::endl;
             }
             
-        
+            // clear
+            newMDE.destructor_MDE();
+            fullfilename ="";
+            
+            
+            //reset all booleans
+            GL_on = false;
+            input_file = false;
+            input_color = false;
+            input_coord = true;
+            input_padding= true;
+            
+            printf("Clearing Done!");
         }
-        
     exit(0);
 }
 

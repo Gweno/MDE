@@ -1,7 +1,0 @@
-#!/bin/bash
-echo "Compiling E..."
-g++ -std=c++11 -c test.cpp
-echo "Building E..."
-g++ -o test test.o -lGL -lglut -lGLU
-echo "Launch E..."
-./test

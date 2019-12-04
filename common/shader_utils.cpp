@@ -143,6 +143,7 @@ GLuint create_program(const char *vertexfile, const char *fragmentfile) {
 		fprintf(stderr, "glLinkProgram:");
 		print_log(program);
 		glDeleteProgram(program);
+        glDeleteShader(shader);
 		return 0;
 	}
 

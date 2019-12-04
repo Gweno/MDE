@@ -29,7 +29,7 @@
 
 #include "./common/shader_utils.h"
 
-#include "E.h"
+#include "MDE.h"
 
 int screen_width=800, screen_height=600;
 
@@ -230,7 +230,6 @@ void create_coord_vector_text(const char *text, atlas * a, vertex3D origin, vert
 
     for (p = (const uint8_t *)text; *p; p++) {
         
-        std::cout<<"check p: " << *p << std::endl;
         /* Calculate the vertex and texture coordinates */
         float x2 = origin.x + a->c[*p].bl * window_coord_scale.x;
         float y2 = -origin.y - a->c[*p].bt * window_coord_scale.y;
@@ -274,7 +273,7 @@ void create_coord_vector_text(const char *text, atlas * a, vertex3D origin, vert
 
     }
     
-    displayV3D(glyphs_box);
+    //~ displayV3D(glyphs_box);
     nb_glyphs_per_text.push_back(c);
     nb_indices+=c;
 }
@@ -292,7 +291,6 @@ void text_frame(std::vector<vertex3D> &vector_input, std::vector<uint> &nb_glyph
         float hmax=(*it).y;
         float h=0;
         float d=0;
-        std::cout << std::endl;
         // the absolute difference between the x coordinate of the right-most vertex and the left-most
         // of the current box, that are 5 vertices apart
         w = std::abs(((*(it+(*it2)-1)).x-(*it).x));
@@ -308,7 +306,7 @@ void text_frame(std::vector<vertex3D> &vector_input, std::vector<uint> &nb_glyph
         std::advance(it2,1);
     }
     create_vector(vertex_3D, v_origin, whd);
-    displayV3D(whd);
+    //~ displayV3D(whd);
     init_vectors(vertex_3D);
 }
 
@@ -372,7 +370,9 @@ bool init_program(){
     std::cout << "Maximum nr of vertex attributes supported: " << nrAttributes << std::endl;
     
     // testing boxes
-    program_box = create_program("./shaders/box.v.glsl", "./shaders/box.f.glsl");
+    //~ program_box = create_program("./shaders/box.v.glsl", "./shaders/box.f.glsl");
+    
+    program_box = create_program("../source/shaders/box.v.glsl", "../source/shaders/box.f.glsl");
     if(program_box == 0)
         return 0;
 
@@ -383,7 +383,8 @@ bool init_program(){
         return 0;
 
     // program for the text
-    program_text = create_program("shaders/text.v.glsl", "shaders/text.f.glsl");
+    //~ program_text = create_program("shaders/text.v.glsl", "shaders/text.f.glsl");
+    program_text = create_program("../source/shaders/text.v.glsl", "../source/shaders/text.f.glsl");
     if(program_text == 0)
         return 0;
     
@@ -542,7 +543,7 @@ void draw_box(){
     glDisableVertexAttribArray(attribute_v_color_box);
 }
 
-void init_text_Entity(E &my_entity,vertex3D &origin, std::vector<vertex3D> &offset, vertex2D &padding, vertex3D color) {
+void init_text_MDE(MDE &my_entity,vertex3D &origin, std::vector<vertex3D> &offset, vertex2D &padding, vertex3D color) {
     
     /* Create texture atlasses for several font sizes */
     a48 = new atlas(face, 48);
@@ -553,30 +554,28 @@ void init_text_Entity(E &my_entity,vertex3D &origin, std::vector<vertex3D> &offs
     window_scale.y = 2.0 / glutGet(GLUT_WINDOW_HEIGHT);
     std::vector<vertex3D> v_origin;
 
-    std::vector<GLdata> my_v_E_data;
+    std::vector<GLdata> my_v_MDE_data;
     int level=0;
     int index=0;
-    my_entity.extract_E_data_for_v_offset(my_v_E_data, level);
-    my_entity.display_v_E_data(my_v_E_data);
-    process_v_E_data(my_v_E_data,offset);
-    displayV3D(offset);
+    my_entity.extract_MDE_data_for_v_offset(my_v_MDE_data, level);
+    process_v_MDE_data(my_v_MDE_data,offset);
     for (std::vector<vertex3D>::iterator it_offset=offset.begin(); it_offset!=offset.end();++it_offset){
         v_origin.push_back({origin.x+(*it_offset).x,origin.y+(*it_offset).y,origin.z+(*it_offset).z});
     }
     uint index_v_origin=0;
-    for (std::vector<GLdata>::iterator it_v_E_data=my_v_E_data.begin(); it_v_E_data!=my_v_E_data.end();++it_v_E_data){
+    for (std::vector<GLdata>::iterator it_v_MDE_data=my_v_MDE_data.begin(); it_v_MDE_data!=my_v_MDE_data.end();++it_v_MDE_data){
         
-        create_coord_vector_text(((*it_v_E_data).E_data).c_str(), a48, v_origin[index_v_origin], window_scale );
+        create_coord_vector_text(((*it_v_MDE_data).MDE_data).c_str(), a48, v_origin[index_v_origin], window_scale );
         index_v_origin++;
     }
     text_frame(glyphs_box, nb_glyphs_per_text, v_origin);
     init_color(color,v_origin);
 }
 
-void process_v_E_data(std::vector<GLdata> & v_E_data,std::vector<vertex3D> & v_offset){
+void process_v_MDE_data(std::vector<GLdata> & v_MDE_data,std::vector<vertex3D> & v_offset){
     
-    for (std::vector<GLdata>::iterator it_v_E_data=v_E_data.begin();it_v_E_data!=v_E_data.end(); ++it_v_E_data){
-        v_offset.push_back({(*it_v_E_data).e_member*.5+(*it_v_E_data).index*0.5,(*it_v_E_data).level*(-0.2),0});
+    for (std::vector<GLdata>::iterator it_v_MDE_data=v_MDE_data.begin();it_v_MDE_data!=v_MDE_data.end(); ++it_v_MDE_data){
+        v_offset.push_back({(*it_v_MDE_data).mde_member*.5+(*it_v_MDE_data).index*0.5,(*it_v_MDE_data).level*(-0.2),0});
     }
 }
 
@@ -619,9 +618,9 @@ void textDisplay() {
 
 void onIdle() {
     float move = 2*sinf(glutGet(GLUT_ELAPSED_TIME) / 1000.0 * (2*3.14) / 15); // -1<->+1 every 2 seconds
-    //~ float angle = glutGet(GLUT_ELAPSED_TIME) / 1000.0 * 25;  // 25° per second
+    float angle = glutGet(GLUT_ELAPSED_TIME) / 1000.0 * 25;  // 25° per second
     //~ float move = 0;
-    float angle = 0;
+    //~ float angle = 0;
     screen_width=glutGet(GLUT_WINDOW_WIDTH);
     screen_height=glutGet(GLUT_WINDOW_HEIGHT);
     glm::vec3 axis_y(0, 1, 0);
@@ -655,4 +654,14 @@ void free_resources() {
     glDeleteBuffers(1, &vbo_vertices_box);
     glDeleteBuffers(1, &vbo_vertices_color_box);
     glDeleteBuffers(1, &ibo_box_elements);
+}
+
+
+void keyDown(unsigned char key, int x, int y)
+{
+    // delete all programs and buffers then quit when 'ESC' is pressed.
+    if (key==27) {
+        free_resources();
+        glutLeaveMainLoop();   // Check if 'ESC' is pressed
+    }
 }

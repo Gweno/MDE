@@ -1,7 +1,0 @@
-#!/bin/bash
-echo "Compiling E..."
-g++ -c E.cpp
-echo "Building E..."
-g++ -o E E.o
-echo "Launch E..."
-./E

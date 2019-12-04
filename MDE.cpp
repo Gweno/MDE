@@ -1,36 +1,35 @@
-﻿//-----------E.cpp-------------
-#ifndef E_CPP
-#define E_CPP
+﻿//-----------MDE.cpp-------------
+#ifndef MDE_CPP
+#define MDE_CPP
 
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include "E.h"
+#include "MDE.h"
 #include <sstream>
 #include <string.h>
 #include <string>
-#include "glFunctions.h"
 
 //Constructors:
-E::E(){};
+MDE::MDE(){};
 
-E::E(std::string init_name, std::string init_data, std::vector<E*> init_vE)
+MDE::MDE(std::string init_name, std::string init_data, std::vector<MDE*> init_vMDE)
 {
     this->name = init_name;
     this->data = init_data;
-    for (std::vector<E*>::iterator it=init_vE.begin(); it != init_vE.end(); ++it)
+    for (std::vector<MDE*>::iterator it=init_vMDE.begin(); it != init_vMDE.end(); ++it)
     {
-        this->vE.push_back(*it);
+        this->vMDE.push_back(*it);
     }
 }
 
 
 // Destructors:
 
-E::~E()
+MDE::~MDE()
 {
-    // delete all memory pointed to in vE;
-    for (std::vector<E*>::iterator it=this->vE.begin();it!=this->vE.end();++it)
+    // delete all memory pointed to in vMDE;
+    for (std::vector<MDE*>::iterator it=this->vMDE.begin();it!=this->vMDE.end();++it)
     {
         delete *it;
     }
@@ -38,91 +37,96 @@ E::~E()
 
 // member function to create new Entity
 
-void E::new_vE_element()
+void MDE::new_vMDE_element()
 {
-    this->vE.push_back(new E);
+    this->vMDE.push_back(new MDE);
 };
 
-void E::set_name(std::string eName)
+void MDE::set_name(std::string eName)
 {
     this->name=eName;
 }
 
-void E::set_data(std::string data)
+void MDE::set_data(std::string data)
 {
     this->data=data;
 }
 
-void E::set_name_vE_back(std::string vName)
+void MDE::set_name_vMDE_back(std::string vName)
 {
-    this->vE.back()->name = vName;
+    this->vMDE.back()->name = vName;
 };
 
-void E::set_data_vE_back(std::string vData)
+void MDE::set_data_vMDE_back(std::string vData)
 {
-    this->vE.back()->data = vData;
+    this->vMDE.back()->data = vData;
 };
 
-void E::set_name_vE_index(int index_vEe,string vName)
+void MDE::set_name_vMDE_index(int index_vMDEe,std::string vName)
 {
-    this->vE.at(index_vEe)->name = vName;
+    this->vMDE.at(index_vMDEe)->name = vName;
 };
 
-void E::set_data_vE_index(int index_vEe,string vData)
+void MDE::set_data_vMDE_index(int index_vMDEe,std::string vData)
 {
-    this->vE.at(index_vEe)->data = vData;
+    this->vMDE.at(index_vMDEe)->data = vData;
 };
 
 // Get member functions;
 
-std::string E::get_name_vE_by_index(int index_vEe)
+std::string MDE::get_name()
 {
-    return this->vE.at(index_vEe)->name;
+    return this->name;
 };
 
-std::string E::get_data_vE_by_index(int index_vEe)
+std::string MDE::get_name_vMDE_by_index(int index_vMDEe)
 {
-    return this->vE.at(index_vEe)->data;
+    return this->vMDE.at(index_vMDEe)->name;
+};
+
+std::string MDE::get_data_vMDE_by_index(int index_vMDEe)
+{
+    return this->vMDE.at(index_vMDEe)->data;
 };
 
 
 // Clear member functions;
 
-void E::clear_name()
+void MDE::clear_name()
     {
         this->set_name("");
     }
 
-void E::clear_data()
+void MDE::clear_data()
     {
     this->set_data("");
     }
 
-void E::clear_all_vE()
+void MDE::clear_all_vMDE()
 {
-    if (!this->vE.empty())
+    if (!this->vMDE.empty())
     {
-        for (std::vector<E*>::iterator it_all=this->vE.begin();it_all!=this->vE.end();++it_all)
+        for (std::vector<MDE*>::iterator it_all=this->vMDE.begin();it_all!=this->vMDE.end();++it_all)
         {
-            (*it_all)->clear_all_vE();
+            (*it_all)->clear_all_vMDE();
         }
-        this->vE.clear();
+        this->vMDE.clear();
     }
     else delete this;
 }
 
-void E::delete_all_pt()
+void MDE::delete_all_pt()
 {
-    for (std::vector<E*>::iterator it_all=this->vE.begin();it_all!=this->vE.end();++it_all)
+    for (std::vector<MDE*>::iterator it_all=this->vMDE.begin();it_all!=this->vMDE.end();++it_all)
     {
         delete (*it_all);
     }
 }
 
-void E::destructor_E()
+void MDE::destructor_MDE()
 {
     this->delete_all_pt();
-    this->vE.clear();
+    this->vMDE.clear();
     this->name = "";
     this->data = "";
 }
@@ -137,73 +141,73 @@ void E::destructor_E()
 
 // get member functions
 
-void E::display_name()
+void MDE::display_name()
 // Entity gets its own name and display
 {
     std::cout << this->name << std::endl;
 }
 
-void E::display_data()
+void MDE::display_data()
 // Entity gets its own data and display
 {
     std::cout << this->data << std::endl;
 }
 
-void E::display_vE_names()
+void MDE::display_vMDE_names()
 {
-    for (std::vector<E*>::iterator it=this->vE.begin();it!=this->vE.end();++it){
+    for (std::vector<MDE*>::iterator it=this->vMDE.begin();it!=this->vMDE.end();++it){
         (*it)->display_name();
     }
 };
 
-void E::display_vE_data()
+void MDE::display_vMDE_data()
 {
-    for (std::vector<E*>::iterator it=this->vE.begin();it!=this->vE.end();++it){
+    for (std::vector<MDE*>::iterator it=this->vMDE.begin();it!=this->vMDE.end();++it){
         (*it)->display_data();
     }
 };
 
 
-void E::display_all(int n_indent, const int & n_space)
+void MDE::display_all(int n_indent, const int & n_space)
 {
     std::string N_space(n_indent*n_space,' ');
     std::cout << N_space ;
     std::cout << this->name << " : " << this->data << std::endl;
-    if (this->vE.size()!=0) n_indent++;
-    for (std::vector<E*>::iterator it_vE=this->vE.begin();it_vE!=this->vE.end();++it_vE)
+    if (this->vMDE.size()!=0) n_indent++;
+    for (std::vector<MDE*>::iterator it_vMDE=this->vMDE.begin();it_vMDE!=this->vMDE.end();++it_vMDE)
         {
-            (*it_vE)->display_all(n_indent, n_space);
+            (*it_vMDE)->display_all(n_indent, n_space);
         }
     return;
 };
 GLdata current_GLdata;
 
-void E::extract_E_data_for_v_offset(std::vector<GLdata> & v_E_data, int & level, int index)
+void MDE::extract_MDE_data_for_v_offset(std::vector<GLdata> & v_MDE_data, int & level, int index)
 {
     level++;
     current_GLdata.level= level;
     current_GLdata.index= index;
-    current_GLdata.e_member=E_member::name;
-    current_GLdata.E_data=this->name;
-    v_E_data.push_back(current_GLdata);
-    current_GLdata.e_member=E_member::data;
-    current_GLdata.E_data=this->data;
-    v_E_data.push_back(current_GLdata);
-    if (this->vE.size()!=0) {index++; };
-    for (std::vector<E*>::iterator it_vE=this->vE.begin();it_vE!=this->vE.end();++it_vE)
+    current_GLdata.mde_member=MDE_member::name;
+    current_GLdata.MDE_data=this->name;
+    v_MDE_data.push_back(current_GLdata);
+    current_GLdata.mde_member=MDE_member::data;
+    current_GLdata.MDE_data=this->data;
+    v_MDE_data.push_back(current_GLdata);
+    if (this->vMDE.size()!=0) {index++; };
+    for (std::vector<MDE*>::iterator it_vMDE=this->vMDE.begin();it_vMDE!=this->vMDE.end();++it_vMDE)
         {
-            (*it_vE)->extract_E_data_for_v_offset(v_E_data, level, index);
+            (*it_vMDE)->extract_MDE_data_for_v_offset(v_MDE_data, level, index);
         }
     return;
 }
 
-void E::display_v_E_data(std::vector<GLdata> & v_offset){
+void MDE::display_v_MDE_data(std::vector<GLdata> & v_offset){
     for (std::vector<GLdata>::iterator it=v_offset.begin(); it!=v_offset.end(); ++it){
         printf("level, index,member,data: %i,%i,%i,%s\n",
-         (*it).level, (*it).index, (*it).e_member, (*it).E_data.c_str());
+         (*it).level, (*it).index, (*it).mde_member, (*it).MDE_data.c_str());
     }
 }
-void E::format_display(int n_indent, const int & n_space, std::string start_opening_tag,
+void MDE::format_display(int n_indent, const int & n_space, std::string start_opening_tag,
             std::string end_opening_tag, std::string start_closing_tag,
             std::string end_closing_tag)
 {
@@ -218,8 +222,8 @@ void E::format_display(int n_indent, const int & n_space, std::string start_open
     std::cout << this->data;
     std::cout << endl;
 
-    if (this->vE.size()!=0) n_indent++;
-    for (std::vector<E*>::iterator it=this->vE.begin();it!=this->vE.end();++it)
+    if (this->vMDE.size()!=0) n_indent++;
+    for (std::vector<MDE*>::iterator it=this->vMDE.begin();it!=this->vMDE.end();++it)
         {
             (*it)->format_display(n_indent, n_space, start_opening_tag,
             end_opening_tag, start_closing_tag, end_closing_tag);
@@ -232,7 +236,7 @@ void E::format_display(int n_indent, const int & n_space, std::string start_open
     return;
 };
 
-void E::user_input_V()
+void MDE::user_input_vMDE()
 {
     string key_input;
     int index=0;
@@ -248,22 +252,22 @@ void E::user_input_V()
         std:: cin >> key_input;
         if (key_input!="quit" && key_input!="end")
         {
-            this->new_vE_element();
-            this->set_name_vE_index(index,key_input);
+            this->new_vMDE_element();
+            this->set_name_vMDE_index(index,key_input);
             std::cout << "enter data" << std::endl;
             cin.ignore(); 
             std:: getline(std:: cin, key_input);                
             if (key_input!="quit")
             {
-                this->set_data_vE_index(index,key_input);
+                this->set_data_vMDE_index(index,key_input);
                 index++;
             }
         }
         else if (key_input=="end")
         {
-            for (std::vector<E*>::iterator it=this->vE.begin();it!=this->vE.end();++it)
+            for (std::vector<MDE*>::iterator it=this->vMDE.begin();it!=this->vMDE.end();++it)
             {
-                (*it)->user_input_V();                           //Where recursivity happen...
+                (*it)->user_input_vMDE();                           //Where recursivity happen...
             }
         }
     }
@@ -271,7 +275,7 @@ void E::user_input_V()
 }
 
 
-void E::E_write_to_file(int n_indent, const int & n_space,
+void MDE::save_to_file(int n_indent, const int & n_space,
             std::string start_opening_tag, std::string end_opening_tag,
             std::string start_closing_tag, std::string end_closing_tag,
             ostream &file)
@@ -287,12 +291,12 @@ void E::E_write_to_file(int n_indent, const int & n_space,
     file << this->data;
     file << std::endl;
     
-    if (this->vE.size()!=0) n_indent++;
-    for (std::vector<E*>::iterator it=this->vE.begin();it!=this->vE.end();++it)
+    if (this->vMDE.size()!=0) n_indent++;
+    for (std::vector<MDE*>::iterator it=this->vMDE.begin();it!=this->vMDE.end();++it)
         {
-            (*it)->E_write_to_file(n_indent, n_space, start_opening_tag,
+            (*it)->save_to_file(n_indent, n_space, start_opening_tag,
             end_opening_tag, start_closing_tag, end_closing_tag, file);
-            if (it == this->vE.end()-1) n_indent--;
+            if (it == this->vMDE.end()-1) n_indent--;
             
         }
     
@@ -304,46 +308,53 @@ void E::E_write_to_file(int n_indent, const int & n_space,
     return;
 };
 
-void E::print_flat_E()
+void MDE::print_flat_MDE()
 {
     std::cout << this->name << " : " << this->data << std::endl;
-    if (this->vE.size()!=0)
+    if (this->vMDE.size()!=0)
     {
-        for (std::vector<E*>::iterator it=this->vE.begin();it!=this->vE.end();++it)
+        for (std::vector<MDE*>::iterator it=this->vMDE.begin();it!=this->vMDE.end();++it)
         {
-            (*it)->print_flat_E();
+            (*it)->print_flat_MDE();
         }
     }
     return;
 };
 
-void E::E_save_to_file(){
+void MDE::user_save_to_XML_file(){
 
     char *FileName = new char[20];
     char *FileNameOut = new char[75];
-    char *ExtensionXML = new char[4];
+    char *ExtensionXML = new char[5];
     char *Path = new char[50];
     int n_indent = 0;
     const int n_space = 2;
     FileNameOut[0]=0;                   // to clear the array of Char
     strcpy(ExtensionXML,".xml");
     strcpy(Path,"../datafiles/");
-    cout << "\nEnter the name of the file you want to create: " << std::endl;
-    cin >> FileName;
+    std::cout << "\nEnter the name of the file you want to create: " << std::endl;
+    std::cout << "(Extension '.xml' is added to the file name)" << std::endl;
+    std::cin >> FileName;
     strcat(FileNameOut, Path);
     strcat(FileNameOut,FileName);
     strcat(FileNameOut, ExtensionXML);
     std::ofstream file(FileNameOut);
-    this->E_write_to_file(n_indent, n_space,"<",">","</",">", file);
+    this->save_to_file(n_indent, n_space,"<",">","</",">", file);
+    
+    // destroy * char[]
+    delete [] FileName;
+    delete [] FileNameOut;
+    delete [] ExtensionXML;
+    delete [] Path;
 }
 
 
-void E::fetch_search_result(std::vector<E**> &search_result)
+void MDE::fetch_search_result(std::vector<MDE**> &search_result)
 {
     const int n_space = 2;
     if (search_result.size()!=0)
     {
-        for (std::vector<E**>::iterator it=search_result.begin();it!=search_result.end();++it)
+        for (std::vector<MDE**>::iterator it=search_result.begin();it!=search_result.end();++it)
         {
             (*(*it))->format_display(0,n_space,"<",">","</",">");
             std::cout << endl;
@@ -352,50 +363,50 @@ void E::fetch_search_result(std::vector<E**> &search_result)
     else std::cout << "Not found" <<std::endl;
 }
 
-void E::search_For(int & index, int & level, string searchName)
+void MDE::search_For(int & index, int & level, std::string searchName)
 {
     if (this->name==searchName)
     {
         std::cout << "Found " << searchName << " at (level,index): " << "(" << level  << "," << index << ")" << std::endl;
         std::cout << std::endl;
-        E** ptr_to_ptr_to_E = new E*(this);
-        E::search_result.push_back(ptr_to_ptr_to_E);
+        MDE** ptr_to_ptr_to_MDE = new MDE*(this);
+        MDE::search_result.push_back(ptr_to_ptr_to_MDE);
     }
     else
     {
         level++;
         index=0;
-        (this->simple_loop_VE(searchName));
+        (this->simple_loop_VMDE(searchName));
     }
-    if (E::search_result.size()==0)
+    if (MDE::search_result.size()==0)
     {
         std::cout << "No results" << std::endl; //not ideal...
     }
-    std::cout << "Found " << E::search_result.size() << " Entities with name " << searchName << std::endl;
+    std::cout << "Found " << MDE::search_result.size() << " Entities with name " << searchName << std::endl;
 }
 
-void E::simple_loop_VE(string searchName)
+void MDE::simple_loop_VMDE(std::string searchName)
 {
-    for(std::vector<E*>::const_iterator it=this->vE.begin();it!=this->vE.end();++it)
+    for(std::vector<MDE*>::const_iterator it=this->vMDE.begin();it!=this->vMDE.end();++it)
     {
         if ((*it)->name==searchName)
         {
-            E** ptr_to_ptr_to_E = new E*(*it);
-            E::search_result.push_back(ptr_to_ptr_to_E);
+            MDE** ptr_to_ptr_to_MDE = new MDE*(*it);
+            MDE::search_result.push_back(ptr_to_ptr_to_MDE);
         }
     }
-    this->simple_loop_VE_next_level(searchName);
+    this->simple_loop_VMDE_next_level(searchName);
 }
 
-void E::simple_loop_VE_next_level(string searchName)
+void MDE::simple_loop_VMDE_next_level(std::string searchName)
 {
-    for(std::vector<E*>::const_iterator it=this->vE.begin();it!=this->vE.end();++it)
+    for(std::vector<MDE*>::const_iterator it=this->vMDE.begin();it!=this->vMDE.end();++it)
     {
-        (*it)->simple_loop_VE(searchName);
+        (*it)->simple_loop_VMDE(searchName);
     }
 }
 
-void E::str_token_tag(std::string & buffer_Input,
+void MDE::str_token_tag(std::string & buffer_Input,
  std::string & output_Tag, std::string & buffer_Output,
   char delimiter1, char delimiter2)
 {
@@ -434,7 +445,7 @@ void E::str_token_tag(std::string & buffer_Input,
     }
 }
 
-void E::trim_leading_space(std::string & io_string)
+void MDE::trim_leading_space(std::string & io_string)
 {
     size_t pos = 0;
     pos = io_string.find_first_not_of(' ');
@@ -444,20 +455,25 @@ void E::trim_leading_space(std::string & io_string)
     }
 }
 
-void E::load_XML_File_to_E(const std::string & fullFileName)
+bool MDE::load_XML_File_to_MDE(const std::string & fullFileName)
 {
-    E xmlFile;
-    std::stack<E**> stack_E_pt;
+
+    MDE xmlFile;
+    std::stack<MDE**> stack_MDE_pt;
     
-    xmlFile.extract_File_to_Flat_E(fullFileName);
-    std::vector<E*>::iterator it_start = xmlFile.vE.begin();
-    this->process_flat_E_to_E(it_start, xmlFile, stack_E_pt);
-    xmlFile.destructor_E();
+    if (xmlFile.extract_File_to_Flat_MDE(fullFileName)){
+        std::vector<MDE*>::iterator it_start = xmlFile.vMDE.begin();
+        this->process_flat_MDE_to_MDE(it_start, xmlFile, stack_MDE_pt);
+        xmlFile.destructor_MDE();
+        return true;
+    }
+    else return false;
+        
 }
 
 
 
-void E::extract_File_to_Flat_E(const std::string & fullFileName)
+bool MDE::extract_File_to_Flat_MDE(const std::string & fullFileName)
 {
     std::string bufferString;
     std::string bufferLine;
@@ -468,6 +484,13 @@ void E::extract_File_to_Flat_E(const std::string & fullFileName)
     // Processing file
     ifstream fileEntity;
     fileEntity.open(fullFileName.c_str(), ios::in);
+    
+    if(!fileEntity.is_open()){
+        
+        printf("File not found\n");
+        return false;
+        
+    }
 
     fileEntity.clear();                   // absolutly needed otherwise the file is flagged at eof, and good=0   
     fileEntity.seekg(0, ios::beg);        // set cursor at 0 from start of file
@@ -512,18 +535,19 @@ void E::extract_File_to_Flat_E(const std::string & fullFileName)
             }
             bufferLine = buffer_End_of_Line;
             
-            //now store into vE
-            this->new_vE_element();
-            this->vE.back()->name = element;
-            this->vE.back()->data = buffer_Tag;
+            //now store into vMDE
+            this->new_vMDE_element();
+            this->vMDE.back()->name = element;
+            this->vMDE.back()->data = buffer_Tag;
             
             
         }
     
     }
+    return true;
 }
 
-void E::check_token(const std::string & token, std::string & element)
+void MDE::check_token(const std::string & token, std::string & element)
 {
     if(token.size()>0)
     {
@@ -540,69 +564,62 @@ void E::check_token(const std::string & token, std::string & element)
 }
 
 
-
-void E::proc_it(E & E_proc, std::stack<E**> & stack_E_pt)
-{
-    std::vector<E*>::iterator it_start = E_proc.vE.begin();
-    this->process_flat_E_to_E(it_start, E_proc, stack_E_pt);
-}
-
-E * E::process_flat_E_to_E(std::vector<E*>::iterator & it, E & E_source, std::stack<E**> & stack_E_pt)
+MDE * MDE::process_flat_MDE_to_MDE(std::vector<MDE*>::iterator & it, MDE & MDE_source, std::stack<MDE**> & stack_MDE_pt)
 {
 
-    while (it!=E_source.vE.end())
+    while (it!=MDE_source.vMDE.end())
     {
         if ((*it)->name=="opening_tag")
         {
             this->name=(*it)->data;
             ++it;
-            E** ptr_to_ptr_to_E = new E*(this);
-            stack_E_pt.push(ptr_to_ptr_to_E);
+            MDE** ptr_to_ptr_to_MDE = new MDE*(this);
+            stack_MDE_pt.push(ptr_to_ptr_to_MDE);
 
-            if ((it!=E_source.vE.end()) && ((*it)->name=="data"))
+            if ((it!=MDE_source.vMDE.end()) && ((*it)->name=="data"))
             {
                 this->data=(*it)->data;
                 ++it;
                 
-                if ((it!=E_source.vE.end()) && ((*it)->name=="closing_tag"))
+                if ((it!=MDE_source.vMDE.end()) && ((*it)->name=="closing_tag"))
                 {
-                    return this->process_flat_E_to_E(it, E_source, stack_E_pt);
+                    return this->process_flat_MDE_to_MDE(it, MDE_source, stack_MDE_pt);
                 }
                 else
                 {
-                    this->new_vE_element();
-                    return this->vE.back()->process_flat_E_to_E(it, E_source, stack_E_pt);
+                    this->new_vMDE_element();
+                    return this->vMDE.back()->process_flat_MDE_to_MDE(it, MDE_source, stack_MDE_pt);
                 }
                 
             }
-            else if ((it!=E_source.vE.end()) && ((*it)->name=="closing_tag"))
+            else if ((it!=MDE_source.vMDE.end()) && ((*it)->name=="closing_tag"))
             {
-                return this->process_flat_E_to_E(it, E_source, stack_E_pt);
+                return this->process_flat_MDE_to_MDE(it, MDE_source, stack_MDE_pt);
             }
             else                // else  if next is 'data'
             {
                 this->data="";
-                this->new_vE_element();
-                return this->vE.back()->process_flat_E_to_E(it, E_source, stack_E_pt);
+                this->new_vMDE_element();
+                return this->vMDE.back()->process_flat_MDE_to_MDE(it, MDE_source, stack_MDE_pt);
             }
         }
-        else if(((*it)->name=="closing_tag") && it!=E_source.vE.begin());
+        else if(((*it)->name=="closing_tag") && it!=MDE_source.vMDE.begin());
         {
             ++it;
-            E** ptr_to_ptr_to_E = stack_E_pt.top();
-            delete ptr_to_ptr_to_E;
-            stack_E_pt.pop();
+            MDE** ptr_to_ptr_to_MDE = stack_MDE_pt.top();
+            delete ptr_to_ptr_to_MDE;
+            stack_MDE_pt.pop();
             // tricky: if next element is opening tag we create
-            // a new vE element in the element at teh top of the stack 
+            // a new vMDE element in the element at teh top of the stack 
             // (which should be the parent element of this current one)
-            if ((it!=E_source.vE.end()) && ((*it)->name=="opening_tag"))
+            if ((it!=MDE_source.vMDE.end()) && ((*it)->name=="opening_tag"))
             {
-                (*(stack_E_pt.top()))->new_vE_element();
-                return (*(stack_E_pt.top()))->vE.back()->process_flat_E_to_E(it, E_source, stack_E_pt);
+                (*(stack_MDE_pt.top()))->new_vMDE_element();
+                return (*(stack_MDE_pt.top()))->vMDE.back()->process_flat_MDE_to_MDE(it, MDE_source, stack_MDE_pt);
             }
             else
             {
-                if (!stack_E_pt.empty()) return (*(stack_E_pt.top()))->process_flat_E_to_E(it, E_source, stack_E_pt);
+                if (!stack_MDE_pt.empty()) return (*(stack_MDE_pt.top()))->process_flat_MDE_to_MDE(it, MDE_source, stack_MDE_pt);
                 else return this;
             }
         }
@@ -610,43 +627,37 @@ E * E::process_flat_E_to_E(std::vector<E*>::iterator & it, E & E_source, std::st
     return this;
 }
 
-        
-void E::try_copy(int index)
+void MDE::testing()
 {
-    this->vE.back()->vE.push_back(this->vE.at(index));
-}
-
-void E::testing()
-{
-    this->new_vE_element();
-    this->new_vE_element();
-    this->vE.at(0)->new_vE_element();
-    this->vE.at(0)->new_vE_element();
-    this->vE.at(1)->new_vE_element();
-    this->vE.at(1)->new_vE_element();
+    this->new_vMDE_element();
+    this->new_vMDE_element();
+    this->vMDE.at(0)->new_vMDE_element();
+    this->vMDE.at(0)->new_vMDE_element();
+    this->vMDE.at(1)->new_vMDE_element();
+    this->vMDE.at(1)->new_vMDE_element();
     this->set_name("master");
     this->set_data("123");
-    this->set_name_vE_index(0,"tata");
-    this->set_data_vE_index(0,"1");
-    this->set_name_vE_index(1,"titi");
-    this->set_data_vE_index(1,"2");
-    //~ this->vE.at(0)->set_name_vE_index(0,"lala");
-    this->vE.at(0)->set_name_vE_index(0,"toto");
-    this->vE.at(0)->set_data_vE_index(0,"11");
-    this->vE.at(0)->set_name_vE_index(1,"lili");
-    this->vE.at(0)->set_data_vE_index(1,"12");
-    this->vE.at(1)->set_name_vE_index(0,"toto");
-    this->vE.at(1)->set_data_vE_index(0,"21");
-    this->vE.at(1)->set_name_vE_index(1,"lolo");
-    this->vE.at(1)->set_data_vE_index(1,"22");
+    this->set_name_vMDE_index(0,"tata");
+    this->set_data_vMDE_index(0,"1");
+    this->set_name_vMDE_index(1,"titi");
+    this->set_data_vMDE_index(1,"2");
+    //~ this->vMDE.at(0)->set_name_vMDE_index(0,"lala");
+    this->vMDE.at(0)->set_name_vMDE_index(0,"toto");
+    this->vMDE.at(0)->set_data_vMDE_index(0,"11");
+    this->vMDE.at(0)->set_name_vMDE_index(1,"lili");
+    this->vMDE.at(0)->set_data_vMDE_index(1,"12");
+    this->vMDE.at(1)->set_name_vMDE_index(0,"toto");
+    this->vMDE.at(1)->set_data_vMDE_index(0,"21");
+    this->vMDE.at(1)->set_name_vMDE_index(1,"lolo");
+    this->vMDE.at(1)->set_data_vMDE_index(1,"22");
     
-    this->vE.at(0)->vE.at(0)->new_vE_element();
-    this->vE.at(0)->vE.at(0)->set_name_vE_index(0,"truc");
-    this->vE.at(0)->vE.at(0)->set_data_vE_index(0,"999");
+    this->vMDE.at(0)->vMDE.at(0)->new_vMDE_element();
+    this->vMDE.at(0)->vMDE.at(0)->set_name_vMDE_index(0,"truc");
+    this->vMDE.at(0)->vMDE.at(0)->set_data_vMDE_index(0,"999");
 }
 
 
-void E::display_vector_int(std::vector<int>& vect_index) {
+void MDE::display_vector_int(std::vector<int>& vect_index) {
     
     std::cout << "(" ;
     for(std::vector<int>::const_iterator it=vect_index.begin();it!=vect_index.end();++it)
@@ -658,7 +669,7 @@ void E::display_vector_int(std::vector<int>& vect_index) {
 }
 
 
-E * E::vE_get_by_index(std::vector<int>& vect_index, std::vector<int>::const_iterator it)
+MDE * MDE::vMDE_get_by_index(std::vector<int>& vect_index, std::vector<int>::const_iterator it)
 {
     int store_it=0;
     if (vect_index.size()==0)
@@ -667,23 +678,23 @@ E * E::vE_get_by_index(std::vector<int>& vect_index, std::vector<int>::const_ite
     }
     else if (vect_index.size()==1)
     {
-        return (this->vE).at(vect_index.front());
+        return (this->vMDE).at(vect_index.front());
     }
     else if ((vect_index.size()>1) && (it!=vect_index.end()-1))
     {
         store_it=*it;
-        return ((this->vE).at(store_it))->vE_get_by_index(vect_index,++it);
+        return ((this->vMDE).at(store_it))->vMDE_get_by_index(vect_index,++it);
     }
     else
     {
-        return this->vE.at(vect_index.back());
+        return this->vMDE.at(vect_index.back());
     }
 }
 
-void E::vE_copy_To_Vector_Float(std::vector<float>& vFloat)
+void MDE::vMDE_copy_To_Vector_Float(std::vector<float>& vFloat)
 {
     float num;
-    for (std::vector<E*>::iterator it = this->vE.begin(); it != this->vE.end(); ++it)
+    for (std::vector<MDE*>::iterator it = this->vMDE.begin(); it != this->vMDE.end(); ++it)
     {
         
         if(!(istringstream((*it)->data)>>num)) num=0;
@@ -693,7 +704,7 @@ void E::vE_copy_To_Vector_Float(std::vector<float>& vFloat)
 
 //  Index management
 
-std::vector<int> E::set_vector_of_indexes(std::string list_indexes)
+std::vector<int> MDE::set_vector_of_indexes(std::string list_indexes)
 {
     std::vector<int> vect_index;
     std::string delimiter = ",";
@@ -714,56 +725,17 @@ std::vector<int> E::set_vector_of_indexes(std::string list_indexes)
     return vect_index;
 }
 
-void E::extractEColorDataToGL(
-                            std::vector<float> &colors,
-                            std::vector< vector <float> > &color_faces)
+void MDE::search_results_to_vector_float(std::vector<float> &v_float, std::vector< vector <float> > &v_v_float)
 {
-    std::vector<int> index;
-    for (int f=0; f < 6 ; ++f)
+    for (std::vector<MDE**>::iterator it=MDE::search_result.begin(); it != MDE::search_result.end(); ++it)
     {
-        index = {f,0};
-        (this->vE_get_by_index(index, index.begin()))->vE_copy_To_Vector_Float(colors);
-        color_faces.push_back(colors);
-        colors.clear();
-    }
-    testVector_Display_2d(color_faces);
-}
-
-
-void E::SearchResultsToVectorFloat(std::vector<float> &v_float, std::vector< vector <float> > &v_v_float)
-{
-    for (std::vector<E**>::iterator it=E::search_result.begin(); it != E::search_result.end(); ++it)
-    {
-        (*(*it))->vE_copy_To_Vector_Float(v_float);
+        (*(*it))->vMDE_copy_To_Vector_Float(v_float);
         v_v_float.push_back(v_float);
         v_float.clear();
     }
     
 }
-void E::extractEVertexToGL(
-            std::vector<float> &coordinate,
-            std::vector< vector <float> > &vertex,
-            std::vector< std::vector< std::vector <float> > > &vCube)
-{
-    std::vector<std::vector<float> > vTriangle_face;
-    std::vector<int> index;
-    for (int f=0; f < 6 ; ++f)
-    {
-        for (int v=1; v < 5; ++v)
-        {
-            index = {f,v};
-            (this->vE_get_by_index(index, index.begin()))->vE_copy_To_Vector_Float(coordinate);
-            vertex.push_back(coordinate);
-            coordinate.clear();
-        }
-        quads_to_triangles(vertex, vTriangle_face);
-        vCube.push_back(vTriangle_face);
-        vTriangle_face.clear();
-        vertex.clear();
-    }
-    testVector_Display(vCube);
-}
 
-std::vector<E**> E::search_result;
+std::vector<MDE**> MDE::search_result;
 
-#endif /*E.cpp*/
+#endif /*MDE.cpp*/
