@@ -1,0 +1,28 @@
+Version\+: 0.\+1.\+0\hypertarget{index_intro_sec}{}\section{M\+D\+E in a glance}\label{index_intro_sec}
+An \hyperlink{classMDE}{M\+DE} can be used for multiple purposes. In this first version of \hyperlink{classMDE}{M\+DE}, an \hyperlink{classMDE}{M\+DE} instance is simply used to display the content of an xml file in text mode or in an Open\+GL 3D viewport.\hypertarget{index_install_sec}{}\section{Installation}\label{index_install_sec}
+\hypertarget{index_step1}{}\subsection{Step 1\+: Verify dependencies}\label{index_step1}
+List of libraries you need to have already installed\+: 
+\begin{DoxyItemize}
+\item Open\+GL 
+\item glut 
+\item freeglut 
+\item glew 
+\item freetype2 
+\item glm 
+\end{DoxyItemize}\hypertarget{index_step2}{}\subsection{Step 2\+: external resources}\label{index_step2}
+There are currently external resources used by this program on top of the dependancies\+: 
+\begin{DoxyItemize}
+\item {\bfseries ./source/common/} has some useful functions for shader programs from the Open\+GL Programming wikibook\+: \href{http://en.wikibooks.org/wiki/OpenGL_Programming}{\tt http\+://en.\+wikibooks.\+org/wiki/\+Open\+G\+L\+\_\+\+Programming}. 
+\item {\bfseries ./fonts/} has a few free/opensource font files used by the freetype2 library. 
+\end{DoxyItemize}\hypertarget{index_step3}{}\subsection{Step 3\+: make}\label{index_step3}
+Makefile is in the {\bfseries source} folder. The binary file is output in {\bfseries bin} folder\hypertarget{index_step4}{}\subsection{Step 4\+: run program}\label{index_step4}
+From folder {\bfseries bin} execute ./mde \mbox{[}O\+P\+T\+I\+ON\mbox{]}
+
+Options\+:
+
+
+\begin{DoxyItemize}
+\item {\bfseries no option} \+: if the program is executed with no options, all text mode menus will be displayed consecutively in the console. 
+\item {\bfseries -\/g} display directly in open\+GL, skip the Display Mode menu 
+\item {\bfseries -\/f \mbox{[}F\+I\+LE\mbox{]}} load (xml) file, skip the Data menu 
+\end{DoxyItemize}

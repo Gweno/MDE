@@ -1,0 +1,86 @@
+\hypertarget{group__group__search}{}\section{Searching methods}
+\label{group__group__search}\index{Searching methods@{Searching methods}}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{group__group__search_ga265f4aa5242e6380380067d659ada5c1}{M\+D\+E\+::search\+\_\+\+For} (int \&index, int \&level, std\+::string search\+Name)
+\begin{DoxyCompactList}\small\item\em This member function is to search an entire Entity recursively all instances that has their name equal to the standard string search\+Name in parameter. It stores all the results in the static (class) member search\+\_\+result which is a standard vector of pointers to pointers of \hyperlink{classMDE}{M\+DE}. The results of the search can be displayed with method fetch\+\_\+search\+\_\+result. \end{DoxyCompactList}\item 
+void \hyperlink{group__group__search_gaa7a2d3a12f120684e389e8d045b6bf24}{M\+D\+E\+::fetch\+\_\+search\+\_\+result} (std\+::vector$<$ \hyperlink{classMDE}{M\+DE} $\ast$$\ast$ $>$ \&search\+\_\+result)
+\begin{DoxyCompactList}\small\item\em This member function is to fetch the searching results store a vector of pointers to pointer of \hyperlink{classMDE}{M\+DE}, typically in the static (class) member search\+\_\+result after running method search\+\_\+for() to search for all Entities with a given member \textquotesingle{}name\textquotesingle{}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Searching methods and associated tools that are used to search for members or instances using different process. 
+
+\subsection{Function Documentation}
+\index{Searching methods@{Searching methods}!fetch\+\_\+search\+\_\+result@{fetch\+\_\+search\+\_\+result}}
+\index{fetch\+\_\+search\+\_\+result@{fetch\+\_\+search\+\_\+result}!Searching methods@{Searching methods}}
+\subsubsection[{\texorpdfstring{fetch\+\_\+search\+\_\+result(std\+::vector$<$ M\+D\+E $\ast$$\ast$ $>$ \&search\+\_\+result)}{fetch_search_result(std::vector< MDE ** > &search_result)}}]{\setlength{\rightskip}{0pt plus 5cm}void M\+D\+E\+::fetch\+\_\+search\+\_\+result (
+\begin{DoxyParamCaption}
+\item[{std\+::vector$<$ {\bf M\+DE} $\ast$$\ast$ $>$ \&}]{search\+\_\+result}
+\end{DoxyParamCaption}
+)}\hypertarget{group__group__search_gaa7a2d3a12f120684e389e8d045b6bf24}{}\label{group__group__search_gaa7a2d3a12f120684e389e8d045b6bf24}
+
+
+This member function is to fetch the searching results store a vector of pointers to pointer of \hyperlink{classMDE}{M\+DE}, typically in the static (class) member search\+\_\+result after running method search\+\_\+for() to search for all Entities with a given member \textquotesingle{}name\textquotesingle{}. 
+
+\subsubsection*{name\+: \hyperlink{group__group__search_gaa7a2d3a12f120684e389e8d045b6bf24}{fetch\+\_\+search\+\_\+result(std\+::vector$<$\+M\+D\+E$\ast$$\ast$$>$ \&search\+\_\+result)}}
+
+
+\begin{DoxyParams}{Parameters}
+{\em \&search\+\_\+result} & is a reference to a standard vector of pointers to pointer of \hyperlink{classMDE}{M\+DE}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Nothing is returned (void) 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{group__group__search_ga265f4aa5242e6380380067d659ada5c1}{search\+\_\+\+For()} 
+\end{DoxySeeAlso}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em No} & exception handling. \\
+\hline
+\end{DoxyExceptions}
+\index{Searching methods@{Searching methods}!search\+\_\+\+For@{search\+\_\+\+For}}
+\index{search\+\_\+\+For@{search\+\_\+\+For}!Searching methods@{Searching methods}}
+\subsubsection[{\texorpdfstring{search\+\_\+\+For(int \&index, int \&level, std\+::string search\+Name)}{search_For(int &index, int &level, std::string searchName)}}]{\setlength{\rightskip}{0pt plus 5cm}void M\+D\+E\+::search\+\_\+\+For (
+\begin{DoxyParamCaption}
+\item[{int \&}]{index, }
+\item[{int \&}]{level, }
+\item[{std\+::string}]{search\+Name}
+\end{DoxyParamCaption}
+)}\hypertarget{group__group__search_ga265f4aa5242e6380380067d659ada5c1}{}\label{group__group__search_ga265f4aa5242e6380380067d659ada5c1}
+
+
+This member function is to search an entire Entity recursively all instances that has their name equal to the standard string search\+Name in parameter. It stores all the results in the static (class) member search\+\_\+result which is a standard vector of pointers to pointers of \hyperlink{classMDE}{M\+DE}. The results of the search can be displayed with method fetch\+\_\+search\+\_\+result. 
+
+\subsubsection*{name\+: search\+\_\+\+For(int \& index, int \& level,}
+
+std\+::string search\+Name) 
+\begin{DoxyParams}{Parameters}
+{\em \&} & index is a reference to an integer. \\
+\hline
+{\em \&} & level is a reference to an integer. \\
+\hline
+{\em search\+Name} & is a standard string. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Nothing is returned (void) 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+simple\+\_\+loop\+\_\+\+V\+M\+D\+E() 
+
+simple\+\_\+loop\+\_\+\+V\+M\+D\+E\+\_\+next\+\_\+level() 
+
+\hyperlink{group__group__search_gaa7a2d3a12f120684e389e8d045b6bf24}{fetch\+\_\+search\+\_\+result()} 
+\end{DoxySeeAlso}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em No} & exception handling. \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyNote}{Note}
+The process can be optimised and simplified. 
+\end{DoxyNote}

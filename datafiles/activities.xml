@@ -1,0 +1,63 @@
+<test>
+example
+  <list>
+  activities
+    <activity>
+    swimming
+      <length>
+      500m
+        <method>
+        breath stroke
+        </method>
+        <method>
+        crawl
+        </method>
+      </length>
+      <length>
+      200m
+        <method>
+        breath stroke
+        </method>
+        <method>
+        crawl
+        </method>
+        <method>
+        butterfly
+        </method>
+      </length>
+    </activity>
+    <activity>
+    climbing
+      <place>
+      in-door wall
+      </place>
+      <place>
+      outdoor
+      </place>
+    </activity>
+  </list>
+  <list>
+  actions
+    <type>
+    work
+      <category>
+      programming
+      </category>
+    </type>
+    <type>
+    house-keeping
+      <category>
+      cleaning
+        <room>
+        kitchen
+          <method>
+          mopping the floor
+          </method>
+        </room>
+        <room>
+        bathroom
+        </room>
+      </category>
+    </type>
+  </list>
+</test>

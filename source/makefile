@@ -11,19 +11,19 @@ all: mde
 debug: mde_debug
 
 mde: main.o MDE.o text.o
-	g++ -o mde main.o MDE.o text.o -L/usr/include/GL -lGL -lglut -lGLU -I../include -Wl,-rpath
+	$(CC) $(CXXSTD) -o $(BIN)mde main_d.o MDE_d.o text_d.o $(LDLIBS) $(CXXUTILS)
 
 mde_debug:main_d.o MDE_d.o text_d.o
-	$(CC) -g -o $(BIN)mde_debug main_d.o MDE_d.o text_d.o $(LDLIBS) $(CXXUTILS)
+	$(CC) $(CXXSTD) -g -o $(BIN)mde_debug main_d.o MDE_d.o text_d.o $(LDLIBS) $(CXXUTILS)
 
 main.o: main.cpp
-	g++ -std=c++11 -c main.cpp
+	$(CC) $(CXXSTD) -g $(CFLAGS) main.cpp -o main_d.o $(CXXFLAGS)
 
 MDE.o: MDE.cpp MDE.h
-	g++ -std=c++11 -c MDE.cpp
+	$(CC) $(CXXSTD) -c $(CFLAGS)  MDE.cpp -o MDE_d.o
 
 text.o: text.cpp text.h
-	g++ -c text.cpp 
+	$(CC) $(CXXSTD) -c $(CFLAGS) text.cpp -o text_d.o $(CXXFLAGS)
 
 main_d.o: main.cpp
 	$(CC) $(CXXSTD) -g $(CFLAGS) main.cpp -o main_d.o $(CXXFLAGS)

@@ -1,0 +1,224 @@
+\hypertarget{classE}{}\section{E Class Reference}
+\label{classE}\index{E@{E}}
+
+
+{\ttfamily \#include $<$E.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classE_ac26294d340a47c6a51c615c177052c91}{E} ()
+\begin{DoxyCompactList}\small\item\em This is the basic constructor. Do nothing, apart from creating an empty instance of class \hyperlink{classE}{E}. \end{DoxyCompactList}\item 
+\hyperlink{classE_aaef580a7f041f660ec68449300d516c8}{E} (std\+::string init\+\_\+name, std\+::string init\+\_\+data, std\+::vector$<$ \hyperlink{classE}{E} $\ast$ $>$ init\+\_\+vE)
+\begin{DoxyCompactList}\small\item\em Create an instance of class \hyperlink{classE}{E} and sets its public member \textquotesingle{}name\textquotesingle{} to standard string init\+\_\+name, its public member \textquotesingle{}data\textquotesingle{} to standard string init\+\_\+data and its private member vE, vector of pointers to instance of \hyperlink{classE}{E}, to the vector init\+\_\+vE, standard vector of pointer to instance of \hyperlink{classE}{E}. \end{DoxyCompactList}\item 
+\hyperlink{group__group__clear_ga7edcff371a18184dcc16cdf1523a001a}{$\sim$E} ()
+\begin{DoxyCompactList}\small\item\em This is the destructor member function simply deleteing each pointers from private member vE, vector of pointers to \hyperlink{classE}{E}. \end{DoxyCompactList}\item 
+void \hyperlink{group__group__clear_ga09718029acd816dd033853c94a1f8001}{destructor\+\_\+E} ()
+\begin{DoxyCompactList}\small\item\em This is function member doing is calling delete\+\_\+all\+\_\+pt() to delete all pointers in private member vE and clearing members of the instance of object class \hyperlink{classE}{E}. \end{DoxyCompactList}\item 
+void \hyperlink{classE_a5fef91a84daddb1e9a1cfd2de704c229}{new\+\_\+v\+E\+\_\+element} ()
+\begin{DoxyCompactList}\small\item\em This member function is to create a new pointer to \hyperlink{classE}{E} with a push\+\_\+back on private member vE. \end{DoxyCompactList}\item 
+void \hyperlink{group__group__set_ga2536bf5e123b74905fac652168eacecc}{set\+\_\+name} (std\+::string e\+Name)
+\begin{DoxyCompactList}\small\item\em This member function is to set a standard string e\+Name into the public member \textquotesingle{}name\textquotesingle{} of an instance of an object of class \hyperlink{classE}{E}. \end{DoxyCompactList}\item 
+void \hyperlink{group__group__set_ga35efd42862ed6cfd72a3a8cf9011c707}{set\+\_\+data} (std\+::string \hyperlink{classE_ae199dfce04c109f23799a5708a14a74a}{data})
+\begin{DoxyCompactList}\small\item\em This member function is to set a standard string data into the public member \textquotesingle{}data\textquotesingle{} of an instance of an object of class \hyperlink{classE}{E}. \end{DoxyCompactList}\item 
+void \hyperlink{group__group__set_gaa28d3672c579987f459c43c33339131b}{set\+\_\+name\+\_\+v\+E\+\_\+back} (std\+::string v\+Name)
+\begin{DoxyCompactList}\small\item\em This member function is to set a standard string v\+Name into the public member \textquotesingle{}name\textquotesingle{} of a pointer to an instance of an object of class \hyperlink{classE}{E}, at the back of the private member vE, vector of pointers to instances of class \hyperlink{classE}{E}. \end{DoxyCompactList}\item 
+void \hyperlink{group__group__set_gafd194bd2e8b88814d8ad8c47065ee6ce}{set\+\_\+data\+\_\+v\+E\+\_\+back} (std\+::string v\+Data)
+\begin{DoxyCompactList}\small\item\em This member function is to set a standard string v\+Data into the public member \textquotesingle{}data\textquotesingle{} of a pointer to an instance of an object of class \hyperlink{classE}{E}, at the back of the private member vE, vector of pointers to instances of class \hyperlink{classE}{E}. \end{DoxyCompactList}\item 
+void \hyperlink{group__group__set_ga83e581aaca6f1412ff4d29c96e877256}{set\+\_\+name\+\_\+v\+E\+\_\+index} (int index\+\_\+v\+Ee, std\+::string v\+Name)
+\begin{DoxyCompactList}\small\item\em This member function is to set a standard string v\+Name into the public member \textquotesingle{}name\textquotesingle{} of a pointer to an instance of an object of class \hyperlink{classE}{E}, at the integer index number index\+\_\+v\+Ee of the private member vE, vector of pointers to instances of class \hyperlink{classE}{E}. \end{DoxyCompactList}\item 
+void \hyperlink{group__group__set_gab1aa1d0fd0461dd61e4b5e9d39f08509}{set\+\_\+data\+\_\+v\+E\+\_\+index} (int index\+\_\+v\+Ee, std\+::string v\+Data)
+\begin{DoxyCompactList}\small\item\em This member function is to set a standard string v\+Data into the public member \textquotesingle{}data\textquotesingle{} of a pointer to an instance of an object of class \hyperlink{classE}{E}, at the integer index number index\+\_\+v\+Ee of the private member vE, vector of pointers to instances of class \hyperlink{classE}{E}. \end{DoxyCompactList}\item 
+std\+::vector$<$ int $>$ \hyperlink{group__group__set_ga3d23a22d991a4525a329216ebd187b98}{set\+\_\+vector\+\_\+of\+\_\+indexes} (std\+::string list\+\_\+indexes)
+\begin{DoxyCompactList}\small\item\em This member function is to convert a string hodling a set of indexes to a standard vector of integer corresponding to the set of indexes to be able to use it. The methods returns the vector of indexes. \end{DoxyCompactList}\item 
+std\+::string {\bfseries get\+\_\+name} ()
+\item 
+std\+::string \hyperlink{group__group__get_gac39a54fb84f62a7ae22119ed57553b7a}{get\+\_\+name\+\_\+v\+E\+\_\+by\+\_\+index} (int index\+\_\+v\+Ee)
+\begin{DoxyCompactList}\small\item\em This member function is to get the standard string from the public member \textquotesingle{}name\textquotesingle{} of a pointer to an instance of an object of class \hyperlink{classE}{E}, at the integer index number index\+\_\+v\+Ee of the private member vE, vector of pointers to instances of class \hyperlink{classE}{E}. \end{DoxyCompactList}\item 
+std\+::string \hyperlink{group__group__get_gad93551b2c54e8fd17eae7181f0845ce2}{get\+\_\+data\+\_\+v\+E\+\_\+by\+\_\+index} (int index\+\_\+v\+Ee)
+\begin{DoxyCompactList}\small\item\em This member function is to get the standard string from the public member \textquotesingle{}data\textquotesingle{} of a pointer to an instance of an object of class \hyperlink{classE}{E}, at the integer index number index\+\_\+v\+Ee of the private member vE, vector of pointers to instances of class \hyperlink{classE}{E}. \end{DoxyCompactList}\item 
+\hyperlink{classE}{E} $\ast$ \hyperlink{group__group__get_ga144fc852ebad2c024934e6da7675bd68}{v\+E\+\_\+get\+\_\+by\+\_\+index} (std\+::vector$<$ int $>$ \&vect\+\_\+index, std\+::vector$<$ int $>$\+::const\+\_\+iterator it)
+\begin{DoxyCompactList}\small\item\em This member function is to return the pointer to the instance of \hyperlink{classE}{E} that is at a given set of indexes. \end{DoxyCompactList}\item 
+void \hyperlink{group__group__display_ga5e647273fd30acf7584882ac7c757813}{display\+\_\+name} ()
+\begin{DoxyCompactList}\small\item\em This member function is to display the public member \textquotesingle{}name\textquotesingle{} of an instance of a class \hyperlink{classE}{E} object, using a standard cout. \end{DoxyCompactList}\item 
+void \hyperlink{group__group__display_ga271f6ff8b0a5b5ee4e29fbd204ef0f24}{display\+\_\+data} ()
+\begin{DoxyCompactList}\small\item\em This member function is to display the public member \textquotesingle{}data\textquotesingle{} of an instance of a class \hyperlink{classE}{E} object, using a standard cout. \end{DoxyCompactList}\item 
+void \hyperlink{group__group__display_ga4494a0a02f6bcb42a857ba78c3ad774f}{display\+\_\+v\+E\+\_\+names} ()
+\begin{DoxyCompactList}\small\item\em This member function is to display public member \textquotesingle{}name\textquotesingle{} of all elements of the private member vE, vector of pointers to instances of object of class \hyperlink{classE}{E} using a standard cout recursively. \end{DoxyCompactList}\item 
+void \hyperlink{group__group__display_gaf9a65156dc2432f673156f62971fab76}{display\+\_\+v\+E\+\_\+data} ()
+\begin{DoxyCompactList}\small\item\em This member function is to display public member \textquotesingle{}data\textquotesingle{} of all elements of the private member vE, vector of pointers to instances of object of class \hyperlink{classE}{E} using a standard cout recursively. \end{DoxyCompactList}\item 
+void \hyperlink{group__group__display_ga631a8a99e830b25ac2fd267eef352a42}{display\+\_\+all} (int n\+\_\+indent, const int \&n\+\_\+space)
+\begin{DoxyCompactList}\small\item\em This member function is to display all public members \textquotesingle{}name\textquotesingle{} and \textquotesingle{}data\textquotesingle{} of all private members vE vectors of pointers to instances of object of class \hyperlink{classE}{E}, using a standard cout recursively, and with indentation. \end{DoxyCompactList}\item 
+void \hyperlink{group__group__display_ga443b2ed610b5544289880bd72591ecb7}{format\+\_\+display} (int n\+\_\+indent, const int \&n\+\_\+space, std\+::string start\+\_\+opening\+\_\+tag, std\+::string end\+\_\+opening\+\_\+tag, std\+::string start\+\_\+closing\+\_\+tag, std\+::string end\+\_\+closing\+\_\+tag)
+\begin{DoxyCompactList}\small\item\em This member function is to display the instance of a class object \hyperlink{classE}{E} with a defined format using opening and closing tags (for example like an X\+ML file). \end{DoxyCompactList}\item 
+void \hyperlink{group__group__display_ga775c141cef4f790b906881e26f6b452c}{display\+\_\+vector\+\_\+int} (std\+::vector$<$ int $>$ \&vect\+\_\+index)
+\begin{DoxyCompactList}\small\item\em This member function is to display all public members \textquotesingle{}name\textquotesingle{} and \textquotesingle{}data\textquotesingle{} of all private members vE vectors of pointers to instances of object of class \hyperlink{classE}{E}, using a standard cout recursively, and with indentation. \end{DoxyCompactList}\item 
+void \hyperlink{group__group__display_ga81dcfc21d24912a6ffb5d45bcc852a68}{display\+\_\+v\+\_\+\+E\+\_\+data} (std\+::vector$<$ \hyperlink{structGLdata}{G\+Ldata} $>$ \&v\+\_\+\+E\+\_\+data)
+\begin{DoxyCompactList}\small\item\em This function member is to display all elements of a standard vector of struct \hyperlink{structGLdata}{G\+Ldata}. For example it can displays a vector of offset values for coordinates. \end{DoxyCompactList}\item 
+void \hyperlink{classE_a8be7dc3f091bf48c7c271f9e444d0492}{user\+\_\+input\+\_\+vE} ()
+\begin{DoxyCompactList}\small\item\em This function member is for user to enter manually \textquotesingle{}name\textquotesingle{} and \textquotesingle{}data\textquotesingle{} recursively for all sub-\/entities of the instance \hyperlink{classE}{E} until \textquotesingle{}end\textquotesingle{} is entered. \end{DoxyCompactList}\item 
+void \hyperlink{group__group__io_ga921d111e994a0c73640fb68c609a169c}{user\+\_\+save\+\_\+to\+\_\+\+X\+M\+L\+\_\+file} ()
+\begin{DoxyCompactList}\small\item\em This member function is to save the instance of a class into an X\+ML file. The file\textquotesingle{}s name is chosen by user input. \end{DoxyCompactList}\item 
+bool \hyperlink{group__group__io_ga599ade876fea62a08f1c2005908529c4}{load\+\_\+\+X\+M\+L\+\_\+\+File\+\_\+to\+\_\+E} (const std\+::string \&full\+File\+Name)
+\begin{DoxyCompactList}\small\item\em This member function is to read an X\+ML file using the reference to the string full\+File\+Name and to store the data from the file into an instance of class \hyperlink{classE}{E}. \end{DoxyCompactList}\item 
+void \hyperlink{group__group__io_gabfd75b5cdacabaea45ed25a8c261853a}{extract\+\_\+\+E\+\_\+data\+\_\+for\+\_\+v\+\_\+offset} (std\+::vector$<$ \hyperlink{structGLdata}{G\+Ldata} $>$ \&v\+\_\+\+E\+\_\+data, int \&level, int index=0)
+\begin{DoxyCompactList}\small\item\em This member function is to fill-\/in a standard vector of struct \hyperlink{structGLdata}{G\+Ldata} by extracting data from private member \textquotesingle{}name\textquotesingle{} and public member \textquotesingle{}data\textquotesingle{}, and setting the level and index of each Entities and sub-\/entities of an instance of object class \hyperlink{classE}{E}. The vector of \hyperlink{structGLdata}{G\+Ldata} is used in the standard vector of \hyperlink{structGLdata}{G\+Ldata} to set offset coordinates. \end{DoxyCompactList}\item 
+void \hyperlink{group__group__testing_ga9ddbf0e07f103f81f722752d6f2a5980}{testing} ()
+\begin{DoxyCompactList}\small\item\em This member function is to create at runtime a new Entity with sub-\/entities for testing purposes. \end{DoxyCompactList}\item 
+void \hyperlink{group__group__search_ga53ada246186ae1d5e293ffc526f7c525}{search\+\_\+\+For} (int \&index, int \&level, std\+::string search\+Name)
+\begin{DoxyCompactList}\small\item\em This member function is to search an entire Entity recursively all instances that has their name equal to the standard string search\+Name in parameter. It stores all the results in the static (class) member search\+\_\+result which is a standard vector of pointers to pointers of \hyperlink{classE}{E}. The results of the search can be displayed with method fetch\+\_\+search\+\_\+result. \end{DoxyCompactList}\item 
+void \hyperlink{group__group__search_ga57fc780e7343d490651c475367cb3a89}{fetch\+\_\+search\+\_\+result} (std\+::vector$<$ \hyperlink{classE}{E} $\ast$$\ast$ $>$ \&search\+\_\+result)
+\begin{DoxyCompactList}\small\item\em This member function is to fetch the searching results store a vector of pointers to pointer of \hyperlink{classE}{E}, typically in the static (class) member search\+\_\+result after running method search\+\_\+for() to search for all Entities with a given member \textquotesingle{}name\textquotesingle{}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::string \hyperlink{classE_ae199dfce04c109f23799a5708a14a74a}{data}
+\begin{DoxyCompactList}\small\item\em This is the public member \textquotesingle{}data\textquotesingle{}. It is holding the information that can be displayed for users. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This is class \hyperlink{classE}{E}. 
+
+\subsection{Constructor \& Destructor Documentation}
+\index{E@{E}!E@{E}}
+\index{E@{E}!E@{E}}
+\subsubsection[{\texorpdfstring{E()}{E()}}]{\setlength{\rightskip}{0pt plus 5cm}E\+::E (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{classE_ac26294d340a47c6a51c615c177052c91}{}\label{classE_ac26294d340a47c6a51c615c177052c91}
+
+
+This is the basic constructor. Do nothing, apart from creating an empty instance of class \hyperlink{classE}{E}. 
+
+\subsubsection*{name\+: \hyperlink{classE_ac26294d340a47c6a51c615c177052c91}{E()}}
+
+
+\begin{DoxyParams}{Parameters}
+{\em No} & arguments. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Nothing is returned (void). 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em No} & exception handling. \\
+\hline
+\end{DoxyExceptions}
+\index{E@{E}!E@{E}}
+\index{E@{E}!E@{E}}
+\subsubsection[{\texorpdfstring{E(std\+::string init\+\_\+name, std\+::string init\+\_\+data, std\+::vector$<$ E $\ast$ $>$ init\+\_\+v\+E)}{E(std::string init_name, std::string init_data, std::vector< E * > init_vE)}}]{\setlength{\rightskip}{0pt plus 5cm}E\+::E (
+\begin{DoxyParamCaption}
+\item[{std\+::string}]{init\+\_\+name, }
+\item[{std\+::string}]{init\+\_\+data, }
+\item[{std\+::vector$<$ {\bf E} $\ast$ $>$}]{init\+\_\+vE}
+\end{DoxyParamCaption}
+)}\hypertarget{classE_aaef580a7f041f660ec68449300d516c8}{}\label{classE_aaef580a7f041f660ec68449300d516c8}
+
+
+Create an instance of class \hyperlink{classE}{E} and sets its public member \textquotesingle{}name\textquotesingle{} to standard string init\+\_\+name, its public member \textquotesingle{}data\textquotesingle{} to standard string init\+\_\+data and its private member vE, vector of pointers to instance of \hyperlink{classE}{E}, to the vector init\+\_\+vE, standard vector of pointer to instance of \hyperlink{classE}{E}. 
+
+\subsubsection*{name\+: \hyperlink{classE}{E}(std\+::string init\+\_\+name, std\+::string init\+\_\+data,}
+
+std\+::vector$<$\+E$\ast$$>$ init\+\_\+vE) 
+\begin{DoxyParams}{Parameters}
+{\em init\+\_\+name} & is a standard string \\
+\hline
+{\em init\+\_\+data} & is a standard string \\
+\hline
+{\em init\+\_\+vE} & is a standard vector of pointers to instances of object of class \hyperlink{classE}{E}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Nothing is returned (void). 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classE_ac26294d340a47c6a51c615c177052c91}{E()}. 
+
+\hyperlink{group__group__clear_ga7edcff371a18184dcc16cdf1523a001a}{$\sim$\+E()}. 
+\end{DoxySeeAlso}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em No} & exception handling. \\
+\hline
+\end{DoxyExceptions}
+
+
+\subsection{Member Function Documentation}
+\index{E@{E}!new\+\_\+v\+E\+\_\+element@{new\+\_\+v\+E\+\_\+element}}
+\index{new\+\_\+v\+E\+\_\+element@{new\+\_\+v\+E\+\_\+element}!E@{E}}
+\subsubsection[{\texorpdfstring{new\+\_\+v\+E\+\_\+element()}{new_vE_element()}}]{\setlength{\rightskip}{0pt plus 5cm}void E\+::new\+\_\+v\+E\+\_\+element (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{classE_a5fef91a84daddb1e9a1cfd2de704c229}{}\label{classE_a5fef91a84daddb1e9a1cfd2de704c229}
+
+
+This member function is to create a new pointer to \hyperlink{classE}{E} with a push\+\_\+back on private member vE. 
+
+\subsubsection*{name\+: \hyperlink{classE_a5fef91a84daddb1e9a1cfd2de704c229}{new\+\_\+v\+E\+\_\+element()}}
+
+
+\begin{DoxyParams}{Parameters}
+{\em No} & arguments. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Nothing is returned (void). 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+clear\+\_\+all\+\_\+v\+E(). 
+\end{DoxySeeAlso}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em No} & exception handling. \\
+\hline
+\end{DoxyExceptions}
+\index{E@{E}!user\+\_\+input\+\_\+vE@{user\+\_\+input\+\_\+vE}}
+\index{user\+\_\+input\+\_\+vE@{user\+\_\+input\+\_\+vE}!E@{E}}
+\subsubsection[{\texorpdfstring{user\+\_\+input\+\_\+v\+E()}{user_input_vE()}}]{\setlength{\rightskip}{0pt plus 5cm}void E\+::user\+\_\+input\+\_\+vE (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{classE_a8be7dc3f091bf48c7c271f9e444d0492}{}\label{classE_a8be7dc3f091bf48c7c271f9e444d0492}
+
+
+This function member is for user to enter manually \textquotesingle{}name\textquotesingle{} and \textquotesingle{}data\textquotesingle{} recursively for all sub-\/entities of the instance \hyperlink{classE}{E} until \textquotesingle{}end\textquotesingle{} is entered. 
+
+\subsubsection*{name\+: \hyperlink{classE_a8be7dc3f091bf48c7c271f9e444d0492}{user\+\_\+input\+\_\+v\+E()}}
+
+
+\begin{DoxyParams}{Parameters}
+{\em No} & arguments. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Nothing is returned (void). 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{group__group__set_ga83e581aaca6f1412ff4d29c96e877256}{set\+\_\+name\+\_\+v\+E\+\_\+index()}. 
+
+\hyperlink{group__group__set_gab1aa1d0fd0461dd61e4b5e9d39f08509}{set\+\_\+data\+\_\+v\+E\+\_\+index()}. 
+\end{DoxySeeAlso}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em No} & exception handling. \\
+\hline
+\end{DoxyExceptions}
+
+
+\subsection{Member Data Documentation}
+\index{E@{E}!data@{data}}
+\index{data@{data}!E@{E}}
+\subsubsection[{\texorpdfstring{data}{data}}]{\setlength{\rightskip}{0pt plus 5cm}std\+::string E\+::data}\hypertarget{classE_ae199dfce04c109f23799a5708a14a74a}{}\label{classE_ae199dfce04c109f23799a5708a14a74a}
+
+
+This is the public member \textquotesingle{}data\textquotesingle{}. It is holding the information that can be displayed for users. 
+
+\subsubsection*{name\+: data}
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/gweno/\+Documents/\+Project/\+Cpp/\+E\+S\+V8/source/E.\+h\item 
+/home/gweno/\+Documents/\+Project/\+Cpp/\+E\+S\+V8/source/E.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,300 @@
+\hypertarget{group__group__display}{}\section{Display methods}
+\label{group__group__display}\index{Display methods@{Display methods}}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{group__group__display_ga0d7ee634770bb7ca539a0db883bf5fcb}{M\+D\+E\+::display\+\_\+name} ()
+\begin{DoxyCompactList}\small\item\em This member function is to display the private member \textquotesingle{}name\textquotesingle{} of an instance of a class \hyperlink{classMDE}{M\+DE} object, using a standard cout. \end{DoxyCompactList}\item 
+void \hyperlink{group__group__display_gaffa6663eb89b6e57cb430677067efe8e}{M\+D\+E\+::display\+\_\+data} ()
+\begin{DoxyCompactList}\small\item\em This member function is to display the public member \textquotesingle{}data\textquotesingle{} of an instance of a class \hyperlink{classMDE}{M\+DE} object, using a standard cout. \end{DoxyCompactList}\item 
+void \hyperlink{group__group__display_gaeabe618359d94d130bcd4bc878ce3edc}{M\+D\+E\+::display\+\_\+v\+M\+D\+E\+\_\+names} ()
+\begin{DoxyCompactList}\small\item\em This member function is to display private member \textquotesingle{}name\textquotesingle{} of all elements of the private member v\+M\+DE, vector of pointers to instances of object of class \hyperlink{classMDE}{M\+DE} using a standard cout recursively. \end{DoxyCompactList}\item 
+void \hyperlink{group__group__display_ga5ce5603ab12845a6f1bdb2f909b5ef16}{M\+D\+E\+::display\+\_\+v\+M\+D\+E\+\_\+data} ()
+\begin{DoxyCompactList}\small\item\em This member function is to display public member \textquotesingle{}data\textquotesingle{} of all elements of the private member v\+M\+DE, vector of pointers to instances of object of class \hyperlink{classMDE}{M\+DE} using a standard cout recursively. \end{DoxyCompactList}\item 
+void \hyperlink{group__group__display_ga209fa87837f6b30256bbcdf8f33e1752}{M\+D\+E\+::display\+\_\+all} (int n\+\_\+indent, const int \&n\+\_\+space)
+\begin{DoxyCompactList}\small\item\em This member function is to display all members \textquotesingle{}name\textquotesingle{}(private) and \textquotesingle{}data\textquotesingle{}(public) of all private members v\+M\+DE vectors of pointers to instances of object of class \hyperlink{classMDE}{M\+DE}, using a standard cout recursively, and with indentation. \end{DoxyCompactList}\item 
+void \hyperlink{group__group__display_gaa484ce5bc4e4726e45e06789b0891b6f}{M\+D\+E\+::format\+\_\+display} (int n\+\_\+indent, const int \&n\+\_\+space, std\+::string start\+\_\+opening\+\_\+tag, std\+::string end\+\_\+opening\+\_\+tag, std\+::string start\+\_\+closing\+\_\+tag, std\+::string end\+\_\+closing\+\_\+tag)
+\begin{DoxyCompactList}\small\item\em This member function is to display the instance of a class object \hyperlink{classMDE}{M\+DE} with a defined format using opening and closing tags (for example like an X\+ML file). \end{DoxyCompactList}\item 
+void \hyperlink{group__group__display_gaeee364777c1584d310bd698c9e9b40f4}{M\+D\+E\+::display\+\_\+vector\+\_\+int} (std\+::vector$<$ int $>$ \&vect\+\_\+index)
+\begin{DoxyCompactList}\small\item\em This member function is to display all members \textquotesingle{}name\textquotesingle{}(private) and \textquotesingle{}data\textquotesingle{}(public) of all private members v\+M\+DE vectors of pointers to instances of object of class \hyperlink{classMDE}{M\+DE}, using a standard cout recursively, and with indentation. \end{DoxyCompactList}\item 
+void \hyperlink{group__group__display_ga38a0f84bbf5c8652014c84fa7ce92610}{M\+D\+E\+::display\+\_\+v\+\_\+\+M\+D\+E\+\_\+data} (std\+::vector$<$ \hyperlink{structGLdata}{G\+Ldata} $>$ \&v\+\_\+\+M\+D\+E\+\_\+data)
+\begin{DoxyCompactList}\small\item\em This function member is to display all elements of a standard vector of struct \hyperlink{structGLdata}{G\+Ldata}. For example it can displays a vector of offset values for coordinates. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Methods to display Instances, part of instances or anything else, in the terminal. Mainly for debugging purposes 
+
+\subsection{Function Documentation}
+\index{Display methods@{Display methods}!display\+\_\+all@{display\+\_\+all}}
+\index{display\+\_\+all@{display\+\_\+all}!Display methods@{Display methods}}
+\subsubsection[{\texorpdfstring{display\+\_\+all(int n\+\_\+indent, const int \&n\+\_\+space)}{display_all(int n_indent, const int &n_space)}}]{\setlength{\rightskip}{0pt plus 5cm}void M\+D\+E\+::display\+\_\+all (
+\begin{DoxyParamCaption}
+\item[{int}]{n\+\_\+indent, }
+\item[{const int \&}]{n\+\_\+space}
+\end{DoxyParamCaption}
+)}\hypertarget{group__group__display_ga209fa87837f6b30256bbcdf8f33e1752}{}\label{group__group__display_ga209fa87837f6b30256bbcdf8f33e1752}
+
+
+This member function is to display all members \textquotesingle{}name\textquotesingle{}(private) and \textquotesingle{}data\textquotesingle{}(public) of all private members v\+M\+DE vectors of pointers to instances of object of class \hyperlink{classMDE}{M\+DE}, using a standard cout recursively, and with indentation. 
+
+\subsubsection*{name\+: \hyperlink{group__group__display_ga209fa87837f6b30256bbcdf8f33e1752}{display\+\_\+all(int n\+\_\+indent, const int \& n\+\_\+space)}}
+
+
+\begin{DoxyParams}{Parameters}
+{\em n\+\_\+indent} & is an integer passed to initialised the position of the first line to display, then to be incremented locally recursively. \\
+\hline
+{\em n\+\_\+space} & is an address of a constant integer used to indent each lines to separates elements of intances of object of class \hyperlink{classMDE}{M\+DE} from their own sub-\/elements recursively. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Nothing is returned (void). 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{group__group__display_ga0d7ee634770bb7ca539a0db883bf5fcb}{display\+\_\+name()}. 
+
+\hyperlink{group__group__display_gaffa6663eb89b6e57cb430677067efe8e}{display\+\_\+data()}. 
+
+\hyperlink{group__group__display_gaeabe618359d94d130bcd4bc878ce3edc}{display\+\_\+v\+M\+D\+E\+\_\+names()}. 
+
+\hyperlink{group__group__display_ga5ce5603ab12845a6f1bdb2f909b5ef16}{display\+\_\+v\+M\+D\+E\+\_\+data()}. 
+\end{DoxySeeAlso}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em No} & exception handling. \\
+\hline
+\end{DoxyExceptions}
+\index{Display methods@{Display methods}!display\+\_\+data@{display\+\_\+data}}
+\index{display\+\_\+data@{display\+\_\+data}!Display methods@{Display methods}}
+\subsubsection[{\texorpdfstring{display\+\_\+data()}{display_data()}}]{\setlength{\rightskip}{0pt plus 5cm}void M\+D\+E\+::display\+\_\+data (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{group__group__display_gaffa6663eb89b6e57cb430677067efe8e}{}\label{group__group__display_gaffa6663eb89b6e57cb430677067efe8e}
+
+
+This member function is to display the public member \textquotesingle{}data\textquotesingle{} of an instance of a class \hyperlink{classMDE}{M\+DE} object, using a standard cout. 
+
+\subsubsection*{name\+: \hyperlink{group__group__display_gaffa6663eb89b6e57cb430677067efe8e}{display\+\_\+data()}}
+
+
+\begin{DoxyParams}{Parameters}
+{\em No} & arguments. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Nothing is returned (void). 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{group__group__display_ga0d7ee634770bb7ca539a0db883bf5fcb}{display\+\_\+name()}. 
+
+\hyperlink{group__group__display_ga5ce5603ab12845a6f1bdb2f909b5ef16}{display\+\_\+v\+M\+D\+E\+\_\+data()}. 
+
+\hyperlink{group__group__display_gaeabe618359d94d130bcd4bc878ce3edc}{display\+\_\+v\+M\+D\+E\+\_\+names()}. 
+\end{DoxySeeAlso}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em No} & exception handling. \\
+\hline
+\end{DoxyExceptions}
+\index{Display methods@{Display methods}!display\+\_\+name@{display\+\_\+name}}
+\index{display\+\_\+name@{display\+\_\+name}!Display methods@{Display methods}}
+\subsubsection[{\texorpdfstring{display\+\_\+name()}{display_name()}}]{\setlength{\rightskip}{0pt plus 5cm}void M\+D\+E\+::display\+\_\+name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{group__group__display_ga0d7ee634770bb7ca539a0db883bf5fcb}{}\label{group__group__display_ga0d7ee634770bb7ca539a0db883bf5fcb}
+
+
+This member function is to display the private member \textquotesingle{}name\textquotesingle{} of an instance of a class \hyperlink{classMDE}{M\+DE} object, using a standard cout. 
+
+\subsubsection*{name\+: \hyperlink{group__group__display_ga0d7ee634770bb7ca539a0db883bf5fcb}{display\+\_\+name()}}
+
+
+\begin{DoxyParams}{Parameters}
+{\em No} & arguments. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Nothing is returned (void). 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{group__group__display_gaffa6663eb89b6e57cb430677067efe8e}{display\+\_\+data()}. 
+
+\hyperlink{group__group__display_gaeabe618359d94d130bcd4bc878ce3edc}{display\+\_\+v\+M\+D\+E\+\_\+names()}. 
+
+\hyperlink{group__group__display_ga5ce5603ab12845a6f1bdb2f909b5ef16}{display\+\_\+v\+M\+D\+E\+\_\+data()}. 
+\end{DoxySeeAlso}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em No} & exception handling. \\
+\hline
+\end{DoxyExceptions}
+\index{Display methods@{Display methods}!display\+\_\+v\+\_\+\+M\+D\+E\+\_\+data@{display\+\_\+v\+\_\+\+M\+D\+E\+\_\+data}}
+\index{display\+\_\+v\+\_\+\+M\+D\+E\+\_\+data@{display\+\_\+v\+\_\+\+M\+D\+E\+\_\+data}!Display methods@{Display methods}}
+\subsubsection[{\texorpdfstring{display\+\_\+v\+\_\+\+M\+D\+E\+\_\+data(std\+::vector$<$ G\+Ldata $>$ \&v\+\_\+\+M\+D\+E\+\_\+data)}{display_v_MDE_data(std::vector< GLdata > &v_MDE_data)}}]{\setlength{\rightskip}{0pt plus 5cm}void M\+D\+E\+::display\+\_\+v\+\_\+\+M\+D\+E\+\_\+data (
+\begin{DoxyParamCaption}
+\item[{std\+::vector$<$ {\bf G\+Ldata} $>$ \&}]{v\+\_\+\+M\+D\+E\+\_\+data}
+\end{DoxyParamCaption}
+)}\hypertarget{group__group__display_ga38a0f84bbf5c8652014c84fa7ce92610}{}\label{group__group__display_ga38a0f84bbf5c8652014c84fa7ce92610}
+
+
+This function member is to display all elements of a standard vector of struct \hyperlink{structGLdata}{G\+Ldata}. For example it can displays a vector of offset values for coordinates. 
+
+\subsubsection*{name\+: \hyperlink{group__group__display_ga38a0f84bbf5c8652014c84fa7ce92610}{display\+\_\+v\+\_\+\+M\+D\+E\+\_\+data(std\+::vector$<$\+G\+Ldata$>$ \& v\+\_\+\+M\+D\+E\+\_\+data)}}
+
+
+\begin{DoxyParams}{Parameters}
+{\em \&} & v\+\_\+\+M\+D\+E\+\_\+data reference to a standard vector of type struct \hyperlink{structGLdata}{G\+Ldata}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Nothing is returned (void). 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{group__group__set_gaa140f8ec04b385dad147e8d4defc8434}{set\+\_\+name\+\_\+v\+M\+D\+E\+\_\+index()}. 
+
+\hyperlink{group__group__set_ga5dee98068559783970fd355f7183add7}{set\+\_\+data\+\_\+v\+M\+D\+E\+\_\+index()}. 
+\end{DoxySeeAlso}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em No} & exception handling. \\
+\hline
+\end{DoxyExceptions}
+\index{Display methods@{Display methods}!display\+\_\+vector\+\_\+int@{display\+\_\+vector\+\_\+int}}
+\index{display\+\_\+vector\+\_\+int@{display\+\_\+vector\+\_\+int}!Display methods@{Display methods}}
+\subsubsection[{\texorpdfstring{display\+\_\+vector\+\_\+int(std\+::vector$<$ int $>$ \&vect\+\_\+index)}{display_vector_int(std::vector< int > &vect_index)}}]{\setlength{\rightskip}{0pt plus 5cm}void M\+D\+E\+::display\+\_\+vector\+\_\+int (
+\begin{DoxyParamCaption}
+\item[{std\+::vector$<$ int $>$ \&}]{vect\+\_\+index}
+\end{DoxyParamCaption}
+)}\hypertarget{group__group__display_gaeee364777c1584d310bd698c9e9b40f4}{}\label{group__group__display_gaeee364777c1584d310bd698c9e9b40f4}
+
+
+This member function is to display all members \textquotesingle{}name\textquotesingle{}(private) and \textquotesingle{}data\textquotesingle{}(public) of all private members v\+M\+DE vectors of pointers to instances of object of class \hyperlink{classMDE}{M\+DE}, using a standard cout recursively, and with indentation. 
+
+\subsubsection*{name\+: \hyperlink{group__group__display_gaeee364777c1584d310bd698c9e9b40f4}{display\+\_\+vector\+\_\+int(std\+::vector$<$int$>$\& vect\+\_\+index)}}
+
+
+\begin{DoxyParams}{Parameters}
+{\em \&} & vect\+\_\+index is a reference to a vector of integer holding the set of indexes for an Entity. The display is in the format (i0,i1,..,in) with each i being the consecutive indexes of instance member v\+M\+DE. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Nothing is returned (void). 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em No} & exception handling. \\
+\hline
+\end{DoxyExceptions}
+\index{Display methods@{Display methods}!display\+\_\+v\+M\+D\+E\+\_\+data@{display\+\_\+v\+M\+D\+E\+\_\+data}}
+\index{display\+\_\+v\+M\+D\+E\+\_\+data@{display\+\_\+v\+M\+D\+E\+\_\+data}!Display methods@{Display methods}}
+\subsubsection[{\texorpdfstring{display\+\_\+v\+M\+D\+E\+\_\+data()}{display_vMDE_data()}}]{\setlength{\rightskip}{0pt plus 5cm}void M\+D\+E\+::display\+\_\+v\+M\+D\+E\+\_\+data (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{group__group__display_ga5ce5603ab12845a6f1bdb2f909b5ef16}{}\label{group__group__display_ga5ce5603ab12845a6f1bdb2f909b5ef16}
+
+
+This member function is to display public member \textquotesingle{}data\textquotesingle{} of all elements of the private member v\+M\+DE, vector of pointers to instances of object of class \hyperlink{classMDE}{M\+DE} using a standard cout recursively. 
+
+\subsubsection*{name\+: \hyperlink{group__group__display_ga5ce5603ab12845a6f1bdb2f909b5ef16}{display\+\_\+v\+M\+D\+E\+\_\+data()}}
+
+
+\begin{DoxyParams}{Parameters}
+{\em No} & arguments. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Nothing is returned (void). 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{group__group__display_ga0d7ee634770bb7ca539a0db883bf5fcb}{display\+\_\+name()}. 
+
+\hyperlink{group__group__display_gaeabe618359d94d130bcd4bc878ce3edc}{display\+\_\+v\+M\+D\+E\+\_\+names()}. 
+
+vdisplay\+\_\+all(). 
+\end{DoxySeeAlso}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em No} & exception handling. \\
+\hline
+\end{DoxyExceptions}
+\index{Display methods@{Display methods}!display\+\_\+v\+M\+D\+E\+\_\+names@{display\+\_\+v\+M\+D\+E\+\_\+names}}
+\index{display\+\_\+v\+M\+D\+E\+\_\+names@{display\+\_\+v\+M\+D\+E\+\_\+names}!Display methods@{Display methods}}
+\subsubsection[{\texorpdfstring{display\+\_\+v\+M\+D\+E\+\_\+names()}{display_vMDE_names()}}]{\setlength{\rightskip}{0pt plus 5cm}void M\+D\+E\+::display\+\_\+v\+M\+D\+E\+\_\+names (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{group__group__display_gaeabe618359d94d130bcd4bc878ce3edc}{}\label{group__group__display_gaeabe618359d94d130bcd4bc878ce3edc}
+
+
+This member function is to display private member \textquotesingle{}name\textquotesingle{} of all elements of the private member v\+M\+DE, vector of pointers to instances of object of class \hyperlink{classMDE}{M\+DE} using a standard cout recursively. 
+
+\subsubsection*{name\+: \hyperlink{group__group__display_gaeabe618359d94d130bcd4bc878ce3edc}{display\+\_\+v\+M\+D\+E\+\_\+names()}}
+
+
+\begin{DoxyParams}{Parameters}
+{\em No} & arguments. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Nothing is returned (void). 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{group__group__display_ga0d7ee634770bb7ca539a0db883bf5fcb}{display\+\_\+name()}. 
+
+\hyperlink{group__group__display_ga5ce5603ab12845a6f1bdb2f909b5ef16}{display\+\_\+v\+M\+D\+E\+\_\+data()}. 
+
+vdisplay\+\_\+all(). 
+\end{DoxySeeAlso}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em No} & exception handling. \\
+\hline
+\end{DoxyExceptions}
+\index{Display methods@{Display methods}!format\+\_\+display@{format\+\_\+display}}
+\index{format\+\_\+display@{format\+\_\+display}!Display methods@{Display methods}}
+\subsubsection[{\texorpdfstring{format\+\_\+display(int n\+\_\+indent, const int \&n\+\_\+space, std\+::string start\+\_\+opening\+\_\+tag, std\+::string end\+\_\+opening\+\_\+tag, std\+::string start\+\_\+closing\+\_\+tag, std\+::string end\+\_\+closing\+\_\+tag)}{format_display(int n_indent, const int &n_space, std::string start_opening_tag, std::string end_opening_tag, std::string start_closing_tag, std::string end_closing_tag)}}]{\setlength{\rightskip}{0pt plus 5cm}void M\+D\+E\+::format\+\_\+display (
+\begin{DoxyParamCaption}
+\item[{int}]{n\+\_\+indent, }
+\item[{const int \&}]{n\+\_\+space, }
+\item[{std\+::string}]{start\+\_\+opening\+\_\+tag, }
+\item[{std\+::string}]{end\+\_\+opening\+\_\+tag, }
+\item[{std\+::string}]{start\+\_\+closing\+\_\+tag, }
+\item[{std\+::string}]{end\+\_\+closing\+\_\+tag}
+\end{DoxyParamCaption}
+)}\hypertarget{group__group__display_gaa484ce5bc4e4726e45e06789b0891b6f}{}\label{group__group__display_gaa484ce5bc4e4726e45e06789b0891b6f}
+
+
+This member function is to display the instance of a class object \hyperlink{classMDE}{M\+DE} with a defined format using opening and closing tags (for example like an X\+ML file). 
+
+\subsubsection*{name\+: format\+\_\+display(int n\+\_\+indent, const int \& n\+\_\+space,}
+
+std\+::string start\+\_\+opening\+\_\+tag, std\+::string end\+\_\+opening\+\_\+tag, std\+::string start\+\_\+closing\+\_\+tag, std\+::string end\+\_\+closing\+\_\+tag) 
+\begin{DoxyParams}{Parameters}
+{\em n\+\_\+indent} & is an integer passed to initialised the position of the first line to display, then to be incremented locally recursively. \\
+\hline
+{\em n\+\_\+space} & is an address of a constant integer used to indent each lines to separates elements of intances of object of class \hyperlink{classMDE}{M\+DE} from their own sub-\/elements recursively. \\
+\hline
+{\em start\+\_\+opening\+\_\+tag} & is a standard string corresponding to the start of the opening tag (\char`\"{}$<$\char`\"{} for xml). \\
+\hline
+{\em end\+\_\+opening\+\_\+tag} & is a standard string corresponding to the end of the opening tag (\char`\"{}$>$\char`\"{} for xml). \\
+\hline
+{\em start\+\_\+closing\+\_\+tag} & is a standard string corresponding to the start of the closing tag (\char`\"{}$<$\textbackslash{}\char`\"{} for xml). \\
+\hline
+{\em end\+\_\+closing\+\_\+tag} & is a standard string corresponding to the end of the closing tag (\char`\"{}$>$\char`\"{} for xml). \\
+\hline
+{\em \&file} & (address of a file) is an ostream corresponding to the name of the file . \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Nothing is returned (void). 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{group__group__io_gab0bb5af067d456163cd8d672945acc20}{user\+\_\+save\+\_\+to\+\_\+\+X\+M\+L\+\_\+file()} 
+\end{DoxySeeAlso}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em No} & exception handling. \\
+\hline
+\end{DoxyExceptions}

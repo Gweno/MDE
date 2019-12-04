@@ -1,0 +1,23 @@
+standard libraries:
+iostream
+fstream
+vector
+sstream
+string.h
+string
+vector
+stack
+stdio.h
+stdlib.h
+array
+math.h
+
+dependencies:
+OpenGL 2.1 Mesa 18.0.5
+freeglut3 (freeglut3-dev) version 2.8.1-2
+glut (part of freeglut3)
+glew (libglew-dev) version 1.13.0-2
+glm (libglm-dev) version 0.9.7.2-1
+freetype2 (freetype2-demos) version 2.6.1-0.1ubuntu2.4
+
+
