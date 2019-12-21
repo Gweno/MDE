@@ -180,6 +180,7 @@ void MDE::display_all(int n_indent, const int & n_space)
         }
     return;
 };
+
 GLdata current_GLdata;
 
 void MDE::extract_MDE_data_for_v_offset(std::vector<GLdata> & v_MDE_data, int & level, int index)

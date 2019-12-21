@@ -278,7 +278,7 @@ void create_coord_vector_text(const char *text, atlas * a, vertex3D origin, vert
     nb_indices+=c;
 }
 
-void text_frame(std::vector<vertex3D> &vector_input, std::vector<uint> &nb_glyphs, std::vector<vertex3D> &v_origin){
+void text_frame(std::vector<vertex3D> &vector_input, std::vector<uint> &nb_glyphs, std::vector<vertex3D> &v_origin, vertex2D &padding){
     
     std::vector<vertex3D>  whd;
     std::vector<vertex3D> vertex_3D;
@@ -294,14 +294,16 @@ void text_frame(std::vector<vertex3D> &vector_input, std::vector<uint> &nb_glyph
         // the absolute difference between the x coordinate of the right-most vertex and the left-most
         // of the current box, that are 5 vertices apart
         w = std::abs(((*(it+(*it2)-1)).x-(*it).x));
-        // loop though each glyphs from current iterator until nb of glyphsfor current text is reach
+        // loop though each glyphs from current iterator until nb of glyphsfor current text is reached
         for (std::vector<vertex3D>::iterator it3=it; it3!=(it+(*it2));++it3){
             hmin= std::min(hmin,(*it3).y);
             hmax = std::max(hmax,(*it3).y);
         }
         h = std::abs(hmax - hmin);
         d=h;
-        whd.push_back({w,h,d});
+        //~ whd.push_back({w,h,d});
+        whd.push_back({w+padding.x*2,h+padding.y*2,d}); // double the padding value as padding is same on left and right, and on top and bottom (for now).
+        
         std::advance(it,(*it2));
         std::advance(it2,1);
     }
@@ -543,7 +545,7 @@ void draw_box(){
     glDisableVertexAttribArray(attribute_v_color_box);
 }
 
-void init_text_MDE(MDE &my_entity,vertex3D &origin, std::vector<vertex3D> &offset, vertex2D &padding, vertex3D color) {
+void init_text_MDE(MDE &my_entity,vertex3D &origin, std::vector<vertex3D> &offset, std::vector<vertex3D> &offset_rule, vertex2D &padding, vertex3D color) {
     
     /* Create texture atlasses for several font sizes */
     a48 = new atlas(face, 48);
@@ -552,31 +554,62 @@ void init_text_MDE(MDE &my_entity,vertex3D &origin, std::vector<vertex3D> &offse
     vertex2D window_scale;
     window_scale.x = 2.0 / glutGet(GLUT_WINDOW_WIDTH);
     window_scale.y = 2.0 / glutGet(GLUT_WINDOW_HEIGHT);
-    std::vector<vertex3D> v_origin;
+    std::vector<vertex3D> v_origin;      // coordinates of origin for the glyphs/text
+    std::vector<vertex3D> v_origin_fb;   // coordinates of origin for the frame box to include padding
 
     std::vector<GLdata> my_v_MDE_data;
     int level=0;
     int index=0;
     my_entity.extract_MDE_data_for_v_offset(my_v_MDE_data, level);
-    process_v_MDE_data(my_v_MDE_data,offset);
+    process_v_MDE_data(my_v_MDE_data,offset, offset_rule);
     for (std::vector<vertex3D>::iterator it_offset=offset.begin(); it_offset!=offset.end();++it_offset){
         v_origin.push_back({origin.x+(*it_offset).x,origin.y+(*it_offset).y,origin.z+(*it_offset).z});
     }
+    
+    // Adding padding at first and last elements of v_origin
+    add_padding(v_origin, v_origin_fb, padding);
+    
+
+    
     uint index_v_origin=0;
     for (std::vector<GLdata>::iterator it_v_MDE_data=my_v_MDE_data.begin(); it_v_MDE_data!=my_v_MDE_data.end();++it_v_MDE_data){
         
         create_coord_vector_text(((*it_v_MDE_data).MDE_data).c_str(), a48, v_origin[index_v_origin], window_scale );
         index_v_origin++;
     }
-    text_frame(glyphs_box, nb_glyphs_per_text, v_origin);
+    //~ text_frame(glyphs_box, nb_glyphs_per_text, v_origin);
+    text_frame(glyphs_box, nb_glyphs_per_text, v_origin_fb, padding);
     init_color(color,v_origin);
 }
 
-void process_v_MDE_data(std::vector<GLdata> & v_MDE_data,std::vector<vertex3D> & v_offset){
+void process_v_MDE_data(std::vector<GLdata> & v_MDE_data,std::vector<vertex3D> & v_offset, std::vector<vertex3D> & v_offset_rule){
+    
+    //~ GLfloat nd_offset = 0.5; // name-data offset, distance between the name and the data 
+    //~ GLfloat index_offset = 0.5; // index offset, distance to separate index values 
+    //~ GLfloat level_offset = -0.2; // level offset, distance to separate level values 
+    
+    // offset rule.x is the name-data offset
+    // offset rule.y is the index offset
+    // offset rule.x is the level offset
     
     for (std::vector<GLdata>::iterator it_v_MDE_data=v_MDE_data.begin();it_v_MDE_data!=v_MDE_data.end(); ++it_v_MDE_data){
-        v_offset.push_back({(*it_v_MDE_data).mde_member*.5+(*it_v_MDE_data).index*0.5,(*it_v_MDE_data).level*(-0.2),0});
+        //~ v_offset.push_back({(*it_v_MDE_data).mde_member*.5+(*it_v_MDE_data).index*0.5,(*it_v_MDE_data).level*(-0.2),0});
+        //~ v_offset.push_back({(*it_v_MDE_data).mde_member*nd_offset+(*it_v_MDE_data).index*index_offset,(*it_v_MDE_data).level*level_offset,0});
+        //~ v_offset.push_back({(*it_v_MDE_data).mde_member*v_offset_rule.x+(*it_v_MDE_data).index*v_offset_rule.y,(*it_v_MDE_data).level*v_offset_rule.z,0});
+        v_offset.push_back({
+            (*it_v_MDE_data).mde_member*v_offset_rule[0].x+(*it_v_MDE_data).index*v_offset_rule[0].y+(*it_v_MDE_data).level*v_offset_rule[0].z ,
+            (*it_v_MDE_data).mde_member*v_offset_rule[1].x+(*it_v_MDE_data).index*v_offset_rule[1].y+(*it_v_MDE_data).level*v_offset_rule[1].z ,
+            (*it_v_MDE_data).mde_member*v_offset_rule[2].x+(*it_v_MDE_data).index*v_offset_rule[2].y+(*it_v_MDE_data).level*v_offset_rule[2].z ,
+            });
     }
+}
+
+void add_padding(std::vector<vertex3D> & v_origin, std::vector<vertex3D> & v_origin_fb, vertex2D & padding){
+    
+    for (std::vector<vertex3D>::iterator it=v_origin.begin();it!=v_origin.end(); ++it){
+        v_origin_fb.push_back({(*it).x-padding.x,(*it).y-padding.y,(*it).z});
+    }
+
 }
 
 void textDisplay() {
@@ -617,10 +650,10 @@ void textDisplay() {
 }
 
 void onIdle() {
-    float move = 2*sinf(glutGet(GLUT_ELAPSED_TIME) / 1000.0 * (2*3.14) / 15); // -1<->+1 every 2 seconds
-    float angle = glutGet(GLUT_ELAPSED_TIME) / 1000.0 * 25;  // 25° per second
-    //~ float move = 0;
-    //~ float angle = 0;
+    //~ float move = 2*sinf(glutGet(GLUT_ELAPSED_TIME) / 1000.0 * (2*3.14) / 15); // -1<->+1 every 2 seconds
+    //~ float angle = glutGet(GLUT_ELAPSED_TIME) / 1000.0 * 25;  // 25° per second
+    float move = 0;
+    float angle = 0;
     screen_width=glutGet(GLUT_WINDOW_WIDTH);
     screen_height=glutGet(GLUT_WINDOW_HEIGHT);
     glm::vec3 axis_y(0, 1, 0);

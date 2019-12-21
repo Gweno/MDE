@@ -12,6 +12,13 @@
 #include <stack>
 #include "MDE.h"
 
+//~ #include <unistd.h>
+//~ #include <algorithm>
+
+//~ #include <filesystem>
+#include <experimental/filesystem>
+namespace fs = std::experimental::filesystem;
+
 #include <stdlib.h>
 #include <GL/glew.h>
 #include <GL/freeglut.h>
@@ -32,11 +39,11 @@
 
 #define VERSION_INFO "v0.1.0"
 
-// declarationfor text.cpp
+// declaration for text.cpp
 int window_width=800, window_height=600;
 const char *userText;
 uint userFontSize;
-GLfloat userRed,userGreen,userBlue;
+//~ GLfloat red_user,green_user,blue_user;
 const char *userFontFilename;
 
 
@@ -46,6 +53,13 @@ const char *userFontFilename;
 
 int main (int argc, char **argv){
 
+    // set switches default values - true mean use default values/ no user entry
+    bool GL_on = false;    // GL_on false by default
+    bool input_file = false;  // No input file by default
+    bool input_color = false;  // input color not implemented yet
+    bool input_coord = true;  // input coordinates set by default
+    bool input_padding= false;  // input padding not implemented yet
+    
     // init/declare string variables
     std::string choice[argc];
     std::string filename;
@@ -53,19 +67,17 @@ int main (int argc, char **argv){
     std::string fullfilename;
     std::string default_filename = "testAny.xml";
     
-    // set switches default values
-    bool GL_on = false;    // GL_on false by default
-    bool input_file = false;  // No input file by default
-    bool input_color = false;  // input color not implemented yet
-    bool input_coord = true;  // input coordinates set by default
-    bool input_padding= true;  // input padding not implemented yet
     
     // set variables default values
     float X_user = 0.0;
     float Y_user = 0.0;
     float Z_user = 0.0;
-    float H_padding_user ;
-    float V_padding_user ;
+    float H_padding_user = 0.0;
+    float V_padding_user = 0.0;
+
+GLfloat red_user,green_user,blue_user;
+
+    std::cout << "Current path: " << fs::current_path() << std::endl;
 
     // display runtime arguments
     std::cout << "Have " << argc << " arguments:" << std::endl;
@@ -74,6 +86,7 @@ int main (int argc, char **argv){
         choice[i]=std::string(argv[i]);
     }
     
+
     std::cout << VERSION_INFO << std::endl;
     
     // Check all arguments provided
@@ -83,6 +96,7 @@ int main (int argc, char **argv){
     // -f filename : for loading a file before start
     // -g : for graphic display directly
     // -c r,g,b : to set text box color with RGB (not implemented yet)
+    // -p x,y : to set the padding with floats x and y (not implemented yet)
     // -v: get version 
     for (int i = 0; i < argc; ++i) {
         std::cout << "arguments " << i << ": " << choice[i] << std::endl;
@@ -120,9 +134,42 @@ int main (int argc, char **argv){
                 input_color= true;                
                 if (i<argc-1){
                     cout << choice[i+1]<< endl;
+                    char * arg_red;
+                    char * arg_green;
+                    char * arg_blue;
+                    arg_red = strtok (argv[i+1],",");
+                    std::cout << arg_red << std::endl;
+                    arg_green = strtok (NULL,",");
+                    std::cout << arg_green << std::endl;
+                    arg_blue = strtok (NULL,",");
+                    std::cout << arg_blue << std::endl;
+                    
+                    red_user = std::atof(arg_red);
+                    green_user = std::atof(arg_green);
+                    blue_user = std::atof(arg_blue);
                 }
                 else {
                     printf("Missing Color code\n");
+                }
+            }
+        // padding
+        if(choice[i].find("-p", 0) != std::string::npos)
+            {
+                cout << choice[i]<< endl;
+                input_padding= true;                
+                if (i<argc-1){
+                    std::cout << choice[i+1]<< std::endl;
+                    char * arg_pad_x;
+                    char * arg_pad_y;
+                    arg_pad_x = strtok (argv[i+1],",");
+                    std::cout << arg_pad_x << std::endl;
+                    arg_pad_y = strtok (NULL,",");
+                    std::cout << arg_pad_y << std::endl;
+                    V_padding_user = std::atof(arg_pad_x);
+                    H_padding_user = std::atof(arg_pad_y);
+                }
+                else {
+                    printf("Missing Padding values\n");
                 }
             }
     }
@@ -210,12 +257,16 @@ int main (int argc, char **argv){
                     std::cout << "* Or choose between examples:                      *" << std::endl; 
                     std::cout << "* 1: perma.xml (this file is on a single line)     *" << std::endl; 
                     std::cout << "* 2: bookstore.xml                                 *" << std::endl; 
-                    std::cout << "* 3: activities.xml                                *" << std::endl; 
+                    std::cout << "* 3: activities.xml                                *" << std::endl;
+                    std::cout << "* quit) Quit                     *" << std::endl;
                     std::cout << "*                                                  *" << std::endl;
                     std::cout << "****************************************************" << std::endl;
                     std::cout << "Your choice:";
                     std::cin >> key_input;
-                    if (key_input=="1") {
+                    if (key_input=="quit"){
+                        return 0;
+                    }
+                    else if (key_input=="1") {
                         input_file = newMDE.load_XML_File_to_MDE("../datafiles/perma.xml");
                         fullfilename="../datafiles/perma.xml";
                     }
@@ -299,9 +350,9 @@ int main (int argc, char **argv){
                 
                 // set default colors
                 if (!input_color){
-                    userRed = 0;
-                    userGreen = 1;
-                    userBlue = 1;
+                    red_user = 0;
+                    green_user = 1;
+                    blue_user = 1;
                 }
     
                 GLenum glew_status = glewInit();
@@ -326,11 +377,22 @@ int main (int argc, char **argv){
                 std::cout << "User coordinates: " << X_user << ", "<< Y_user << ", "<< Z_user << std::endl;
                 vertex3D user_origin={X_user,Y_user, Z_user};
                 std::vector<vertex3D> offset;
-                //~ vertex2D user_padding = {H_padding_user,V_padding_user};
-                vertex2D user_padding = {0.0,0.0};
+                std::vector<vertex3D> offset_rule;
+                // offset rule.x is the name-data offset
+                // offset rule.y is the index offset
+                // offset rule.x is the level offset
+                offset_rule = {
+                    {0.5,0.2,0},   // for offset on x-axis
+                    {0.0,0.0,-0.2},   // for offset on y-axis
+                    {0.0,0.0,0.0}    // for offset on z-axis
+                };
+
+                vertex2D user_padding = {H_padding_user,V_padding_user};
+                //~ vertex2D user_padding = {0.0,0.0};
                 
-                vertex3D user_color = {userRed,userBlue,userGreen};
-                init_text_MDE(newMDE,user_origin, offset, user_padding, user_color);
+                vertex3D user_color = {red_user,blue_user,green_user};
+                
+                init_text_MDE(newMDE,user_origin, offset, offset_rule, user_padding, user_color);
                 
                 glutDisplayFunc(textDisplay);
                 glutKeyboardFunc(keyDown);

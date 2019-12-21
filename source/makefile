@@ -1,7 +1,7 @@
 CC=g++
 CFLAGS=-c -Wall
-CXXSTD=-std=c++11
-LDLIBS=-lm -lglut -lGLEW -lGL -lfreetype -L/usr/include/GL -lGLU -Wl,-rpath,
+CXXSTD=-std=c++17
+LDLIBS=-lm -lglut -lGLEW -lGL -lfreetype -L/usr/include/GL -lGLU -lstdc++fs -Wl,-rpath, 
 CXXFLAGS=-I/usr/include/freetype2
 CXXUTILS=./common/shader_utils.o
 
@@ -15,6 +15,7 @@ mde: main.o MDE.o text.o
 
 mde_debug:main_d.o MDE_d.o text_d.o
 	$(CC) $(CXXSTD) -g -o $(BIN)mde_debug main_d.o MDE_d.o text_d.o $(LDLIBS) $(CXXUTILS)
+#~ 	$(CC) $(CXXSTD) -g -o $(BIN)mde_debug main_d.o MDE_d.o text_d.o $(LDLIBS) $(CXXUTILS) -lstdc++fs
 
 main.o: main.cpp
 	$(CC) $(CXXSTD) -g $(CFLAGS) main.cpp -o main_d.o $(CXXFLAGS)

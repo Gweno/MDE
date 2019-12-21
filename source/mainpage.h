@@ -44,12 +44,17 @@
  * 
  *  <ul>
  * 
- *  <li> <b>no option</b> : if the program is executed with no options,
+ *  <li> <b>no option</b><br>
+ * if the program is executed with no options,
  * all text mode menus will be displayed consecutively in the console.
- *  <li> <b>-g</b>
+ *  <li> <b>-g</b><br>
  *     display directly in openGL, skip the Display Mode menu
- *  <li> <b>-f [FILE]</b>
+ *  <li> <b>-f [FILE]</b><br>
  *     load (xml) file, skip the Data menu
+ *  <li> <b>-p [*vertical_padding*],[*horizontal_padding*]</b><br>
+ *     add symetrical vertical and horizontal padding, creating a box frame larger than the text displayed.
+ *  <li> <b>-c [*red(0..1)*],[*green(0..1)*],[*blue(0..1)*]</b><br>
+ *     set rgb colours for the box frames with each values in range [0,1].
  *  </ul>
  * 
  */
