@@ -1,5 +1,5 @@
 ## <p align="center">Multidimensional Data Entity - GL display</p>
-### <p align="center">Version 0.1</p>
+### <p align="center">Version 0.1.1</p>
 
 A Multidimensional Data Entity is an instance of an object of class **MDE**.
 The base class **MDE** has 3 member variables:

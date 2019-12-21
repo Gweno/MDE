@@ -37,7 +37,7 @@ namespace fs = std::experimental::filesystem;
 
 #include "./common/shader_utils.h"
 
-#define VERSION_INFO "v0.1.0"
+#define VERSION_INFO "v0.1.1"
 
 // declaration for text.cpp
 int window_width=800, window_height=600;
