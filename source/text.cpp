@@ -90,6 +90,13 @@ struct point3D {
 	GLfloat t;
 };
 
+
+//~ GLfloat *font_color[4] = {NULL};
+GLfloat *font_color = NULL;
+
+// some boolean flags
+bool move_it;
+
 /**
  * The atlas struct holds a texture that contains the visible US-ASCII characters
  * of a certain font rendered with a certain character height.
@@ -280,36 +287,45 @@ void create_coord_vector_text(const char *text, atlas * a, vertex3D origin, vert
 
 void text_frame(std::vector<vertex3D> &vector_input, std::vector<uint> &nb_glyphs, std::vector<vertex3D> &v_origin, vertex2D &padding){
     
-    std::vector<vertex3D>  whd;
     std::vector<vertex3D> vertex_3D;
     std::vector<vertex3D>::iterator it=vector_input.begin();
     std::vector<uint>::iterator it2=nb_glyphs.begin();
+    std::vector<vertex3D> bottom_left_front;
+    std::vector<vertex3D> top_right_back;
     
     while (it<vector_input.end()){
-        float w=0;
         float hmin=(*it).y;
         float hmax=(*it).y;
+        float wmin=(*it).x;
+        float wmax=(*it).x;
         float h=0;
         float d=0;
-        // the absolute difference between the x coordinate of the right-most vertex and the left-most
-        // of the current box, that are 5 vertices apart
-        w = std::abs(((*(it+(*it2)-1)).x-(*it).x));
-        // loop though each glyphs from current iterator until nb of glyphsfor current text is reached
+        
+        // loop though each glyphs from current iterator until nb of glyphs for current text is reached
         for (std::vector<vertex3D>::iterator it3=it; it3!=(it+(*it2));++it3){
             hmin= std::min(hmin,(*it3).y);
             hmax = std::max(hmax,(*it3).y);
+            wmin= std::min(wmin,(*it3).x);
+            wmax = std::max(wmax,(*it3).x);
+            std::cout << " x: "<< (*it3).x << " y: " << (*it3).y << " z: " << (*it3).z << std::endl;
+            //~ std::cout << " hmin: "<< hmin << " hmax: " << hmax << std::endl;
         }
+        std::cout << std::endl;
         h = std::abs(hmax - hmin);
+        // for now depth is the same as the width of the text
+        std::cout << "h: " << h << " hmax: " << hmax << " hmin: " << hmin << std::endl;
         d=h;
-        //~ whd.push_back({w,h,d});
-        whd.push_back({w+padding.x*2,h+padding.y*2,d}); // double the padding value as padding is same on left and right, and on top and bottom (for now).
+        
+        bottom_left_front.push_back({wmin,hmin,0});
+        top_right_back.push_back({wmax,hmax,d});
         
         std::advance(it,(*it2));
         std::advance(it2,1);
     }
-    create_vector(vertex_3D, v_origin, whd);
-    //~ displayV3D(whd);
+    
+    create_vector(vertex_3D, v_origin, bottom_left_front, top_right_back);
     init_vectors(vertex_3D);
+    
 }
 
 void render_text(atlas * a) {
@@ -432,8 +448,29 @@ void init_color(vertex3D color, std::vector<vertex3D> &whd){
     glBufferData(GL_ARRAY_BUFFER,vect_color3.size() * sizeof(GLfloat),&vect_color3.front(),GL_STATIC_DRAW);
 }
 
+void init_font_color(std::vector<GLfloat> &color){
+    
+    std::cout << color[0] << std::endl;
+
+    //~ *font_color[4]={color[0]};
+    //~ *font_color=color[0];
+    font_color=&color[0];
+    
+    std::cout << font_color[0] << std::endl;
+    std::cout << font_color[1] << std::endl;
+    std::cout << font_color[2] << std::endl;
+    std::cout << font_color[3] << std::endl;
+    std::cout << font_color[4] << std::endl;
+    
+    //~ for( unsigned int it = 0; it < sizeof(font_color)/sizeof(font_color[0]); ++it ){
+        //~ std::cout << font_color[it] << std::endl;
+    //~ }
+    
+}
+    
+
 void displayV3D(std::vector<vertex3D> &vector_3D){
-        std::cout<<"loop V3D"<<std::endl;
+    std::cout<<"loop V3D"<<std::endl;
     for(std::vector<vertex3D>::iterator it=vector_3D.begin();it!=vector_3D.end();++it){
         
         std::cout<<"| ";
@@ -445,27 +482,30 @@ void displayV3D(std::vector<vertex3D> &vector_3D){
     
 }
 
-void create_vector(std::vector<vertex3D> &vector3D,std::vector<vertex3D> &v_origin, std::vector<vertex3D> &vector_text_whd){
+ // blf: bottom-left-front, trb: top-right-back
+void create_vector(std::vector<vertex3D> &vector3D,std::vector<vertex3D> &v_origin, std::vector<vertex3D> &vector_blf, std::vector<vertex3D> &vector_trb){
     
-    std::vector<vertex3D>::iterator whd_it;
     std::vector<vertex3D>::iterator v_origin_it;
-    for(whd_it=vector_text_whd.begin(),v_origin_it=v_origin.begin() ;whd_it!=vector_text_whd.end() && v_origin_it!=vector_text_whd.end() ;++whd_it, ++v_origin_it){
-        // 1st vertex
-        vector3D.push_back({(*v_origin_it).x,(*v_origin_it).y,(*v_origin_it).z});
+    std::vector<vertex3D>::iterator v_blf_it;
+    std::vector<vertex3D>::iterator v_trb_it;
+
+    for(v_origin_it=v_origin.begin(), v_blf_it=vector_blf.begin(), v_trb_it=vector_trb.begin(); v_origin_it!=v_origin.end() && v_blf_it!=vector_blf.end() && v_trb_it!=vector_trb.end();++v_origin_it, ++v_blf_it, ++v_trb_it){
+        // 1st vertex is bottom left corner, front face
+        vector3D.push_back({(*v_blf_it).x,(*v_blf_it).y,(*v_origin_it).z});
         // 2nd vertex, keep 1st vertex x and z, add y from vector2D, to get upper left corner, front face
-        vector3D.push_back({vector3D.back().x,vector3D.back().y+(*whd_it).y,vector3D.back().z});
+        vector3D.push_back({vector3D.back().x,(*v_trb_it).y,vector3D.back().z});
         // 3rd vertex, back is now 2nd vertex, so just add y, add x from, to get upper right corner, front face
-        vector3D.push_back({vector3D.back().x+(*whd_it).x,vector3D.back().y,vector3D.back().z});
+        vector3D.push_back({(*v_trb_it).x,vector3D.back().y,vector3D.back().z});
         // 4th vertex, back is now 3rd vertex, so deduct y, keeping x, to get bottom right corner, front face
-        vector3D.push_back({vector3D.back().x,vector3D.back().y-(*whd_it).y,vector3D.back().z});
+        vector3D.push_back({vector3D.back().x,(*v_blf_it).y,vector3D.back().z});
         // 5th vertex deduct x to come back to bottom left corner, and deduct a depth for z to get back face
-        vector3D.push_back({vector3D.back().x-(*whd_it).x,vector3D.back().y,vector3D.back().z-(*whd_it).z});
+        vector3D.push_back({(*v_blf_it).x,vector3D.back().y,vector3D.back().z-(*v_trb_it).z});
         // 6nd vertex, keep 1st vertex x and z, add y from vector2D, to get upper left corner, back face
-        vector3D.push_back({vector3D.back().x,vector3D.back().y+(*whd_it).y,vector3D.back().z});
+        vector3D.push_back({vector3D.back().x,(*v_trb_it).y,vector3D.back().z});
         // 7th vertex, back is now 2nd vertex, so just add y, add x from, to get upper right corner, back face
-        vector3D.push_back({vector3D.back().x+(*whd_it).x,vector3D.back().y,vector3D.back().z});
+        vector3D.push_back({(*v_trb_it).x,vector3D.back().y,vector3D.back().z});
         // 8th vertex, back is now 3rd vertex, so deduct y, keeping x, to get bottom right corner, back face
-        vector3D.push_back({vector3D.back().x,vector3D.back().y-(*whd_it).y,vector3D.back().z});
+        vector3D.push_back({vector3D.back().x,(*v_blf_it).y,vector3D.back().z});
 
             }
 }
@@ -637,7 +677,9 @@ void textDisplay() {
 
     /* Drawing the text */    
     glUseProgram(program_text);
-    glUniform4fv(uniform_color_text, 1, red);
+    //~ glUniform4fv(uniform_color_text, 1, red);
+    //~ glUniform4fv(uniform_color_text, 1, *font_color);
+    glUniform4fv(uniform_color_text, 1, font_color);
     glUniform4fv(uniform_bgcolor_text, 1, bg_rgb);
     render_text(a48);
     
@@ -649,16 +691,28 @@ void textDisplay() {
     
 }
 
+void get_move_it(bool a_move_it){
+    move_it = a_move_it;
+}
+
 void onIdle() {
-    //~ float move = 2*sinf(glutGet(GLUT_ELAPSED_TIME) / 1000.0 * (2*3.14) / 15); // -1<->+1 every 2 seconds
-    //~ float angle = glutGet(GLUT_ELAPSED_TIME) / 1000.0 * 25;  // 25° per second
-    float move = 0;
-    float angle = 0;
+    float move;
+    float angle;
+    if (!move_it){
+        move = 0;
+        angle = 0;
+    }
+    else {
+        move = 2*sinf(glutGet(GLUT_ELAPSED_TIME) / 1000.0 * (2*3.14) / 30); // -1<->+1 every 2 seconds
+        angle = glutGet(GLUT_ELAPSED_TIME) / 1000.0 * 10;  // 25° per second
+    }
     screen_width=glutGet(GLUT_WINDOW_WIDTH);
     screen_height=glutGet(GLUT_WINDOW_HEIGHT);
+    glm::vec3 axis_x(1, 0, 0);
     glm::vec3 axis_y(0, 1, 0);
     glm::vec3 axis_z(0, 0, 1);
-    glm::mat4 m_translate = glm::translate(glm::mat4(1.0f), glm::vec3(0.0, move ,0.0));
+    //~ glm::mat4 m_translate = glm::translate(glm::mat4(1.0f), glm::vec3(0.0, move ,0.0));
+    glm::mat4 m_translate = glm::translate(glm::mat4(1.0f), glm::vec3(move, 0.0 ,0.0));
     glm::mat4 anim = glm::rotate(glm::mat4(1.0f), glm::radians(angle), axis_y);
     glm::mat4 anim2 = glm::rotate(glm::mat4(1.0f), glm::radians(angle), axis_z);
     

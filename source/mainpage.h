@@ -1,6 +1,6 @@
 /*! \mainpage Multidimensional Data Entity
  * 
- *  Version: 0.1.1
+ *  Version: 0.2.1
  *
  * \section intro_sec MDE in a glance
  *
@@ -47,14 +47,24 @@
  *  <li> <b>no option</b><br>
  * if the program is executed with no options,
  * all text mode menus will be displayed consecutively in the console.
- *  <li> <b>-g</b><br>
- *     display directly in openGL, skip the Display Mode menu
- *  <li> <b>-f [FILE]</b><br>
+ *  <li> <b>-v, -\-version</b><br>
+ *     to get the program's version (and quit).
+ *  <li> <b>-g, -\-glmode</b><br>
+ *     display directly in graphic mode (openGL), skip the Display Mode menu
+ *  <li> <b>-f [FILE], -\-file [FILE]</b><br>
  *     load (xml) file, skip the Data menu
- *  <li> <b>-p [*vertical_padding*],[*horizontal_padding*]</b><br>
+ *  <li> <b>-c [*red(0..1)*],[*green(0..1)*],[*blue(0..1)*], -\-box-color  [*red(0..1)*],[*green(0..1)*],[*blue(0..1)*]</b><br>
+ *     set rgb colours for the box frames with each values in range float[0,1].
+ *  <li> <b>-o, -\-origin [*red(0..1)*],[*green(0..1)*],[*blue(0..1)*],[*alpha(0..1)*] </b><br>
+ *     set rgba colours for font with each values in range float[0,1].
+ *  <li> <b>-p, -\-padding [*vertical_padding*],[*horizontal_padding*]</b><br>
  *     add symetrical vertical and horizontal padding, creating a box frame larger than the text displayed.
- *  <li> <b>-c [*red(0..1)*],[*green(0..1)*],[*blue(0..1)*]</b><br>
- *     set rgb colours for the box frames with each values in range [0,1].
+ *  <li> <b>-a, -\-origin [*x*],[*y*],[*z*]</b><br>
+ *     set the coordinates of origin to (x,y,z).
+ *  <li> <b>-r, -\-offset-rule [*name<->index.x*],[*name<->index.y*],[*name<->index.z*],[*index.x*],[*index.y*],[*index.z*],*[*level.x*],[*level.y*],[*level.z*]</b><br>
+ *     set the offset rule with floats
+ *  <li> <b>-m, -\-move</b><br>
+ *     for moving mode (makes the MDE move on all axis).
  *  </ul>
  * 
  */

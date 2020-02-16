@@ -1,4 +1,4 @@
-Version\+: 0.\+1.\+1\hypertarget{index_intro_sec}{}\section{M\+D\+E in a glance}\label{index_intro_sec}
+Version\+: 0.\+2.\+1\hypertarget{index_intro_sec}{}\section{M\+D\+E in a glance}\label{index_intro_sec}
 An \hyperlink{classMDE}{M\+DE} can be used for multiple purposes. In this first version of \hyperlink{classMDE}{M\+DE}, an \hyperlink{classMDE}{M\+DE} instance is simply used to display the content of an xml file in text mode or in an Open\+GL 3D viewport.\hypertarget{index_install_sec}{}\section{Installation}\label{index_install_sec}
 \hypertarget{index_step1}{}\subsection{Step 1\+: Verify dependencies}\label{index_step1}
 List of libraries you need to have already installed\+: 
@@ -24,12 +24,22 @@ Options\+:
 \begin{DoxyItemize}
 \item {\bfseries no option}~\newline
  if the program is executed with no options, all text mode menus will be displayed consecutively in the console. 
-\item {\bfseries -\/g}~\newline
- display directly in open\+GL, skip the Display Mode menu 
-\item {\bfseries -\/f \mbox{[}F\+I\+LE\mbox{]}}~\newline
+\item {\bfseries -\/v, -\/-\/version}~\newline
+ to get the program\textquotesingle{}s version (and quit). 
+\item {\bfseries -\/g, -\/-\/glmode}~\newline
+ display directly in graphic mode (open\+GL), skip the Display Mode menu 
+\item {\bfseries -\/f \mbox{[}F\+I\+LE\mbox{]}, -\/-\/file \mbox{[}F\+I\+LE\mbox{]}}~\newline
  load (xml) file, skip the Data menu 
-\item {\bfseries -\/p \mbox{[}{\itshape vertical\+\_\+padding}\mbox{]},\mbox{[}{\itshape horizontal\+\_\+padding}\mbox{]}}~\newline
+\item {\bfseries -\/c \mbox{[}{\itshape red(0..1)}\mbox{]},\mbox{[}{\itshape green(0..1)}\mbox{]},\mbox{[}{\itshape blue(0..1)}\mbox{]}, -\/-\/box-\/color \mbox{[}{\itshape red(0..1)}\mbox{]},\mbox{[}{\itshape green(0..1)}\mbox{]},\mbox{[}{\itshape blue(0..1)}\mbox{]}}~\newline
+ set rgb colours for the box frames with each values in range float\mbox{[}0,1\mbox{]}. 
+\item {\bfseries -\/o, -\/-\/origin \mbox{[}{\itshape red(0..1)}\mbox{]},\mbox{[}{\itshape green(0..1)}\mbox{]},\mbox{[}{\itshape blue(0..1)}\mbox{]},\mbox{[}{\itshape alpha(0..1)}\mbox{]} }~\newline
+ set rgba colours for font with each values in range float\mbox{[}0,1\mbox{]}. 
+\item {\bfseries -\/p, -\/-\/padding \mbox{[}{\itshape vertical\+\_\+padding}\mbox{]},\mbox{[}{\itshape horizontal\+\_\+padding}\mbox{]}}~\newline
  add symetrical vertical and horizontal padding, creating a box frame larger than the text displayed. 
-\item {\bfseries -\/c \mbox{[}{\itshape red(0..1)}\mbox{]},\mbox{[}{\itshape green(0..1)}\mbox{]},\mbox{[}{\itshape blue(0..1)}\mbox{]}}~\newline
- set rgb colours for the box frames with each values in range \mbox{[}0,1\mbox{]}. 
+\item {\bfseries -\/a, -\/-\/origin \mbox{[}{\itshape x}\mbox{]},\mbox{[}{\itshape y}\mbox{]},\mbox{[}{\itshape z}\mbox{]}}~\newline
+ set the coordinates of origin to (x,y,z). 
+\item {\bfseries -\/r, -\/-\/offset-\/rule \mbox{[}{\itshape name$<$-\/$>$index.\+x}\mbox{]},\mbox{[}{\itshape name$<$-\/$>$index.\+y}\mbox{]},\mbox{[}{\itshape name$<$-\/$>$index.\+z}\mbox{]},\mbox{[}{\itshape index.\+x}\mbox{]},\mbox{[}{\itshape index.\+y}\mbox{]},\mbox{[}{\itshape index.\+z}\mbox{]},{\itshape \mbox{[}$\ast$level.x}\mbox{]},\mbox{[}{\itshape level.\+y}\mbox{]},\mbox{[}{\itshape level.\+z}\mbox{]}}~\newline
+ set the offset rule with floats 
+\item {\bfseries -\/m, -\/-\/move}~\newline
+ for moving mode (makes the \hyperlink{classMDE}{M\+DE} move on all axis). 
 \end{DoxyItemize}

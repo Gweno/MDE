@@ -79,7 +79,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">Multidimensional Data Entity </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>Version: 0.1.1</p>
+<div class="textblock"><p>Version: 0.2.1</p>
 <h1><a class="anchor" id="intro_sec"></a>
 MDE in a glance</h1>
 <p>An <a class="el" href="classMDE.html">MDE</a> can be used for multiple purposes. In this first version of <a class="el" href="classMDE.html">MDE</a>, an <a class="el" href="classMDE.html">MDE</a> instance is simply used to display the content of an xml file in text mode or in an OpenGL 3D viewport.</p>
@@ -121,17 +121,32 @@ Step 4: run program</h2>
 <b>no option</b><br />
  if the program is executed with no options, all text mode menus will be displayed consecutively in the console. </li>
 <li>
-<b>-g</b><br />
- display directly in openGL, skip the Display Mode menu </li>
+<b>-v, --version</b><br />
+ to get the program's version (and quit). </li>
 <li>
-<b>-f [FILE]</b><br />
+<b>-g, --glmode</b><br />
+ display directly in graphic mode (openGL), skip the Display Mode menu </li>
+<li>
+<b>-f [FILE], --file [FILE]</b><br />
  load (xml) file, skip the Data menu </li>
 <li>
-<b>-p [<em>vertical_padding</em>],[<em>horizontal_padding</em>]</b><br />
+<b>-c [<em>red(0..1)</em>],[<em>green(0..1)</em>],[<em>blue(0..1)</em>], --box-color [<em>red(0..1)</em>],[<em>green(0..1)</em>],[<em>blue(0..1)</em>]</b><br />
+ set rgb colours for the box frames with each values in range float[0,1]. </li>
+<li>
+<b>-o, --origin [<em>red(0..1)</em>],[<em>green(0..1)</em>],[<em>blue(0..1)</em>],[<em>alpha(0..1)</em>] </b><br />
+ set rgba colours for font with each values in range float[0,1]. </li>
+<li>
+<b>-p, --padding [<em>vertical_padding</em>],[<em>horizontal_padding</em>]</b><br />
  add symetrical vertical and horizontal padding, creating a box frame larger than the text displayed. </li>
 <li>
-<b>-c [<em>red(0..1)</em>],[<em>green(0..1)</em>],[<em>blue(0..1)</em>]</b><br />
- set rgb colours for the box frames with each values in range [0,1]. </li>
+<b>-a, --origin [<em>x</em>],[<em>y</em>],[<em>z</em>]</b><br />
+ set the coordinates of origin to (x,y,z). </li>
+<li>
+<b>-r, --offset-rule [<em>name&lt;-&gt;index.x</em>],[<em>name&lt;-&gt;index.y</em>],[<em>name&lt;-&gt;index.z</em>],[<em>index.x</em>],[<em>index.y</em>],[<em>index.z</em>],<em>[*level.x</em>],[<em>level.y</em>],[<em>level.z</em>]</b><br />
+ set the offset rule with floats </li>
+<li>
+<b>-m, --move</b><br />
+ for moving mode (makes the <a class="el" href="classMDE.html">MDE</a> move on all axis). </li>
 </ul>
 </div></div><!-- contents -->
 <!-- start footer part -->

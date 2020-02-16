@@ -65,7 +65,7 @@ void draw_box();
 void text_frame(std::vector<vertex3D> &vector_input, std::vector<uint> &nb_glyphs, vertex3D &offset, vertex2D &padding);
 void render_text(atlas * a) ;
 
-void create_vector(std::vector<vertex3D> &vector3D,std::vector<vertex3D> &v_origin, std::vector<vertex3D> &vector_text_whd);
+void create_vector(std::vector<vertex3D> &vector3D,std::vector<vertex3D> &v_origin, std::vector<vertex3D> &vector_blf, std::vector<vertex3D> &vector_trb);
 void create_coord_vector_text(const char *text, atlas * a, vertex3D origin, vertex2D &window_coord_scale);
 void onIdle();
 void free_resources();
@@ -88,5 +88,12 @@ void keyDown(unsigned char key, int x, int y);
  * parameters. 
  */
 void add_padding(std::vector<vertex3D> & v_origin,std::vector<vertex3D> & v_origin_fb, vertex2D & padding);
+
+
+void init_font_color(std::vector<GLfloat> &color);
+//~ void init_font_color(std::vector<GLfloat> color);
+
+
+void get_move_it(bool move_it);
 
 #endif /*text.h*/
