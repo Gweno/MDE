@@ -51,20 +51,35 @@
  *     to get the program's version (and quit).
  *  <li> <b>-g, -\-glmode</b><br>
  *     display directly in graphic mode (openGL), skip the Display Mode menu
- *  <li> <b>-f [FILE], -\-file [FILE]</b><br>
+ *  <li> <b>-f, -\-file</b> *file*<br>
  *     load (xml) file, skip the Data menu
- *  <li> <b>-c [*red(0..1)*],[*green(0..1)*],[*blue(0..1)*], -\-box-color  [*red(0..1)*],[*green(0..1)*],[*blue(0..1)*]</b><br>
- *     set rgb colours for the box frames with each values in range float[0,1].
- *  <li> <b>-o, -\-origin [*red(0..1)*],[*green(0..1)*],[*blue(0..1)*],[*alpha(0..1)*] </b><br>
+ *  <li> <b>-n, -\-font</b> *font*<br>
+ *     set the font (only open source font on the ./fonts folder for now).
+ *  <li> <b>-s, -\-font-size</b> *size*<br>
+ *     set the font size as an integer, best to use multiple of 8.
+ *  <li> <b>-o, -\-font-color</b> *r,g,b,a*<br>
  *     set rgba colours for font with each values in range float[0,1].
- *  <li> <b>-p, -\-padding [*vertical_padding*],[*horizontal_padding*]</b><br>
+ *  <li> <b>-b, -\-box</b><br>
+ *     for displaying a frame box for each text.
+ *  <li> <b>-c, -\-box-color</b> *r,g,b,a*<br>
+ *     set rgba colours/alpha for the box frames with each values in range float[0,1].
+ *  <li> <b>-d, -\-background-color</b> *r,g,b,a*<br>
+ *     set rgba colours/alpha for the background with each values in range float[0,1] (alpha has no effect).
+ *  <li> <b>-p, -\-padding</b> *vertical_padding,horizontal_padding*<br>
  *     add symetrical vertical and horizontal padding, creating a box frame larger than the text displayed.
- *  <li> <b>-a, -\-origin [*x*],[*y*],[*z*]</b><br>
+ *  <li> <b>-a, -\-origin</b> *x,y,z*<br>
  *     set the coordinates of origin to (x,y,z).
- *  <li> <b>-r, -\-offset-rule [*name<->index.x*],[*name<->index.y*],[*name<->index.z*],[*index.x*],[*index.y*],[*index.z*],*[*level.x*],[*level.y*],[*level.z*]</b><br>
+ *  <li> <b>-r, -\-offset-rule</b> *name<->index.x,name<->index.y,name<->index.z,index.x,index.y,index.z,level.x,level.y,level.z*<br>
  *     set the offset rule with floats
  *  <li> <b>-m, -\-move</b><br>
- *     for moving mode (makes the MDE move on all axis).
+ *     for moving mode (makes the MDE instance move on all axis).
  *  </ul>
+ *
  * 
+ *  \section Other documentation
+ * 
+ *  <ul>
+ *  <li> <a href="https://github.com/Gweno/MDE/blob/master/README.md">README</a>
+ *  <li> <a href="https://github.com/Gweno/MDE/blob/master/dependencies.txt">Dependencies</a>
+ *  </ul> 
  */

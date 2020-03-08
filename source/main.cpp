@@ -45,10 +45,16 @@ namespace fs = std::experimental::filesystem;
 
 // declaration for text.cpp
 int window_width=800, window_height=600;
-const char *userText;
-uint userFontSize;
+//~ const char *userText;
+uint user_font_size;
 //~ GLfloat red_user,green_user,blue_user;
-const char *userFontFilename;
+//~ const char *userFontFilename;
+
+// init const char
+const char * user_font;
+
+std::string font_name;
+
 
 int main (int argc, char **argv){
 
@@ -56,12 +62,18 @@ int main (int argc, char **argv){
     bool GL_on = false;    // GL_on false by default
     bool input_file = false;  // No input file by default
     bool input_color = false;  // input color
+    bool input_font = false;  // input font name
     bool input_font_color = false;  // input font color
+    bool input_font_size = false;  // input font size
     bool input_coord = false;  // input coordinates set by default
     bool input_padding= false;  // input padding
     bool input_offset_rule= false;  // input offset rule
     bool move_it = false;   // bool switch for testing moving display
+    bool display_box;      //bool to switch box display on/off
+    bool input_bg_color = false;  // input background color
 
+    //~ // init const char
+    //~ const char * user_font;
     
     // init/declare string variables
     std::string choice[argc];
@@ -71,8 +83,9 @@ int main (int argc, char **argv){
     std::string default_filename = "testAny.xml";
     
     // init GLfloat colors
-    GLfloat red_user,green_user,blue_user;
+    GLfloat red_user,green_user,blue_user,alpha_user;
     GLfloat red_font_user,green_font_user,blue_font_user,alpha_font_user;
+    GLfloat red_bg_user,green_bg_user,blue_bg_user,alpha_bg_user;
     
     // set variables default values
     float X_user = 0.0;
@@ -102,15 +115,19 @@ int main (int argc, char **argv){
     // 'Turn on' Relevant boolean variables and
     // stores other useful variables.
     // arguments are:
-    // -v or --version: get version
-    // -g or --glmode: for graphic display mode
-    // -f filename or --file filename: for loading a file before start
-    // -c r,g,b or --box-color r,g,b: to set text box color with RGB
-    // -o r,g,b,a or --font-color r,g,b,a: set color and alpha for the font
-    // -p x,y or --padding x,y: to set the padding with floats x and y
-    // -a x,y,z or --origin x,y,z: to set the coordinates of origin
-    // -r or --offset-rule  :to set the offset rules
-    // -m or --move  :for moving mode (makes the MDE move and all axis)
+    // -v, --version: get version
+    // -g, --glmode: for graphic display mode
+    // -f, --file filename: for loading a file before start
+    // -n, --font font: set the font
+    // -s, --font-size size: set the font size
+    // -o, --font-color r,g,b,a: set color and alpha for the font
+    // -b, --box display a frame box for each text
+    // -c, --box-color r,g,b,a: to set text box color with RGBA
+    // -p, --padding x,y: to set the padding with floats x and y
+    // -a, --origin x,y,z: to set the coordinates of origin
+    // -r, --offset-rule  :to set the offset rules
+    // -m, --move  :for moving mode (makes the MDE move and all axis)
+    // -d, --background-color r,g,b,a: to set background color with RGBA
     
     for (int i = 0; i < argc; ++i) {
         std::cout << "arguments " << i << ": " << choice[i] << std::endl;
@@ -126,6 +143,12 @@ int main (int argc, char **argv){
             {
                 printf("Move it!\n");
                 move_it = true;
+            }
+        // test. box display or not
+        if (std::regex_match (choice[i], std::regex("(-b)|(--box)")))
+            {
+                printf("Displaybox!\n");
+                display_box = true;
             }
         // set GL mode on
         if (std::regex_match (choice[i], std::regex("(-g)|(--glmode)")))
@@ -150,6 +173,7 @@ int main (int argc, char **argv){
                     printf("Missing File name\n");
                     printf("Setting default File name\n");
                 }
+
             }
         // set box frame color
         if (std::regex_match (choice[i], std::regex("(-c)|(--box-color)")))
@@ -166,15 +190,64 @@ int main (int argc, char **argv){
                     green_user = std::stof(part);
                     getline(is, part, ',');
                     blue_user = std::stof(part);
+                    getline(is, part, ',');
+                    alpha_user = std::stof(part);
                     
-                    std::cout << "r,g,b: " << red_user << " , " << green_user << " , " << blue_user << std::endl;
+                    std::cout << "r,g,b: " << red_user << " , " << green_user << " , " << blue_user << " , " << alpha_user << std::endl;
 
                 }
                 else {
                     printf("Missing Color value\n");
                 }
             }
-        // set font alpha and color
+        // set font
+        if (std::regex_match (choice[i], std::regex("(-n)|(--font)")))
+            {
+                input_font= true;                
+                if (i<argc-1){
+                    cout << choice[i+1]<< endl;
+                    istringstream is(choice[i+1]);
+                    std::string part;
+                    //~ std::string font_name;
+                    getline(is, part, ',');
+                    font_name = "../fonts/"+part+".ttf";
+                    //~ font_name= "../fonts/OpenSans-Bold.ttf";
+                    //~ font_name= "../fonts/FreeSans.ttf";
+                    user_font = font_name.c_str();       //convert the string to const char*
+                    
+
+                    std::cout << "font: " << user_font << std::endl;
+                }
+                else {
+                    printf("Missing Font Name\n");
+                }
+            }
+            
+
+            
+        // set font size
+        if (std::regex_match (choice[i], std::regex("(-s)|(--font-size)")))
+            {
+                //~ cout << choice[i]<< endl;
+                //~ cout << std::string::npos<< endl;
+                input_font_size= true;                
+                if (i<argc-1){
+                    cout << choice[i+1]<< endl;
+                    istringstream is(choice[i+1]);
+                    string part;
+                    getline(is, part, ',');
+                    user_font_size = std::stof(part);
+
+                    std::cout << "font size: " << user_font_size << std::endl;
+                }
+                else {
+                    printf("Missing Font Size\n");
+                }
+            }
+
+
+
+        // set font color
         if (std::regex_match (choice[i], std::regex("(-o)|(--font-color)")))
             {
                 //~ cout << choice[i]<< endl;
@@ -194,6 +267,33 @@ int main (int argc, char **argv){
                     alpha_font_user = std::stof(part);
                     
                     std::cout << "r,g,b,a: " << red_font_user << " , " << green_font_user << " , " << blue_font_user << " , " << alpha_font_user << std::endl;
+
+                }
+                else {
+                    printf("Missing Font Color and Alpha values\n");
+                }
+            }
+        // set background color
+        if (std::regex_match (choice[i], std::regex("(-d)|(--background-color)")))
+            {
+                //~ cout << choice[i]<< endl;
+                //~ cout << std::string::npos<< endl;
+                input_bg_color= true;                
+                if (i<argc-1){
+                    cout << choice[i+1]<< endl;
+                    istringstream is(choice[i+1]);
+                    string part;
+                    getline(is, part, ',');
+                    red_bg_user = std::stof(part);
+                    getline(is, part, ',');
+                    green_bg_user = std::stof(part);
+                    getline(is, part, ',');
+                    blue_bg_user = std::stof(part);
+                    getline(is, part, ',');
+                    alpha_bg_user = std::stof(part);
+                    
+                    std::cout << "background: r,g,b,a: " << red_bg_user << " , " << green_bg_user << " , " << blue_bg_user << " , " << alpha_bg_user << std::endl;
+
                 }
                 else {
                     printf("Missing Font Color and Alpha values\n");
@@ -319,11 +419,17 @@ int main (int argc, char **argv){
                 std::cout << "************** Data **************" << std::endl;
                 std::cout << "*                                *" << std::endl;
                 std::cout << "* f)    Load Data File (xml)     *" << std::endl;
+                if (n and fullfilename!="") {
+                std::cout << "* k)    or keep current file?    *" << std::endl;
+                }
                 std::cout << "* s)    Load Data testing Set    *" << std::endl;
                 std::cout << "* u)    User Data Input          *" << std::endl;
                 std::cout << "* quit) Quit                     *" << std::endl;
                 std::cout << "*                                *" << std::endl;
                 std::cout << "**********************************" << std::endl;
+                if (n and fullfilename!="") {
+                    std::cout << "Current file:" <<  fullfilename << std::endl;
+                }
                 std::cout << "Your choice:";
                 std::cin >> key_input;
             }
@@ -399,6 +505,10 @@ int main (int argc, char **argv){
                 }
                 
             }
+            else if (key_input=="k"){
+                input_file = newMDE.load_XML_File_to_MDE(fullfilename);                
+                std::cout <<"Keeping current file " << fullfilename << std::endl;
+            }
             else if (key_input=="s"){
                 newMDE.testing();
                 std::cout << std::endl;
@@ -451,6 +561,11 @@ int main (int argc, char **argv){
                     std::cin >> V_padding_user ;
                     std::cout << "You have chosen padding: " << H_padding_user << ", "<< V_padding_user << std::endl;
                 }
+
+                if (!input_font_size){
+                    user_font_size=48;
+                }
+                
                 
                 glutInit(&argc, argv);
                 glutInitContextVersion(2,0);
@@ -458,15 +573,26 @@ int main (int argc, char **argv){
                 glutInitWindowSize(window_width, window_height);
                 glutCreateWindow("Basic Text");
     
+    
                 // set default font and font size
-                userFontSize=48;
-                userFontFilename = "../fonts/FreeSans.ttf";
+                //~ user_font_size=48;
+                //~ user_font_size=96;
+                //~ user_font_size=8;
+                //~ user_font_size=24;
+                
+                if (!input_font){
+                    user_font= "../fonts/FreeSans.ttf";
+                }
+                                
+                //~ userFontFilename = "../fonts/FreeSans.ttf";
+                //~ userFontFilename = "../fonts/OpenSans-Bold.ttf";
                 
                 // set default colors
                 if (!input_color){
                     red_user = 0.0;
                     green_user = 1.0;
                     blue_user = 1.0;
+                    alpha_user = 1.0;
                 }
                 // set default font colors
                 if (!input_font_color){
@@ -474,6 +600,14 @@ int main (int argc, char **argv){
                     green_font_user = 0.0;
                     blue_font_user = 1.0;
                     alpha_font_user = 1.0;
+                }
+                
+                // set default background colors
+                if (!input_bg_color){
+                    red_bg_user = 1.0;
+                    green_bg_user = 1.0;
+                    blue_bg_user = 1.0;
+                    alpha_bg_user = 1.0;
                 }
     
                 GLenum glew_status = glewInit();
@@ -487,14 +621,14 @@ int main (int argc, char **argv){
                     fprintf(stderr, "No support for OpenGL 2.0 found\n");
                     return 1;
                 }
-        
-                if (!init_font(userFontSize, userFontFilename)  ||  !init_program()) {
+                
+                if (!init_font(user_font_size, user_font)  ||  !init_program()) {
                     
                     fprintf(stderr, "Problem with loading fonts, or program\n");
                     return 1;
                     
                 }
-                    
+
                 std::cout << "User coordinates: " << X_user << ", "<< Y_user << ", "<< Z_user << std::endl;
                 vertex3D user_origin={X_user,Y_user, Z_user};
                 
@@ -514,7 +648,9 @@ int main (int argc, char **argv){
                 vertex2D user_padding = {H_padding_user,V_padding_user};
                 //~ vertex2D user_padding = {0.0,0.0};
                 
-                vertex3D user_color = {red_user,green_user,blue_user};
+                //~ vertex3D user_color = {red_user,green_user,blue_user};
+                vertex3Dalpha user_color = {red_user,green_user,blue_user,alpha_user};
+                vertex3Dalpha user_bg_color = {red_bg_user,green_bg_user,blue_bg_user,alpha_bg_user};
                 
                 std::vector<GLfloat> user_font_color = {
                     red_font_user,
@@ -523,12 +659,12 @@ int main (int argc, char **argv){
                     alpha_font_user
                 };
                           
-                get_move_it(move_it);
-                          
-                init_text_MDE(newMDE,user_origin, offset, offset_rule, user_padding, user_color);
+                set_options(move_it,display_box);
+                
+                init_text_MDE(newMDE,user_origin, offset, offset_rule, user_padding, user_color,user_bg_color);
                 init_font_color(user_font_color);
                 
-                glutDisplayFunc(textDisplay);
+                glutDisplayFunc(text_display);
                 glutKeyboardFunc(keyDown);
                 glutIdleFunc(onIdle);
                 glEnable(GL_BLEND);
@@ -546,15 +682,20 @@ int main (int argc, char **argv){
             
             // clear
             newMDE.destructor_MDE();
-            fullfilename ="";
+            //~ fullfilename ="";
             
             
             //reset all booleans
-            GL_on = false;
-            input_file = false;
-            input_color = false;
-            input_coord = false;
-            input_padding= true;
+            GL_on = false;    // GL_on false by default
+            input_file = false;  // No input file by default
+            input_color = false;  // input color
+            input_font = false;  // input font name
+            input_font_color = false;  // input font color
+            input_font_size = false;  // input font size
+            input_coord = false;  // input coordinates set by default
+            input_padding= false;  // input padding
+            input_offset_rule= false;  // input offset rule
+            move_it = false;   // switch for testing moving display            
             
             printf("Clearing Done!");
         }

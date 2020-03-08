@@ -1,6 +1,8 @@
 attribute vec3 coord3d_b;
-attribute vec3 v_color_b;
-varying vec3 f_color_b;
+//~ attribute vec3 v_color_b;
+attribute vec4 v_color_b;
+//~ varying vec3 f_color_b;
+varying vec4 f_color_b;
 uniform mat4 m_transform;
 
 void main(void) {

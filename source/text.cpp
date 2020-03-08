@@ -61,8 +61,11 @@ GLuint vbo_vertices_color_box;
 GLuint ibo_box_elements;
 
 const char *inputText;
-uint fontSize=48;
-GLfloat r,g,b;
+//~ uint fontSize=48;
+uint fontSize=12;
+GLfloat r,g,b,a;
+GLfloat bg_r, bg_g, bg_b, bg_a;
+
 
 vertex3D text_coordinates ={0.0,0.0,0.0};
 vertex2D padding ={0.0,0.0};
@@ -96,6 +99,7 @@ GLfloat *font_color = NULL;
 
 // some boolean flags
 bool move_it;
+bool display_box;
 
 /**
  * The atlas struct holds a texture that contains the visible US-ASCII characters
@@ -126,7 +130,9 @@ struct atlas {
 	} c[128];		// character information
 
 	 atlas(FT_Face face, int height) {
-		FT_Set_Pixel_Sizes(face, 0, height);
+		//~ FT_Set_Pixel_Sizes(face, 0, height);
+		int error = FT_Set_Pixel_Sizes(face, 0, height);
+        printf("FT_set_Pixel_Sizes:%d\n",error);
 		FT_GlyphSlot g = face->glyph;
 
 		unsigned int roww = 0;
@@ -142,6 +148,12 @@ struct atlas {
 				fprintf(stderr, "Loading character %c failed!\n", i);
 				continue;
 			}
+            
+            //~ if (FT_Render_Glyph( face,FT_RENDER_MODE_NORMAL)){
+                //~ fprintf(stderr, "Special Render character %c failed!\n", i);
+                //~ continue;
+            //~ }
+            
 			if (roww + g->bitmap.width + 1 >= MAXWIDTH) {
 				w = std::max(w, roww);
 				h += rowh;
@@ -217,9 +229,13 @@ struct atlas {
 	}
 };
 
+atlas *a96;
 atlas *a48;
+atlas *a40;
 atlas *a24;
 atlas *a12;
+
+atlas *a_any_size;
 
 uint nb_indices=0;
 
@@ -307,13 +323,13 @@ void text_frame(std::vector<vertex3D> &vector_input, std::vector<uint> &nb_glyph
             hmax = std::max(hmax,(*it3).y);
             wmin= std::min(wmin,(*it3).x);
             wmax = std::max(wmax,(*it3).x);
-            std::cout << " x: "<< (*it3).x << " y: " << (*it3).y << " z: " << (*it3).z << std::endl;
+            //~ std::cout << " x: "<< (*it3).x << " y: " << (*it3).y << " z: " << (*it3).z << std::endl;
             //~ std::cout << " hmin: "<< hmin << " hmax: " << hmax << std::endl;
         }
-        std::cout << std::endl;
+        //~ std::cout << std::endl;
         h = std::abs(hmax - hmin);
         // for now depth is the same as the width of the text
-        std::cout << "h: " << h << " hmax: " << hmax << " hmin: " << hmin << std::endl;
+        //~ std::cout << "h: " << h << " hmax: " << hmax << " hmin: " << hmin << std::endl;
         d=h;
         
         bottom_left_front.push_back({wmin,hmin,0});
@@ -359,7 +375,7 @@ bool init_font(uint uFontSize,const char *uFontFilename) {
     /*Set the font size from argument */
     fontSize=uFontSize;
     
-    /*Set the font Filename from arguement*/
+    /*Set the font Filename from argument*/
     fontfilename = uFontFilename;
     
     /* Initialize the FreeType2 library */
@@ -419,27 +435,33 @@ bool init_program(){
     return 1;
 }
 
-void init_color(vertex3D color, std::vector<vertex3D> &whd){
-    r=color.x;
-    g=color.y;
-    b=color.z;
+void init_color(vertex3Dalpha color_alpha, vertex3Dalpha bg_color_alpha, std::vector<vertex3D> &whd){
+    r=color_alpha.x;
+    g=color_alpha.y;
+    b=color_alpha.z;
+    a=color_alpha.a;
+    
+    bg_r=bg_color_alpha.x;
+    bg_g=bg_color_alpha.y;
+    bg_b=bg_color_alpha.z;
+    bg_a=bg_color_alpha.a;
     
     GLfloat box_vertices_color3[]={
-        r,g,b,
-        r,g,b,
-        r,g,b,
-        r,g,b,
-        r,g,b,
-        r,g,b,
-        r,g,b,
-        r,g,b
+        r,g,b,a,
+        r,g,b,a,
+        r,g,b,a,
+        r,g,b,a,
+        r,g,b,a,
+        r,g,b,a,
+        r,g,b,a,
+        r,g,b,a
     };
     
     std::vector<GLfloat> vect_color3;
 
     int max_loop = whd.size();
     for(int i=0;i<max_loop;i++){
-        vect_color3.insert (vect_color3.end(), box_vertices_color3, box_vertices_color3+24);
+        vect_color3.insert (vect_color3.end(), box_vertices_color3, box_vertices_color3+32);
         }
 
 
@@ -450,21 +472,7 @@ void init_color(vertex3D color, std::vector<vertex3D> &whd){
 
 void init_font_color(std::vector<GLfloat> &color){
     
-    std::cout << color[0] << std::endl;
-
-    //~ *font_color[4]={color[0]};
-    //~ *font_color=color[0];
     font_color=&color[0];
-    
-    std::cout << font_color[0] << std::endl;
-    std::cout << font_color[1] << std::endl;
-    std::cout << font_color[2] << std::endl;
-    std::cout << font_color[3] << std::endl;
-    std::cout << font_color[4] << std::endl;
-    
-    //~ for( unsigned int it = 0; it < sizeof(font_color)/sizeof(font_color[0]); ++it ){
-        //~ std::cout << font_color[it] << std::endl;
-    //~ }
     
 }
     
@@ -568,7 +576,8 @@ void draw_box(){
     glBindBuffer(GL_ARRAY_BUFFER, vbo_vertices_color_box);
     glVertexAttribPointer(
     attribute_v_color_box,      // attribute
-    3,                      // number of elements per vertex, here (r,g,b)
+    //~ 3,                      // number of elements per vertex, here (r,g,b)
+    4,                      // number of elements per vertex, here (r,g,b,a)
     GL_FLOAT,               // the type of each element
     GL_FALSE,               // take our values as-is
     0,
@@ -585,15 +594,17 @@ void draw_box(){
     glDisableVertexAttribArray(attribute_v_color_box);
 }
 
-void init_text_MDE(MDE &my_entity,vertex3D &origin, std::vector<vertex3D> &offset, std::vector<vertex3D> &offset_rule, vertex2D &padding, vertex3D color) {
+void init_text_MDE(MDE &my_entity,vertex3D &origin, std::vector<vertex3D> &offset, std::vector<vertex3D> &offset_rule, vertex2D &padding, vertex3Dalpha &color_alpha, vertex3Dalpha &bg_color_alpha) {
     
-    /* Create texture atlasses for several font sizes */
-    a48 = new atlas(face, 48);
-    a24 = new atlas(face, 24);
-    a12 = new atlas(face, 12);
+    /* Create texture atlasses for a given font size */
+    //~ a_any_size = new atlas(face, 48);
+    a_any_size = new atlas(face,(int)fontSize);
+    
     vertex2D window_scale;
     window_scale.x = 2.0 / glutGet(GLUT_WINDOW_WIDTH);
     window_scale.y = 2.0 / glutGet(GLUT_WINDOW_HEIGHT);
+    //~ window_scale.x = 1.0 / glutGet(GLUT_WINDOW_WIDTH);
+    //~ window_scale.y = 1.0 / glutGet(GLUT_WINDOW_HEIGHT);
     std::vector<vertex3D> v_origin;      // coordinates of origin for the glyphs/text
     std::vector<vertex3D> v_origin_fb;   // coordinates of origin for the frame box to include padding
 
@@ -614,12 +625,13 @@ void init_text_MDE(MDE &my_entity,vertex3D &origin, std::vector<vertex3D> &offse
     uint index_v_origin=0;
     for (std::vector<GLdata>::iterator it_v_MDE_data=my_v_MDE_data.begin(); it_v_MDE_data!=my_v_MDE_data.end();++it_v_MDE_data){
         
-        create_coord_vector_text(((*it_v_MDE_data).MDE_data).c_str(), a48, v_origin[index_v_origin], window_scale );
+        //~ create_coord_vector_text(((*it_v_MDE_data).MDE_data).c_str(), a48, v_origin[index_v_origin], window_scale );
+        create_coord_vector_text(((*it_v_MDE_data).MDE_data).c_str(), a_any_size, v_origin[index_v_origin], window_scale );
         index_v_origin++;
     }
     //~ text_frame(glyphs_box, nb_glyphs_per_text, v_origin);
     text_frame(glyphs_box, nb_glyphs_per_text, v_origin_fb, padding);
-    init_color(color,v_origin);
+    init_color(color_alpha,bg_color_alpha,v_origin);
 }
 
 void process_v_MDE_data(std::vector<GLdata> & v_MDE_data,std::vector<vertex3D> & v_offset, std::vector<vertex3D> & v_offset_rule){
@@ -652,10 +664,10 @@ void add_padding(std::vector<vertex3D> & v_origin, std::vector<vertex3D> & v_ori
 
 }
 
-void textDisplay() {
+void text_display() {
 
-    /* White background */
-    glClearColor(1, 1, 1, 1);
+    // Set the colored background, default is white.
+    glClearColor(bg_r, bg_g, bg_b, bg_a);
     // need the depth buffer for 3d
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
@@ -669,30 +681,38 @@ void textDisplay() {
     GLfloat black[4] = { 0, 0, 0, 1 };
     GLfloat red[4] = { 1, 0, 0, 1 };
     
-    //set the color of the non-glyph part of the glyph box to same color as the
+    // set the color of the non-glyph part of the glyph box to same color as the
     // cube color: r,g,b
-    GLfloat bg_rgb[4] = { r, g, b, 1 };
+    // keep alpha to zero
+    //~ GLfloat bg_rgb[4] = { r, g, b, a };
+    GLfloat bg_rgb[4] = { r, g, b, 0 };
     
     FT_Set_Pixel_Sizes(face, 0, fontSize);
 
+    // check option to display the box frame for the text.
+    if (display_box){
+        // Drawing a box
+        glUseProgram(program_box);
+        draw_box();
+        }
+    //~ else{
+        //~ // if no box, set box alpha to 0.0 to discard the non-glyph part of the glyhp's box
+        //~ a=0.0;
+    //~ }
+    
     /* Drawing the text */    
     glUseProgram(program_text);
-    //~ glUniform4fv(uniform_color_text, 1, red);
-    //~ glUniform4fv(uniform_color_text, 1, *font_color);
     glUniform4fv(uniform_color_text, 1, font_color);
     glUniform4fv(uniform_bgcolor_text, 1, bg_rgb);
-    render_text(a48);
-    
-    // Drawing a box
-    glUseProgram(program_box);
-    draw_box();
+    render_text(a_any_size);
     
     glutSwapBuffers();
     
 }
 
-void get_move_it(bool a_move_it){
+void set_options(bool a_move_it, bool a_display_box){
     move_it = a_move_it;
+    display_box = a_display_box;
 }
 
 void onIdle() {
@@ -705,6 +725,7 @@ void onIdle() {
     else {
         move = 2*sinf(glutGet(GLUT_ELAPSED_TIME) / 1000.0 * (2*3.14) / 30); // -1<->+1 every 2 seconds
         angle = glutGet(GLUT_ELAPSED_TIME) / 1000.0 * 10;  // 25° per second
+        //~ angle = 0;
     }
     screen_width=glutGet(GLUT_WINDOW_WIDTH);
     screen_height=glutGet(GLUT_WINDOW_HEIGHT);
@@ -712,7 +733,8 @@ void onIdle() {
     glm::vec3 axis_y(0, 1, 0);
     glm::vec3 axis_z(0, 0, 1);
     //~ glm::mat4 m_translate = glm::translate(glm::mat4(1.0f), glm::vec3(0.0, move ,0.0));
-    glm::mat4 m_translate = glm::translate(glm::mat4(1.0f), glm::vec3(move, 0.0 ,0.0));
+    //~ glm::mat4 m_translate = glm::translate(glm::mat4(1.0f), glm::vec3(move, 0.0 ,0.0));
+    glm::mat4 m_translate = glm::translate(glm::mat4(1.0f), glm::vec3(0.0 ,0.0, move));
     glm::mat4 anim = glm::rotate(glm::mat4(1.0f), glm::radians(angle), axis_y);
     glm::mat4 anim2 = glm::rotate(glm::mat4(1.0f), glm::radians(angle), axis_z);
     
