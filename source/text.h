@@ -82,7 +82,11 @@ void free_resources();
 void process_v_MDE_data(std::vector<GLdata> & v_MDE_data,std::vector<vertex3D> & v_offset, std::vector<vertex3D> & v_offset_rule);
 
 void keyDown(unsigned char key, int x, int y);
- 
+
+void mouse_movement(int x, int y);
+void movement_button_pressed(int x, int y);
+void mouse_wheel(int button, int state, int x, int y);
+
  /**
  * 
  * ##name: add_padding(std::vector<vertex3D> & v_origin,std::vector<vertex3D> & v_origin_fb, vertex2D & padding)

@@ -56,6 +56,25 @@ const char * user_font;
 std::string font_name;
 
 
+//predifined colors:
+//~ darkgrey = (0.4, 0.4, 0.4)
+//~ red = (1.0, 0.0, 0.0)
+//~ green = (0.0, 1.0, 0.0)
+//~ blue = (0.0, 0.0, 1.0)
+//~ cyan = (0.0, 1.0, 1.0)
+//~ magenta = (1.0, 0.0, 1.0)
+//~ yellow = (1.0, 1.0, 0.0)
+//~ white = (1.0, 1.0, 1.0)
+//~ black = (0.0, 0.0, 0.0)
+//~ darkred = (0.5, 0.0, 0.0)
+//~ darkgreen = (0.0, 0.5, 0.0)
+//~ darkblue = (0.0, 0.0, 0.5)
+//~ darkcyan = (0.0, 0.5, 0.5)
+//~ darkmagenta = (0.5, 0.0, 0.5)
+//~ darkyellow = (0.5, 0.5, 0.0)
+//~ lightgrey = (0.8, 0.8, 0.8)
+
+
 int main (int argc, char **argv){
 
     // set switches default values - true mean use default values/ no user entry
@@ -69,7 +88,7 @@ int main (int argc, char **argv){
     bool input_padding= false;  // input padding
     bool input_offset_rule= false;  // input offset rule
     bool move_it = false;   // bool switch for testing moving display
-    bool display_box;      //bool to switch box display on/off
+    bool display_box = false;      //bool to switch box display on/off
     bool input_bg_color = false;  // input background color
 
     //~ // init const char
@@ -147,7 +166,7 @@ int main (int argc, char **argv){
         // test. box display or not
         if (std::regex_match (choice[i], std::regex("(-b)|(--box)")))
             {
-                printf("Displaybox!\n");
+                printf("Display box!\n");
                 display_box = true;
             }
         // set GL mode on
@@ -667,6 +686,14 @@ int main (int argc, char **argv){
                 glutDisplayFunc(text_display);
                 glutKeyboardFunc(keyDown);
                 glutIdleFunc(onIdle);
+                
+                // check glut event: keyboard and mouse
+                //~ glutPassiveMotionFunc(mouse_movement); //check for Mouse movement with button up
+                glutMotionFunc(movement_button_pressed); //check for Mouse movement with button down
+                glutMouseFunc(mouse_wheel);
+                //~ glutKeyboardFunc(keyDown);                
+                
+
                 glEnable(GL_BLEND);
                 glEnable(GL_DEPTH_TEST);
                 glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

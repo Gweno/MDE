@@ -66,6 +66,8 @@ uint fontSize=12;
 GLfloat r,g,b,a;
 GLfloat bg_r, bg_g, bg_b, bg_a;
 
+float x_pos = 0, y_pos = 0, z_pos = 0, x_rot = 0, y_rot = 0;
+float lastx, lasty;
 
 vertex3D text_coordinates ={0.0,0.0,0.0};
 vertex2D padding ={0.0,0.0};
@@ -100,6 +102,10 @@ GLfloat *font_color = NULL;
 // some boolean flags
 bool move_it;
 bool display_box;
+
+bool left_click=false;
+bool right_click=false;
+
 
 /**
  * The atlas struct holds a texture that contains the visible US-ASCII characters
@@ -713,7 +719,85 @@ void text_display() {
 void set_options(bool a_move_it, bool a_display_box){
     move_it = a_move_it;
     display_box = a_display_box;
+    printf("display box:%u\n", display_box);
 }
+
+//~ void mouse_movement(int x, int y) {
+    //~ if(left_click){
+    //~ printf("left click!\n");
+    //~ float diffx=x-lastx; //check the difference between the current x and the last x position
+    //~ float diffy=y-lasty; //check the difference between the current y and the last y position
+    //~ lastx=x; //set lastx to the current x position
+    //~ lasty=y; //set lasty to the current y position
+    //~ x_rot += (float) diffy/5; //set the xrot to xrot with the addition of the difference in the y position
+    //~ y_rot += (float) diffx/5;    //set the xrot to yrot with the addition of the difference in the x position
+    //~ if (x_rot >360) x_rot -= 360;
+    //~ if (x_rot < -360) x_rot += 360;
+    //~ if (y_rot >360) y_rot -= 360;
+    //~ if (y_rot < -360) y_rot += 360;
+    //~ }
+    
+    //~ }
+
+void movement_button_pressed(int x, int y) {
+    if(left_click){
+    float diffx=x-lastx; //check the difference between the current x and the last x position
+    float diffy=y-lasty; //check the difference between the current y and the last y position
+    lastx=x; //set lastx to the current x position
+    lasty=y; //set lasty to the current y position
+    x_rot += (float) diffy/5; //set the xrot to xrot with the addition of the difference in the y position
+    y_rot += (float) diffx/5;    //set the xrot to yrot with the addition of the difference in the x position
+    if (x_rot >360) x_rot -= 360;
+    if (x_rot < -360) x_rot += 360;
+    if (y_rot >360) y_rot -= 360;
+    if (y_rot < -360) y_rot += 360;
+    }
+
+    if(right_click){
+    float diffx=x-lastx; //check the difference between the current x and the last x position
+    float diffy=y-lasty; //check the difference between the current y and the last y position
+    lastx=x; //set lastx to the current x position
+    lasty=y; //set lasty to the current y position
+    //~ if(diffx<0) x_pos += ((float) diffx-250)/500;
+    //~ if(diffx>0) x_pos += (250-(float) diffx)/500;
+    //~ if(diffy<0) y_pos += (250-(float) diffy)/500;
+    //~ if(diffy>0) y_pos += ((float) diffy-250)/500;
+    if(diffx<0) x_pos += ((float) diffx-250)/7500;
+    if(diffx>0) x_pos += (250-(float) diffx)/7500;
+    if(diffy<0) y_pos += (250-(float) diffy)/7500;
+    if(diffy>0) y_pos += ((float) diffy-250)/7500;
+    }
+}
+
+void mouse_wheel(int button, int state, int x, int y)
+{
+   // Wheel reports as button 3(scroll up) and button 4(scroll down)
+    //~ float diffx=x-lastx; //check the difference between the current x and the last x position
+    //~ float diffy=y-lasty; //check the difference between the current y and the last y position
+   
+   if ((button == 0) || (state == GLUT_DOWN)) left_click=true;// It's a wheel event
+   if ((button == 0) || (state == GLUT_UP)) left_click=false;// It's a wheel event
+   if ((button == 2) || (state == GLUT_DOWN)) right_click=true;// It's a wheel event
+   if ((button == 2) || (state == GLUT_UP)) right_click=false;// It's a wheel event
+   // if middle click do nothing
+   if (button == 1){
+       left_click=false;
+       right_click=false;
+   }
+   if ((button == 3) || (button == 4)) // It's a wheel event
+   {
+       // Each wheel event reports like a button click, GLUT_DOWN then GLUT_UP
+       if (state == GLUT_UP) return; // Disregard redundant GLUT_UP events
+       //~ printf("Scroll %s At %d %d\n", (button == 3) ? "Up" : "Down", x, y);
+       (button == 3) ? z_pos++ : z_pos--;
+    
+   }
+   //~ else{  // normal button event
+       //~ printf("Button %d is %s At %d %d\n", button, (state == GLUT_DOWN) ? "Down" : "Up", x, y);
+   //~ }
+}
+
+
 
 void onIdle() {
     float move;
@@ -734,9 +818,15 @@ void onIdle() {
     glm::vec3 axis_z(0, 0, 1);
     //~ glm::mat4 m_translate = glm::translate(glm::mat4(1.0f), glm::vec3(0.0, move ,0.0));
     //~ glm::mat4 m_translate = glm::translate(glm::mat4(1.0f), glm::vec3(move, 0.0 ,0.0));
-    glm::mat4 m_translate = glm::translate(glm::mat4(1.0f), glm::vec3(0.0 ,0.0, move));
-    glm::mat4 anim = glm::rotate(glm::mat4(1.0f), glm::radians(angle), axis_y);
-    glm::mat4 anim2 = glm::rotate(glm::mat4(1.0f), glm::radians(angle), axis_z);
+    
+    //~ glm::mat4 m_translate = glm::translate(glm::mat4(1.0f), glm::vec3(0.0 ,0.0, move));
+    glm::mat4 m_translate = glm::translate(glm::mat4(1.0f), glm::vec3(x_pos ,y_pos, z_pos));
+    
+    //~ glm::mat4 anim = glm::rotate(glm::mat4(1.0f), glm::radians(angle), axis_y);
+    //~ glm::mat4 anim2 = glm::rotate(glm::mat4(1.0f), glm::radians(angle), axis_z);
+    
+    glm::mat4 anim = glm::rotate(glm::mat4(1.0f), glm::radians(x_rot), axis_x);
+    glm::mat4 anim2 = glm::rotate(glm::mat4(1.0f), glm::radians(y_rot), axis_y);
     
     glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(1.0, 0.0, -1.0));
     glm::mat4 view = glm::lookAt(glm::vec3(0.0, 0.0, 4.0), glm::vec3(0.0, 0.0,-1.0), glm::vec3(0.0, 1.0, 0.0));//eye,center,up
