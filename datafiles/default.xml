@@ -1,0 +1,24 @@
+<master>
+123
+  <tata>
+  1
+    <toto>
+    11
+      <truc>
+      999
+      </truc>
+    </toto>
+    <lili>
+    12
+    </lili>
+  </tata>
+  <titi>
+  2
+    <toto>
+    21
+    </toto>
+    <lolo>
+    22
+    </lolo>
+  </titi>
+</master>

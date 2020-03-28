@@ -28,18 +28,31 @@ Options\+:
  to get the program\textquotesingle{}s version (and quit). 
 \item {\bfseries -\/g, -\/-\/glmode}~\newline
  display directly in graphic mode (open\+GL), skip the Display Mode menu 
-\item {\bfseries -\/f \mbox{[}F\+I\+LE\mbox{]}, -\/-\/file \mbox{[}F\+I\+LE\mbox{]}}~\newline
+\item {\bfseries -\/f, -\/-\/file} {\itshape file}~\newline
  load (xml) file, skip the Data menu 
-\item {\bfseries -\/c \mbox{[}{\itshape red(0..1)}\mbox{]},\mbox{[}{\itshape green(0..1)}\mbox{]},\mbox{[}{\itshape blue(0..1)}\mbox{]}, -\/-\/box-\/color \mbox{[}{\itshape red(0..1)}\mbox{]},\mbox{[}{\itshape green(0..1)}\mbox{]},\mbox{[}{\itshape blue(0..1)}\mbox{]}}~\newline
- set rgb colours for the box frames with each values in range float\mbox{[}0,1\mbox{]}. 
-\item {\bfseries -\/o, -\/-\/origin \mbox{[}{\itshape red(0..1)}\mbox{]},\mbox{[}{\itshape green(0..1)}\mbox{]},\mbox{[}{\itshape blue(0..1)}\mbox{]},\mbox{[}{\itshape alpha(0..1)}\mbox{]} }~\newline
+\item {\bfseries -\/n, -\/-\/font} {\itshape font}~\newline
+ set the font (only open source font on the ./fonts folder for now). 
+\item {\bfseries -\/s, -\/-\/font-\/size} {\itshape size}~\newline
+ set the font size as an integer, best to use multiple of 8. 
+\item {\bfseries -\/o, -\/-\/font-\/color} {\itshape r,g,b,a}~\newline
  set rgba colours for font with each values in range float\mbox{[}0,1\mbox{]}. 
-\item {\bfseries -\/p, -\/-\/padding \mbox{[}{\itshape vertical\+\_\+padding}\mbox{]},\mbox{[}{\itshape horizontal\+\_\+padding}\mbox{]}}~\newline
+\item {\bfseries -\/b, -\/-\/box}~\newline
+ for displaying a frame box for each text. 
+\item {\bfseries -\/c, -\/-\/box-\/color} {\itshape r,g,b,a}~\newline
+ set rgba colours/alpha for the box frames with each values in range float\mbox{[}0,1\mbox{]}. 
+\item {\bfseries -\/d, -\/-\/background-\/color} {\itshape r,g,b,a}~\newline
+ set rgba colours/alpha for the background with each values in range float\mbox{[}0,1\mbox{]} (alpha has no effect). 
+\item {\bfseries -\/p, -\/-\/padding} {\itshape vertical\+\_\+padding,horizontal\+\_\+padding}~\newline
  add symetrical vertical and horizontal padding, creating a box frame larger than the text displayed. 
-\item {\bfseries -\/a, -\/-\/origin \mbox{[}{\itshape x}\mbox{]},\mbox{[}{\itshape y}\mbox{]},\mbox{[}{\itshape z}\mbox{]}}~\newline
+\item {\bfseries -\/a, -\/-\/origin} {\itshape x,y,z}~\newline
  set the coordinates of origin to (x,y,z). 
-\item {\bfseries -\/r, -\/-\/offset-\/rule \mbox{[}{\itshape name$<$-\/$>$index.\+x}\mbox{]},\mbox{[}{\itshape name$<$-\/$>$index.\+y}\mbox{]},\mbox{[}{\itshape name$<$-\/$>$index.\+z}\mbox{]},\mbox{[}{\itshape index.\+x}\mbox{]},\mbox{[}{\itshape index.\+y}\mbox{]},\mbox{[}{\itshape index.\+z}\mbox{]},{\itshape \mbox{[}$\ast$level.x}\mbox{]},\mbox{[}{\itshape level.\+y}\mbox{]},\mbox{[}{\itshape level.\+z}\mbox{]}}~\newline
+\item {\bfseries -\/r, -\/-\/offset-\/rule} {\itshape name$<$-\/$>$index.\+x,name$<$-\/$>$index.\+y,name$<$-\/$>$index.\+z,index.\+x,index.\+y,index.\+z,level.\+x,level.\+y,level.\+z}~\newline
  set the offset rule with floats 
 \item {\bfseries -\/m, -\/-\/move}~\newline
- for moving mode (makes the \hyperlink{classMDE}{M\+DE} move on all axis). 
+ for moving mode (makes the \hyperlink{classMDE}{M\+DE} instance move on all axis). 
+\end{DoxyItemize}\hypertarget{index_Other}{}\section{documentation}\label{index_Other}
+
+\begin{DoxyItemize}
+\item \href{https://github.com/Gweno/MDE/blob/master/README.md}{\tt R\+E\+A\+D\+ME} 
+\item \href{https://github.com/Gweno/MDE/blob/master/dependencies.txt}{\tt Dependencies} 
 \end{DoxyItemize}

@@ -1,0 +1,30 @@
+<default>
+main menu
+  <entry>
+  Data Menu
+    <entry>
+    Load Data File
+      <entry>
+      Enter name of xml file
+      </entry>
+      <entry>
+      perma.xml
+      </entry>
+      <entry>
+      bookstore.xml
+      </entry>
+    </entry>
+    <entry>
+    Load Data Testing set
+    </entry>
+    <entry>
+    User Data Input
+    </entry>
+  </entry>
+  <entry>
+  Font Menu
+  </entry>
+  <entry>
+  Coordinates Menu
+  </entry>
+</default>
