@@ -87,9 +87,15 @@ Functions</h2></td></tr>
 <tr class="memitem:gab0bb5af067d456163cd8d672945acc20"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__io.html#gab0bb5af067d456163cd8d672945acc20">MDE::user_save_to_XML_file</a> ()</td></tr>
 <tr class="memdesc:gab0bb5af067d456163cd8d672945acc20"><td class="mdescLeft">&#160;</td><td class="mdescRight">This member function is to save the instance of a class into an XML file. The file's name is chosen by user input.  <a href="#gab0bb5af067d456163cd8d672945acc20">More...</a><br /></td></tr>
 <tr class="separator:gab0bb5af067d456163cd8d672945acc20"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadd7f1e7519e60fad799462002ddfd6fd"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__io.html#gadd7f1e7519e60fad799462002ddfd6fd">MDE::load_XML_File_to_MDE</a> (const std::string &amp;fullFileName)</td></tr>
-<tr class="memdesc:gadd7f1e7519e60fad799462002ddfd6fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">This member function is to read an XML file using the reference to the string fullFileName and to store the data from the file into an instance of class <a class="el" href="classMDE.html">MDE</a>.  <a href="#gadd7f1e7519e60fad799462002ddfd6fd">More...</a><br /></td></tr>
-<tr class="separator:gadd7f1e7519e60fad799462002ddfd6fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga299e26c85332bf5effaa64d986184cc6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__io.html#ga299e26c85332bf5effaa64d986184cc6">MDE::load_XML_File_to_MDE</a> (const std::string &amp;full_filename)</td></tr>
+<tr class="memdesc:ga299e26c85332bf5effaa64d986184cc6"><td class="mdescLeft">&#160;</td><td class="mdescRight">This member function is to read an XML file using the reference to the string full_filename and to store the data from the file into an instance of class <a class="el" href="classMDE.html">MDE</a>.  <a href="#ga299e26c85332bf5effaa64d986184cc6">More...</a><br /></td></tr>
+<tr class="separator:ga299e26c85332bf5effaa64d986184cc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf9e35ce2a8841994485c22e9744a939f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__io.html#gaf9e35ce2a8841994485c22e9744a939f">MDE::load_XML_File_to_vMDE</a> (int &amp;index, const std::string &amp;full_filename)</td></tr>
+<tr class="memdesc:gaf9e35ce2a8841994485c22e9744a939f"><td class="mdescLeft">&#160;</td><td class="mdescRight">This member function is to read an XML file using the reference to the string full_filename and to store the data from the file into an element at a given index of the private member vMDE of the instance of a class of <a class="el" href="classMDE.html">MDE</a>.  <a href="#gaf9e35ce2a8841994485c22e9744a939f">More...</a><br /></td></tr>
+<tr class="separator:gaf9e35ce2a8841994485c22e9744a939f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa51327a2747fbef6e85da046e7661a2e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__io.html#gaa51327a2747fbef6e85da046e7661a2e">MDE::replace_vMDE_with_XML</a> (std::vector&lt; int &gt; &amp;vect_index_file, const std::string &amp;full_filename)</td></tr>
+<tr class="memdesc:gaa51327a2747fbef6e85da046e7661a2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">This member function is to read an XML file using the reference to the string full_filename and to store the data from the file into an element at a given index of the private member vMDE of the instance of a class of <a class="el" href="classMDE.html">MDE</a> by replacing completely the existing element.  <a href="#gaa51327a2747fbef6e85da046e7661a2e">More...</a><br /></td></tr>
+<tr class="separator:gaa51327a2747fbef6e85da046e7661a2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad5a5a84a32ba35ff2c35f3a60fb2c44f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__io.html#gad5a5a84a32ba35ff2c35f3a60fb2c44f">MDE::extract_MDE_data_for_v_offset</a> (std::vector&lt; <a class="el" href="structGLdata.html">GLdata</a> &gt; &amp;v_MDE_data, int &amp;level, int index=0)</td></tr>
 <tr class="memdesc:gad5a5a84a32ba35ff2c35f3a60fb2c44f"><td class="mdescLeft">&#160;</td><td class="mdescRight">This member function is to fill-in a standard vector of struct <a class="el" href="structGLdata.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions. ">GLdata</a> by extracting data from private member 'name' and public member 'data', and setting the level and index of each Entities and sub-entities of an instance of object class <a class="el" href="classMDE.html">MDE</a>. The vector of <a class="el" href="structGLdata.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions. ">GLdata</a> is used in the standard vector of <a class="el" href="structGLdata.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions. ">GLdata</a> to set offset coordinates.  <a href="#gad5a5a84a32ba35ff2c35f3a60fb2c44f">More...</a><br /></td></tr>
 <tr class="separator:gad5a5a84a32ba35ff2c35f3a60fb2c44f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -151,7 +157,7 @@ search_for() </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="gadd7f1e7519e60fad799462002ddfd6fd"></a>
+<a class="anchor" id="ga299e26c85332bf5effaa64d986184cc6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -159,17 +165,17 @@ search_for() </dd></dl>
           <td class="memname">bool MDE::load_XML_File_to_MDE </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>fullFileName</em></td><td>)</td>
+          <td class="paramname"><em>full_filename</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>This member function is to read an XML file using the reference to the string fullFileName and to store the data from the file into an instance of class <a class="el" href="classMDE.html">MDE</a>. </p>
-<h2>name: <a class="el" href="group__group__io.html#gadd7f1e7519e60fad799462002ddfd6fd" title="This member function is to read an XML file using the reference to the string fullFileName and to sto...">load_XML_File_to_MDE()</a></h2>
+<p>This member function is to read an XML file using the reference to the string full_filename and to store the data from the file into an instance of class <a class="el" href="classMDE.html">MDE</a>. </p>
+<h2>name: <a class="el" href="group__group__io.html#ga299e26c85332bf5effaa64d986184cc6" title="This member function is to read an XML file using the reference to the string full_filename and to st...">load_XML_File_to_MDE()</a></h2>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">fullFileName</td><td>is a standard string. </td></tr>
+    <tr><td class="paramname">full_filename</td><td>is a standard string. </td></tr>
   </table>
   </dd>
 </dl>
@@ -181,6 +187,98 @@ search_for() </dd></dl>
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>The process is using a standard stack of pointers to pointers of Instances of Objects Class <a class="el" href="classMDE.html">MDE</a> (std::stack&lt;MDE**&gt;). </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gaf9e35ce2a8841994485c22e9744a939f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool MDE::load_XML_File_to_vMDE </td>
+          <td>(</td>
+          <td class="paramtype">int &amp;&#160;</td>
+          <td class="paramname"><em>index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>full_filename</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This member function is to read an XML file using the reference to the string full_filename and to store the data from the file into an element at a given index of the private member vMDE of the instance of a class of <a class="el" href="classMDE.html">MDE</a>. </p>
+<h2>name: load_XML_File_to_vMDE(int &amp; index,</h2>
+<p>const std::string &amp; full_filename) </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">&amp;</td><td>index is a reference to an integer that holds the vector index of the private member vMDE where to load the XML file. struct <a class="el" href="structGLdata.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions. ">GLdata</a>. </td></tr>
+    <tr><td class="paramname">&amp;</td><td>full_filename is a reference to the path and name of the file to load. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>a bool is returned as false if fail to load or true if the file is loaded successfully. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__group__io.html#ga299e26c85332bf5effaa64d986184cc6" title="This member function is to read an XML file using the reference to the string full_filename and to st...">load_XML_File_to_MDE()</a> </dd>
+<dd>
+<a class="el" href="group__group__io.html#gaa51327a2747fbef6e85da046e7661a2e" title="This member function is to read an XML file using the reference to the string full_filename and to st...">replace_vMDE_with_XML()</a> </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">No</td><td>exception handling. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaa51327a2747fbef6e85da046e7661a2e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool MDE::replace_vMDE_with_XML </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; int &gt; &amp;&#160;</td>
+          <td class="paramname"><em>vect_index_file</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>full_filename</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This member function is to read an XML file using the reference to the string full_filename and to store the data from the file into an element at a given index of the private member vMDE of the instance of a class of <a class="el" href="classMDE.html">MDE</a> by replacing completely the existing element. </p>
+<h2>name: replace_vMDE_with_XML(</h2>
+<p>std::vector&lt;int&gt; &amp; vect_index_file, const std::string &amp; full_filename) </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">&amp;</td><td>index is a reference to an integer that holds the vector index of the private member vMDE where to load the XML file. </td></tr>
+    <tr><td class="paramname">&amp;</td><td>full_filename is a reference to the path and name of the file to load. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>a bool is returned as false if fail to load or true if the file is loaded successfully. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__group__io.html#gaf9e35ce2a8841994485c22e9744a939f" title="This member function is to read an XML file using the reference to the string full_filename and to st...">load_XML_File_to_vMDE()</a> </dd>
+<dd>
+<a class="el" href="group__group__io.html#ga299e26c85332bf5effaa64d986184cc6" title="This member function is to read an XML file using the reference to the string full_filename and to st...">load_XML_File_to_MDE()</a> </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">No</td><td>exception handling. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

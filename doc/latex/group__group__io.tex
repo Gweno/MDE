@@ -5,8 +5,12 @@
 \item 
 void \hyperlink{group__group__io_gab0bb5af067d456163cd8d672945acc20}{M\+D\+E\+::user\+\_\+save\+\_\+to\+\_\+\+X\+M\+L\+\_\+file} ()
 \begin{DoxyCompactList}\small\item\em This member function is to save the instance of a class into an X\+ML file. The file\textquotesingle{}s name is chosen by user input. \end{DoxyCompactList}\item 
-bool \hyperlink{group__group__io_gadd7f1e7519e60fad799462002ddfd6fd}{M\+D\+E\+::load\+\_\+\+X\+M\+L\+\_\+\+File\+\_\+to\+\_\+\+M\+DE} (const std\+::string \&full\+File\+Name)
-\begin{DoxyCompactList}\small\item\em This member function is to read an X\+ML file using the reference to the string full\+File\+Name and to store the data from the file into an instance of class \hyperlink{classMDE}{M\+DE}. \end{DoxyCompactList}\item 
+bool \hyperlink{group__group__io_ga299e26c85332bf5effaa64d986184cc6}{M\+D\+E\+::load\+\_\+\+X\+M\+L\+\_\+\+File\+\_\+to\+\_\+\+M\+DE} (const std\+::string \&full\+\_\+filename)
+\begin{DoxyCompactList}\small\item\em This member function is to read an X\+ML file using the reference to the string full\+\_\+filename and to store the data from the file into an instance of class \hyperlink{classMDE}{M\+DE}. \end{DoxyCompactList}\item 
+bool \hyperlink{group__group__io_gaf9e35ce2a8841994485c22e9744a939f}{M\+D\+E\+::load\+\_\+\+X\+M\+L\+\_\+\+File\+\_\+to\+\_\+v\+M\+DE} (int \&index, const std\+::string \&full\+\_\+filename)
+\begin{DoxyCompactList}\small\item\em This member function is to read an X\+ML file using the reference to the string full\+\_\+filename and to store the data from the file into an element at a given index of the private member v\+M\+DE of the instance of a class of \hyperlink{classMDE}{M\+DE}. \end{DoxyCompactList}\item 
+bool \hyperlink{group__group__io_gaa51327a2747fbef6e85da046e7661a2e}{M\+D\+E\+::replace\+\_\+v\+M\+D\+E\+\_\+with\+\_\+\+X\+ML} (std\+::vector$<$ int $>$ \&vect\+\_\+index\+\_\+file, const std\+::string \&full\+\_\+filename)
+\begin{DoxyCompactList}\small\item\em This member function is to read an X\+ML file using the reference to the string full\+\_\+filename and to store the data from the file into an element at a given index of the private member v\+M\+DE of the instance of a class of \hyperlink{classMDE}{M\+DE} by replacing completely the existing element. \end{DoxyCompactList}\item 
 void \hyperlink{group__group__io_gad5a5a84a32ba35ff2c35f3a60fb2c44f}{M\+D\+E\+::extract\+\_\+\+M\+D\+E\+\_\+data\+\_\+for\+\_\+v\+\_\+offset} (std\+::vector$<$ \hyperlink{structGLdata}{G\+Ldata} $>$ \&v\+\_\+\+M\+D\+E\+\_\+data, int \&level, int index=0)
 \begin{DoxyCompactList}\small\item\em This member function is to fill-\/in a standard vector of struct \hyperlink{structGLdata}{G\+Ldata} by extracting data from private member \textquotesingle{}name\textquotesingle{} and public member \textquotesingle{}data\textquotesingle{}, and setting the level and index of each Entities and sub-\/entities of an instance of object class \hyperlink{classMDE}{M\+DE}. The vector of \hyperlink{structGLdata}{G\+Ldata} is used in the standard vector of \hyperlink{structGLdata}{G\+Ldata} to set offset coordinates. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
@@ -57,20 +61,20 @@ This method can be optimised and may be able to use other existing methods.
 \end{DoxyNote}
 \index{I/\+O methods@{I/\+O methods}!load\+\_\+\+X\+M\+L\+\_\+\+File\+\_\+to\+\_\+\+M\+DE@{load\+\_\+\+X\+M\+L\+\_\+\+File\+\_\+to\+\_\+\+M\+DE}}
 \index{load\+\_\+\+X\+M\+L\+\_\+\+File\+\_\+to\+\_\+\+M\+DE@{load\+\_\+\+X\+M\+L\+\_\+\+File\+\_\+to\+\_\+\+M\+DE}!I/\+O methods@{I/\+O methods}}
-\subsubsection[{\texorpdfstring{load\+\_\+\+X\+M\+L\+\_\+\+File\+\_\+to\+\_\+\+M\+D\+E(const std\+::string \&full\+File\+Name)}{load_XML_File_to_MDE(const std::string &fullFileName)}}]{\setlength{\rightskip}{0pt plus 5cm}bool M\+D\+E\+::load\+\_\+\+X\+M\+L\+\_\+\+File\+\_\+to\+\_\+\+M\+DE (
+\subsubsection[{\texorpdfstring{load\+\_\+\+X\+M\+L\+\_\+\+File\+\_\+to\+\_\+\+M\+D\+E(const std\+::string \&full\+\_\+filename)}{load_XML_File_to_MDE(const std::string &full_filename)}}]{\setlength{\rightskip}{0pt plus 5cm}bool M\+D\+E\+::load\+\_\+\+X\+M\+L\+\_\+\+File\+\_\+to\+\_\+\+M\+DE (
 \begin{DoxyParamCaption}
-\item[{const std\+::string \&}]{full\+File\+Name}
+\item[{const std\+::string \&}]{full\+\_\+filename}
 \end{DoxyParamCaption}
-)}\hypertarget{group__group__io_gadd7f1e7519e60fad799462002ddfd6fd}{}\label{group__group__io_gadd7f1e7519e60fad799462002ddfd6fd}
+)}\hypertarget{group__group__io_ga299e26c85332bf5effaa64d986184cc6}{}\label{group__group__io_ga299e26c85332bf5effaa64d986184cc6}
 
 
-This member function is to read an X\+ML file using the reference to the string full\+File\+Name and to store the data from the file into an instance of class \hyperlink{classMDE}{M\+DE}. 
+This member function is to read an X\+ML file using the reference to the string full\+\_\+filename and to store the data from the file into an instance of class \hyperlink{classMDE}{M\+DE}. 
 
-\subsubsection*{name\+: \hyperlink{group__group__io_gadd7f1e7519e60fad799462002ddfd6fd}{load\+\_\+\+X\+M\+L\+\_\+\+File\+\_\+to\+\_\+\+M\+D\+E()}}
+\subsubsection*{name\+: \hyperlink{group__group__io_ga299e26c85332bf5effaa64d986184cc6}{load\+\_\+\+X\+M\+L\+\_\+\+File\+\_\+to\+\_\+\+M\+D\+E()}}
 
 
 \begin{DoxyParams}{Parameters}
-{\em full\+File\+Name} & is a standard string. \\
+{\em full\+\_\+filename} & is a standard string. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -84,6 +88,74 @@ A boolean value true if file exists and is open, or false if file does not exist
 \begin{DoxyNote}{Note}
 The process is using a standard stack of pointers to pointers of Instances of Objects Class \hyperlink{classMDE}{M\+DE} (std\+::stack$<$\+M\+D\+E$\ast$$\ast$$>$). 
 \end{DoxyNote}
+\index{I/\+O methods@{I/\+O methods}!load\+\_\+\+X\+M\+L\+\_\+\+File\+\_\+to\+\_\+v\+M\+DE@{load\+\_\+\+X\+M\+L\+\_\+\+File\+\_\+to\+\_\+v\+M\+DE}}
+\index{load\+\_\+\+X\+M\+L\+\_\+\+File\+\_\+to\+\_\+v\+M\+DE@{load\+\_\+\+X\+M\+L\+\_\+\+File\+\_\+to\+\_\+v\+M\+DE}!I/\+O methods@{I/\+O methods}}
+\subsubsection[{\texorpdfstring{load\+\_\+\+X\+M\+L\+\_\+\+File\+\_\+to\+\_\+v\+M\+D\+E(int \&index, const std\+::string \&full\+\_\+filename)}{load_XML_File_to_vMDE(int &index, const std::string &full_filename)}}]{\setlength{\rightskip}{0pt plus 5cm}bool M\+D\+E\+::load\+\_\+\+X\+M\+L\+\_\+\+File\+\_\+to\+\_\+v\+M\+DE (
+\begin{DoxyParamCaption}
+\item[{int \&}]{index, }
+\item[{const std\+::string \&}]{full\+\_\+filename}
+\end{DoxyParamCaption}
+)}\hypertarget{group__group__io_gaf9e35ce2a8841994485c22e9744a939f}{}\label{group__group__io_gaf9e35ce2a8841994485c22e9744a939f}
+
+
+This member function is to read an X\+ML file using the reference to the string full\+\_\+filename and to store the data from the file into an element at a given index of the private member v\+M\+DE of the instance of a class of \hyperlink{classMDE}{M\+DE}. 
+
+\subsubsection*{name\+: load\+\_\+\+X\+M\+L\+\_\+\+File\+\_\+to\+\_\+v\+M\+DE(int \& index,}
+
+const std\+::string \& full\+\_\+filename) 
+\begin{DoxyParams}{Parameters}
+{\em \&} & index is a reference to an integer that holds the vector index of the private member v\+M\+DE where to load the X\+ML file. struct \hyperlink{structGLdata}{G\+Ldata}. \\
+\hline
+{\em \&} & full\+\_\+filename is a reference to the path and name of the file to load. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a bool is returned as false if fail to load or true if the file is loaded successfully. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{group__group__io_ga299e26c85332bf5effaa64d986184cc6}{load\+\_\+\+X\+M\+L\+\_\+\+File\+\_\+to\+\_\+\+M\+D\+E()} 
+
+\hyperlink{group__group__io_gaa51327a2747fbef6e85da046e7661a2e}{replace\+\_\+v\+M\+D\+E\+\_\+with\+\_\+\+X\+M\+L()} 
+\end{DoxySeeAlso}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em No} & exception handling. \\
+\hline
+\end{DoxyExceptions}
+\index{I/\+O methods@{I/\+O methods}!replace\+\_\+v\+M\+D\+E\+\_\+with\+\_\+\+X\+ML@{replace\+\_\+v\+M\+D\+E\+\_\+with\+\_\+\+X\+ML}}
+\index{replace\+\_\+v\+M\+D\+E\+\_\+with\+\_\+\+X\+ML@{replace\+\_\+v\+M\+D\+E\+\_\+with\+\_\+\+X\+ML}!I/\+O methods@{I/\+O methods}}
+\subsubsection[{\texorpdfstring{replace\+\_\+v\+M\+D\+E\+\_\+with\+\_\+\+X\+M\+L(std\+::vector$<$ int $>$ \&vect\+\_\+index\+\_\+file, const std\+::string \&full\+\_\+filename)}{replace_vMDE_with_XML(std::vector< int > &vect_index_file, const std::string &full_filename)}}]{\setlength{\rightskip}{0pt plus 5cm}bool M\+D\+E\+::replace\+\_\+v\+M\+D\+E\+\_\+with\+\_\+\+X\+ML (
+\begin{DoxyParamCaption}
+\item[{std\+::vector$<$ int $>$ \&}]{vect\+\_\+index\+\_\+file, }
+\item[{const std\+::string \&}]{full\+\_\+filename}
+\end{DoxyParamCaption}
+)}\hypertarget{group__group__io_gaa51327a2747fbef6e85da046e7661a2e}{}\label{group__group__io_gaa51327a2747fbef6e85da046e7661a2e}
+
+
+This member function is to read an X\+ML file using the reference to the string full\+\_\+filename and to store the data from the file into an element at a given index of the private member v\+M\+DE of the instance of a class of \hyperlink{classMDE}{M\+DE} by replacing completely the existing element. 
+
+\subsubsection*{name\+: replace\+\_\+v\+M\+D\+E\+\_\+with\+\_\+\+X\+ML(}
+
+std\+::vector$<$int$>$ \& vect\+\_\+index\+\_\+file, const std\+::string \& full\+\_\+filename) 
+\begin{DoxyParams}{Parameters}
+{\em \&} & index is a reference to an integer that holds the vector index of the private member v\+M\+DE where to load the X\+ML file. \\
+\hline
+{\em \&} & full\+\_\+filename is a reference to the path and name of the file to load. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a bool is returned as false if fail to load or true if the file is loaded successfully. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{group__group__io_gaf9e35ce2a8841994485c22e9744a939f}{load\+\_\+\+X\+M\+L\+\_\+\+File\+\_\+to\+\_\+v\+M\+D\+E()} 
+
+\hyperlink{group__group__io_ga299e26c85332bf5effaa64d986184cc6}{load\+\_\+\+X\+M\+L\+\_\+\+File\+\_\+to\+\_\+\+M\+D\+E()} 
+\end{DoxySeeAlso}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em No} & exception handling. \\
+\hline
+\end{DoxyExceptions}
 \index{I/\+O methods@{I/\+O methods}!user\+\_\+save\+\_\+to\+\_\+\+X\+M\+L\+\_\+file@{user\+\_\+save\+\_\+to\+\_\+\+X\+M\+L\+\_\+file}}
 \index{user\+\_\+save\+\_\+to\+\_\+\+X\+M\+L\+\_\+file@{user\+\_\+save\+\_\+to\+\_\+\+X\+M\+L\+\_\+file}!I/\+O methods@{I/\+O methods}}
 \subsubsection[{\texorpdfstring{user\+\_\+save\+\_\+to\+\_\+\+X\+M\+L\+\_\+file()}{user_save_to_XML_file()}}]{\setlength{\rightskip}{0pt plus 5cm}void M\+D\+E\+::user\+\_\+save\+\_\+to\+\_\+\+X\+M\+L\+\_\+file (

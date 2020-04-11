@@ -193,6 +193,21 @@ class MDE {
          */
         private: void clear_all_vMDE();
         
+         /**
+         * 
+         * ##name: clear_all_vMDE_by_index(std::vector<int>& vect_index)
+         *  
+         * @param *& vect_index* is a reference to a standard vector of integers
+         * that holds the sequence of indexes to point to an element of vMDE. 
+         * @return Nothing is returned (void).
+         * @see clear_all_vMDE().
+         * @exception No exception handling.
+         * @brief This member function is to clear all entries of the element
+         * of the private member vector vMDE of an instance of 
+         * a class MDE object recursively using a vector of index pointing
+         * to the parent element.
+         */
+        private: void clear_all_vMDE_by_index(std::vector<int>& vect_index);
         
         
         /** @} */ // end of group_clear
@@ -295,7 +310,6 @@ class MDE {
          * to instances of class MDE.
          */
         public: void set_name_vMDE_index(int index_vMDEe,std::string vName);
-
 
          /**
          * 
@@ -647,18 +661,65 @@ class MDE {
          /**
          * 
          * ##name: load_XML_File_to_MDE()
-         * @param fullFileName is a standard string.
+         * @param full_filename is a standard string.
          * @return A boolean value true if file exists and is open,
          * or false if file does not exist or failed to open.
          * @exception No exception handling.
          * @brief This member function is to read an XML file using the 
-         * reference to the string fullFileName and
+         * reference to the string full_filename and
          * to store the data from the file into an instance of class MDE.
          * 
          * @note The process is using a standard stack of pointers to
          * pointers of Instances of Objects Class MDE (std::stack<MDE**>).
          */
-        public: bool load_XML_File_to_MDE(const std::string & fullFileName);
+        public: bool load_XML_File_to_MDE(const std::string & full_filename);
+
+        /**
+         * 
+         * ##name: load_XML_File_to_vMDE(int & index,
+         * const std::string & full_filename)
+         * @param  & index is a reference to an integer that holds the
+         * vector index of the private member vMDE where to load the XML
+         * file.
+         * struct GLdata.
+         * @param  & full_filename is a reference to the path and name
+         * of the file to load.
+         * @return a bool is returned as false if fail to load or
+         * true if the file is loaded successfully.
+         * @see load_XML_File_to_MDE()
+         * @see replace_vMDE_with_XML()
+         * @exception No exception handling.
+         * @brief This member function is to read an XML file using the 
+         * reference to the string full_filename and
+         * to store the data from the file into an element 
+         * at a given index of the  private member vMDE 
+         * of the instance of a class of MDE.
+         */
+        public: bool load_XML_File_to_vMDE(int & index, const std::string & full_filename);
+
+        /**
+         * 
+         * ##name: replace_vMDE_with_XML(
+         * std::vector<int> & vect_index_file,
+         * const std::string & full_filename)
+         * @param  & index is a reference to an integer that holds the
+         * vector index of the private member vMDE where to load the XML
+         * file.
+         * @param  & full_filename is a reference to the path and name
+         * of the file to load.
+         * @return a bool is returned as false if fail to load or
+         * true if the file is loaded successfully.
+         * @see load_XML_File_to_vMDE()
+         * @see load_XML_File_to_MDE()
+         * @exception No exception handling.
+         * @brief This member function is to read an XML file using the 
+         * reference to the string full_filename and
+         * to store the data from the file into an element 
+         * at a given index of the  private member vMDE 
+         * of the instance of a class of MDE by replacing completely
+         * the existing element.
+         */
+        public: bool replace_vMDE_with_XML(std::vector<int> & vect_index_file, const std::string & full_filename);
 
         /**
          * 
@@ -684,6 +745,7 @@ class MDE {
         , std::string & output_Tag, std::string & buffer_Output
         , char delimiter1, char delimiter2);
 
+
         /**
          * 
          * ##name: trim_leading_space(std::string & io_string)
@@ -702,8 +764,8 @@ class MDE {
         /**
          * 
          * ##name: extract_File_to_Flat_MDE(
-         * const std::string & fullFileName)
-         * @param  & fullFileName is a reference to a standard string
+         * const std::string & full_filename)
+         * @param  & full_filename is a reference to a standard string
          * that holds the the name of a file to extract.
          * @return A boolean is returned.
          * @see load_XML_File_to_MDE()
@@ -718,7 +780,7 @@ class MDE {
          * (space charaters at the start) of the io_string parameter
          * @note This function can be optimised.
          */
-        private: bool extract_File_to_Flat_MDE(const std::string & fullFileName);
+        private: bool extract_File_to_Flat_MDE(const std::string & full_filename);
 
         /**
          * 
@@ -942,6 +1004,7 @@ class MDE {
          */
         
         /** @} */ // end of group_X
+
         
 };
 

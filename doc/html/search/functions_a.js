@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['vmde_5fget_5fby_5findex',['vMDE_get_by_index',['../group__group__get.html#gab0c2bc0e33b0b3c651e56141cefc2f8b',1,'MDE']]]
+  ['user_5finput_5fvmde',['user_input_vMDE',['../classMDE.html#abfe9ff721cd10f55b8f641ef7674d4ab',1,'MDE']]],
+  ['user_5fsave_5fto_5fxml_5ffile',['user_save_to_XML_file',['../group__group__io.html#gab0bb5af067d456163cd8d672945acc20',1,'MDE']]]
 ];

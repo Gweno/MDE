@@ -115,6 +115,12 @@ void MDE::clear_all_vMDE()
     else delete this;
 }
 
+void MDE::clear_all_vMDE_by_index(std::vector<int>& vect_index)
+{
+    std::vector<int>::const_iterator it=vect_index.begin();
+    (this->vMDE_get_by_index(vect_index,it))->clear_all_vMDE();
+}
+
 void MDE::delete_all_pt()
 {
     for (std::vector<MDE*>::iterator it_all=this->vMDE.begin();it_all!=this->vMDE.end();++it_all)
@@ -456,13 +462,13 @@ void MDE::trim_leading_space(std::string & io_string)
     }
 }
 
-bool MDE::load_XML_File_to_MDE(const std::string & fullFileName)
+bool MDE::load_XML_File_to_MDE(const std::string & full_filename)
 {
 
     MDE xmlFile;
     std::stack<MDE**> stack_MDE_pt;
     
-    if (xmlFile.extract_File_to_Flat_MDE(fullFileName)){
+    if (xmlFile.extract_File_to_Flat_MDE(full_filename)){
         std::vector<MDE*>::iterator it_start = xmlFile.vMDE.begin();
         this->process_flat_MDE_to_MDE(it_start, xmlFile, stack_MDE_pt);
         xmlFile.destructor_MDE();
@@ -473,8 +479,49 @@ bool MDE::load_XML_File_to_MDE(const std::string & fullFileName)
 }
 
 
+bool MDE::load_XML_File_to_vMDE(int & index, const std::string & full_filename)
+{
 
-bool MDE::extract_File_to_Flat_MDE(const std::string & fullFileName)
+    MDE xmlFile;
+    std::stack<MDE**> stack_MDE_pt;
+    
+    if (xmlFile.extract_File_to_Flat_MDE(full_filename)){
+        std::vector<MDE*>::iterator it_start = xmlFile.vMDE.begin();
+        this->vMDE[index]->process_flat_MDE_to_MDE(it_start, xmlFile, stack_MDE_pt);
+        xmlFile.destructor_MDE();
+        return true;
+    }
+    else return false;
+        
+}
+
+bool MDE::replace_vMDE_with_XML(std::vector<int> & vect_index_file, const std::string & full_filename)
+{
+    //~ newMDE.destructor_MDE();
+    std::vector<int>::const_iterator it_file;
+    bool input_file = false;
+    int index_file;
+    this->display_vector_int(vect_index_file);
+    //~ vect_index_file.push_back(0);
+    //~ newMDE.display_vector_int(vect_index_file);
+    this->clear_all_vMDE_by_index(vect_index_file);
+    std::vector<int> tmp_vect_index= vect_index_file;
+    tmp_vect_index.pop_back();
+    //~ vect_index_file.pop_back();
+    this->display_vector_int(tmp_vect_index);
+    index_file = vect_index_file.back();
+    printf("index file:%i", index_file);
+
+    // get vDME pointer at index just before last od vector of indexes, tehn load at that last index.
+    input_file = (this->vMDE_get_by_index(tmp_vect_index,it_file))->load_XML_File_to_vMDE(index_file, full_filename);
+    
+    // set the name of the file to the mde pointer at the given index, one level above what has been loaded
+    (this->vMDE_get_by_index(tmp_vect_index,it_file))->set_data(full_filename);
+
+    return input_file;
+}
+
+bool MDE::extract_File_to_Flat_MDE(const std::string & full_filename)
 {
     std::string bufferString;
     std::string bufferLine;
@@ -484,7 +531,7 @@ bool MDE::extract_File_to_Flat_MDE(const std::string & fullFileName)
     
     // Processing file
     ifstream fileEntity;
-    fileEntity.open(fullFileName.c_str(), ios::in);
+    fileEntity.open(full_filename.c_str(), ios::in);
     
     if(!fileEntity.is_open()){
         
@@ -497,7 +544,7 @@ bool MDE::extract_File_to_Flat_MDE(const std::string & fullFileName)
     fileEntity.seekg(0, ios::beg);        // set cursor at 0 from start of file
 
     this->name = "File";
-    this->data = fullFileName;
+    this->data = full_filename;
     
     while ((fileEntity.good()) && (!fileEntity.eof()))     // loop while extraction from file is possible
     {

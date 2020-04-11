@@ -1,0 +1,2 @@
+g++ -std=c++17 -g -c -Wall main.cpp -o main_d.o -I/usr/include/freetype2
+makefile:30: recipe for target 'main_d.o' failed
