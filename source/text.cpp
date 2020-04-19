@@ -43,6 +43,10 @@ GLint uniform_color_text;
 GLint uniform_tex;
 GLint uniform_bgcolor_text;
 GLint uniform_m_transform;
+GLint uniform_m_view;
+GLint uniform_m_model;
+GLint uniform_m_projection;
+GLint uniform_m_camera;
 
 // attributes
 GLint attribute_coord_text;
@@ -100,12 +104,17 @@ struct point3D {
 GLfloat *font_color = NULL;
 
 // some boolean flags
-bool move_it;
-bool display_box;
+bool move_it = false;
+bool display_box = false;
 
 bool left_click=false;
 bool right_click=false;
 
+//~ glm::vec3 cameraPos   = glm::vec3(0.0f, 0.0f,  3.0f);
+//~ glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+//~ glm::vec3 cameraUp    = glm::vec3(0.0f, 1.0f,  0.0f);
+
+//~ glm::mat4 m_view;
 
 /**
  * The atlas struct holds a texture that contains the visible US-ASCII characters
@@ -419,7 +428,12 @@ bool init_program(){
     attribute_coord3d_box = get_attrib(program_box, "coord3d_b");
     attribute_v_color_box = get_attrib(program_box, "v_color_b");
 
-    if(attribute_coord3d_box == -1 || attribute_v_color_box == -1)
+    uniform_m_model = get_uniform(program_box, "m_model");
+    uniform_m_projection = get_uniform(program_box, "m_projection");
+    uniform_m_view = get_uniform(program_box, "m_view");
+        
+
+    if(attribute_coord3d_box == -1 || attribute_v_color_box == -1 || uniform_m_model == -1 || uniform_m_projection == -1 || uniform_m_view == -1)
         return 0;
 
     // program for the text
@@ -433,8 +447,12 @@ bool init_program(){
     uniform_tex_text = get_uniform(program_text, "tex");
     uniform_color_text = get_uniform(program_text, "color");
     uniform_bgcolor_text = get_uniform(program_text, "bgcolor");
+
+    uniform_m_model = get_uniform(program_text, "m_model");
+    uniform_m_projection = get_uniform(program_text, "m_projection");
+    uniform_m_view = get_uniform(program_text, "m_view");
     
-    if(attribute_coord_text == -1 || uniform_tex_text == -1 || uniform_color_text == -1)
+    if(attribute_coord_text == -1 || uniform_tex_text == -1 || uniform_color_text == -1 || uniform_m_model == -1 || uniform_m_projection == -1 || uniform_m_view == -1)
         return 0;
     
 
@@ -797,9 +815,65 @@ void mouse_wheel(int button, int state, int x, int y)
    //~ }
 }
 
+void display(){
+    camera();
+    text_display();
+}
 
+
+void camera(){
+    //https://learnopengl.com/Getting-started/Camera
+    
+    // Camera position
+    glm::vec3 cameraPos = glm::vec3(-x_pos, -y_pos, -z_pos); // z is reversed
+
+    
+    // Camera direction
+    glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
+    glm::vec3 cameraDirection = glm::normalize(cameraPos - cameraTarget); //The name direction vector is not the best chosen name, since it is actually pointing in the reverse direction of what it is targeting. 
+    
+    // Right axis
+    // Product of 'world space' right by camera 
+    glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f); 
+    glm::vec3 cameraRight = glm::normalize(glm::cross(up, cameraDirection));
+    
+    // Up axis
+    glm::vec3 cameraUp = glm::cross(cameraDirection, cameraRight);
+    
+    // Front
+    glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+    
+    glm::mat4 m_view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp); //eye,center,up
+    
+    glUseProgram(program_text);
+    glUniformMatrix4fv(uniform_m_view, 1, GL_FALSE, glm::value_ptr(m_view));
+    
+    glUseProgram(program_box);
+    glUniformMatrix4fv(uniform_m_view, 1, GL_FALSE, glm::value_ptr(m_view));
+
+    glutPostRedisplay();
+}
+
+void init_matrices(){
+    
+    glm::mat4 m_model = glm::translate(glm::mat4(1.0f), glm::vec3(1.0, 0.0, -1.0));
+    glm::mat4 m_projection = glm::perspective(45.0f, 1.0f*screen_width/screen_height, 0.1f, 10.0f);
+    glm::mat4 m_view = glm::lookAt(glm::vec3(0.0, 0.0, 4.0), glm::vec3(0.0, 0.0,-1.0), glm::vec3(0.0, 1.0, 0.0));//eye,center,up
+    
+    glUseProgram(program_text);
+    glUniformMatrix4fv(uniform_m_model, 1, GL_FALSE, glm::value_ptr(m_model));
+    glUniformMatrix4fv(uniform_m_projection, 1, GL_FALSE, glm::value_ptr(m_projection));
+    glUniformMatrix4fv(uniform_m_view, 1, GL_FALSE, glm::value_ptr(m_view));
+    
+    glUseProgram(program_box);
+    glUniformMatrix4fv(uniform_m_model, 1, GL_FALSE, glm::value_ptr(m_model));
+    glUniformMatrix4fv(uniform_m_projection, 1, GL_FALSE, glm::value_ptr(m_projection));
+    glUniformMatrix4fv(uniform_m_view, 1, GL_FALSE, glm::value_ptr(m_view));
+    
+}
 
 void onIdle() {
+//~ void camera() {
     float move;
     float angle;
     if (!move_it){
@@ -816,34 +890,28 @@ void onIdle() {
     glm::vec3 axis_x(1, 0, 0);
     glm::vec3 axis_y(0, 1, 0);
     glm::vec3 axis_z(0, 0, 1);
-    //~ glm::mat4 m_translate = glm::translate(glm::mat4(1.0f), glm::vec3(0.0, move ,0.0));
-    //~ glm::mat4 m_translate = glm::translate(glm::mat4(1.0f), glm::vec3(move, 0.0 ,0.0));
+    glm::mat4 m_translate = glm::translate(glm::mat4(1.0f), glm::vec3(move, 0.0 ,0.0));
     
-    //~ glm::mat4 m_translate = glm::translate(glm::mat4(1.0f), glm::vec3(0.0 ,0.0, move));
-    glm::mat4 m_translate = glm::translate(glm::mat4(1.0f), glm::vec3(x_pos ,y_pos, z_pos));
+    glm::mat4 anim = glm::rotate(glm::mat4(1.0f), glm::radians(angle), axis_y);
+    glm::mat4 anim2 = glm::rotate(glm::mat4(1.0f), glm::radians(angle), axis_z);
     
-    //~ glm::mat4 anim = glm::rotate(glm::mat4(1.0f), glm::radians(angle), axis_y);
-    //~ glm::mat4 anim2 = glm::rotate(glm::mat4(1.0f), glm::radians(angle), axis_z);
+    glm::mat4 m_model = glm::translate(glm::mat4(1.0f), glm::vec3(1.0, 0.0, -1.0));
+    glm::mat4 m_projection = glm::perspective(45.0f, 1.0f*screen_width/screen_height, 0.1f, 10.0f);
     
-    glm::mat4 anim = glm::rotate(glm::mat4(1.0f), glm::radians(x_rot), axis_x);
-    glm::mat4 anim2 = glm::rotate(glm::mat4(1.0f), glm::radians(y_rot), axis_y);
+    m_model = m_model * m_translate * anim2 * anim;
     
-    glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(1.0, 0.0, -1.0));
-    glm::mat4 view = glm::lookAt(glm::vec3(0.0, 0.0, 4.0), glm::vec3(0.0, 0.0,-1.0), glm::vec3(0.0, 1.0, 0.0));//eye,center,up
-    glm::mat4 projection = glm::perspective(45.0f, 1.0f*screen_width/screen_height, 0.1f, 10.0f);
-    
-    glm::mat4 m_transform = projection * view * model * m_translate * anim2 * anim;
-    
-    // program_text is the current testing: separate texts on separate boxes
     glUseProgram(program_text);
-    glUniformMatrix4fv(uniform_m_transform, 1, GL_FALSE, glm::value_ptr(m_transform));
+    glUniformMatrix4fv(uniform_m_model, 1, GL_FALSE, glm::value_ptr(m_model));
+    glUniformMatrix4fv(uniform_m_projection, 1, GL_FALSE, glm::value_ptr(m_projection));
     
-    // program_box is for the box
     glUseProgram(program_box);
-    glUniformMatrix4fv(uniform_m_transform, 1, GL_FALSE, glm::value_ptr(m_transform));
-    
+    glUniformMatrix4fv(uniform_m_model, 1, GL_FALSE, glm::value_ptr(m_model));
+    glUniformMatrix4fv(uniform_m_projection, 1, GL_FALSE, glm::value_ptr(m_projection));
+
     glutPostRedisplay();
+
 }
+
 
 void free_resources() {
     glDeleteProgram(program_box);

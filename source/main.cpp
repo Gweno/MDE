@@ -147,6 +147,7 @@ int main (int argc, char **argv){
     // stores other useful variables.
     // arguments are:
     // -v, --version: get version
+    // -e, --nomenu: GL display only, use all default or runtime arguments
     // -g, --glmode: for graphic display mode
     // -f, --file filename: for loading a file before start
     // -n, --font font: set the font
@@ -198,9 +199,16 @@ int main (int argc, char **argv){
         if (std::regex_match (choice[i], std::regex("(-g)|(--glmode)")))
 
             {
-                //~ cout << choice[i]<< endl;
                 GL_on = true;  //switch to openGL 3D mode
                 printf("OpenGL 3D mode is switched on\n");
+            }
+        // set GL mode on
+        if (std::regex_match (choice[i], std::regex("(-e)|(--nomenu)")))
+
+            {
+                display_menu = false;  // no text mode menu
+                GL_on = true;  //switch to openGL 3D mode
+                printf("No Text Menu, straigth to GL\n");
             }
         // load file
         if (std::regex_match (choice[i], std::regex("(-f)|(--file)")))
@@ -481,7 +489,7 @@ int main (int argc, char **argv){
                 printf("**********************************\n");
                 printf("\n");
                 
-                display_menu=true;
+                //~ display_menu=true;
                 
                 while(display_menu){
                 
@@ -1200,16 +1208,20 @@ int main (int argc, char **argv){
                             
                             init_text_MDE(newMDE,user_origin, offset, offset_rule, user_padding, user_color,user_bg_color);
                             init_font_color(user_font_color);
+                            init_matrices();
                             
-                            glutDisplayFunc(text_display);
+                            glutDisplayFunc(display);
+                            //~ glutDisplayFunc(text_display);
                             glutKeyboardFunc(keyDown);
-                            glutIdleFunc(onIdle);
                             
                             // check glut event: keyboard and mouse
                             //~ glutPassiveMotionFunc(mouse_movement); //check for Mouse movement with button up
                             glutMotionFunc(movement_button_pressed); //check for Mouse movement with button down
                             glutMouseFunc(mouse_wheel);
                             //~ glutKeyboardFunc(keyDown);                
+                            //~ glutDisplayFunc(camera);
+                            //~ glutIdleFunc(camera);
+                            glutIdleFunc(onIdle);
                             
             
                             glEnable(GL_BLEND);
