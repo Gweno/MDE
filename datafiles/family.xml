@@ -1,0 +1,67 @@
+<Family>
+    Capp
+    <Parents>
+        
+        <Papa>
+            Gweno
+            <Age>
+                45
+            </Age>
+            <Nationality>
+                French
+            </Nationality>
+        </Papa>
+        <Maman>
+            Gwen
+            <Age>
+                44
+            </Age>
+            <Nationality>
+                French
+            </Nationality>
+        </Maman>
+    </Parents>
+    <Children>
+        
+        <Elder>
+            Kerian
+            <Age>
+                8
+            </Age>
+            <Nationality>
+                French
+            </Nationality>
+        </Elder>
+        <Middle>
+            Anakin
+            <Age>
+                6
+            </Age>
+            <Nationality>
+                English and French
+            </Nationality>
+        </Middle>
+        <Younger>
+            Elwen
+            <Age>
+                4
+            </Age>
+            <Nationality>
+                English and French
+            </Nationality>
+        </Younger>
+    </Children>
+    <Cats>
+        
+        <Elder>
+            Iris
+            <Age>
+                22 months
+            </Age>
+        </Elder>
+        <Younger>
+            Eren
+        </Younger>
+    </Cats>
+</Family>
+

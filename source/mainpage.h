@@ -1,6 +1,6 @@
 /*! \mainpage Multidimensional Data Entity
  * 
- *  Version: 0.2.1
+ *  Version: 0.3.2
  *
  * \section intro_sec MDE in a glance
  *

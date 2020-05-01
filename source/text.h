@@ -61,10 +61,8 @@ bool init_font(uint uFontSize,const char *uFontFilename);
  */
 bool init_program();
 
-//~ void init_color(vertex3D color, std::vector<vertex3D> &whd);
 void init_color(vertex3Dalpha color_alpha, vertex3Dalpha bg_color_alpha, std::vector<vertex3D> &whd);
 void init_vectors(std::vector<vertex3D> &vectors_boxes);
-//~ void init_text_MDE(MDE &my_entity,vertex3D &origin, std::vector<vertex3D> &offset, std::vector<vertex3D> &offset_rule, vertex2D &padding, vertex3D color);
 void init_text_MDE(MDE &my_entity,vertex3D &origin, std::vector<vertex3D> &offset, std::vector<vertex3D> &offset_rule, vertex2D &padding, vertex3Dalpha &color_alpha, vertex3Dalpha &bg_color_alpha);
 void init_text_coordinates(GLfloat x, GLfloat y, GLfloat z);
 
@@ -78,7 +76,6 @@ void create_vector(std::vector<vertex3D> &vector3D,std::vector<vertex3D> &v_orig
 void create_coord_vector_text(const char *text, atlas * a, vertex3D origin, vertex2D &window_coord_scale);
 void onIdle();
 void camera();
-void camera_old();
 void display();
 void init_matrices();
 
@@ -86,12 +83,10 @@ void free_resources();
 
 void process_v_MDE_data(std::vector<GLdata> & v_MDE_data,std::vector<vertex3D> & v_offset, std::vector<vertex3D> & v_offset_rule);
 
-void keyDown(unsigned char key, int x, int y);
-
-void mouse_movement(int x, int y);
-void movement_button_pressed(int x, int y);
+void keyboard(unsigned char key, int x, int y);
+void special_key(int key, int x, int y);
 void mouse_wheel(int button, int state, int x, int y);
-
+void mouse_movement(int xpos, int ypos);
  /**
  * 
  * ##name: add_padding(std::vector<vertex3D> & v_origin,std::vector<vertex3D> & v_origin_fb, vertex2D & padding)
@@ -109,8 +104,6 @@ void add_padding(std::vector<vertex3D> & v_origin,std::vector<vertex3D> & v_orig
 
 
 void init_font_color(std::vector<GLfloat> &color);
-//~ void init_font_color(std::vector<GLfloat> color);
-
 
 void set_options(bool move_it, bool display_box);
 

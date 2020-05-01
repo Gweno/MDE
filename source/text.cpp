@@ -110,9 +110,30 @@ bool display_box = false;
 bool left_click=false;
 bool right_click=false;
 
-//~ glm::vec3 cameraPos   = glm::vec3(0.0f, 0.0f,  3.0f);
-//~ glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-//~ glm::vec3 cameraUp    = glm::vec3(0.0f, 1.0f,  0.0f);
+glm::vec3 cameraPos   = glm::vec3(0.0f, 0.0f,  3.0f);
+glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+glm::vec3 cameraUp    = glm::vec3(0.0f, 1.0f,  0.0f);
+
+//~ const float cameraSpeed = 0.05f; // adjust accordingly
+float cameraSpeed = 0.05f; // adjust accordingly
+
+
+float deltaTime = 0.0f;	// Time between current frame and last frame
+float lastFrame = 0.0f; // Time of last frame
+
+float yaw   = -90.0f;	// yaw is initialized to -90.0 degrees since a yaw of 0.0 results in a direction vector pointing to the right so we initially rotate a bit to the left.
+float pitch =  0.0f;
+float lastX =  800.0f / 2.0;
+float lastY =  600.0 / 2.0;
+float fov   =  45.0f;
+
+bool firstMouse = true;
+
+//~ int xOrigin = -1;
+
+//~ // actual vector representing the camera's direction
+//~ float lx=0.0f,lz=-1.0f, ly = 0.0f;
+
 
 //~ glm::mat4 m_view;
 
@@ -740,82 +761,45 @@ void set_options(bool a_move_it, bool a_display_box){
     printf("display box:%u\n", display_box);
 }
 
-//~ void mouse_movement(int x, int y) {
-    //~ if(left_click){
-    //~ printf("left click!\n");
-    //~ float diffx=x-lastx; //check the difference between the current x and the last x position
-    //~ float diffy=y-lasty; //check the difference between the current y and the last y position
-    //~ lastx=x; //set lastx to the current x position
-    //~ lasty=y; //set lasty to the current y position
-    //~ x_rot += (float) diffy/5; //set the xrot to xrot with the addition of the difference in the y position
-    //~ y_rot += (float) diffx/5;    //set the xrot to yrot with the addition of the difference in the x position
-    //~ if (x_rot >360) x_rot -= 360;
-    //~ if (x_rot < -360) x_rot += 360;
-    //~ if (y_rot >360) y_rot -= 360;
-    //~ if (y_rot < -360) y_rot += 360;
-    //~ }
-    
-    //~ }
-
-void movement_button_pressed(int x, int y) {
-    if(left_click){
-    float diffx=x-lastx; //check the difference between the current x and the last x position
-    float diffy=y-lasty; //check the difference between the current y and the last y position
-    lastx=x; //set lastx to the current x position
-    lasty=y; //set lasty to the current y position
-    x_rot += (float) diffy/5; //set the xrot to xrot with the addition of the difference in the y position
-    y_rot += (float) diffx/5;    //set the xrot to yrot with the addition of the difference in the x position
-    if (x_rot >360) x_rot -= 360;
-    if (x_rot < -360) x_rot += 360;
-    if (y_rot >360) y_rot -= 360;
-    if (y_rot < -360) y_rot += 360;
-    }
-
-    if(right_click){
-    float diffx=x-lastx; //check the difference between the current x and the last x position
-    float diffy=y-lasty; //check the difference between the current y and the last y position
-    lastx=x; //set lastx to the current x position
-    lasty=y; //set lasty to the current y position
-    //~ if(diffx<0) x_pos += ((float) diffx-250)/500;
-    //~ if(diffx>0) x_pos += (250-(float) diffx)/500;
-    //~ if(diffy<0) y_pos += (250-(float) diffy)/500;
-    //~ if(diffy>0) y_pos += ((float) diffy-250)/500;
-    if(diffx<0) x_pos += ((float) diffx-250)/7500;
-    if(diffx>0) x_pos += (250-(float) diffx)/7500;
-    if(diffy<0) y_pos += (250-(float) diffy)/7500;
-    if(diffy>0) y_pos += ((float) diffy-250)/7500;
-    }
-}
-
 void mouse_wheel(int button, int state, int x, int y)
 {
-   // Wheel reports as button 3(scroll up) and button 4(scroll down)
-    //~ float diffx=x-lastx; //check the difference between the current x and the last x position
-    //~ float diffy=y-lasty; //check the difference between the current y and the last y position
+    //~ printf("Button %d is %s At %d %d\n", button, (state == GLUT_DOWN) ? "Down" : "Up", x, y);
+    if ((button == 0) && (state == GLUT_DOWN))
+    {
+        // first reset firstMouse to get init mouse position in mouse callback
+        firstMouse = true;
+        left_click=true;// It's a wheel event
+    }
+    if ((button == 0) && (state == GLUT_UP)) left_click=false;// It's a wheel event
+    if ((button == 2) && (state == GLUT_DOWN)) right_click=true;// It's a wheel event
+    if ((button == 2) && (state == GLUT_UP)) right_click=false;// It's a wheel event
+    // if middle click do nothing
+    if (button == 1)
+        {
+           left_click=false;
+           right_click=false;
+        }
+    if ((button == 3) && (state == GLUT_UP)) // Scroll up
+        {
+            if (fov >= 1.0f && fov <= 45.0f) fov --;
+            if (fov <= 1.0f) fov = 1.0f;
+            if (fov >= 45.0f) fov = 45.0f;
+        }
+    if ((button == 4) && (state == GLUT_UP)) // Scroll down
+        {
+            if (fov >= 1.0f && fov <= 45.0f) fov ++;
+            if (fov <= 1.0f) fov = 1.0f;
+            if (fov >= 45.0f) fov = 45.0f;
+        }
+    }
    
-   if ((button == 0) || (state == GLUT_DOWN)) left_click=true;// It's a wheel event
-   if ((button == 0) || (state == GLUT_UP)) left_click=false;// It's a wheel event
-   if ((button == 2) || (state == GLUT_DOWN)) right_click=true;// It's a wheel event
-   if ((button == 2) || (state == GLUT_UP)) right_click=false;// It's a wheel event
-   // if middle click do nothing
-   if (button == 1){
-       left_click=false;
-       right_click=false;
-   }
-   if ((button == 3) || (button == 4)) // It's a wheel event
-   {
-       // Each wheel event reports like a button click, GLUT_DOWN then GLUT_UP
-       if (state == GLUT_UP) return; // Disregard redundant GLUT_UP events
-       //~ printf("Scroll %s At %d %d\n", (button == 3) ? "Up" : "Down", x, y);
-       (button == 3) ? z_pos++ : z_pos--;
-    
-   }
-   //~ else{  // normal button event
-       //~ printf("Button %d is %s At %d %d\n", button, (state == GLUT_DOWN) ? "Down" : "Up", x, y);
-   //~ }
-}
-
 void display(){
+
+    // calculate frame rate for consistent camera velocity
+    float currentFrame = glutGet(GLUT_ELAPSED_TIME);
+    deltaTime = currentFrame - lastFrame;
+    lastFrame = currentFrame;
+    
     camera();
     text_display();
 }
@@ -823,10 +807,6 @@ void display(){
 
 void camera(){
     //https://learnopengl.com/Getting-started/Camera
-    
-    // Camera position
-    glm::vec3 cameraPos = glm::vec3(-x_pos, -y_pos, -z_pos); // z is reversed
-
     
     // Camera direction
     glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -838,18 +818,20 @@ void camera(){
     glm::vec3 cameraRight = glm::normalize(glm::cross(up, cameraDirection));
     
     // Up axis
-    glm::vec3 cameraUp = glm::cross(cameraDirection, cameraRight);
-    
-    // Front
-    glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+    cameraUp = glm::cross(cameraDirection, cameraRight);
     
     glm::mat4 m_view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp); //eye,center,up
     
+    // Projection matrix modified by field of view (fov) directed by the camera zoom from the mouse wheel
+    glm::mat4 m_projection = glm::perspective(glm::radians(fov), 1.0f*screen_width/screen_height, 0.1f, 10.0f);
+    
     glUseProgram(program_text);
     glUniformMatrix4fv(uniform_m_view, 1, GL_FALSE, glm::value_ptr(m_view));
+    glUniformMatrix4fv(uniform_m_projection, 1, GL_FALSE, glm::value_ptr(m_projection));
     
     glUseProgram(program_box);
     glUniformMatrix4fv(uniform_m_view, 1, GL_FALSE, glm::value_ptr(m_view));
+    glUniformMatrix4fv(uniform_m_projection, 1, GL_FALSE, glm::value_ptr(m_projection));
 
     glutPostRedisplay();
 }
@@ -896,17 +878,17 @@ void onIdle() {
     glm::mat4 anim2 = glm::rotate(glm::mat4(1.0f), glm::radians(angle), axis_z);
     
     glm::mat4 m_model = glm::translate(glm::mat4(1.0f), glm::vec3(1.0, 0.0, -1.0));
-    glm::mat4 m_projection = glm::perspective(45.0f, 1.0f*screen_width/screen_height, 0.1f, 10.0f);
+    //~ glm::mat4 m_projection = glm::perspective(45.0f, 1.0f*screen_width/screen_height, 0.1f, 10.0f);
     
     m_model = m_model * m_translate * anim2 * anim;
     
     glUseProgram(program_text);
     glUniformMatrix4fv(uniform_m_model, 1, GL_FALSE, glm::value_ptr(m_model));
-    glUniformMatrix4fv(uniform_m_projection, 1, GL_FALSE, glm::value_ptr(m_projection));
+    //~ glUniformMatrix4fv(uniform_m_projection, 1, GL_FALSE, glm::value_ptr(m_projection));
     
     glUseProgram(program_box);
     glUniformMatrix4fv(uniform_m_model, 1, GL_FALSE, glm::value_ptr(m_model));
-    glUniformMatrix4fv(uniform_m_projection, 1, GL_FALSE, glm::value_ptr(m_projection));
+    //~ glUniformMatrix4fv(uniform_m_projection, 1, GL_FALSE, glm::value_ptr(m_projection));
 
     glutPostRedisplay();
 
@@ -923,12 +905,104 @@ void free_resources() {
     glDeleteBuffers(1, &ibo_box_elements);
 }
 
+void mouse_movement(int xpos, int ypos)
+{
+    printf("left: %u, right:%u\n", left_click, right_click);
+    
+    if(firstMouse)
+    {
+        lastX = xpos;
+        lastY = ypos;
+        //~ firstMouse = false;
+        firstMouse = false;
+    }
+    if(left_click)
+    {
+        
+        float xoffset = xpos - lastX;
+        float yoffset = lastY - ypos; 
+        lastX = xpos;
+        lastY = ypos;
+    
+        float sensitivity = 0.05;
+        xoffset *= sensitivity;
+        yoffset *= sensitivity;
+    
+        yaw   += xoffset;
+        pitch += yoffset;
+    
+        if(pitch > 89.0f)
+            pitch = 89.0f;
+        if(pitch < -89.0f)
+            pitch = -89.0f;
+    
+        glm::vec3 direction;
+        direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+        direction.y = sin(glm::radians(pitch));
+        direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+        cameraFront = glm::normalize(direction);
+    }
+}  
 
-void keyDown(unsigned char key, int x, int y)
+void special_key(int key, int x, int y){
+    
+    //set consistent camera speed with frame rate
+    cameraSpeed = (2.5f * deltaTime)/1000;
+    printf("\n get cameraSpeed:%f\n", cameraSpeed);
+    
+    switch(key)
+    {
+        case GLUT_KEY_UP:
+            cameraPos += cameraSpeed * cameraFront;
+            break;
+        case GLUT_KEY_DOWN:
+            cameraPos -= cameraSpeed * cameraFront;
+            break;
+        case GLUT_KEY_LEFT:
+            cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+            break;
+        case GLUT_KEY_RIGHT:
+            cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+            break;
+    }
+}
+
+
+void keyboard(unsigned char key, int x, int y)
 {
     // delete all programs and buffers then quit when 'ESC' is pressed.
-    if (key==27) {
-        free_resources();
-        glutLeaveMainLoop();   // Check if 'ESC' is pressed
+    switch (key)
+    {
+        case 'w':
+            cameraPos += cameraSpeed * cameraFront;
+            break;
+        case 's':
+            cameraPos -= cameraSpeed * cameraFront;
+            break;
+        case 'a':
+            cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+            break;
+        case 'd':
+            cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+            break;
+        //~ case '+':
+            //~ cameraSpeed +=0.05;
+            //~ break;
+        //~ case '-':
+            //~ (cameraSpeed >= 0) ? cameraSpeed -=0.05 : cameraSpeed = 0.05;
+            //~ printf("speed: %.2f/n", cameraSpeed);
+            //~ break;
+            
+       // Check if 'ESC' is pressed
+        case 27:
+            free_resources();
+            glutLeaveMainLoop();
+            break;
+        
     }
+    
+    //~ if (key==27) {
+        //~ free_resources();
+        //~ glutLeaveMainLoop();   // Check if 'ESC' is pressed
+    //~ }
 }

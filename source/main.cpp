@@ -51,7 +51,7 @@ namespace fs = std::experimental::filesystem;
 
 #include "./common/shader_utils.h"
 
-#define VERSION_INFO "v0.2.1"
+#define VERSION_INFO "v0.3.2"
 
 // declaration for text.cpp
 int window_width=800, window_height=600;
@@ -1211,16 +1211,12 @@ int main (int argc, char **argv){
                             init_matrices();
                             
                             glutDisplayFunc(display);
-                            //~ glutDisplayFunc(text_display);
-                            glutKeyboardFunc(keyDown);
+                            glutKeyboardFunc(keyboard);
+                            glutSpecialFunc(special_key);
                             
                             // check glut event: keyboard and mouse
-                            //~ glutPassiveMotionFunc(mouse_movement); //check for Mouse movement with button up
-                            glutMotionFunc(movement_button_pressed); //check for Mouse movement with button down
+                            glutMotionFunc(mouse_movement); //check for Mouse movement with button down
                             glutMouseFunc(mouse_wheel);
-                            //~ glutKeyboardFunc(keyDown);                
-                            //~ glutDisplayFunc(camera);
-                            //~ glutIdleFunc(camera);
                             glutIdleFunc(onIdle);
                             
             

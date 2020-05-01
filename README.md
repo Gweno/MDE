@@ -1,9 +1,9 @@
-#####Doc version: 2
+#####Doc version: 2.1
 #####Author: Gwenole Capp
 #####email: gwenole.capp@gmail.com
 ---
 ## <p align="center">Multidimensional Data Entity - GL display</p>
-### <p align="center">Version 0.2.1</p>
+### <p align="center">Version 0.3.2</p>
 
 A Multidimensional Data Entity is an instance of an object of class **MDE**.
 The base class **MDE** has 3 member variables:
@@ -198,8 +198,12 @@ The openGL mode displays the instance of an *MDE* object in an openGL context, i
 ---
 
 ### Mouse control in Graphic Mode menu:
-#### Use Mouse <big>*Left click*<big> to move camera right, left, up or down.
-#### Use Mouse <big>*Right click*<big> to rotate camera on x or y axis.
+#### Use Mouse <big>*Left click*<big> to look around right, left, up or down with the camera .
 #### Use Mouse <big>*Wheel*<big> to zoom in or out.
 ### Keyboard control in Graphic Mode menu:
+#### Use keys WASD or arrow keys to move camera:  
+#####&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; W or up to move forward
+#####&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; S or down to move backward
+#####&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A or left to move left
+#####&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; D or right to move right
 #### Use key <big>*ESC*<big> to exit the program.
