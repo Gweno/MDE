@@ -99,6 +99,7 @@ int main (int argc, char **argv){
 
     // initialise default value
     user_font= "../fonts/FreeSans.ttf";
+    //~ user_font= "../fonts/SansForgetica-Regular.otf";
     user_font_size = 48;
     
     // init/declare string variables
@@ -119,7 +120,7 @@ int main (int argc, char **argv){
     float H_padding_user = 0.0;
     float V_padding_user = 0.0;
 
-    // Offset rules
+    // Offset rules : default values
     std::vector<vertex3D> offset_rule;
     vertex3D off_rule_name_data = {0.5,0.2,0.0};
     vertex3D off_rule_index = {0.0,0.0,-0.2};
@@ -136,11 +137,12 @@ int main (int argc, char **argv){
 
     // display runtime arguments
     std::cout << "Have " << argc << " arguments:" << std::endl;
-    for (int i = 0; i < argc; ++i) {
+    for (int i = 0; i < argc; ++i)
+    {
         std::cout << i << ", " << argv[i] << std::endl;
         choice[i]=std::string(argv[i]);
     }
-        std::cout << VERSION_INFO << std::endl;
+    std::cout << VERSION_INFO << std::endl;
     
     // Check all arguments provided
     // 'Turn on' Relevant boolean variables and
@@ -166,44 +168,78 @@ int main (int argc, char **argv){
     
     newMDE.set_name("MDE");
     newMDE.set_data("master");
-    newMDE.new_vMDE_element();
     
     pid_t pid = getpid();
     printf("pid: %lu\n", pid);
     
+    newMDE.new_vMDE_element();
     newMDE.set_name_vMDE_back("pid");
     newMDE.set_data_vMDE_back(to_string(pid));
     
-    for (int i = 0; i < argc; ++i) {
+    // load all runtime arguments into vMDE "arguments"
+    newMDE.new_vMDE_element();
+    newMDE.set_name_vMDE_back("arguments");
+    newMDE.set_data_vMDE_back(to_string(argc));
+    
+    
+    std::vector<int> vect_index_file = {1};
+    //~ int index_file = 0;
+    std::vector<int>::const_iterator it_file;
+    
+    //~ for (int i = 0; i < argc; ++i)
+    //~ {
+        //~ (newMDE.vMDE_get_by_index(vect_index_file,it_file))->new_vMDE_element();
+        //~ (newMDE.vMDE_get_by_index(vect_index_file,it_file))->set_name_vMDE_back("arg"+to_string(i));
+        //~ (newMDE.vMDE_get_by_index(vect_index_file,it_file))->set_data_vMDE_back(argv[i]);
+    //~ }
+    
+    //~ (newMDE.vMDE_get_by_index(vect_index_file,it_file))->char_array_to_vMDE_data(argc,argv);
+    (newMDE.get_vMDE({1}))->char_array_to_vMDE_data(argc,argv);
+    
+    //~ for (std::vector<MDE*>::iterator it=this->vMDE.begin();it!=this->vMDE.end();++it)// vMDE is private...
+    
+    //~ std::cout << "arguments through mde" << (newMDE.get_vMDE_test({2,0},it_file)).data << std::endl;std::cout << "arguments through mde" << i << ": " << (newMDE.get_vMDE_test({2,i},it_file)).data << std::endl;
+    std::cout << "test arguments through mde" << std::endl;
+    uint it_vect_index = 0;
+    //~ std::cout << "arguments through mde: " << (newMDE.get_vMDE_test({},it_vect_index))[1]->data << std::endl;
+    //~ (newMDE.get_vMDE_test({},it_file)).display_data();
+    
+    // loop on arguments to modify parameters
+    for (int i = 0; i < argc; ++i)
+    {
         std::cout << "arguments " << i << ": " << choice[i] << std::endl;
+        //~ std::cout << "arguments through mde" << i << ": " << (newMDE.get_vMDE({1}))[i].data << std::endl;
+        std::vector<int> c_v_index = {1};
+        int c_index = 0;
+        std::vector<MDE *> v_choice = newMDE.loop_test3(c_v_index,c_index);
         
         // get version (then exit)
-        if (std::regex_match (choice[i], std::regex("(-v)|(--version)")))
+        if (std::regex_match (v_choice[i]->data, std::regex("(-v)|(--version)")))
             {
                 printf("Version: %s\n", VERSION_INFO);
                 return 0;
             }
         // test. move it or not
-        if (std::regex_match (choice[i], std::regex("(-m)|(--move)")))
+        if (std::regex_match (v_choice[i]->data, std::regex("(-m)|(--move)")))
             {
                 printf("Move it!\n");
                 move_it = true;
             }
         // test. box display or not
-        if (std::regex_match (choice[i], std::regex("(-b)|(--box)")))
+        if (std::regex_match (v_choice[i]->data, std::regex("(-b)|(--box)")))
             {
                 printf("Display box!\n");
                 display_box = true;
             }
         // set GL mode on
-        if (std::regex_match (choice[i], std::regex("(-g)|(--glmode)")))
+        if (std::regex_match (v_choice[i]->data, std::regex("(-g)|(--glmode)")))
 
             {
                 GL_on = true;  //switch to openGL 3D mode
                 printf("OpenGL 3D mode is switched on\n");
             }
         // set GL mode on
-        if (std::regex_match (choice[i], std::regex("(-e)|(--nomenu)")))
+        if (std::regex_match (v_choice[i]->data, std::regex("(-e)|(--nomenu)")))
 
             {
                 display_menu = false;  // no text mode menu
@@ -211,16 +247,16 @@ int main (int argc, char **argv){
                 printf("No Text Menu, straigth to GL\n");
             }
         // load file
-        if (std::regex_match (choice[i], std::regex("(-f)|(--file)")))
+        if (std::regex_match (v_choice[i]->data, std::regex("(-f)|(--file)")))
             {
-                cout << choice[i]<< endl;
+                cout << v_choice[i]->data<< endl;
                 //~ input_file = true;
                 if (i<argc-1){
-                    cout << choice[i+1]<< endl;
+                    cout << v_choice[i+1]->data<< endl;
                     //~ filename=choice[i+1];
                     //~ fullfilename=datasource_path + filename;
                     //~ fullfilename=datasource_path + filename;
-                    full_filename=choice[i+1];
+                    full_filename=v_choice[i+1]->data;
                     std::cout << "set file to load" << std::endl;
                 }
                 else {
@@ -230,13 +266,13 @@ int main (int argc, char **argv){
 
             }
         // set box frame color
-        if (std::regex_match (choice[i], std::regex("(-c)|(--box-color)")))
+        if (std::regex_match (v_choice[i]->data, std::regex("(-c)|(--box-color)")))
             {
-                //~ cout << choice[i]<< endl;
+                //~ cout << choice[i]->data<< endl;
                 //~ input_color= true;                
                 if (i<argc-1){
                     //~ cout << choice[i+1]<< endl;
-                    istringstream is(choice[i+1]);
+                    istringstream is(v_choice[i+1]->data);
                     std::string part;
                     getline(is, part, ',');
                     red_user = std::stof(part);
@@ -255,12 +291,12 @@ int main (int argc, char **argv){
                 }
             }
         // set font
-        if (std::regex_match (choice[i], std::regex("(-n)|(--font)")))
+        if (std::regex_match (v_choice[i]->data, std::regex("(-n)|(--font)")))
             {
                 //~ input_font= true;                
                 if (i<argc-1){
-                    cout << choice[i+1]<< endl;
-                    istringstream is(choice[i+1]);
+                    cout << v_choice[i+1]->data<< endl;
+                    istringstream is(v_choice[i+1]->data);
                     std::string part;
                     //~ std::string font_name;
                     getline(is, part, ',');
@@ -280,14 +316,14 @@ int main (int argc, char **argv){
 
             
         // set font size
-        if (std::regex_match (choice[i], std::regex("(-s)|(--font-size)")))
+        if (std::regex_match (v_choice[i]->data, std::regex("(-s)|(--font-size)")))
             {
                 //~ cout << choice[i]<< endl;
                 //~ cout << std::string::npos<< endl;
                 //~ input_font_size= true;                
                 if (i<argc-1){
-                    cout << choice[i+1]<< endl;
-                    istringstream is(choice[i+1]);
+                    cout << v_choice[i+1]->data<< endl;
+                    istringstream is(v_choice[i+1]->data);
                     std::string part;
                     getline(is, part, ',');
                     user_font_size = std::stof(part);
@@ -302,14 +338,14 @@ int main (int argc, char **argv){
 
 
         // set font color
-        if (std::regex_match (choice[i], std::regex("(-o)|(--font-color)")))
+        if (std::regex_match (v_choice[i]->data, std::regex("(-o)|(--font-color)")))
             {
                 //~ cout << choice[i]<< endl;
                 //~ cout << std::string::npos<< endl;
                 //~ input_font_color= true;                
                 if (i<argc-1){
-                    cout << choice[i+1]<< endl;
-                    istringstream is(choice[i+1]);
+                    cout << v_choice[i+1]->data<< endl;
+                    istringstream is(v_choice[i+1]->data);
                     std::string part;
                     getline(is, part, ',');
                     red_font_user = std::stof(part);
@@ -328,14 +364,14 @@ int main (int argc, char **argv){
                 }
             }
         // set background color
-        if (std::regex_match (choice[i], std::regex("(-d)|(--background-color)")))
+        if (std::regex_match (v_choice[i]->data, std::regex("(-d)|(--background-color)")))
             {
                 //~ cout << choice[i]<< endl;
                 //~ cout << std::string::npos<< endl;
                 //~ input_bg_color= true;                
                 if (i<argc-1){
-                    cout << choice[i+1]<< endl;
-                    istringstream is(choice[i+1]);
+                    cout << v_choice[i+1]->data<< endl;
+                    istringstream is(v_choice[i+1]->data);
                     std::string part;
                     getline(is, part, ',');
                     red_bg_user = std::stof(part);
@@ -354,13 +390,13 @@ int main (int argc, char **argv){
                 }
             }
         // set coordinates of origin
-        if (std::regex_match (choice[i], std::regex("(-a)|(--origin)")))
+        if (std::regex_match (v_choice[i]->data, std::regex("(-a)|(--origin)")))
             {
                 //~ cout << choice[i]<< endl;
                 //~ input_coord= true;                
                 if (i<argc-1){
 
-                    istringstream is(choice[i+1]);
+                    istringstream is(v_choice[i+1]->data);
                     std::string part;
                     getline(is, part, ',');
                     X_user = std::stof(part);
@@ -377,13 +413,13 @@ int main (int argc, char **argv){
                 }
             }
         // padding
-        if (std::regex_match (choice[i], std::regex("(-p)|(--padding)")))
+        if (std::regex_match (v_choice[i]->data, std::regex("(-p)|(--padding)")))
             {
                 //~ cout << choice[i]<< endl;
                 //~ input_padding= true;                
                 if (i<argc-1){
                     
-                    istringstream is(choice[i+1]);
+                    istringstream is(v_choice[i+1]->data);
                     std::string part;
                     getline(is, part, ',');
                     V_padding_user = std::stof(part);
@@ -397,7 +433,7 @@ int main (int argc, char **argv){
                 }
             }
         // offset rules
-        if (std::regex_match (choice[i], std::regex("(-r)|(--offset-rule)")))
+        if (std::regex_match (v_choice[i]->data, std::regex("(-r)|(--offset-rule)")))
             {
                 //~ cout << choice[i]<< endl;
                 //~ input_offset_rule= true;                
@@ -412,7 +448,7 @@ int main (int argc, char **argv){
                     vertex3D off_rul;
 
                     std::string part;
-                    istringstream is(choice[i+1]);
+                    istringstream is(v_choice[i+1]->data);
                     
                     for(int j=0; j<3;++j){
                             
@@ -441,6 +477,26 @@ int main (int argc, char **argv){
             }
     }
     
+    // create an sub-entity for all paramenters and their value
+    newMDE.new_vMDE_element();
+    newMDE.set_name_vMDE_back("parameters");
+    newMDE.set_data_vMDE_back(to_string(argc));
+    
+    vect_index_file[0] ++;
+    
+    (newMDE.vMDE_get_by_index(vect_index_file,it_file))->new_vMDE_element("version",VERSION_INFO);
+    (newMDE.vMDE_get_by_index(vect_index_file,it_file))->new_vMDE_element("move",(move_it)? "true" : "false");
+    (newMDE.vMDE_get_by_index(vect_index_file,it_file))->new_vMDE_element("box", (display_box)? "true" : "false");
+    (newMDE.vMDE_get_by_index(vect_index_file,it_file))->new_vMDE_element("glmode",(GL_on)? "true":"false");
+    (newMDE.vMDE_get_by_index(vect_index_file,it_file))->new_vMDE_element("nomenu",(display_menu)? "false":"true");
+    (newMDE.vMDE_get_by_index(vect_index_file,it_file))->new_vMDE_element("file",full_filename);
+    (newMDE.vMDE_get_by_index(vect_index_file,it_file))->new_vMDE_element("box-color",
+    std::to_string(red_user)+", "+std::to_string(green_user)+", "+std::to_string(blue_user)+", "+std::to_string(alpha_user));
+    (newMDE.vMDE_get_by_index(vect_index_file,it_file))->new_vMDE_element("font",user_font);
+    (newMDE.vMDE_get_by_index(vect_index_file,it_file))->new_vMDE_element("font-size",std::to_string(user_font_size));
+    
+
+    
     // variables for the main while loop
     
         
@@ -459,11 +515,13 @@ int main (int argc, char **argv){
         newMDE.set_name_vMDE_back("file");
         newMDE.set_data_vMDE_back(full_filename);
         
-        
+        // add the file's content at vMde with index 2 for file
         //~ newMDE.new_vMDE_element();
-        std::vector<int> vect_index_file = {1};
+        //~ std::vector<int> vect_index_file = {2};
+        //~ vect_index_file = {2};
+        vect_index_file[0] ++;
         int index_file = 0;
-        std::vector<int>::const_iterator it_file;
+        //~ std::vector<int>::const_iterator it_file;
         
         // add a new element for loading file into it;
         (newMDE.vMDE_get_by_index(vect_index_file,it_file))->new_vMDE_element();
@@ -516,6 +574,7 @@ int main (int argc, char **argv){
                         if(display_box) printf("          Frame Box Color&Alpha (r,g,b,a): (%.2f,%.2f,%.2f,%.2f)\n", red_user, green_user, blue_user, alpha_user);
                         printf("\n");
                         printf("  t) Display In Terminal\n");
+                        printf("  x) Display In Terminal as Xml\n");
                         printf("  g) Display in Gl mode\n");
                         printf("\n");
                         printf("  q) Quit\n");
@@ -1123,6 +1182,33 @@ int main (int argc, char **argv){
                             case 't':
                                 {
                                     newMDE.display_all(0, n_space);
+
+                                    //~ std::cout << "display some vMDE: " << (newMDE.get_vMDE({3}))->data << std::endl;
+                                    //~ int s_index = 0;
+                                    //~ int s_level = 0;
+                                    //~ std::vector<MDE**> my_search_result;
+                                    //~ int n_space = 2;
+                                    //~ std::vector<int> vector_index={3,0,0,0,0};
+                                    //~ int start_index = 0;
+                                    //~ newMDE.loop_test2(vector_index,start_index,my_search_result);
+                                    //~ std::cout << "name: " << (*(my_search_result.back()))->get_name();
+                                    //~ std::cout << " data: " << (*(my_search_result.back()))->data << std::endl;
+                                    //~ vector_index={3,0,0,0};
+                                    //~ start_index = 0;
+                                    //~ std::cout << newMDE.loop_test3(vector_index,start_index)[0]->data << std::endl;
+
+                                    while (key_input!="b"){
+                                        std::cout << std::endl;
+                                        std::cout <<"Press b to come Back to Main Menu" << std::endl;
+                                        std::cin >> key_input;
+                                    }                                
+                                    break;
+                                }
+                            case 'x':
+                                {
+                                    const int n_space = 2;
+                                    newMDE.format_display(0,n_space,"<",">","</",">");
+
                                     while (key_input!="b"){
                                         std::cout << std::endl;
                                         std::cout <<"Press b to come Back to Main Menu" << std::endl;
@@ -1145,10 +1231,12 @@ int main (int argc, char **argv){
                             break;
                         }
                         key_input="";
+
                 
                 }
                 printf("Done!\n");
                 // if any of the bool is false, then display the menu...
+
 
 
                         if (GL_on){

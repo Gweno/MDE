@@ -1,0 +1,511 @@
+Current path: "/home/gweno/Documents/Project/Cpp/MDE/source"
+lines 0
+columns 0
+Have 1 arguments:
+0, ./../bin/mde_debug
+v0.3.2
+pid: 29264
+in get_vMDE0, ./../bin/mde_debug
+test arguments through mde
+arguments 0: ./../bin/mde_debug
+(3)first element: master
+last element: master
+before it
+master
+after it
+after loop
+first element: tata
+last element: tata
+before it
+tata
+after it
+after loop
+first element: toto
+last element: toto
+before it
+toto
+after it
+after loop
+first element: truc
+last element: truc
+before it
+truc
+after it
+after loop
+first element: /truc
+last element: /truc
+before it
+/truc
+after it
+after loop
+first element: /toto
+last element: /toto
+before it
+/toto
+after it
+after loop
+first element: lili
+last element: lili
+before it
+lili
+after it
+after loop
+first element: /lili
+last element: /lili
+before it
+/lili
+after it
+after loop
+first element: /tata
+last element: /tata
+before it
+/tata
+after it
+after loop
+first element: titi
+last element: titi
+before it
+titi
+after it
+after loop
+first element: toto
+last element: toto
+before it
+toto
+after it
+after loop
+first element: /toto
+last element: /toto
+before it
+/toto
+after it
+after loop
+first element: lolo
+last element: lolo
+before it
+lolo
+after it
+after loop
+first element: /lolo
+last element: /lolo
+before it
+/lolo
+after it
+after loop
+first element: /titi
+last element: /titi
+before it
+/titi
+after it
+after loop
+first element: /master
+last element: /master
+before it
+/master
+after it
+after loop
+Done
+Here 3
+File : ../datafiles/default.xml
+  opening_tag : master
+  data : 123
+  opening_tag : tata
+  data : 1
+  opening_tag : toto
+  data : 11
+  opening_tag : truc
+  data : 999
+  closing_tag : /truc
+  closing_tag : /toto
+  opening_tag : lili
+  data : 12
+  closing_tag : /lili
+  closing_tag : /tata
+  opening_tag : titi
+  data : 2
+  opening_tag : toto
+  data : 21
+  closing_tag : /toto
+  opening_tag : lolo
+  data : 22
+  closing_tag : /lolo
+  closing_tag : /titi
+  closing_tag : /master
+Here 4
+file : ../datafiles/default.xml
+  master : 123
+    tata : 1
+      toto : 11
+        truc : 999
+      lili : 12
+    titi : 2
+      toto : 21
+      lolo : 22
+
+**********************************
+*                                *
+*     MDE Version v0.3.2       *
+*                                *
+*********************************
+*                                *
+*        Welcome!                *
+*                                *
+*                                *
+*  This is session 1             *
+*                                *
+**********************************
+
+******************************Main Menu******************************
+
+  1) Data Menu
+          File: ../datafiles/default.xml  
+  2) Font Menu
+          Font: ../fonts/FreeSans.ttf
+          Size: 48
+          Color & Alpha (r,g,b,a): (0.00, 0.00, 0.00, 1.00)
+  3) Coordinates Menu
+          Coordinates(x,y,z): (0.00,0.00,0.00)
+          Name <-> data offset Rule (x,y,z): (0.50,0.20,0.00)
+          Index offset Rule (x,y,z):         (0.00,0.00,-0.20)
+          Level offset Rule (x,y,z):        (0.00,0.00,0.00)
+  4) Frame Menu
+          Frame Box:OFF
+          Color & Alpha (r,g,b,a): (0.50,0.50,0.50,0.50)
+          Padding(px) (horizontal, vertical): (0.00,0.00)
+  5) Color Menu
+          Background color&alpha (r,g,b,a): (1.00,1.00,1.00,1.00)
+          Font Color&Alpha (r,g,b,a): (0.00,0.00,0.00,1.00)
+
+  t) Display In Terminal
+  x) Display In Terminal as Xml
+  g) Display in Gl mode
+
+  q) Quit
+
+*********************************************************************
+Your choice:
+******************************* Data ********************************
+
+  1) Load Data File (xml)
+             Current File: ../datafiles/default.xml  
+  2) Load Data testing Set
+  3) User Data Input
+
+  b) Back
+  q) Quit
+
+*********************************************************************
+Your choice:
+**************************** Load File ******************************
+
+              Current File: ../datafiles/default.xml  
+
+  1) Enter name of xml file (including extension)
+
+           Or choose between examples:
+
+  2: perma.xml (this file is on a single line)
+  3: bookstore.xml
+  4: activities.xml
+
+  b) Back
+  q) Quit
+
+*********************************************************************
+Your choice:
+file to load:../datafiles/test0.svg
+(3, 0)(3)index file:0
+here 0
+first element: ?xml
+last element: standalone="no"?
+before it
+?xml
+after it
+before it
+version="1.0"
+after it
+before it
+encoding="UTF-8"
+after it
+before it
+standalone="no"?
+after it
+after loop
+first element: svg
+last element: inkscape:export-ydpi="75"
+before it
+svg
+after it
+before it
+inkscape:export-ydpi="75"
+after it
+after loop
+first element: metadata
+last element: id="metadata160"
+before it
+metadata
+after it
+before it
+id="metadata160"
+after it
+after loop
+first element: rdf:RDF
+last element: rdf:RDF
+before it
+rdf:RDF
+after it
+after loop
+first element: cc:Work
+last element: rdf:about=""
+before it
+cc:Work
+after it
+before it
+rdf:about=""
+after it
+after loop
+first element: dc:format
+last element: dc:format
+before it
+dc:format
+after it
+after loop
+first element: /dc:format
+last element: /dc:format
+before it
+/dc:format
+after it
+after loop
+first element: dc:type
+last element: /
+before it
+dc:type
+after it
+before it
+rdf:resource="http://purl.org/dc/dcmitype/StillImage"
+after it
+before it
+/
+after it
+after loop
+first element: dc:title
+last element: /
+before it
+dc:title
+after it
+before it
+/
+after it
+after loop
+first element: /cc:Work
+last element: /cc:Work
+before it
+/cc:Work
+after it
+after loop
+first element: /rdf:RDF
+last element: /rdf:RDF
+before it
+/rdf:RDF
+after it
+after loop
+first element: /metadata
+last element: /metadata
+before it
+/metadata
+after it
+after loop
+first element: /svg
+last element: /svg
+before it
+/svg
+after it
+after loop
+Done
+Here 3
+File : ../datafiles/test0.svg
+  opening_tag : ?xml
+  attribute : version="1.0"
+  attribute : encoding="UTF-8"
+  attribute : standalone="no"?
+  opening_tag : svg
+  attribute : inkscape:export-ydpi="75"
+  opening_tag : metadata
+  attribute : id="metadata160"
+  opening_tag : rdf:RDF
+  opening_tag : cc:Work
+  attribute : rdf:about=""
+  opening_tag : dc:format
+  data : image/svg+xml
+  closing_tag : /dc:format
+  self_closing_tag : dc:type
+  attribute : rdf:resource="http://purl.org/dc/dcmitype/StillImage"
+  self_closing_tag : dc:title
+  closing_tag : /cc:Work
+  closing_tag : /rdf:RDF
+  closing_tag : /metadata
+  closing_tag : /svg
+Here 4
+file : ../datafiles/default.xml
+  ?xml : 
+    attribute : version="1.0"
+    attribute : encoding="UTF-8"
+    attribute : standalone="no"?
+    svg : 
+      attribute : inkscape:export-ydpi="75"
+      metadata : 
+        attribute : id="metadata160"
+        rdf:RDF : 
+          dc:type : 
+            attribute : rdf:about=""
+            dc:format : image/svg+xml
+            attribute : rdf:resource="http://purl.org/dc/dcmitype/StillImage"
+            dc:title : 
+here 1
+here 2
+******************************Main Menu******************************
+
+  1) Data Menu
+          File: ../datafiles/test0.svg  
+  2) Font Menu
+          Font: ../fonts/FreeSans.ttf
+          Size: 48
+          Color & Alpha (r,g,b,a): (0.00, 0.00, 0.00, 1.00)
+  3) Coordinates Menu
+          Coordinates(x,y,z): (0.00,0.00,0.00)
+          Name <-> data offset Rule (x,y,z): (0.50,0.20,0.00)
+          Index offset Rule (x,y,z):         (0.00,0.00,-0.20)
+          Level offset Rule (x,y,z):        (0.00,0.00,0.00)
+  4) Frame Menu
+          Frame Box:OFF
+          Color & Alpha (r,g,b,a): (0.50,0.50,0.50,0.50)
+          Padding(px) (horizontal, vertical): (0.00,0.00)
+  5) Color Menu
+          Background color&alpha (r,g,b,a): (1.00,1.00,1.00,1.00)
+          Font Color&Alpha (r,g,b,a): (0.00,0.00,0.00,1.00)
+
+  t) Display In Terminal
+  x) Display In Terminal as Xml
+  g) Display in Gl mode
+
+  q) Quit
+
+*********************************************************************
+Your choice:
+<MDE>
+master
+  <pid>
+  29264
+  </pid>
+  <arguments>
+  1
+    <0>
+    ./../bin/mde_debug
+    </0>
+  </arguments>
+  <parameters>
+  1
+    <version>
+    v0.3.2
+    </version>
+    <move>
+    false
+    </move>
+    <box>
+    false
+    </box>
+    <glmode>
+    false
+    </glmode>
+    <nomenu>
+    false
+    </nomenu>
+    <file>
+    ../datafiles/default.xml
+    </file>
+    <box-color>
+    0.500000, 0.500000, 0.500000, 0.500000
+    </box-color>
+    <font>
+    ../fonts/FreeSans.ttf
+    </font>
+    <font-size>
+    48
+    </font-size>
+  </parameters>
+  <file>
+  ../datafiles/test0.svg
+    <?xml>
+    
+      <attribute>
+      version="1.0"
+      </attribute>
+      <attribute>
+      encoding="UTF-8"
+      </attribute>
+      <attribute>
+      standalone="no"?
+      </attribute>
+      <svg>
+      
+        <attribute>
+        inkscape:export-ydpi="75"
+        </attribute>
+        <metadata>
+        
+          <attribute>
+          id="metadata160"
+          </attribute>
+          <rdf:RDF>
+          
+            <dc:type>
+            
+              <attribute>
+              rdf:about=""
+              </attribute>
+              <dc:format>
+              image/svg+xml
+              </dc:format>
+              <attribute>
+              rdf:resource="http://purl.org/dc/dcmitype/StillImage"
+              </attribute>
+              <dc:title>
+              
+              </dc:title>
+            </dc:type>
+          </rdf:RDF>
+        </metadata>
+      </svg>
+    </?xml>
+  </file>
+</MDE>
+Press b to come Back to Main Menu
+******************************Main Menu******************************
+
+  1) Data Menu
+          File: ../datafiles/test0.svg  
+  2) Font Menu
+          Font: ../fonts/FreeSans.ttf
+          Size: 48
+          Color & Alpha (r,g,b,a): (0.00, 0.00, 0.00, 1.00)
+  3) Coordinates Menu
+          Coordinates(x,y,z): (0.00,0.00,0.00)
+          Name <-> data offset Rule (x,y,z): (0.50,0.20,0.00)
+          Index offset Rule (x,y,z):         (0.00,0.00,-0.20)
+          Level offset Rule (x,y,z):        (0.00,0.00,0.00)
+  4) Frame Menu
+          Frame Box:OFF
+          Color & Alpha (r,g,b,a): (0.50,0.50,0.50,0.50)
+          Padding(px) (horizontal, vertical): (0.00,0.00)
+  5) Color Menu
+          Background color&alpha (r,g,b,a): (1.00,1.00,1.00,1.00)
+          Font Color&Alpha (r,g,b,a): (0.00,0.00,0.00,1.00)
+
+  t) Display In Terminal
+  x) Display In Terminal as Xml
+  g) Display in Gl mode
+
+  q) Quit
+
+*********************************************************************
+Your choice:

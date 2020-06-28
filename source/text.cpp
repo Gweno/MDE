@@ -907,8 +907,7 @@ void free_resources() {
 
 void mouse_movement(int xpos, int ypos)
 {
-    printf("left: %u, right:%u\n", left_click, right_click);
-    
+
     if(firstMouse)
     {
         lastX = xpos;
@@ -948,7 +947,6 @@ void special_key(int key, int x, int y){
     
     //set consistent camera speed with frame rate
     cameraSpeed = (2.5f * deltaTime)/1000;
-    printf("\n get cameraSpeed:%f\n", cameraSpeed);
     
     switch(key)
     {

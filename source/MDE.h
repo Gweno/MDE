@@ -53,6 +53,7 @@ class MDE {
 
         
     public:
+        //~ static std::vector<MDE**> search_result;
 
         //public members:
         
@@ -225,7 +226,8 @@ class MDE {
          * @brief This member function is to create a new pointer to
          * MDE with a push_back on private member vMDE.
          */
-        public: void new_vMDE_element();
+        //~ public: void new_vMDE_element();
+        public: void new_vMDE_element(std::string name="",std::string data="");
 
         // SET methods
         /** @defgroup group_set Set methods
@@ -344,6 +346,8 @@ class MDE {
         public: std::vector<int> set_vector_of_indexes(
         std::string list_indexes);      //  should not be class MDE
 
+        public: void char_array_to_vMDE_data(int n_element, char **array_char, bool create=true );
+        
         
         /** @} */ // end of group_set             
 
@@ -408,6 +412,13 @@ class MDE {
          */
         public: MDE * vMDE_get_by_index(std::vector<int>& vect_index,
         std::vector<int>::const_iterator it);
+
+        // simplified version of vMDE_get_by_index
+        public: MDE * get_vMDE(std::vector<int> vect_index);
+ 
+        //~ public: std::vector<MDE *> get_vMDE_test(std::vector<int> vect_index, std::vector<int>::const_iterator it);
+        //public: std::vector<MDE *> get_vMDE_test(std::vector<int> vect_index, uint it);
+        //~ public: std::vector<MDE *> get_vMDE_test(std::vector<int> vect_index);
         
         /** @} */ // end of group_get
         
@@ -677,7 +688,7 @@ class MDE {
         /**
          * 
          * ##name: load_XML_File_to_vMDE(int & index,
-         * const std::string & full_filename)
+         * ## const std::string & full_filename)
          * @param  & index is a reference to an integer that holds the
          * vector index of the private member vMDE where to load the XML
          * file.
@@ -696,6 +707,7 @@ class MDE {
          * of the instance of a class of MDE.
          */
         public: bool load_XML_File_to_vMDE(int & index, const std::string & full_filename);
+        public: bool load_XML_File_to_vMDE_old(int & index, const std::string & full_filename);
 
         /**
          * 
@@ -826,6 +838,8 @@ class MDE {
         private: void check_token(const std::string & token,
         std::string & element);
         
+        private: void split_string(const std::string & tag, std::vector<std::string> & tokens);
+        
         /**
          * 
          * ##name: search_results_to_vector_float(
@@ -941,7 +955,7 @@ class MDE {
          * fetch_search_result.
          * @note The process can be optimised and simplified.
          */
-        public: void search_For(int & index, int & level, std::string searchName);
+        public: void search_For(int & index, int & level, std::string searchName, std::vector<MDE**> &search_result = MDE::search_result);
 
         /**
          * 
@@ -959,7 +973,7 @@ class MDE {
          * recursive process to separate scopes of the different
          * sub-entities of an entity.
          */
-        private: void simple_loop_VMDE(std::string searchName);
+        private: void simple_loop_VMDE(std::string searchName, std::vector<MDE**> &search_result = MDE::search_result);
         
         /**
          * 
@@ -974,7 +988,7 @@ class MDE {
          * separate scopes of the different sub-entities of an entity
          * to perform the search.
          */
-        private: void simple_loop_VMDE_next_level(std::string searchName);
+        private: void simple_loop_VMDE_next_level(std::string searchName, std::vector<MDE**> &search_result = MDE::search_result);
 
         /**
          * 
@@ -990,10 +1004,13 @@ class MDE {
          * search_for() to search for all Entities with a given member
          * 'name'.
          */
-        public: void fetch_search_result(std::vector<MDE**> &search_result);
+        public: void fetch_search_result(std::vector<MDE**> &search_result = MDE::search_result);
 
+        public: void get_vMDE_test2(int index, std::vector<MDE**> &pt_vMDE = MDE::search_result);
 
+        public: void loop_test2(std::vector<int> & vect_index, int & index, std::vector<MDE**> & pt_vMDE = MDE::search_result);
 
+        public: std::vector<MDE*> loop_test3(std::vector<int> & vect_index, int & index);
         /** @} */ // end of group_search
         
         

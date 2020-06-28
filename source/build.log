@@ -1,0 +1,18 @@
+g++ -std=c++17 -g -c -Wall main.cpp -o main_d.o -I/usr/include/freetype2
+main.cpp: In function ‘int main(int, char**)’:
+main.cpp:172:29: warning: format ‘%lu’ expects argument of type ‘long unsigned int’, but argument 2 has type ‘pid_t {aka int}’ [-Wformat=]
+     printf("pid: %lu\n", pid);
+                             ^
+main.cpp:95:10: warning: variable ‘input_file’ set but not used [-Wunused-but-set-variable]
+     bool input_file = false;  // No input file by default
+          ^
+g++ -std=c++17 -g -c -Wall  MDE.cpp -o MDE_d.o
+MDE.cpp: In member function ‘MDE* MDE::get_vMDE(std::vector<int>)’:
+MDE.cpp:761:1: warning: no return statement in function returning non-void [-Wreturn-type]
+ }
+ ^
+MDE.cpp: In member function ‘std::vector<MDE*> MDE::get_vMDE_test(std::vector<int>, std::vector<int>::const_iterator)’:
+MDE.cpp:765:9: warning: unused variable ‘store_it’ [-Wunused-variable]
+     int store_it=0;
+         ^
+g++ -std=c++17 -g -o ../bin/mde_debug main_d.o MDE_d.o text_d.o -lm -lglut -lGLEW -lGL -lfreetype -L/usr/include/GL -lGLU -lstdc++fs -Wl,-rpath,  ./common/shader_utils.o

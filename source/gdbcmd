@@ -1,0 +1,10 @@
+p (*it)->name
+p (*it)->data
+p (*this)->name
+p (*this)->data
+p (*this)->vMDE[0]->name
+p (*this)->vMDE[0]->data
+p (*this)->vMDE[1]->name
+p (*this)->vMDE[1]->data
+p (*this)->vMDE[2]->name
+p (*this)->vMDE[2]->data

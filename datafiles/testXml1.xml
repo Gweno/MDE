@@ -1,0 +1,108 @@
+<MDE>
+master
+  <pid>
+  18969
+  </pid>
+  <arguments>
+  1
+    <0>
+    ./../bin/mde_debug
+    </0>
+  </arguments>
+  <parameters>
+  1
+    <version>
+    v0.3.2
+    </version>
+    <move>
+    false
+    </move>
+    <box>
+    false
+    </box>
+    <glmode>
+    false
+    </glmode>
+    <nomenu>
+    false
+    </nomenu>
+    <file>
+    ../datafiles/default.xml
+    </file>
+    <box-color>
+    0.500000, 0.500000, 0.500000, 0.500000
+    </box-color>
+    <font>
+    ../fonts/FreeSans.ttf
+    </font>
+    <font-size>
+    48
+    </font-size>
+  </parameters>
+  <file>
+  ../datafiles/test3.svg
+    <?xml>
+    
+      <attribute>
+      version="1.0"
+      </attribute>
+      <attribute>
+      encoding="UTF-8"
+      </attribute>
+      <attribute>
+      standalone="no"?
+      </attribute>
+      <svg>
+      
+        <attribute>
+        inkscape:export-ydpi="75"
+        </attribute>
+        <metadata>
+        
+          <attribute>
+          id="metadata160"
+          </attribute>
+          <rdf:RDF>
+          
+            <cc:Work>
+            
+              <attribute>
+              rdf:about=""
+              </attribute>
+              <dc:format>
+              image/svg+xml
+              </dc:format>
+              <!-->
+              
+                <attribute>
+                License:
+                </attribute>
+                <attribute>
+                creative
+                </attribute>
+                <attribute>
+                commons
+                </attribute>
+                <attribute>
+                attribution
+                </attribute>
+                <attribute>
+                --
+                </attribute>
+                <dc:type>
+                
+                </dc:type>
+                <dc:title>
+                
+                </dc:title>
+                <>
+                
+                </>
+              </!-->
+            </cc:Work>
+          </rdf:RDF>
+        </metadata>
+      </svg>
+    </?xml>
+  </file>
+</MDE>
