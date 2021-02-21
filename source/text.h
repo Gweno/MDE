@@ -7,6 +7,7 @@
 #include <vector>
 
 #include "MDE.h"
+#include "utils.h"
 
 extern GLfloat r,g,b;
 

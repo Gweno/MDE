@@ -656,7 +656,8 @@ void init_text_MDE(MDE &my_entity,vertex3D &origin, std::vector<vertex3D> &offse
     std::vector<GLdata> my_v_MDE_data;
     int level=0;
     int index=0;
-    my_entity.extract_MDE_data_for_v_offset(my_v_MDE_data, level);
+    //~ my_entity.extract_MDE_data_for_v_offset(my_v_MDE_data, level);
+    extractMDEdataForVoffset(my_entity, my_v_MDE_data, level);
     process_v_MDE_data(my_v_MDE_data,offset, offset_rule);
     for (std::vector<vertex3D>::iterator it_offset=offset.begin(); it_offset!=offset.end();++it_offset){
         v_origin.push_back({origin.x+(*it_offset).x,origin.y+(*it_offset).y,origin.z+(*it_offset).z});

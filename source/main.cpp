@@ -25,6 +25,7 @@
 
 // Headers
 #include "MDE.h"
+#include "utils.h"
 
 //~ #include <unistd.h>
 //~ #include <algorithm>
@@ -526,7 +527,8 @@ int main (int argc, char **argv){
         // add a new element for loading file into it;
         (newMDE.vMDE_get_by_index(vect_index_file,it_file))->new_vMDE_element();
         newMDE.display_vector_int(vect_index_file);
-        input_file = (newMDE.vMDE_get_by_index(vect_index_file,it_file))->load_XML_File_to_vMDE(index_file, const_full_filename);
+        //~ input_file = (newMDE.vMDE_get_by_index(vect_index_file,it_file))->load_XML_File_to_vMDE(index_file, const_full_filename);
+        input_file = loadXMLFileTovMDE(*(newMDE.vMDE_get_by_index(vect_index_file,it_file)), index_file, const_full_filename);
 
         // add new index in vector of indexes to reflect start of data from file in MDE, for later replacong with new loaded file
         vect_index_file.push_back(0);
@@ -632,14 +634,16 @@ int main (int argc, char **argv){
                                                     {
                                                         std::cin >> key_input;
                                                         const std::string file_to_load="../datafiles/"+key_input;
-                                                        newMDE.replace_vMDE_with_XML(vect_index_file,file_to_load);
+                                                        //~ newMDE.replace_vMDE_with_XML(vect_index_file,file_to_load);
+                                                        replaceVMDEwithXML(newMDE,vect_index_file,file_to_load);
                                                         full_filename=file_to_load;
                                                         break;
                                                     }
                                                 case '2':
                                                     {
                                                         const std::string file_to_load="../datafiles/perma.xml";
-                                                        newMDE.replace_vMDE_with_XML(vect_index_file,file_to_load);
+                                                        //~ newMDE.replace_vMDE_with_XML(vect_index_file,file_to_load);
+                                                        replaceVMDEwithXML(newMDE,vect_index_file,file_to_load);
                                                         full_filename=file_to_load;
                                                         break;
                                                     }
@@ -647,7 +651,8 @@ int main (int argc, char **argv){
                                                 case '3':
                                                     {
                                                         const std::string file_to_load="../datafiles/bookstore.xml";
-                                                        newMDE.replace_vMDE_with_XML(vect_index_file,file_to_load);
+                                                        //~ newMDE.replace_vMDE_with_XML(vect_index_file,file_to_load);
+                                                        replaceVMDEwithXML(newMDE,vect_index_file,file_to_load);
                                                         full_filename=file_to_load;
                                                         break;
                                                     }
@@ -655,7 +660,8 @@ int main (int argc, char **argv){
                                                 case '4':
                                                     {
                                                         const std::string file_to_load="../datafiles/activities.xml";
-                                                        newMDE.replace_vMDE_with_XML(vect_index_file,file_to_load);
+                                                        //~ newMDE.replace_vMDE_with_XML(vect_index_file,file_to_load);
+                                                        replaceVMDEwithXML(newMDE,vect_index_file,file_to_load);
                                                         full_filename=file_to_load;
                                                         break;
                                                     }
@@ -683,7 +689,8 @@ int main (int argc, char **argv){
                                         newMDE.destructor_MDE();
                                         newMDE.testing();
                                         std::cout << std::endl;
-                                        newMDE.format_display(0,n_space,"<",">","</",">");
+                                        //~ newMDE.format_display(0,n_space,"<",">","</",">");
+                                        formatDisplay(newMDE,0,n_space,"<",">","</",">");
                                         std::cout << std::endl;
                                         std::cout << "Do you want to save the file?(y)" << std::endl;
                                         std::cin >> key_input;
@@ -713,7 +720,8 @@ int main (int argc, char **argv){
                                         newMDE.user_input_vMDE();
                                         
                                         std::cout << std::endl;
-                                        newMDE.format_display(0,n_space,"<",">","</",">");
+                                        //~ newMDE.format_display(0,n_space,"<",">","</",">");
+                                        formatDisplay(newMDE,0,n_space,"<",">","</",">");
                                         std::cout << std::endl;
                                         std::cout << "Do you want to save the file?(y)" << std::endl;
                                         std::cin >> key_input;
@@ -1184,9 +1192,11 @@ int main (int argc, char **argv){
                                     newMDE.display_all(0, n_space);
 
                                     //~ std::cout << "display some vMDE: " << (newMDE.get_vMDE({3}))->data << std::endl;
-                                    //~ int s_index = 0;
-                                    //~ int s_level = 0;
-                                    //~ std::vector<MDE**> my_search_result;
+                                    int s_index = 0;
+                                    int s_level = 0;
+                                    std::vector<MDE**> my_search_result;
+                                    searchFor(newMDE, s_index,s_level,"toto",my_search_result);
+                                    fetchSearchResult(my_search_result);
                                     //~ int n_space = 2;
                                     //~ std::vector<int> vector_index={3,0,0,0,0};
                                     //~ int start_index = 0;
@@ -1207,7 +1217,8 @@ int main (int argc, char **argv){
                             case 'x':
                                 {
                                     const int n_space = 2;
-                                    newMDE.format_display(0,n_space,"<",">","</",">");
+                                    //~ newMDE.format_display(0,n_space,"<",">","</",">");
+                                    formatDisplay(newMDE,0,n_space,"<",">","</",">");
 
                                     while (key_input!="b"){
                                         std::cout << std::endl;

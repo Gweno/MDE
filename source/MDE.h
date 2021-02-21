@@ -26,13 +26,13 @@ enum MDE_member {name,data};
  * @brief This is public structure 'GLdata'. It is used for transferring
  * information to GL functions.
  */
-struct GLdata{
+//~ struct GLdata{
     
-    int level;
-    int index;
-    MDE_member mde_member;
-    std::string MDE_data;
-};
+    //~ int level;
+    //~ int index;
+    //~ MDE_member mde_member;
+    //~ std::string MDE_data;
+//~ };
 
 /**
  * This is class MDE.
@@ -49,7 +49,7 @@ class MDE {
         
         // non-static members
         std::vector<MDE *> vMDE;
-        std::string name;
+        //~ std::string name;
 
         
     public:
@@ -65,6 +65,8 @@ class MDE {
          */
         std::string data;
         
+        std::string name;
+
         //Public member functions:
         //Constructors:
          /**
@@ -208,7 +210,8 @@ class MDE {
          * a class MDE object recursively using a vector of index pointing
          * to the parent element.
          */
-        private: void clear_all_vMDE_by_index(std::vector<int>& vect_index);
+        //~ private: void clear_all_vMDE_by_index(std::vector<int>& vect_index);
+        public: void clear_all_vMDE_by_index(std::vector<int>& vect_index);
         
         
         /** @} */ // end of group_clear
@@ -415,10 +418,19 @@ class MDE {
 
         // simplified version of vMDE_get_by_index
         public: MDE * get_vMDE(std::vector<int> vect_index);
- 
+        
+        //~ public: std::vector<MDE*>::const_iterator getVmdeBegin();
+        public: std::vector<MDE*>::iterator getVmdeBegin();
+        public: std::vector<MDE*>::const_iterator getVmdeEnd();
+        
+        public: MDE * getVmdeBack();
+
+        public: std::size_t getVmdeSize();
+         
         //~ public: std::vector<MDE *> get_vMDE_test(std::vector<int> vect_index, std::vector<int>::const_iterator it);
         //public: std::vector<MDE *> get_vMDE_test(std::vector<int> vect_index, uint it);
         //~ public: std::vector<MDE *> get_vMDE_test(std::vector<int> vect_index);
+
         
         /** @} */ // end of group_get
         
@@ -550,10 +562,10 @@ class MDE {
          * of a class object MDE with a defined format using opening and 
          * closing tags (for example like an XML file).
          */        
-        public: void format_display(int n_indent, const int & n_space,
-            std::string start_opening_tag,
-            std::string end_opening_tag, std::string start_closing_tag,
-            std::string end_closing_tag);
+        //~ public: void format_display(int n_indent, const int & n_space,
+            //~ std::string start_opening_tag,
+            //~ std::string end_opening_tag, std::string start_closing_tag,
+            //~ std::string end_closing_tag);
         
          /**
          * 
@@ -599,7 +611,7 @@ class MDE {
          * standard vector of struct GLdata. For example it can displays
          * a vector of offset values for coordinates.
          */
-        public: void display_v_MDE_data(std::vector<GLdata> & v_MDE_data);
+        //~ public: void display_v_MDE_data(std::vector<GLdata> & v_MDE_data);
         
         /** @} */ // end of group_display
         
@@ -683,7 +695,7 @@ class MDE {
          * @note The process is using a standard stack of pointers to
          * pointers of Instances of Objects Class MDE (std::stack<MDE**>).
          */
-        public: bool load_XML_File_to_MDE(const std::string & full_filename);
+        //~ public: bool load_XML_File_to_MDE(const std::string & full_filename);
 
         /**
          * 
@@ -706,8 +718,8 @@ class MDE {
          * at a given index of the  private member vMDE 
          * of the instance of a class of MDE.
          */
-        public: bool load_XML_File_to_vMDE(int & index, const std::string & full_filename);
-        public: bool load_XML_File_to_vMDE_old(int & index, const std::string & full_filename);
+        //~ public: bool load_XML_File_to_vMDE(int & index, const std::string & full_filename);
+        //~ public: bool load_XML_File_to_vMDE_old(int & index, const std::string & full_filename);
 
         /**
          * 
@@ -753,9 +765,9 @@ class MDE {
          * @brief This member function is to read an XML file and
          * store it into an instance of class  MDE. 
          */
-        private: void str_token_tag(std::string & buffer_Input
-        , std::string & output_Tag, std::string & buffer_Output
-        , char delimiter1, char delimiter2);
+//        private: void str_token_tag(std::string & buffer_Input
+//        , std::string & output_Tag, std::string & buffer_Output
+//        , char delimiter1, char delimiter2);
 
 
         /**
@@ -770,7 +782,7 @@ class MDE {
          * (space charaters at the start) of the io_string parameter
          * passed as argument for this member function.
          */
-        private: void trim_leading_space(std::string & io_string);
+//        private: void trim_leading_space(std::string & io_string);
 
 
         /**
@@ -792,7 +804,8 @@ class MDE {
          * (space charaters at the start) of the io_string parameter
          * @note This function can be optimised.
          */
-        private: bool extract_File_to_Flat_MDE(const std::string & full_filename);
+        //~ private: bool extract_File_to_Flat_MDE(const std::string & full_filename);
+        //~ private: bool extract_File_to_Flat_MDE_old(const std::string & full_filename);
 
         /**
          * 
@@ -817,8 +830,8 @@ class MDE {
          * complex and does contain a key algorhythm for building an
          * Entity MDE from a flat source.
          */
-        private: MDE * process_flat_MDE_to_MDE(std::vector<MDE*>::iterator & it,
-        MDE & MDE_source, std::stack<MDE**> & stack_MDE_pt);
+        //~ private: MDE * process_flat_MDE_to_MDE(std::vector<MDE*>::iterator & it,
+        //~ MDE & MDE_source, std::stack<MDE**> & stack_MDE_pt);
         
         /**
          * 
@@ -835,10 +848,10 @@ class MDE {
          * a 'closing_tag'.
          * It changes the parameter element accordingly.
          */
-        private: void check_token(const std::string & token,
-        std::string & element);
+//        private: void check_token(const std::string & token,
+//        std::string & element);
         
-        private: void split_string(const std::string & tag, std::vector<std::string> & tokens);
+        //~ private: void split_string(const std::string & tag, std::vector<std::string> & tokens);
         
         /**
          * 
@@ -899,8 +912,8 @@ class MDE {
          * @note This method can be optimised and may be able to use
          * other existing methods.
          */
-        public: void extract_MDE_data_for_v_offset(std::vector<GLdata> & v_MDE_data,
-        int & level, int index = 0);
+        //~ public: void extract_MDE_data_for_v_offset(std::vector<GLdata> & v_MDE_data,
+        //~ int & level, int index = 0);
 
         /** @} */ // end of group_io
         
@@ -955,7 +968,7 @@ class MDE {
          * fetch_search_result.
          * @note The process can be optimised and simplified.
          */
-        public: void search_For(int & index, int & level, std::string searchName, std::vector<MDE**> &search_result = MDE::search_result);
+        //~ public: void search_For(int & index, int & level, std::string searchName, std::vector<MDE**> &search_result = MDE::search_result);
 
         /**
          * 
@@ -973,7 +986,7 @@ class MDE {
          * recursive process to separate scopes of the different
          * sub-entities of an entity.
          */
-        private: void simple_loop_VMDE(std::string searchName, std::vector<MDE**> &search_result = MDE::search_result);
+        //~ private: void simple_loop_VMDE(std::string searchName, std::vector<MDE**> &search_result = MDE::search_result);
         
         /**
          * 
@@ -988,7 +1001,7 @@ class MDE {
          * separate scopes of the different sub-entities of an entity
          * to perform the search.
          */
-        private: void simple_loop_VMDE_next_level(std::string searchName, std::vector<MDE**> &search_result = MDE::search_result);
+        //~ private: void simple_loop_VMDE_next_level(std::string searchName, std::vector<MDE**> &search_result = MDE::search_result);
 
         /**
          * 
@@ -1011,6 +1024,8 @@ class MDE {
         public: void loop_test2(std::vector<int> & vect_index, int & index, std::vector<MDE**> & pt_vMDE = MDE::search_result);
 
         public: std::vector<MDE*> loop_test3(std::vector<int> & vect_index, int & index);
+        
+        //~ public: void processXmlElement(std::string & buffer_Tag, std::string & element, std::vector<std::string> & list_elements);
         /** @} */ // end of group_search
         
         

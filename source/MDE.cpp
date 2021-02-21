@@ -5,12 +5,14 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include "MDE.h"
 #include <sstream>
 #include <string.h>
 #include <string>
 #include <stdexcept>      // std::out_of_range
 #include <iterator>       // iteror istream
+
+#include "MDE.h"
+//~ #include "utils.h"
 
 //Constructors:
 MDE::MDE(){};
@@ -201,8 +203,9 @@ void MDE::display_all(int n_indent, const int & n_space)
     return;
 };
 
-GLdata current_GLdata;
+//~ GLdata current_GLdata;
 
+/*
 void MDE::extract_MDE_data_for_v_offset(std::vector<GLdata> & v_MDE_data, int & level, int index)
 {
     level++;
@@ -221,13 +224,16 @@ void MDE::extract_MDE_data_for_v_offset(std::vector<GLdata> & v_MDE_data, int & 
         }
     return;
 }
-
+*/
+/*
 void MDE::display_v_MDE_data(std::vector<GLdata> & v_offset){
     for (std::vector<GLdata>::iterator it=v_offset.begin(); it!=v_offset.end(); ++it){
         printf("level, index,member,data: %i,%i,%i,%s\n",
          (*it).level, (*it).index, (*it).mde_member, (*it).MDE_data.c_str());
     }
 }
+*/
+/*
 void MDE::format_display(int n_indent, const int & n_space, std::string start_opening_tag,
             std::string end_opening_tag, std::string start_closing_tag,
             std::string end_closing_tag)
@@ -256,6 +262,7 @@ void MDE::format_display(int n_indent, const int & n_space, std::string start_op
     std::cout<< end_closing_tag;
     return;
 };
+*/
 
 void MDE::user_input_vMDE()
 {
@@ -369,7 +376,7 @@ void MDE::user_save_to_XML_file(){
     delete [] Path;
 }
 
-
+/*
 void MDE::fetch_search_result(std::vector<MDE**> &search_result)
 {
     const int n_space = 2;
@@ -377,13 +384,15 @@ void MDE::fetch_search_result(std::vector<MDE**> &search_result)
     {
         for (std::vector<MDE**>::iterator it=search_result.begin();it!=search_result.end();++it)
         {
-            (*(*it))->format_display(0,n_space,"<",">","</",">");
+            //~ (*(*it))->format_display(0,n_space,"<",">","</",">");
+            formatDisplay((*(*it)),0,n_space,"<",">","</",">");
             std::cout << endl;
         }
     }
     else std::cout << "Not found" <<std::endl;
 }
-
+*/
+/*
 void MDE::search_For(int & index, int & level, std::string searchName, std::vector<MDE**> &search_result )
 {
     if (this->name==searchName)
@@ -410,7 +419,8 @@ void MDE::search_For(int & index, int & level, std::string searchName, std::vect
     //~ std::cout << "Found " << MDE::search_result.size() << " Entities with name " << searchName << std::endl;
     std::cout << "Found " << search_result.size() << " Entities with name " << searchName << std::endl;
 }
-
+*/
+/*
 void MDE::simple_loop_VMDE(std::string searchName, std::vector<MDE**> &search_result)
 {
     for(std::vector<MDE*>::const_iterator it=this->vMDE.begin();it!=this->vMDE.end();++it)
@@ -425,7 +435,8 @@ void MDE::simple_loop_VMDE(std::string searchName, std::vector<MDE**> &search_re
     //~ this->simple_loop_VMDE_next_level(searchName);
     this->simple_loop_VMDE_next_level(searchName, search_result);
 }
-
+*/
+/*
 void MDE::simple_loop_VMDE_next_level(std::string searchName,  std::vector<MDE**> &search_result)
 {
     for(std::vector<MDE*>::const_iterator it=this->vMDE.begin();it!=this->vMDE.end();++it)
@@ -434,7 +445,8 @@ void MDE::simple_loop_VMDE_next_level(std::string searchName,  std::vector<MDE**
         (*it)->simple_loop_VMDE(searchName, search_result);
     }
 }
-
+*/
+/*
 void MDE::str_token_tag(std::string & buffer_Input,
  std::string & output_Tag, std::string & buffer_Output,
   char delimiter1, char delimiter2)
@@ -491,14 +503,16 @@ void MDE::trim_leading_space(std::string & io_string)
         io_string = io_string.substr(pos);
     }
 }
-
+*/
+/*
 bool MDE::load_XML_File_to_MDE(const std::string & full_filename)
 {
 
     MDE xmlFile;
     std::stack<MDE**> stack_MDE_pt;
     
-    if (xmlFile.extract_File_to_Flat_MDE(full_filename)){
+    //~ if (xmlFile.extract_File_to_Flat_MDE(full_filename)){
+    if (extractFileToFlatMDE(xmlFile, full_filename)){
         std::vector<MDE*>::iterator it_start = xmlFile.vMDE.begin();
         this->process_flat_MDE_to_MDE(it_start, xmlFile, stack_MDE_pt);
         xmlFile.destructor_MDE();
@@ -507,15 +521,16 @@ bool MDE::load_XML_File_to_MDE(const std::string & full_filename)
     else return false;
         
 }
-
-
+*/
+/*
 bool MDE::load_XML_File_to_vMDE(int & index, const std::string & full_filename)
 {
 
     MDE xmlFile;
     std::stack<MDE**> stack_MDE_pt;
     
-    if (xmlFile.extract_File_to_Flat_MDE(full_filename)){
+    //~ if (xmlFile.extract_File_to_Flat_MDE(full_filename)){
+    if (extractFileToFlatMDE(xmlFile, full_filename)){
         this->display_all(0,2);
         printf("hola\n");
         std::vector<MDE*>::iterator it_start = xmlFile.vMDE.begin();
@@ -526,7 +541,10 @@ bool MDE::load_XML_File_to_vMDE(int & index, const std::string & full_filename)
         MDE ** pt_to_pt_MDE = new MDE*(this);
         stack_MDE_pt.push(pt_to_pt_MDE);
         std::cout << "name,data" << this->name << ", " << this->data << std::endl;
-        this->vMDE[index]->process_flat_MDE_to_MDE(it_start, xmlFile, stack_MDE_pt);
+        //~ this->vMDE[index]->process_flat_MDE_to_MDE(it_start, xmlFile, stack_MDE_pt);
+        //~ processFlatMDEToMDE(xmlFile,*this,it_start, stack_MDE_pt);
+        processFlatMDEToMDE(xmlFile,*this->vMDE[index],it_start, stack_MDE_pt);
+
         printf("hola\n");
         
         std::cout << "Here 3" << std::endl;
@@ -543,7 +561,9 @@ bool MDE::load_XML_File_to_vMDE(int & index, const std::string & full_filename)
     else return false;
         
 }
+*/
 
+/*
 bool MDE::load_XML_File_to_vMDE_old(int & index, const std::string & full_filename)
 {
 
@@ -571,7 +591,8 @@ bool MDE::load_XML_File_to_vMDE_old(int & index, const std::string & full_filena
     else return false;
         
 }
-
+*/
+/*
 bool MDE::replace_vMDE_with_XML(std::vector<int> & vect_index_file, const std::string & full_filename)
 {
     std::cout << "file to load:" << full_filename << std::endl;
@@ -607,7 +628,7 @@ bool MDE::replace_vMDE_with_XML(std::vector<int> & vect_index_file, const std::s
 
     return input_file;
 }
-
+*/
 void MDE::char_array_to_vMDE_data(int n_element, char **array_char, bool create )
 {
     for (int i = 0; i < n_element; ++i)
@@ -632,7 +653,69 @@ void MDE::char_array_to_vMDE_data(int n_element, char **array_char, bool create 
     } 
 }
 
+/*
 bool MDE::extract_File_to_Flat_MDE(const std::string & full_filename)
+{
+    std::string bufferString;
+    std::string bufferLine;
+    std::string buffer_Tag;
+    std::string element;
+    std::string buffer_End_of_Line;
+    std::vector<std::string> list_elements;
+    
+    // Processing file
+    ifstream fileEntity;
+    fileEntity.open(full_filename.c_str(), ios::in);
+    
+    if(!fileEntity.is_open())
+    {
+        printf("File not found\n");
+        return false;
+    }
+
+    fileEntity.clear();                   // absolutly needed otherwise the file is flagged at eof, and good=0   
+    fileEntity.seekg(0, ios::beg);        // set cursor at 0 from start of file
+
+    this->name = "File";
+    this->data = full_filename;
+    
+    while ((fileEntity.good()) && (!fileEntity.eof()))     // loop while extraction from file is possible
+    {
+        // get a line from the file
+        std::getline(fileEntity, bufferString);
+
+        // check if element has the flag, it is a partial tag (a tag that has a '\n' in the source file)
+        if (element=="__tag_part__")
+        {
+            // in which case we add the new extracted line at the end of previous line
+            // but triming new loaded line first
+            trimLeadingSpace(bufferString);
+            bufferLine += " " + bufferString;
+            // and delete the flag
+            element = "";
+        }
+        else bufferLine = bufferString;
+        //~ bufferLine = bufferString;
+        
+        while (bufferLine.size()>0 && element!="__tag_part__")
+        {
+            
+            extractXmlElement(bufferLine, buffer_Tag, element, list_elements);
+            
+            //now store into vMDE
+            // only if element is not a partial tag
+            if (element!="__tag_part__")
+            {
+                this->processXmlElement(buffer_Tag, element, list_elements);
+            }
+        }
+    
+    }
+    std::cout << "Done" << std::endl;
+    return true;
+}
+
+bool MDE::extract_File_to_Flat_MDE_old(const std::string & full_filename)
 {
     std::string bufferString;
     std::string bufferLine;
@@ -668,7 +751,8 @@ bool MDE::extract_File_to_Flat_MDE(const std::string & full_filename)
         {
             // in which case we add the new extracted line at the end of previous line
             // but triming new loaded line first
-            this->trim_leading_space(bufferString);
+            //~ this->trim_leading_space(bufferString);
+            trimLeadingSpace(bufferString);
             bufferLine += " " + bufferString;
             // and delete the flag
             element = "";
@@ -678,10 +762,12 @@ bool MDE::extract_File_to_Flat_MDE(const std::string & full_filename)
         
         while (bufferLine.size()>0 && element!="__tag_part__")
         {
-            this->trim_leading_space(bufferLine);
+            //~ this->trim_leading_space(bufferLine);
+            trimLeadingSpace(bufferLine);
             if (bufferLine[0]=='<')
             {
-                this->str_token_tag(bufferLine,buffer_Tag,buffer_End_of_Line,'<','>');
+                //~ this->str_token_tag(bufferLine,buffer_Tag,buffer_End_of_Line,'<','>');
+                strTokenTag(bufferLine,buffer_Tag,buffer_End_of_Line,'<','>');
                 // To check if "__part__" is at the end of the buffer_Tag
                 size_t s_buffer_Tag_len = buffer_Tag.length();
                 if (s_buffer_Tag_len>8 && buffer_Tag.substr(s_buffer_Tag_len-8,8) == "__part__")
@@ -694,25 +780,28 @@ bool MDE::extract_File_to_Flat_MDE(const std::string & full_filename)
                 else
                 {
                     element ="tag";
-                    this->check_token(buffer_Tag, element);
-                    this->split_string(buffer_Tag,list_elements);
+                    //~ this->check_token(buffer_Tag, element);
+                    checkToken(buffer_Tag, element);
+                    //~ this->split_string(buffer_Tag,list_elements);
+                    splitString(buffer_Tag,list_elements);
                     
                     {
-                        std::cout << "first element: " << list_elements[0] << std::endl;
-                        std::cout << "last element: " << list_elements.back() << std::endl;
-                        for (vector<string>::iterator it=list_elements.begin(); it!=list_elements.end(); ++it) 
-                        {
-                            cout<<"before it"<<endl;
-                            cout<<*it<<endl;
-                            cout<<"after it"<<endl;
-                        }
-                        cout<<"after loop"<<endl;
+                        //~ std::cout << "first element: " << list_elements[0] << std::endl;
+                        //~ std::cout << "last element: " << list_elements.back() << std::endl;
+                        //~ for (vector<string>::iterator it=list_elements.begin(); it!=list_elements.end(); ++it) 
+                        //~ {
+                            //~ cout<<"before it"<<endl;
+                            //~ cout<<*it<<endl;
+                            //~ cout<<"after it"<<endl;
+                        //~ }
+                        //~ cout<<"after loop"<<endl;
                     }
                 }
             }
             else
             {
-                this->str_token_tag(bufferLine,buffer_Tag,buffer_End_of_Line,0,'<');
+                //~ this->str_token_tag(bufferLine,buffer_Tag,buffer_End_of_Line,0,'<');
+                strTokenTag(bufferLine,buffer_Tag,buffer_End_of_Line,0,'<');
                 element = "data";
                 if(buffer_Tag.size()==0)
                 {
@@ -735,60 +824,59 @@ bool MDE::extract_File_to_Flat_MDE(const std::string & full_filename)
             // only if element is not a partial tag
             if (element!="__tag_part__")
             {
-                // check if the element is a tag and if the tag has many elements with it
-                if ((element == "opening_tag" || element == "closing_tag") && list_elements.size()>1)
-                {
-                    // first element of the list of element is always the tag's name
-                    this->new_vMDE_element();
-                    // check if last element is a "/" then it's a self-closing tag
-                    if (list_elements.back()=="/")
-                    {
-                        this->vMDE.back()->name = "self_closing_tag";
-                        // pop_back that last "/"
-                        list_elements.pop_back();
-                    }
-                    else
-                    {
-                        this->vMDE.back()->name = element;
-                    }
-                    this->vMDE.back()->data = list_elements[0];
-                    // then stores all other elements as 'attribute'
-                    for (vector<string>::iterator it=list_elements.begin()+1; it!=list_elements.end(); ++it) 
-                    {
-                        this->new_vMDE_element();
-                        this->vMDE.back()->name = "attribute";
-                        this->vMDE.back()->data = *it;
-                    }
-                }
-                else if ((element == "xml_declaration")  && list_elements.size()>1)
-                {
-                    this->new_vMDE_element();
-                    
-                    // rough management of attributes here... need to take away last '?' of the tag
-                    this->vMDE.back()->name = element;
-                    this->vMDE.back()->data = list_elements[0];
-                    
-                    for (vector<string>::iterator it=list_elements.begin()+1; it!=list_elements.end(); ++it) 
-                    {
-                        this->new_vMDE_element();
-                        this->vMDE.back()->name = "attribute";
-                        this->vMDE.back()->data = *it;
-                    }
-                }
-                else
-                {
-                    this->new_vMDE_element();
-                    this->vMDE.back()->name = element;
-                    this->vMDE.back()->data = buffer_Tag;
-                }
+                this->processXmlElement(buffer_Tag, element, list_elements);
             }
+            
         }
     
     }
     std::cout << "Done" << std::endl;
     return true;
 }
-
+*/
+/*
+void MDE::processXmlElement(std::string & buffer_Tag, std::string & element, std::vector<std::string> & list_elements)
+{
+// check if the element is a tag and if the tag has many elements with it
+    if ((element == "opening_tag" || element == "closing_tag") && list_elements.size()>1)
+    {
+        // first element of the list of element is always the tag's name
+        this->new_vMDE_element();
+        // check if last element is a "/" then it's a self-closing tag
+        if (list_elements.back()=="/")
+        {
+            this->vMDE.back()->name = "self_closing_tag";
+            // pop_back that last "/"
+            list_elements.pop_back();
+        }
+        else
+        {
+            this->vMDE.back()->name = element;
+        }
+        this->vMDE.back()->data = list_elements[0];
+        // then stores all other elements as 'attribute'
+        for (vector<string>::iterator it=list_elements.begin()+1; it!=list_elements.end(); ++it) 
+        {
+            this->new_vMDE_element("attribute",*it);
+        }
+    }
+    else if ((element == "xml_declaration")  && list_elements.size()>1)
+    {
+        // rough management of attributes here... need to take away last '?' of the tag
+        this->new_vMDE_element(element,list_elements[0]);
+        
+        for (vector<string>::iterator it=list_elements.begin()+1; it!=list_elements.end(); ++it) 
+        {
+            this->new_vMDE_element("attribute",*it);
+        }
+    }
+    else
+    {
+        this->new_vMDE_element(element,buffer_Tag);
+    }
+}
+*/
+/*
 void MDE::split_string(const std::string & tag, std::vector<std::string> & list_elements)
 {
     std::stringstream iss(tag);
@@ -799,6 +887,7 @@ void MDE::split_string(const std::string & tag, std::vector<std::string> & list_
 
 void MDE::check_token(const std::string & token, std::string & element)
 {
+    std::cout << "in MDE" << std::endl;
     if(token.size()>0)
     {
         if(element=="tag")
@@ -814,7 +903,8 @@ void MDE::check_token(const std::string & token, std::string & element)
         element = "null_" + element;
     }
 }
-
+*/
+/*
 MDE * MDE::process_flat_MDE_to_MDE(std::vector<MDE*>::iterator & it, MDE & MDE_source, std::stack<MDE**> & stack_MDE_pt)
 {
 
@@ -999,7 +1089,7 @@ MDE * MDE::process_flat_MDE_to_MDE(std::vector<MDE*>::iterator & it, MDE & MDE_s
     }
     return this;
 }
-
+*/
 
 void MDE::testing()
 {
@@ -1163,6 +1253,29 @@ std::vector<MDE*> MDE::loop_test3(std::vector<int> & vect_index, int & index){
 }
 
 
+
+MDE * MDE::getVmdeBack()
+{
+    printf("in getVmdeEnd");
+    return this->vMDE.back();
+}
+
+//~ std::vector<MDE*>::const_iterator MDE::getVmdeBegin()
+std::vector<MDE*>::iterator MDE::getVmdeBegin()
+{
+    return this->vMDE.begin();
+}
+
+std::vector<MDE*>::const_iterator MDE::getVmdeEnd()
+{
+    return this->vMDE.end();
+}
+
+std::size_t MDE::getVmdeSize()
+{
+    printf("in getVmdeSize");
+    return this->vMDE.size();
+}
 
 // simplified version of vMDE_get_by_index
 MDE * MDE::get_vMDE(std::vector<int> vect_index)
