@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['testing_20methods',['Testing methods',['../group__group__testing.html',1,'']]]
+  ['searching_20methods_112',['Searching methods',['../group__group__search.html',1,'']]],
+  ['set_20methods_113',['Set methods',['../group__group__set.html',1,'']]]
 ];

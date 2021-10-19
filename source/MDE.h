@@ -48,8 +48,11 @@ class MDE {
         static std::vector<MDE**> search_result;
         
         // non-static members
-        std::vector<MDE *> vMDE;
+        //~ std::vector<MDE *> vMDE;
         //~ std::string name;
+        int totRef = 0;
+        int countRef = 0;
+        int refVmdeSize = 0;
 
         
     public:
@@ -66,6 +69,8 @@ class MDE {
         std::string data;
         
         std::string name;
+
+        std::vector<MDE *> vMDE;
 
         //Public member functions:
         //Constructors:
@@ -121,7 +126,7 @@ class MDE {
          * deleteing each pointers from private member vMDE, vector of
          * pointers to MDE.
          */
-        ~MDE();
+        //~ ~MDE();
 
          /**
          * 
@@ -135,6 +140,7 @@ class MDE {
          * and clearing members of the instance of object class MDE.
          */        
         public: void destructor_MDE();
+        public: void destructor_Search_results(std::vector<MDE**> vsr);
 
          /**
          * 
@@ -146,7 +152,15 @@ class MDE {
          * @brief This is another destructor member doing exactely the
          * same as~MDE()
          */
-        private: void delete_all_pt();
+        private: void delete_all_pt_old();
+        private: void delete_all_pt_v_old();
+        
+        public: void delete_all_pt();
+        public: void delete_all_pt2_old();
+        void deleteAllPt(int sizeRef=0);
+        bool deleteAllPt_old();
+        void deleteAll();
+        bool isFirstRef();
 //TODO make sure this delete_all_pt() is necessary        
         
         
@@ -231,6 +245,7 @@ class MDE {
          */
         //~ public: void new_vMDE_element();
         public: void new_vMDE_element(std::string name="",std::string data="");
+        public: void new_vMDE_element(MDE * aMDE);
 
         // SET methods
         /** @defgroup group_set Set methods
@@ -1017,7 +1032,7 @@ class MDE {
          * search_for() to search for all Entities with a given member
          * 'name'.
          */
-        public: void fetch_search_result(std::vector<MDE**> &search_result = MDE::search_result);
+        //~ public: void fetch_search_result(std::vector<MDE**> &search_result = MDE::search_result);
 
         public: void get_vMDE_test2(int index, std::vector<MDE**> &pt_vMDE = MDE::search_result);
 

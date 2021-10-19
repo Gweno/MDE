@@ -17,27 +17,35 @@
 //Constructors:
 MDE::MDE(){};
 
-MDE::MDE(std::string init_name, std::string init_data, std::vector<MDE*> init_vMDE)
-{
-    this->name = init_name;
-    this->data = init_data;
-    for (std::vector<MDE*>::iterator it=init_vMDE.begin(); it != init_vMDE.end(); ++it)
-    {
-        this->vMDE.push_back(*it);
-    }
-}
+//~ MDE::MDE(std::string init_name, std::string init_data, std::vector<MDE*> init_vMDE)
+//~ {
+    //~ this->name = init_name;
+    //~ this->data = init_data;
+    //~ for (auto it:init_vMDE)
+    //~ {
+        //~ this->vMDE.push_back(it);
+    //~ }
+//~ }
 
 
 // Destructors:
 
-MDE::~MDE()
-{
+
+
+//~ MDE::~MDE(){
+    //~ std::cout << "Destructor called for " << this->name << std::endl;
+    //~ this->destructor_MDE();
+    //~ }
+
+//~ {
     // delete all memory pointed to in vMDE;
-    for (std::vector<MDE*>::iterator it=this->vMDE.begin();it!=this->vMDE.end();++it)
-    {
-        delete *it;
-    }
-};
+    //~ for (std::vector<MDE*>::iterator it=this->vMDE.begin();it!=this->vMDE.end();++it)
+    //~ for (auto it:vMDE)
+    //~ {
+        //~ delete *it;
+        //~ delete it;
+    //~ }
+//~ };
 
 // member function to create new Entity
 
@@ -47,7 +55,9 @@ MDE::~MDE()
 //~ };
 void MDE::new_vMDE_element(std::string name,std::string data)
 {
-    this->vMDE.push_back(new MDE);
+    MDE * pt_MDE = new MDE();
+    //~ this->vMDE.push_back(new MDE);
+    this->vMDE.push_back(pt_MDE);
     if (name !="")
     {
         this->set_name_vMDE_back(name);
@@ -56,6 +66,16 @@ void MDE::new_vMDE_element(std::string name,std::string data)
     {
         this->set_data_vMDE_back(data);
     }
+    //~ delete pt_MDE;
+};
+
+void MDE::new_vMDE_element(MDE * aMDE)
+{
+    std::cout << "New element from Vector" << std::endl;
+    this->vMDE.push_back(aMDE);
+    aMDE->countRef++;
+    aMDE->totRef = std::max(aMDE->countRef,aMDE->totRef);
+    aMDE->refVmdeSize = aMDE->vMDE.size();
 };
 
 void MDE::set_name(std::string eName)
@@ -122,13 +142,15 @@ void MDE::clear_all_vMDE()
 {
     if (!this->vMDE.empty())
     {
-        for (std::vector<MDE*>::iterator it_all=this->vMDE.begin();it_all!=this->vMDE.end();++it_all)
+        //~ for (std::vector<MDE*>::iterator it_all=this->vMDE.begin();it_all!=this->vMDE.end();++it_all)
+        for (auto it_all:this->vMDE)
         {
-            (*it_all)->clear_all_vMDE();
+            //~ (*it_all)->clear_all_vMDE();
+            (it_all)->clear_all_vMDE();
         }
         this->vMDE.clear();
     }
-    else delete this;
+    //~ else delete this;
 }
 
 void MDE::clear_all_vMDE_by_index(std::vector<int>& vect_index)
@@ -137,17 +159,232 @@ void MDE::clear_all_vMDE_by_index(std::vector<int>& vect_index)
     (this->vMDE_get_by_index(vect_index,it))->clear_all_vMDE();
 }
 
-void MDE::delete_all_pt()
+void MDE::delete_all_pt_v_old()
 {
     for (std::vector<MDE*>::iterator it_all=this->vMDE.begin();it_all!=this->vMDE.end();++it_all)
     {
+        std::cout << "deleting: " << this->name << std::endl;
+        std::cout << "size: " << this->vMDE.size() << std::endl;
+        
         delete (*it_all);
     }
 }
 
+void MDE::delete_all_pt2_old()
+{
+    for (auto it:this->vMDE)
+    {
+        
+        std::cout << "(ref)checking subE " << this->name << std::endl;
+        if(it->vMDE.size()>0){
+            
+            std::cout << "(ref)checthere are subE:" << it->name << std::endl;
+            it->delete_all_pt2_old();
+        };
+        std::cout << "(ref)deleting " << it->name << std::endl;
+        delete it;
+    }
+}
+
+void MDE::delete_all_pt()
+{
+    for (auto it:this->vMDE)
+    {
+        if(it->vMDE.size()>0){
+            std::cout << " > - Checking vectors for " << it->name <<  " : " << it->data << std::endl;            
+            it->delete_all_pt();
+        }
+        if(it->countRef>0){
+            std::cout << "Current count for (" << it->name <<  " : " << it->data << ") :" << it->countRef << " reference(s)." << std::endl;
+            it->countRef--;
+            std::cout << "0 - NOT DELETING (" << it->name <<  " : " << it->data << ") still has " << it->countRef << " reference(s)." << std::endl;
+        }
+        //~ else{
+        std::cout << "X - deleting " << it->name <<  " : " << it->data << std::endl;
+        delete it;
+        //~ }
+    }        
+}
+
+void MDE::deleteAllPt(int sizeRef)
+{
+    std::cout << "E: " << this->name << std::endl;
+    for(auto it=this->vMDE.begin();it!=this->vMDE.end();it++){
+        std::cout << "                 Checkpoint 1 " << std::endl;
+        std::cout << "                 sizeRef: " << sizeRef << std::endl;
+        std::cout << "                 before     sub E: " << (*it)->name << std::endl;
+        std::advance(it,sizeRef);
+        if((*it)->isFirstRef()){
+            std::cout << "                 Has first Ref" << std::endl;
+            std::cout << "                 vMDE.size() " << (*it)->vMDE.size() << std::endl;
+            std::cout << "                 (*it)->refVmdeSize " << (*it)->refVmdeSize << std::endl;
+            if((*it)->vMDE.size()>0){
+                std::cout << "                 Has sub Es" << std::endl;
+                (*it)->deleteAllPt();
+            }
+            (*it)->countRef--;
+            std::cout << "* NOT Deleting & " << (*it) << std::endl;
+            std::cout << "* NOT Deleting " << (*it)->name << std::endl;
+            //~ char del=0;
+            //~ std::cin >> del;
+            //~ if(del=='y'){
+                //~ delete (*it);
+            //~ }            
+            //~ delete (*it);
+        }
+        else {
+            std::cout << "                 Checkpoint 2" << std::endl;
+            if((*it)->vMDE.size()>0){
+            std::cout << "                 Has sub Es" << std::endl;
+            if((*it)->vMDE.size()>(*it)->refVmdeSize) {
+                (*it)->deleteAllPt((*it)->refVmdeSize);
+                std::cout << "                 Has sub Es - Check after" << std::endl;
+            }            
+            //~ (*it)->deleteAllPt();
+            }
+            //~ std::cout << "**    Deleting " << (*it)->name << std::endl;
+            //~ delete (*it);
+            // delete only if was not a ref
+            if((*it)->countRef==0)
+            {
+                std::cout << "***    Deleting & " << (*it) << std::endl;
+                std::cout << "***    Deleting " << (*it)->name << std::endl;
+                //~ char del=0;
+                //~ std::cin >> del;
+                //~ if(del=='y'){
+                    //~ delete (*it);
+                //~ }
+                delete (*it);
+            }
+            else{
+                std::cout << "****   On       & " << (*it) << std::endl;
+                std::cout << "****NOT Deleting " << (*it)->name << std::endl;
+                //~ char del=0;
+                //~ std::cin >> del;
+                //~ if(del=='y'){
+                    //~ delete (*it);
+                //~ }
+            }
+                
+        }
+    }
+}
+
+bool MDE::deleteAllPt_old()
+{
+    for (auto it:this->vMDE)
+    {
+        std::cout << " > - Checking vectors for " << this->name <<  " : " << this->data << std::endl;
+        std::cout << " > - On subentity " << it->name <<  " : " << it->data << std::endl;
+        std::cout << "     Total References     " << it->totRef << std::endl;
+        std::cout << "     References left      " << it->countRef << std::endl;
+        if(it->vMDE.size()>0){
+            
+            std::cout << "     it has subentities" << std::endl;
+            if(it->isFirstRef()){
+                std::cout << "       There's at least one ref" << std::endl;
+                it->countRef--;
+                // display size of master...
+                std::cout << "Size of Master vMDE " << this->vMDE.size() << std::endl;
+                std::cout << "Size of subEntity vMDE " << it->vMDE.size() << std::endl;
+                std::cout << "subEntity vMDE " << it->vMDE.back()->name << std::endl;
+                std::cout << "display it size " << it->refVmdeSize << std::endl;
+                std::cout << "subEntity before increment " << it->name << std::endl;
+                //~ if(it->vMDE.size()>it->refVmdeSize){
+                    //~ std::cout << "next iteration on " << it->vMDE[it->refVmdeSize-1]->name << std::endl;
+                    //~ std::advance(it,it->refVmdeSize);
+                    //~ std::cout << "subEntity after increment " << it->name << std::endl;
+                    //~ it->vMDE[it->refVmdeSize-1]->deleteAllPt(); //move to end of current ref
+                    //~ it->deleteAllPt();
+                //~ }
+                //~ std::cout << "subEntity after increment " << it->name << std::endl;
+                
+                // go to end of refered pointer...
+                
+                
+                
+            }
+            else if(it->totRef==0){
+                std::cout << "       There's no ref" << std::endl;
+                //~ return it->deleteAllPt();
+                it->deleteAllPt();
+            }
+            else{
+                std::cout << "DO NOTHING -> check next" << it->name << std::endl;
+            }
+        }
+        //~ else if (it->isFirstRef() || it->totRef==0){
+        //~ else{
+        std::cout << "X - deleting " << it->name <<  " : " << it->data << std::endl;
+        delete it;
+        //~ }
+        //else do nothing;
+        
+        //~ if(it->countRef>0){
+            //~ std::cout << "Current count for (" << it->name <<  " : " << it->data << ") :" << it->countRef << " reference(s)." << std::endl;
+            //~ it->countRef--;
+            //~ std::cout << "0 - NOT DELETING (" << it->name <<  " : " << it->data << ") still has " << it->countRef << " reference(s)." << std::endl;
+        //~ }
+        //~ else{
+            //~ std::cout << "X - deleting " << it->name <<  " : " << it->data << std::endl;
+            //~ delete it;
+        //~ }
+    }        
+}
+
+bool MDE::isFirstRef(){
+    if(this->countRef==this->totRef && this->totRef>0) return true;
+    else return false;
+}
+
+/*
+ 
+//if it->isFirstRef()
+// delete_all_pt_2... (don't expect any other ref...)
+// else go to next iteration and check again 
+ 
+ */
+
+
+void MDE::deleteAll()
+{
+    for (auto it:this->vMDE)
+    {
+        std::cout << "> " << it->name << " : " << it->data << std::endl;
+        if(it->isFirstRef()){
+            std::cout << "First ref # " << it->totRef << " / " <<  it->countRef << std::endl;
+            it->delete_all_pt2_old();
+            it->countRef--;
+        }
+        else std::cout << "Ref # " << it->totRef << " / " <<  it->countRef << std::endl;
+        std::cout << "go next " << std::endl;
+    }
+}
+void MDE::delete_all_pt_old()
+{
+    for (auto it:this->vMDE)
+    {
+        if(it->vMDE.size()>0){
+            std::cout << " > - Checking vectors for " << it->name <<  " : " << it->data << std::endl;            
+            it->delete_all_pt();
+        }
+        if(it->countRef>0){
+            std::cout << "Current count for (" << it->name <<  " : " << it->data << ") :" << it->countRef << " reference(s)." << std::endl;
+            it->countRef--;
+            std::cout << "0 - NOT DELETING (" << it->name <<  " : " << it->data << ") still has " << it->countRef << " reference(s)." << std::endl;
+        }
+        else{
+            std::cout << "X - deleting " << it->name <<  " : " << it->data << std::endl;
+            delete it;
+        }
+    }        
+}
+
+
 void MDE::destructor_MDE()
 {
     this->delete_all_pt();
+    //~ this->delete_all_pt2();
     this->vMDE.clear();
     this->name = "";
     this->data = "";
@@ -177,15 +414,19 @@ void MDE::display_data()
 
 void MDE::display_vMDE_names()
 {
-    for (std::vector<MDE*>::iterator it=this->vMDE.begin();it!=this->vMDE.end();++it){
-        (*it)->display_name();
+    //~ for (std::vector<MDE*>::iterator it=this->vMDE.begin();it!=this->vMDE.end();++it){
+        //~ (*it)->display_name();
+    for (auto it:this->vMDE){
+        it->display_name();
     }
 };
 
 void MDE::display_vMDE_data()
 {
-    for (std::vector<MDE*>::iterator it=this->vMDE.begin();it!=this->vMDE.end();++it){
-        (*it)->display_data();
+    //~ for (std::vector<MDE*>::iterator it=this->vMDE.begin();it!=this->vMDE.end();++it){
+        //~ (*it)->display_data();
+    for (auto it:this->vMDE){
+        it->display_data();
     }
 };
 
@@ -293,9 +534,13 @@ void MDE::user_input_vMDE()
         }
         else if (key_input=="end")
         {
-            for (std::vector<MDE*>::iterator it=this->vMDE.begin();it!=this->vMDE.end();++it)
+            //~ for (std::vector<MDE*>::iterator it=this->vMDE.begin();it!=this->vMDE.end();++it)
+            //~ {
+                //~ (*it)->user_input_vMDE();                           //Where recursivity happen...
+            //~ }
+            for (auto it:this->vMDE)
             {
-                (*it)->user_input_vMDE();                           //Where recursivity happen...
+                it->user_input_vMDE();                           //Where recursivity happen...
             }
         }
     }
@@ -320,11 +565,18 @@ void MDE::save_to_file(int n_indent, const int & n_space,
     file << std::endl;
     
     if (this->vMDE.size()!=0) n_indent++;
-    for (std::vector<MDE*>::iterator it=this->vMDE.begin();it!=this->vMDE.end();++it)
+    //~ for (std::vector<MDE*>::iterator it=this->vMDE.begin();it!=this->vMDE.end();++it)
+        //~ {
+            //~ (*it)->save_to_file(n_indent, n_space, start_opening_tag,
+            //~ end_opening_tag, start_closing_tag, end_closing_tag, file);
+            //~ if (it == this->vMDE.end()-1) n_indent--;
+            
+        //~ }
+    for (auto it:this->vMDE)
         {
-            (*it)->save_to_file(n_indent, n_space, start_opening_tag,
+            it->save_to_file(n_indent, n_space, start_opening_tag,
             end_opening_tag, start_closing_tag, end_closing_tag, file);
-            if (it == this->vMDE.end()-1) n_indent--;
+            if (it == this->vMDE.back()) n_indent--;
             
         }
     
@@ -341,9 +593,13 @@ void MDE::print_flat_MDE()
     std::cout << this->name << " : " << this->data << std::endl;
     if (this->vMDE.size()!=0)
     {
-        for (std::vector<MDE*>::iterator it=this->vMDE.begin();it!=this->vMDE.end();++it)
+        //~ for (std::vector<MDE*>::iterator it=this->vMDE.begin();it!=this->vMDE.end();++it)
+        //~ {
+            //~ (*it)->print_flat_MDE();
+        //~ }
+        for (auto it:this->vMDE)
         {
-            (*it)->print_flat_MDE();
+            it->print_flat_MDE();
         }
     }
     return;
@@ -1358,5 +1614,14 @@ void MDE::search_results_to_vector_float(std::vector<float> &v_float, std::vecto
 }
 
 std::vector<MDE**> MDE::search_result;
+
+void MDE::destructor_Search_results(std::vector<MDE**> vsr){
+
+    for (auto it:vsr)
+    {
+        delete it;
+    }
+}
+    
 
 #endif /*MDE.cpp*/

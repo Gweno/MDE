@@ -1,31 +1,65 @@
-\hypertarget{group__group__clear}{}\section{Clear methods}
+\hypertarget{group__group__clear}{}\doxysection{Clear methods}
 \label{group__group__clear}\index{Clear methods@{Clear methods}}
-\subsection*{Functions}
+
+
+Methods to clear the strings \textquotesingle{}name\textquotesingle{} and \textquotesingle{}data\textquotesingle{} in instance of Objects of Class \mbox{\hyperlink{classMDE}{M\+DE}}.  
+
+
+\doxysubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{group__group__clear_ga659629fc7fa0747f1853f23d107bb67a}{M\+D\+E\+::$\sim$\+M\+DE} ()
-\begin{DoxyCompactList}\small\item\em This is the destructor member function simply deleteing each pointers from private member v\+M\+DE, vector of pointers to \hyperlink{classMDE}{M\+DE}. \end{DoxyCompactList}\item 
-void \hyperlink{group__group__clear_gad832700663a9577adea73d14aee5011f}{M\+D\+E\+::destructor\+\_\+\+M\+DE} ()
-\begin{DoxyCompactList}\small\item\em This is function member doing is calling delete\+\_\+all\+\_\+pt() to delete all pointers in private member v\+M\+DE and clearing members of the instance of object class \hyperlink{classMDE}{M\+DE}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\mbox{\hyperlink{group__group__clear_ga659629fc7fa0747f1853f23d107bb67a}{M\+D\+E\+::$\sim$\+M\+DE}} ()
+\begin{DoxyCompactList}\small\item\em This is the destructor member function simply deleteing each pointers from private member v\+M\+DE, vector of pointers to \mbox{\hyperlink{classMDE}{M\+DE}}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__group__clear_gad832700663a9577adea73d14aee5011f}{M\+D\+E\+::destructor\+\_\+\+M\+DE}} ()
+\begin{DoxyCompactList}\small\item\em This is function member doing is calling delete\+\_\+all\+\_\+pt() to delete all pointers in private member v\+M\+DE and clearing members of the instance of object class \mbox{\hyperlink{classMDE}{M\+DE}}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__group__clear_gaa2d2adff677862aa8a12fbde8df0f781}{M\+D\+E\+::clear\+\_\+all\+\_\+v\+M\+D\+E\+\_\+by\+\_\+index}} (std\+::vector$<$ int $>$ \&vect\+\_\+index)
+\begin{DoxyCompactList}\small\item\em This member function is to clear all entries of the element of the private member vector v\+M\+DE of an instance of a class \mbox{\hyperlink{classMDE}{M\+DE}} object recursively using a vector of index pointing to the parent element. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
-\subsection{Detailed Description}
-Methods to clear the strings \textquotesingle{}name\textquotesingle{} and \textquotesingle{}data\textquotesingle{} in instance of Objects of Class \hyperlink{classMDE}{M\+DE}. 
-
-\subsection{Function Documentation}
-\index{Clear methods@{Clear methods}!destructor\+\_\+\+M\+DE@{destructor\+\_\+\+M\+DE}}
-\index{destructor\+\_\+\+M\+DE@{destructor\+\_\+\+M\+DE}!Clear methods@{Clear methods}}
-\subsubsection[{\texorpdfstring{destructor\+\_\+\+M\+D\+E()}{destructor_MDE()}}]{\setlength{\rightskip}{0pt plus 5cm}void M\+D\+E\+::destructor\+\_\+\+M\+DE (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}\hypertarget{group__group__clear_gad832700663a9577adea73d14aee5011f}{}\label{group__group__clear_gad832700663a9577adea73d14aee5011f}
+\doxysubsection{Detailed Description}
+Methods to clear the strings \textquotesingle{}name\textquotesingle{} and \textquotesingle{}data\textquotesingle{} in instance of Objects of Class \mbox{\hyperlink{classMDE}{M\+DE}}. 
 
 
-This is function member doing is calling delete\+\_\+all\+\_\+pt() to delete all pointers in private member v\+M\+DE and clearing members of the instance of object class \hyperlink{classMDE}{M\+DE}. 
 
-\subsubsection*{name\+: \hyperlink{group__group__clear_gad832700663a9577adea73d14aee5011f}{destructor\+\_\+\+M\+D\+E()}}
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{group__group__clear_gaa2d2adff677862aa8a12fbde8df0f781}\label{group__group__clear_gaa2d2adff677862aa8a12fbde8df0f781}} 
+\index{Clear methods@{Clear methods}!clear\_all\_vMDE\_by\_index@{clear\_all\_vMDE\_by\_index}}
+\index{clear\_all\_vMDE\_by\_index@{clear\_all\_vMDE\_by\_index}!Clear methods@{Clear methods}}
+\doxysubsubsection{\texorpdfstring{clear\_all\_vMDE\_by\_index()}{clear\_all\_vMDE\_by\_index()}}
+{\footnotesize\ttfamily void M\+D\+E\+::clear\+\_\+all\+\_\+v\+M\+D\+E\+\_\+by\+\_\+index (\begin{DoxyParamCaption}\item[{std\+::vector$<$ int $>$ \&}]{vect\+\_\+index }\end{DoxyParamCaption})}
 
+
+
+This member function is to clear all entries of the element of the private member vector v\+M\+DE of an instance of a class \mbox{\hyperlink{classMDE}{M\+DE}} object recursively using a vector of index pointing to the parent element. 
+
+\hypertarget{group__group__clear_autotoc_md9}{}\doxysubsubsection{name\+: clear\+\_\+all\+\_\+v\+M\+D\+E\+\_\+by\+\_\+index(std\+::vector$<$int$>$\& vect\+\_\+index)}\label{group__group__clear_autotoc_md9}
+
+\begin{DoxyParams}{Parameters}
+{\em $<$em$>$\&} & vect\+\_\+index is a reference to a standard vector of integers that holds the sequence of indexes to point to an element of v\+M\+DE. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Nothing is returned (void). 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+clear\+\_\+all\+\_\+v\+M\+D\+E(). 
+\end{DoxySeeAlso}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em No} & exception handling. \\
+\hline
+\end{DoxyExceptions}
+\mbox{\Hypertarget{group__group__clear_gad832700663a9577adea73d14aee5011f}\label{group__group__clear_gad832700663a9577adea73d14aee5011f}} 
+\index{Clear methods@{Clear methods}!destructor\_MDE@{destructor\_MDE}}
+\index{destructor\_MDE@{destructor\_MDE}!Clear methods@{Clear methods}}
+\doxysubsubsection{\texorpdfstring{destructor\_MDE()}{destructor\_MDE()}}
+{\footnotesize\ttfamily void M\+D\+E\+::destructor\+\_\+\+M\+DE (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+This is function member doing is calling delete\+\_\+all\+\_\+pt() to delete all pointers in private member v\+M\+DE and clearing members of the instance of object class \mbox{\hyperlink{classMDE}{M\+DE}}. 
+
+\hypertarget{group__group__clear_autotoc_md4}{}\doxysubsubsection{name\+: destructor\+\_\+\+M\+D\+E()}\label{group__group__clear_autotoc_md4}
 
 \begin{DoxyParams}{Parameters}
 {\em No} & arguments. \\
@@ -42,19 +76,17 @@ delete\+\_\+all\+\_\+pt().
 {\em No} & exception handling. \\
 \hline
 \end{DoxyExceptions}
-\index{Clear methods@{Clear methods}!````~M\+DE@{$\sim$\+M\+DE}}
-\index{````~M\+DE@{$\sim$\+M\+DE}!Clear methods@{Clear methods}}
-\subsubsection[{\texorpdfstring{$\sim$\+M\+D\+E()}{~MDE()}}]{\setlength{\rightskip}{0pt plus 5cm}M\+D\+E\+::$\sim$\+M\+DE (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}\hypertarget{group__group__clear_ga659629fc7fa0747f1853f23d107bb67a}{}\label{group__group__clear_ga659629fc7fa0747f1853f23d107bb67a}
+\mbox{\Hypertarget{group__group__clear_ga659629fc7fa0747f1853f23d107bb67a}\label{group__group__clear_ga659629fc7fa0747f1853f23d107bb67a}} 
+\index{Clear methods@{Clear methods}!````~MDE@{$\sim$MDE}}
+\index{````~MDE@{$\sim$MDE}!Clear methods@{Clear methods}}
+\doxysubsubsection{\texorpdfstring{$\sim$MDE()}{~MDE()}}
+{\footnotesize\ttfamily M\+D\+E\+::$\sim$\+M\+DE (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 
-This is the destructor member function simply deleteing each pointers from private member v\+M\+DE, vector of pointers to \hyperlink{classMDE}{M\+DE}. 
 
-\subsubsection*{name\+: \hyperlink{group__group__clear_ga659629fc7fa0747f1853f23d107bb67a}{$\sim$\+M\+D\+E()}}
+This is the destructor member function simply deleteing each pointers from private member v\+M\+DE, vector of pointers to \mbox{\hyperlink{classMDE}{M\+DE}}. 
 
+\hypertarget{group__group__clear_autotoc_md3}{}\doxysubsubsection{name\+: $\sim$\+M\+D\+E()}\label{group__group__clear_autotoc_md3}
 
 \begin{DoxyParams}{Parameters}
 {\em No} & arguments. \\
@@ -64,7 +96,7 @@ This is the destructor member function simply deleteing each pointers from priva
 Nothing is returned (void). 
 \end{DoxyReturn}
 \begin{DoxySeeAlso}{See also}
-\hyperlink{classMDE_a149c182b2578cc172f7bb1fc6f228a70}{M\+D\+E()}. 
+\mbox{\hyperlink{classMDE_a149c182b2578cc172f7bb1fc6f228a70}{M\+D\+E()}}. 
 \end{DoxySeeAlso}
 
 \begin{DoxyExceptions}{Exceptions}

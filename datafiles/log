@@ -1,0 +1,165 @@
+Deleting pointers
+ > - Checking vectors for MDE : master
+ > - On subentity pid : 3925
+     Total References     0
+     References left      0
+X - deleting pid : 3925
+ > - Checking vectors for MDE : master
+ > - On subentity arguments : 1
+     Total References     0
+     References left      0
+     it has subentities
+       There's no ref
+ > - Checking vectors for arguments : 1
+ > - On subentity 0 : ./../bin/mde_debug
+     Total References     0
+     References left      0
+X - deleting 0 : ./../bin/mde_debug
+X - deleting arguments : 1
+ > - Checking vectors for MDE : master
+ > - On subentity parameters : 1
+     Total References     0
+     References left      0
+     it has subentities
+       There's no ref
+ > - Checking vectors for parameters : 1
+ > - On subentity version : v0.3.2
+     Total References     0
+     References left      0
+X - deleting version : v0.3.2
+ > - Checking vectors for parameters : 1
+ > - On subentity move : false
+     Total References     0
+     References left      0
+X - deleting move : false
+ > - Checking vectors for parameters : 1
+ > - On subentity box : false
+     Total References     0
+     References left      0
+X - deleting box : false
+ > - Checking vectors for parameters : 1
+ > - On subentity glmode : false
+     Total References     0
+     References left      0
+X - deleting glmode : false
+ > - Checking vectors for parameters : 1
+ > - On subentity nomenu : false
+     Total References     0
+     References left      0
+X - deleting nomenu : false
+ > - Checking vectors for parameters : 1
+ > - On subentity file : ../datafiles/default.xml
+     Total References     0
+     References left      0
+X - deleting file : ../datafiles/default.xml
+ > - Checking vectors for parameters : 1
+ > - On subentity box-color : 0.500000, 0.500000, 0.500000, 0.500000
+     Total References     0
+     References left      0
+X - deleting box-color : 0.500000, 0.500000, 0.500000, 0.500000
+ > - Checking vectors for parameters : 1
+ > - On subentity font : ../fonts/FreeSans.ttf
+     Total References     0
+     References left      0
+X - deleting font : ../fonts/FreeSans.ttf
+ > - Checking vectors for parameters : 1
+ > - On subentity font-size : 48
+     Total References     0
+     References left      0
+X - deleting font-size : 48
+X - deleting parameters : 1
+ > - Checking vectors for MDE : master
+ > - On subentity file : ../datafiles/default.xml
+     Total References     0
+     References left      0
+     it has subentities
+       There's no ref
+ > - Checking vectors for file : ../datafiles/default.xml
+ > - On subentity master : 123
+     Total References     0
+     References left      0
+     it has subentities
+       There's no ref
+ > - Checking vectors for master : 123
+ > - On subentity tata : 1
+     Total References     0
+     References left      0
+     it has subentities
+       There's no ref
+ > - Checking vectors for tata : 1
+ > - On subentity toto : 11
+     Total References     0
+     References left      0
+     it has subentities
+       There's no ref
+ > - Checking vectors for toto : 11
+ > - On subentity truc : 999
+     Total References     0
+     References left      0
+X - deleting truc : 999
+X - deleting toto : 11
+ > - Checking vectors for tata : 1
+ > - On subentity lili : 12
+     Total References     0
+     References left      0
+X - deleting lili : 12
+X - deleting tata : 1
+ > - Checking vectors for master : 123
+ > - On subentity titi : 2
+     Total References     0
+     References left      0
+     it has subentities
+       There's no ref
+ > - Checking vectors for titi : 2
+ > - On subentity toto : 21
+     Total References     0
+     References left      0
+X - deleting toto : 21
+ > - Checking vectors for titi : 2
+ > - On subentity lolo : 22
+     Total References     0
+     References left      0
+X - deleting lolo : 22
+X - deleting titi : 2
+X - deleting master : 123
+X - deleting file : ../datafiles/default.xml
+ > - Checking vectors for MDE : master
+ > - On subentity div : 
+     Total References     2
+     References left      2
+     it has subentities
+       There's at least one ref
+(ref)checking subE div
+(ref)deleting p
+(ref)checking subE div
+(ref)deleting p
+X - deleting div : 
+ > - Checking vectors for MDE : master
+ > - On subentity window : main window
+     Total References     1
+     References left      1
+     it has subentities
+       There's at least one ref
+(ref)checking subE window
+(ref)checthere are subE:attributes
+(ref)checking subE attributes
+(ref)deleting width
+(ref)checking subE attributes
+(ref)deleting height
+(ref)checking subE attributes
+(ref)deleting background-color
+(ref)deleting attributes
+(ref)checking subE window
+(ref)deleting title
+(ref)checking subE window
+(ref)checthere are subE:content
+(ref)checking subE content
+(ref)checthere are subE:div
+(ref)checking subE div
+(ref)deleting p
+(ref)checking subE div
+(ref)deleting p
+(ref)deleting div
+(ref)deleting content
+X - deleting window : main window
+

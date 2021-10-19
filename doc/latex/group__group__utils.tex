@@ -1,0 +1,478 @@
+\hypertarget{group__group__utils}{}\doxysection{Functions Utils}
+\label{group__group__utils}\index{Functions Utils@{Functions Utils}}
+
+
+Functions Utils is not a class but a collection of utilitary functions to manipulate \mbox{\hyperlink{classMDE}{M\+DE}} instances, like loading from an X\+ML file, or saving to an X\+ML file.  
+
+
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structGLdata}{G\+Ldata}}
+\begin{DoxyCompactList}\small\item\em This is public structure \textquotesingle{}\mbox{\hyperlink{structGLdata}{G\+Ldata}}\textquotesingle{}. It is used for transferring information to GL functions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{group__group__utils_gaba1bb76120cd8f14987e635e63e7d0db}{check\+Token}} (const std\+::string \&token, std\+::string \&element)
+\begin{DoxyCompactList}\small\item\em This member function is to process a token extracted from a file as a tag and checks if it is an \textquotesingle{}opening\+\_\+tag\textquotesingle{} or a \textquotesingle{}closing\+\_\+tag\textquotesingle{}. It changes the parameter element accordingly. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__group__utils_gaf98bdbbd73032fd57b977a116c0a32b6}{str\+Token\+Tag}} (std\+::string \&buffer\+\_\+\+Input, std\+::string \&output\+\_\+\+Tag, std\+::string \&buffer\+\_\+\+Output, char delimiter1, char delimiter2)
+\begin{DoxyCompactList}\small\item\em This member function is to read an X\+ML file and store it into an instance of class \mbox{\hyperlink{classMDE}{M\+DE}}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__group__utils_ga62fbfa9829d0a2584921d108478edc09}{trim\+Leading\+Space}} (std\+::string \&io\+\_\+string)
+\begin{DoxyCompactList}\small\item\em This member function is to trim the leading space (space charaters at the start) of the io\+\_\+string parameter passed as argument for this member function. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{group__group__utils_ga4bc96f5ee04e9c8f3860bb991a97a911}{extract\+File\+To\+Flat\+M\+DE}} (\mbox{\hyperlink{classMDE}{M\+DE}} \&M\+D\+E\+\_\+source, const std\+::string \&full\+\_\+filename)
+\begin{DoxyCompactList}\small\item\em This member function is to extract data from an xml file and store it in an Entity with all sub-\/entities at the same level and the \textquotesingle{}name\textquotesingle{} member sets to \textquotesingle{}name\textquotesingle{} or \textquotesingle{}data\textquotesingle{} accordingly to wether it\textquotesingle{}s a \textquotesingle{}name\textquotesingle{} or \textquotesingle{}data\textquotesingle{} member. (space charaters at the start) of the io\+\_\+string parameter. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classMDE}{M\+DE}} $\ast$ \mbox{\hyperlink{group__group__utils_ga50247340f34dc1e6ec74fc3c0164f773}{process\+Flat\+M\+D\+E\+To\+M\+DE}} (\mbox{\hyperlink{classMDE}{M\+DE}} \&M\+D\+E\+\_\+source, \mbox{\hyperlink{classMDE}{M\+DE}} \&M\+D\+E\+\_\+target, std\+::vector$<$ \mbox{\hyperlink{classMDE}{M\+DE}} $\ast$ $>$\+::iterator \&it, std\+::stack$<$ \mbox{\hyperlink{classMDE}{M\+DE}} $\ast$$\ast$ $>$ \&stack\+\_\+\+M\+D\+E\+\_\+pt)
+\begin{DoxyCompactList}\small\item\em This member function is to process an instnace of a \textquotesingle{}flat\textquotesingle{} Entity and return a pointer to a new instance of \mbox{\hyperlink{classMDE}{M\+DE}} that has nested sub-\/entities. The algorithm checks what is the data, if it is a structural data like an opening tag or closing tag it creates or ends the sub-\/entities accordingly. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{group__group__utils_ga5b0926b8281516b1639284daaf33f41f}{load\+X\+M\+L\+File\+Tov\+M\+DE}} (\mbox{\hyperlink{classMDE}{M\+DE}} \&M\+D\+E\+\_\+source, int \&index, const std\+::string \&full\+\_\+filename)
+\begin{DoxyCompactList}\small\item\em This member function is to read an X\+ML file using the reference to the string full\+\_\+filename and to store the data from the file into an element at a given index of the private member v\+M\+DE of the instance of a class of \mbox{\hyperlink{classMDE}{M\+DE}}. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{group__group__utils_gaa9e264dadf6e6ccd1187bd8229b4ebea}{load\+X\+M\+L\+File\+To\+M\+DE}} (\mbox{\hyperlink{classMDE}{M\+DE}} \&M\+D\+E\+\_\+source, const std\+::string \&full\+\_\+filename)
+\begin{DoxyCompactList}\small\item\em This member function is to read an X\+ML file using the reference to the string full\+\_\+filename and to store the data from the file into an instance of class \mbox{\hyperlink{classMDE}{M\+DE}}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__group__utils_gad8f7ca1f04faf6a3699a198fda05dce5}{format\+Display}} (\mbox{\hyperlink{classMDE}{M\+DE}} \&M\+D\+E\+\_\+source, int n\+\_\+indent, const int \&n\+\_\+space, std\+::string start\+\_\+opening\+\_\+tag, std\+::string end\+\_\+opening\+\_\+tag, std\+::string start\+\_\+closing\+\_\+tag, std\+::string end\+\_\+closing\+\_\+tag)
+\begin{DoxyCompactList}\small\item\em This member function is to display the instance of a class object \mbox{\hyperlink{classMDE}{M\+DE}} with a defined format using opening and closing tags (for example like an X\+ML file). \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__group__utils_gac83d52afc57abbd6ff463a31c47f05e9}{extract\+M\+D\+Edata\+For\+Voffset}} (\mbox{\hyperlink{classMDE}{M\+DE}} \&M\+D\+E\+\_\+source, std\+::vector$<$ \mbox{\hyperlink{structGLdata}{G\+Ldata}} $>$ \&v\+\_\+\+M\+D\+E\+\_\+data, int \&level, int index=0)
+\begin{DoxyCompactList}\small\item\em This member function is to fill-\/in a standard vector of struct \mbox{\hyperlink{structGLdata}{G\+Ldata}} by extracting data from private member \textquotesingle{}name\textquotesingle{} and public member \textquotesingle{}data\textquotesingle{}, and setting the level and index of each Entities and sub-\/entities of an instance of object class \mbox{\hyperlink{classMDE}{M\+DE}}. The vector of \mbox{\hyperlink{structGLdata}{G\+Ldata}} is used in the standard vector of \mbox{\hyperlink{structGLdata}{G\+Ldata}} to set offset coordinates. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__group__utils_ga9452896a5e14c435556a6af0b9da1a09}{search\+For}} (\mbox{\hyperlink{classMDE}{M\+DE}} \&M\+D\+E\+\_\+source, int \&index, int \&level, std\+::string search\+Name, std\+::vector$<$ \mbox{\hyperlink{classMDE}{M\+DE}} $\ast$$\ast$ $>$ \&search\+\_\+result)
+\begin{DoxyCompactList}\small\item\em This member function is to search an entire Entity recursively all instances that has their name equal to the standard string search\+Name in parameter. It stores all the results in the static (class) member search\+\_\+result which is a standard vector of pointers to pointers of \mbox{\hyperlink{classMDE}{M\+DE}}. The results of the search can be displayed with method fetch\+\_\+search\+\_\+result. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__group__utils_ga874012995833d90a578771c83ebf7d4a}{simple\+Loop\+V\+M\+DE}} (\mbox{\hyperlink{classMDE}{M\+DE}} \&M\+D\+E\+\_\+source, std\+::string search\+Name, std\+::vector$<$ \mbox{\hyperlink{classMDE}{M\+DE}} $\ast$$\ast$ $>$ \&search\+\_\+result)
+\begin{DoxyCompactList}\small\item\em This member function is to part of the recursive algorithm in the search\+\_\+for method. It recursively stores pointers to pointer to \mbox{\hyperlink{classMDE}{M\+DE}} in the static (class) member search\+\_\+result when the search is successful. It calls a similar methods called simple\+\_\+loop\+\_\+\+V\+M\+D\+E\+\_\+next\+\_\+level in its recursive process to separate scopes of the different sub-\/entities of an entity. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__group__utils_ga5c5c1a1553762cfd4cdbd6f51d0bc715}{simple\+Loop\+V\+M\+D\+Enext\+Level}} (\mbox{\hyperlink{classMDE}{M\+DE}} \&M\+D\+E\+\_\+source, std\+::string search\+Name, std\+::vector$<$ \mbox{\hyperlink{classMDE}{M\+DE}} $\ast$$\ast$ $>$ \&search\+\_\+result)
+\begin{DoxyCompactList}\small\item\em This member function is to part of the recursive algorithm in the search\+\_\+for method. It is used to separate scopes of the different sub-\/entities of an entity to perform the search. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__group__utils_ga2be8fc00486d267f1073ef904a33210b}{display\+V\+M\+D\+Edata}} (std\+::vector$<$ \mbox{\hyperlink{structGLdata}{G\+Ldata}} $>$ \&v\+\_\+offset)
+\begin{DoxyCompactList}\small\item\em This function member is to display all elements of a standard vector of struct \mbox{\hyperlink{structGLdata}{G\+Ldata}}. For example it can displays a vector of offset values for coordinates. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Functions Utils is not a class but a collection of utilitary functions to manipulate \mbox{\hyperlink{classMDE}{M\+DE}} instances, like loading from an X\+ML file, or saving to an X\+ML file. 
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{group__group__utils_gaba1bb76120cd8f14987e635e63e7d0db}\label{group__group__utils_gaba1bb76120cd8f14987e635e63e7d0db}} 
+\index{Functions Utils@{Functions Utils}!checkToken@{checkToken}}
+\index{checkToken@{checkToken}!Functions Utils@{Functions Utils}}
+\doxysubsubsection{\texorpdfstring{checkToken()}{checkToken()}}
+{\footnotesize\ttfamily void check\+Token (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{token,  }\item[{std\+::string \&}]{element }\end{DoxyParamCaption})}
+
+
+
+This member function is to process a token extracted from a file as a tag and checks if it is an \textquotesingle{}opening\+\_\+tag\textquotesingle{} or a \textquotesingle{}closing\+\_\+tag\textquotesingle{}. It changes the parameter element accordingly. 
+
+\hypertarget{group__group__utils_autotoc_md40}{}\doxysubsubsection{name\+: check\+Token(const std\+::string \& token,}\label{group__group__utils_autotoc_md40}
+std\+::string \& element) 
+\begin{DoxyParams}{Parameters}
+{\em \&} & token is a reference to a standard string. \\
+\hline
+{\em \&} & element is a reference to a standard string. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Nothing is returned (void) 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+load\+\_\+\+X\+M\+L\+\_\+\+File\+\_\+to\+\_\+\+M\+D\+E() 
+
+extract\+\_\+\+File\+\_\+to\+\_\+\+Flat\+\_\+\+M\+D\+E() 
+\end{DoxySeeAlso}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em No} & exception handling. \\
+\hline
+\end{DoxyExceptions}
+\mbox{\Hypertarget{group__group__utils_ga2be8fc00486d267f1073ef904a33210b}\label{group__group__utils_ga2be8fc00486d267f1073ef904a33210b}} 
+\index{Functions Utils@{Functions Utils}!displayVMDEdata@{displayVMDEdata}}
+\index{displayVMDEdata@{displayVMDEdata}!Functions Utils@{Functions Utils}}
+\doxysubsubsection{\texorpdfstring{displayVMDEdata()}{displayVMDEdata()}}
+{\footnotesize\ttfamily void display\+V\+M\+D\+Edata (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{structGLdata}{G\+Ldata}} $>$ \&}]{v\+\_\+offset }\end{DoxyParamCaption})}
+
+
+
+This function member is to display all elements of a standard vector of struct \mbox{\hyperlink{structGLdata}{G\+Ldata}}. For example it can displays a vector of offset values for coordinates. 
+
+\hypertarget{group__group__utils_autotoc_md52}{}\doxysubsubsection{name\+: display\+V\+M\+D\+Edata(std\+::vector$<$\+G\+Ldata$>$ \& v\+\_\+\+M\+D\+E\+\_\+data)}\label{group__group__utils_autotoc_md52}
+
+\begin{DoxyParams}{Parameters}
+{\em \&} & v\+\_\+\+M\+D\+E\+\_\+data reference to a standard vector of type struct \mbox{\hyperlink{structGLdata}{G\+Ldata}}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Nothing is returned (void). 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+set\+\_\+name\+\_\+v\+M\+D\+E\+\_\+index(). 
+
+set\+\_\+data\+\_\+v\+M\+D\+E\+\_\+index(). 
+\end{DoxySeeAlso}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em No} & exception handling. \\
+\hline
+\end{DoxyExceptions}
+\mbox{\Hypertarget{group__group__utils_ga4bc96f5ee04e9c8f3860bb991a97a911}\label{group__group__utils_ga4bc96f5ee04e9c8f3860bb991a97a911}} 
+\index{Functions Utils@{Functions Utils}!extractFileToFlatMDE@{extractFileToFlatMDE}}
+\index{extractFileToFlatMDE@{extractFileToFlatMDE}!Functions Utils@{Functions Utils}}
+\doxysubsubsection{\texorpdfstring{extractFileToFlatMDE()}{extractFileToFlatMDE()}}
+{\footnotesize\ttfamily bool extract\+File\+To\+Flat\+M\+DE (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classMDE}{M\+DE}} \&}]{M\+D\+E\+\_\+source,  }\item[{const std\+::string \&}]{full\+\_\+filename }\end{DoxyParamCaption})}
+
+
+
+This member function is to extract data from an xml file and store it in an Entity with all sub-\/entities at the same level and the \textquotesingle{}name\textquotesingle{} member sets to \textquotesingle{}name\textquotesingle{} or \textquotesingle{}data\textquotesingle{} accordingly to wether it\textquotesingle{}s a \textquotesingle{}name\textquotesingle{} or \textquotesingle{}data\textquotesingle{} member. (space charaters at the start) of the io\+\_\+string parameter. 
+
+\hypertarget{group__group__utils_autotoc_md43}{}\doxysubsubsection{name\+: extract\+File\+To\+Flat\+M\+D\+E(\+M\+D\+E \& M\+D\+E\+\_\+source,}\label{group__group__utils_autotoc_md43}
+const std\+::string \& full\+\_\+filename) 
+\begin{DoxyParams}{Parameters}
+{\em \&} & M\+D\+E\+\_\+source is a reference to the \mbox{\hyperlink{classMDE}{M\+DE}} instance that holds the the file\textquotesingle{}s data \\
+\hline
+{\em \&} & full\+\_\+filename is a reference to a standard string that holds the the name of a file to extract. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A boolean is returned. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+load\+\_\+\+X\+M\+L\+\_\+\+File\+\_\+to\+\_\+\+M\+D\+E() 
+
+str\+\_\+token\+\_\+tag(). 
+\end{DoxySeeAlso}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Standard} & function ifstream\+::is\+\_\+open() is used to return value true if file exists and is open, or false if file does not exist or failed to open. \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyNote}{Note}
+This function can be optimised. 
+\end{DoxyNote}
+\mbox{\Hypertarget{group__group__utils_gac83d52afc57abbd6ff463a31c47f05e9}\label{group__group__utils_gac83d52afc57abbd6ff463a31c47f05e9}} 
+\index{Functions Utils@{Functions Utils}!extractMDEdataForVoffset@{extractMDEdataForVoffset}}
+\index{extractMDEdataForVoffset@{extractMDEdataForVoffset}!Functions Utils@{Functions Utils}}
+\doxysubsubsection{\texorpdfstring{extractMDEdataForVoffset()}{extractMDEdataForVoffset()}}
+{\footnotesize\ttfamily void extract\+M\+D\+Edata\+For\+Voffset (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classMDE}{M\+DE}} \&}]{M\+D\+E\+\_\+source,  }\item[{std\+::vector$<$ \mbox{\hyperlink{structGLdata}{G\+Ldata}} $>$ \&}]{v\+\_\+\+M\+D\+E\+\_\+data,  }\item[{int \&}]{level,  }\item[{int}]{index = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+
+This member function is to fill-\/in a standard vector of struct \mbox{\hyperlink{structGLdata}{G\+Ldata}} by extracting data from private member \textquotesingle{}name\textquotesingle{} and public member \textquotesingle{}data\textquotesingle{}, and setting the level and index of each Entities and sub-\/entities of an instance of object class \mbox{\hyperlink{classMDE}{M\+DE}}. The vector of \mbox{\hyperlink{structGLdata}{G\+Ldata}} is used in the standard vector of \mbox{\hyperlink{structGLdata}{G\+Ldata}} to set offset coordinates. 
+
+\hypertarget{group__group__utils_autotoc_md48}{}\doxysubsubsection{name\+: extract\+M\+D\+Edata\+For\+Voffset(\+M\+D\+E \& M\+D\+E\+\_\+source,}\label{group__group__utils_autotoc_md48}
+std\+::vector$<$\+G\+Ldata$>$ \& v\+\_\+\+M\+D\+E\+\_\+data, int \& level, int index = 0) 
+\begin{DoxyParams}{Parameters}
+{\em \&} & M\+D\+E\+\_\+source is a reference to a \mbox{\hyperlink{classMDE}{M\+DE}} instance \\
+\hline
+{\em \&} & v\+\_\+\+M\+D\+E\+\_\+data is a reference to a standard vector of struct \mbox{\hyperlink{structGLdata}{G\+Ldata}}. \\
+\hline
+{\em \&} & level is a reference to an int. \\
+\hline
+{\em \&} & index is a reference to an int. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Nothing is returned (void) 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+search\+\_\+results\+\_\+to\+\_\+vector\+\_\+float() 
+
+search\+\_\+for() 
+\end{DoxySeeAlso}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em No} & exception handling. \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyNote}{Note}
+This method can be optimised and may be able to use other existing methods. 
+\end{DoxyNote}
+\mbox{\Hypertarget{group__group__utils_gad8f7ca1f04faf6a3699a198fda05dce5}\label{group__group__utils_gad8f7ca1f04faf6a3699a198fda05dce5}} 
+\index{Functions Utils@{Functions Utils}!formatDisplay@{formatDisplay}}
+\index{formatDisplay@{formatDisplay}!Functions Utils@{Functions Utils}}
+\doxysubsubsection{\texorpdfstring{formatDisplay()}{formatDisplay()}}
+{\footnotesize\ttfamily void format\+Display (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classMDE}{M\+DE}} \&}]{M\+D\+E\+\_\+source,  }\item[{int}]{n\+\_\+indent,  }\item[{const int \&}]{n\+\_\+space,  }\item[{std\+::string}]{start\+\_\+opening\+\_\+tag,  }\item[{std\+::string}]{end\+\_\+opening\+\_\+tag,  }\item[{std\+::string}]{start\+\_\+closing\+\_\+tag,  }\item[{std\+::string}]{end\+\_\+closing\+\_\+tag }\end{DoxyParamCaption})}
+
+
+
+This member function is to display the instance of a class object \mbox{\hyperlink{classMDE}{M\+DE}} with a defined format using opening and closing tags (for example like an X\+ML file). 
+
+\hypertarget{group__group__utils_autotoc_md47}{}\doxysubsubsection{name\+: format\+Display(\+M\+D\+E \& M\+D\+E\+\_\+source,int n\+\_\+indent,}\label{group__group__utils_autotoc_md47}
+const int \& n\+\_\+space, std\+::string start\+\_\+opening\+\_\+tag, std\+::string end\+\_\+opening\+\_\+tag, std\+::string start\+\_\+closing\+\_\+tag, std\+::string end\+\_\+closing\+\_\+tag) 
+\begin{DoxyParams}{Parameters}
+{\em \&} & M\+D\+E\+\_\+source is a reference to the \mbox{\hyperlink{classMDE}{M\+DE}} instance to display \\
+\hline
+{\em n\+\_\+indent} & is an integer passed to initialised the position of the first line to display, then to be incremented locally recursively. \\
+\hline
+{\em n\+\_\+space} & is an address of a constant integer used to indent each lines to separates elements of intances of object of class \mbox{\hyperlink{classMDE}{M\+DE}} from their own sub-\/elements recursively. \\
+\hline
+{\em start\+\_\+opening\+\_\+tag} & is a standard string corresponding to the start of the opening tag (\char`\"{}$<$\char`\"{} for xml). \\
+\hline
+{\em end\+\_\+opening\+\_\+tag} & is a standard string corresponding to the end of the opening tag (\char`\"{}$>$\char`\"{} for xml). \\
+\hline
+{\em start\+\_\+closing\+\_\+tag} & is a standard string corresponding to the start of the closing tag (\char`\"{}$<$\textbackslash{}\char`\"{} for xml). \\
+\hline
+{\em end\+\_\+closing\+\_\+tag} & is a standard string corresponding to the end of the closing tag (\char`\"{}$>$\char`\"{} for xml). \\
+\hline
+{\em \&file} & (address of a file) is an ostream corresponding to the name of the file . \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Nothing is returned (void). 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+user\+\_\+save\+\_\+to\+\_\+\+X\+M\+L\+\_\+file() 
+\end{DoxySeeAlso}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em No} & exception handling. \\
+\hline
+\end{DoxyExceptions}
+\mbox{\Hypertarget{group__group__utils_gaa9e264dadf6e6ccd1187bd8229b4ebea}\label{group__group__utils_gaa9e264dadf6e6ccd1187bd8229b4ebea}} 
+\index{Functions Utils@{Functions Utils}!loadXMLFileToMDE@{loadXMLFileToMDE}}
+\index{loadXMLFileToMDE@{loadXMLFileToMDE}!Functions Utils@{Functions Utils}}
+\doxysubsubsection{\texorpdfstring{loadXMLFileToMDE()}{loadXMLFileToMDE()}}
+{\footnotesize\ttfamily bool load\+X\+M\+L\+File\+To\+M\+DE (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classMDE}{M\+DE}} \&}]{M\+D\+E\+\_\+source,  }\item[{const std\+::string \&}]{full\+\_\+filename }\end{DoxyParamCaption})}
+
+
+
+This member function is to read an X\+ML file using the reference to the string full\+\_\+filename and to store the data from the file into an instance of class \mbox{\hyperlink{classMDE}{M\+DE}}. 
+
+\hypertarget{group__group__utils_autotoc_md46}{}\doxysubsubsection{name\+: load\+X\+M\+L\+File\+To\+M\+D\+E(\+M\+D\+E \& M\+D\+E\+\_\+source,}\label{group__group__utils_autotoc_md46}
+const std\+::string \& full\+\_\+filename) 
+\begin{DoxyParams}{Parameters}
+{\em \&} & M\+D\+E\+\_\+source is a reference to the \mbox{\hyperlink{classMDE}{M\+DE}} instance that holds the the file\textquotesingle{}s data \\
+\hline
+{\em full\+\_\+filename} & is a standard string. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A boolean value true if file exists and is open, or false if file does not exist or failed to open. 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em No} & exception handling. \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyNote}{Note}
+The process is using a standard stack of pointers to pointers of Instances of Objects Class \mbox{\hyperlink{classMDE}{M\+DE}} (std\+::stack$<$\+M\+D\+E$\ast$$\ast$$>$). 
+\end{DoxyNote}
+\mbox{\Hypertarget{group__group__utils_ga5b0926b8281516b1639284daaf33f41f}\label{group__group__utils_ga5b0926b8281516b1639284daaf33f41f}} 
+\index{Functions Utils@{Functions Utils}!loadXMLFileTovMDE@{loadXMLFileTovMDE}}
+\index{loadXMLFileTovMDE@{loadXMLFileTovMDE}!Functions Utils@{Functions Utils}}
+\doxysubsubsection{\texorpdfstring{loadXMLFileTovMDE()}{loadXMLFileTovMDE()}}
+{\footnotesize\ttfamily bool load\+X\+M\+L\+File\+Tov\+M\+DE (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classMDE}{M\+DE}} \&}]{M\+D\+E\+\_\+source,  }\item[{int \&}]{index,  }\item[{const std\+::string \&}]{full\+\_\+filename }\end{DoxyParamCaption})}
+
+
+
+This member function is to read an X\+ML file using the reference to the string full\+\_\+filename and to store the data from the file into an element at a given index of the private member v\+M\+DE of the instance of a class of \mbox{\hyperlink{classMDE}{M\+DE}}. 
+
+\hypertarget{group__group__utils_autotoc_md45}{}\doxysubsubsection{name\+: load\+X\+M\+L\+File\+Tov\+M\+D\+E(\+M\+D\+E \& M\+D\+E\+\_\+source, int \& index,}\label{group__group__utils_autotoc_md45}
+const std\+::string \& full\+\_\+filename) 
+\begin{DoxyParams}{Parameters}
+{\em \&} & M\+D\+E\+\_\+source is a reference to the \mbox{\hyperlink{classMDE}{M\+DE}} instance that holds the the file\textquotesingle{}s data \\
+\hline
+{\em \&} & index is a reference to an integer that holds the vector index of the private member v\+M\+DE where to load the X\+ML file. struct \mbox{\hyperlink{structGLdata}{G\+Ldata}}. \\
+\hline
+{\em \&} & full\+\_\+filename is a reference to the path and name of the file to load. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a bool is returned as false if fail to load or true if the file is loaded successfully. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+load\+\_\+\+X\+M\+L\+\_\+\+File\+\_\+to\+\_\+\+M\+D\+E() 
+
+replace\+\_\+v\+M\+D\+E\+\_\+with\+\_\+\+X\+M\+L() 
+\end{DoxySeeAlso}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em No} & exception handling. \\
+\hline
+\end{DoxyExceptions}
+\mbox{\Hypertarget{group__group__utils_ga50247340f34dc1e6ec74fc3c0164f773}\label{group__group__utils_ga50247340f34dc1e6ec74fc3c0164f773}} 
+\index{Functions Utils@{Functions Utils}!processFlatMDEToMDE@{processFlatMDEToMDE}}
+\index{processFlatMDEToMDE@{processFlatMDEToMDE}!Functions Utils@{Functions Utils}}
+\doxysubsubsection{\texorpdfstring{processFlatMDEToMDE()}{processFlatMDEToMDE()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classMDE}{M\+DE}}$\ast$ process\+Flat\+M\+D\+E\+To\+M\+DE (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classMDE}{M\+DE}} \&}]{M\+D\+E\+\_\+source,  }\item[{\mbox{\hyperlink{classMDE}{M\+DE}} \&}]{M\+D\+E\+\_\+target,  }\item[{std\+::vector$<$ \mbox{\hyperlink{classMDE}{M\+DE}} $\ast$ $>$\+::iterator \&}]{it,  }\item[{std\+::stack$<$ \mbox{\hyperlink{classMDE}{M\+DE}} $\ast$$\ast$ $>$ \&}]{stack\+\_\+\+M\+D\+E\+\_\+pt }\end{DoxyParamCaption})}
+
+
+
+This member function is to process an instnace of a \textquotesingle{}flat\textquotesingle{} Entity and return a pointer to a new instance of \mbox{\hyperlink{classMDE}{M\+DE}} that has nested sub-\/entities. The algorithm checks what is the data, if it is a structural data like an opening tag or closing tag it creates or ends the sub-\/entities accordingly. 
+
+\hypertarget{group__group__utils_autotoc_md44}{}\doxysubsubsection{name\+: process\+Flat\+M\+D\+E\+To\+M\+D\+E(\+M\+D\+E \& M\+D\+E\+\_\+source,\+M\+D\+E \& M\+D\+E\+\_\+target}\label{group__group__utils_autotoc_md44}
+,std\+::vector$<$\+M\+D\+E$\ast$$>$\+::iterator \& it, \mbox{\hyperlink{classMDE}{M\+DE}} \& M\+D\+E\+\_\+source, std\+::stack$<$\+M\+D\+E$\ast$$\ast$$>$ \& stack\+\_\+\+M\+D\+E\+\_\+pt) 
+\begin{DoxyParams}{Parameters}
+{\em \&} & M\+D\+E\+\_\+source is a reference to the \mbox{\hyperlink{classMDE}{M\+DE}} instance that contains the \textquotesingle{}flat\textquotesingle{} data as one Entity \\
+\hline
+{\em \&} & M\+D\+E\+\_\+target is a reference to the \mbox{\hyperlink{classMDE}{M\+DE}} instance to transfer the data to with sub Entities \\
+\hline
+{\em \&} & it is a reference to an iterator of a standard vector of pointers to instances of \mbox{\hyperlink{classMDE}{M\+DE}}. \\
+\hline
+{\em \&} & stack\+\_\+\+M\+D\+E\+\_\+pt is a reference to an standard stack of pointers to instances of \mbox{\hyperlink{classMDE}{M\+DE}}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\& M\+D\+E\+\_\+target a reference to the target instance of \mbox{\hyperlink{classMDE}{M\+DE}}. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+load\+\_\+\+X\+M\+L\+\_\+\+File\+\_\+to\+\_\+\+M\+D\+E() 
+
+proc\+\_\+it() 
+\end{DoxySeeAlso}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em No} & exception handling. \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyNote}{Note}
+This function could be optimised. This function is complex and does contain a key algorithm for returning an Entity \mbox{\hyperlink{classMDE}{M\+DE}} from a flat source. 
+\end{DoxyNote}
+\mbox{\Hypertarget{group__group__utils_ga9452896a5e14c435556a6af0b9da1a09}\label{group__group__utils_ga9452896a5e14c435556a6af0b9da1a09}} 
+\index{Functions Utils@{Functions Utils}!searchFor@{searchFor}}
+\index{searchFor@{searchFor}!Functions Utils@{Functions Utils}}
+\doxysubsubsection{\texorpdfstring{searchFor()}{searchFor()}}
+{\footnotesize\ttfamily void search\+For (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classMDE}{M\+DE}} \&}]{M\+D\+E\+\_\+source,  }\item[{int \&}]{index,  }\item[{int \&}]{level,  }\item[{std\+::string}]{search\+Name,  }\item[{std\+::vector$<$ \mbox{\hyperlink{classMDE}{M\+DE}} $\ast$$\ast$ $>$ \&}]{search\+\_\+result }\end{DoxyParamCaption})}
+
+
+
+This member function is to search an entire Entity recursively all instances that has their name equal to the standard string search\+Name in parameter. It stores all the results in the static (class) member search\+\_\+result which is a standard vector of pointers to pointers of \mbox{\hyperlink{classMDE}{M\+DE}}. The results of the search can be displayed with method fetch\+\_\+search\+\_\+result. 
+
+\hypertarget{group__group__utils_autotoc_md49}{}\doxysubsubsection{name\+: search\+For(\+M\+D\+E \& M\+D\+E\+\_\+source,int \& index, int \& level,}\label{group__group__utils_autotoc_md49}
+std\+::string search\+Name) 
+\begin{DoxyParams}{Parameters}
+{\em \&} & M\+D\+E\+\_\+source is a reference to a \mbox{\hyperlink{classMDE}{M\+DE}} instance \\
+\hline
+{\em \&} & index is a reference to an integer. \\
+\hline
+{\em \&} & level is a reference to an integer. \\
+\hline
+{\em search\+Name} & is a standard string. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Nothing is returned (void) 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+simple\+\_\+loop\+\_\+\+V\+M\+D\+E() 
+
+simple\+\_\+loop\+\_\+\+V\+M\+D\+E\+\_\+next\+\_\+level() 
+
+fetch\+\_\+search\+\_\+result() 
+\end{DoxySeeAlso}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em No} & exception handling. \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyNote}{Note}
+The process can be optimised and simplified. 
+\end{DoxyNote}
+\mbox{\Hypertarget{group__group__utils_ga874012995833d90a578771c83ebf7d4a}\label{group__group__utils_ga874012995833d90a578771c83ebf7d4a}} 
+\index{Functions Utils@{Functions Utils}!simpleLoopVMDE@{simpleLoopVMDE}}
+\index{simpleLoopVMDE@{simpleLoopVMDE}!Functions Utils@{Functions Utils}}
+\doxysubsubsection{\texorpdfstring{simpleLoopVMDE()}{simpleLoopVMDE()}}
+{\footnotesize\ttfamily void simple\+Loop\+V\+M\+DE (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classMDE}{M\+DE}} \&}]{M\+D\+E\+\_\+source,  }\item[{std\+::string}]{search\+Name,  }\item[{std\+::vector$<$ \mbox{\hyperlink{classMDE}{M\+DE}} $\ast$$\ast$ $>$ \&}]{search\+\_\+result }\end{DoxyParamCaption})}
+
+
+
+This member function is to part of the recursive algorithm in the search\+\_\+for method. It recursively stores pointers to pointer to \mbox{\hyperlink{classMDE}{M\+DE}} in the static (class) member search\+\_\+result when the search is successful. It calls a similar methods called simple\+\_\+loop\+\_\+\+V\+M\+D\+E\+\_\+next\+\_\+level in its recursive process to separate scopes of the different sub-\/entities of an entity. 
+
+\hypertarget{group__group__utils_autotoc_md50}{}\doxysubsubsection{name\+: simple\+Loop\+V\+M\+D\+E(\+M\+D\+E \& M\+D\+E\+\_\+source,}\label{group__group__utils_autotoc_md50}
+std\+::string search\+Name) 
+\begin{DoxyParams}{Parameters}
+{\em \&} & M\+D\+E\+\_\+source is a reference to a \mbox{\hyperlink{classMDE}{M\+DE}} instance \\
+\hline
+{\em search\+Name} & is a standard string. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Nothing is returned (void) 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+search\+\_\+\+For() 
+
+simple\+\_\+loop\+\_\+\+V\+M\+D\+E\+\_\+next\+\_\+level() 
+\end{DoxySeeAlso}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em No} & exception handling. \\
+\hline
+\end{DoxyExceptions}
+\mbox{\Hypertarget{group__group__utils_ga5c5c1a1553762cfd4cdbd6f51d0bc715}\label{group__group__utils_ga5c5c1a1553762cfd4cdbd6f51d0bc715}} 
+\index{Functions Utils@{Functions Utils}!simpleLoopVMDEnextLevel@{simpleLoopVMDEnextLevel}}
+\index{simpleLoopVMDEnextLevel@{simpleLoopVMDEnextLevel}!Functions Utils@{Functions Utils}}
+\doxysubsubsection{\texorpdfstring{simpleLoopVMDEnextLevel()}{simpleLoopVMDEnextLevel()}}
+{\footnotesize\ttfamily void simple\+Loop\+V\+M\+D\+Enext\+Level (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classMDE}{M\+DE}} \&}]{M\+D\+E\+\_\+source,  }\item[{std\+::string}]{search\+Name,  }\item[{std\+::vector$<$ \mbox{\hyperlink{classMDE}{M\+DE}} $\ast$$\ast$ $>$ \&}]{search\+\_\+result }\end{DoxyParamCaption})}
+
+
+
+This member function is to part of the recursive algorithm in the search\+\_\+for method. It is used to separate scopes of the different sub-\/entities of an entity to perform the search. 
+
+\hypertarget{group__group__utils_autotoc_md51}{}\doxysubsubsection{name\+: simple\+Loop\+V\+M\+D\+Enext\+Level(\+M\+D\+E \& M\+D\+E\+\_\+source,}\label{group__group__utils_autotoc_md51}
+std\+::string search\+Name) 
+\begin{DoxyParams}{Parameters}
+{\em \&} & M\+D\+E\+\_\+source is a reference to a \mbox{\hyperlink{classMDE}{M\+DE}} instance \\
+\hline
+{\em search\+Name} & is a standard string. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Nothing is returned (void) 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+search\+\_\+\+For() 
+
+simple\+\_\+loop\+\_\+\+V\+M\+D\+E() 
+\end{DoxySeeAlso}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em No} & exception handling. \\
+\hline
+\end{DoxyExceptions}
+\mbox{\Hypertarget{group__group__utils_gaf98bdbbd73032fd57b977a116c0a32b6}\label{group__group__utils_gaf98bdbbd73032fd57b977a116c0a32b6}} 
+\index{Functions Utils@{Functions Utils}!strTokenTag@{strTokenTag}}
+\index{strTokenTag@{strTokenTag}!Functions Utils@{Functions Utils}}
+\doxysubsubsection{\texorpdfstring{strTokenTag()}{strTokenTag()}}
+{\footnotesize\ttfamily void str\+Token\+Tag (\begin{DoxyParamCaption}\item[{std\+::string \&}]{buffer\+\_\+\+Input,  }\item[{std\+::string \&}]{output\+\_\+\+Tag,  }\item[{std\+::string \&}]{buffer\+\_\+\+Output,  }\item[{char}]{delimiter1,  }\item[{char}]{delimiter2 }\end{DoxyParamCaption})}
+
+
+
+This member function is to read an X\+ML file and store it into an instance of class \mbox{\hyperlink{classMDE}{M\+DE}}. 
+
+\hypertarget{group__group__utils_autotoc_md41}{}\doxysubsubsection{name\+: str\+Token\+Tag(std\+::string \& buffer\+\_\+\+Input}\label{group__group__utils_autotoc_md41}
+, std\+::string \& output\+\_\+\+Tag, std\+::string \& buffer\+\_\+\+Output , char delimiter1, char delimiter2) 
+\begin{DoxyParams}{Parameters}
+{\em \&} & buffer\+\_\+\+Input is a reference to a standard string that holds the line input \\
+\hline
+{\em output\+\_\+\+Tag} & is a standard string for the token extracted \\
+\hline
+{\em buffer\+\_\+\+Output} & is a standard string for the remainder of the line input minus the token extracted and after the delimiter2 \\
+\hline
+{\em delimiter1} & is an char corresponding to the char used as the front delimiter for the token \\
+\hline
+{\em delimiter2} & is an char corresponding to the char used as the end delimiter for the token \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Nothing is returned (void) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{group__group__utils_ga62fbfa9829d0a2584921d108478edc09}\label{group__group__utils_ga62fbfa9829d0a2584921d108478edc09}} 
+\index{Functions Utils@{Functions Utils}!trimLeadingSpace@{trimLeadingSpace}}
+\index{trimLeadingSpace@{trimLeadingSpace}!Functions Utils@{Functions Utils}}
+\doxysubsubsection{\texorpdfstring{trimLeadingSpace()}{trimLeadingSpace()}}
+{\footnotesize\ttfamily void trim\+Leading\+Space (\begin{DoxyParamCaption}\item[{std\+::string \&}]{io\+\_\+string }\end{DoxyParamCaption})}
+
+
+
+This member function is to trim the leading space (space charaters at the start) of the io\+\_\+string parameter passed as argument for this member function. 
+
+\hypertarget{group__group__utils_autotoc_md42}{}\doxysubsubsection{name\+: trim\+Leading\+Space(std\+::string \& io\+\_\+string)}\label{group__group__utils_autotoc_md42}
+
+\begin{DoxyParams}{Parameters}
+{\em \&} & io\+\_\+string is a reference to a standard string that holds the i/o string to be trimed \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Nothing is returned (void) 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+str\+\_\+token\+\_\+tag() 
+\end{DoxySeeAlso}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em No} & exception handling. \\
+\hline
+\end{DoxyExceptions}

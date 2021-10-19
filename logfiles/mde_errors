@@ -1,0 +1,51 @@
+Error:
+
+X Error of failed request:  BadValue (integer parameter out of range for operation)
+  Major opcode of failed request:  151 (GLX)
+  Minor opcode of failed request:  24 (X_GLXCreateNewContext)
+  Value in failed request:  0x0
+  Serial number of failed request:  41
+  Current serial number in output stream:  42
+  
+It seems to be a problem of dependency with the nvdia card
+
+nvdia-settings gives an error, but apparently it's not important (according to a post on a forum)
+gweno@MrCool123:~$ nvidia-settings
+
+ERROR: An internal driver error occurred
+
+
+ERROR: An internal driver error occurred
+
+
+ERROR: An internal driver error occurred
+
+
+ERROR: An internal driver error occurred
+
+
+(nvidia-settings:84047): GLib-GObject-CRITICAL **: 23:36:37.584: g_object_unref: assertion 'G_IS_OBJECT (object)' failed
+
+ERROR: An internal driver error occurred
+
+
+ERROR: An internal driver error occurred
+
+
+ERROR: An internal driver error occurred
+
+
+ERROR: An internal driver error occurred
+
+
+ERROR: nvidia-settings could not find the registry key file. This file should have been installed along with this driver at either
+       /usr/share/nvidia/nvidia-application-profiles-460.32.03-key-documentation or /usr/share/nvidia/nvidia-application-profiles-key-documentation. The application
+       profiles will continue to work, but values cannot be prepopulated or validated, and will not be listed in the help text. Please see the README for possible
+       values and descriptions.
+
+** Message: 23:36:37.672: PRIME: No offloading required. Abort
+** Message: 23:36:37.672: PRIME: is it supported? no
+
+----------------
+somehow, after rebooting it worked well!
+

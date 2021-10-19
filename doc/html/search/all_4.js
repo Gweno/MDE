@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['fetch_5fsearch_5fresult',['fetch_search_result',['../group__group__search.html#gaa7a2d3a12f120684e389e8d045b6bf24',1,'MDE']]],
-  ['format_5fdisplay',['format_display',['../group__group__display.html#gaa484ce5bc4e4726e45e06789b0891b6f',1,'MDE']]]
+  ['fetch_5fsearch_5fresult_16',['fetch_search_result',['../group__group__search.html#ga7ecc9f5b399fe83927c4fd8027732f15',1,'MDE']]],
+  ['formatdisplay_17',['formatDisplay',['../group__group__utils.html#gad8f7ca1f04faf6a3699a198fda05dce5',1,'formatDisplay(MDE &amp;MDE_source, int n_indent, const int &amp;n_space, std::string start_opening_tag, std::string end_opening_tag, std::string start_closing_tag, std::string end_closing_tag):&#160;utils.cpp'],['../group__group__utils.html#gad8f7ca1f04faf6a3699a198fda05dce5',1,'formatDisplay(MDE &amp;MDE_source, int n_indent, const int &amp;n_space, std::string start_opening_tag, std::string end_opening_tag, std::string start_closing_tag, std::string end_closing_tag):&#160;utils.cpp']]],
+  ['functions_20utils_18',['Functions Utils',['../group__group__utils.html',1,'']]]
 ];

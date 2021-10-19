@@ -1,6 +1,6 @@
-Version\+: 0.\+3.\+2\hypertarget{index_intro_sec}{}\section{M\+D\+E in a glance}\label{index_intro_sec}
-An \hyperlink{classMDE}{M\+DE} can be used for multiple purposes. In this first version of \hyperlink{classMDE}{M\+DE}, an \hyperlink{classMDE}{M\+DE} instance is simply used to display the content of an xml file in text mode or in an Open\+GL 3D viewport.\hypertarget{index_install_sec}{}\section{Installation}\label{index_install_sec}
-\hypertarget{index_step1}{}\subsection{Step 1\+: Verify dependencies}\label{index_step1}
+Version\+: 0.\+3.\+2\hypertarget{index_intro_sec}{}\doxysection{M\+D\+E in a glance}\label{index_intro_sec}
+An \mbox{\hyperlink{classMDE}{M\+DE}} can be used for multiple purposes. In this first version of \mbox{\hyperlink{classMDE}{M\+DE}}, an \mbox{\hyperlink{classMDE}{M\+DE}} instance is simply used to display the content of an xml file in text mode or in an Open\+GL 3D viewport.\hypertarget{index_install_sec}{}\doxysection{Installation}\label{index_install_sec}
+\hypertarget{index_step1}{}\doxysubsection{Step 1\+: Verify dependencies}\label{index_step1}
 List of libraries you need to have already installed\+: 
 \begin{DoxyItemize}
 \item Open\+GL 
@@ -9,50 +9,50 @@ List of libraries you need to have already installed\+:
 \item glew 
 \item freetype2 
 \item glm 
-\end{DoxyItemize}\hypertarget{index_step2}{}\subsection{Step 2\+: external resources}\label{index_step2}
+\end{DoxyItemize}\hypertarget{index_step2}{}\doxysubsection{Step 2\+: external resources}\label{index_step2}
 There are currently external resources used by this program on top of the dependancies\+: 
 \begin{DoxyItemize}
-\item {\bfseries ./source/common/} has some useful functions for shader programs from the Open\+GL Programming wikibook\+: \href{http://en.wikibooks.org/wiki/OpenGL_Programming}{\tt http\+://en.\+wikibooks.\+org/wiki/\+Open\+G\+L\+\_\+\+Programming}. 
-\item {\bfseries ./fonts/} has a few free/opensource font files used by the freetype2 library. 
-\end{DoxyItemize}\hypertarget{index_step3}{}\subsection{Step 3\+: make}\label{index_step3}
-Makefile is in the {\bfseries source} folder. The binary file is output in {\bfseries bin} folder\hypertarget{index_step4}{}\subsection{Step 4\+: run program}\label{index_step4}
-From folder {\bfseries bin} execute ./mde \mbox{[}O\+P\+T\+I\+ON\mbox{]}
+\item {\bfseries{./source/common/}} has some useful functions for shader programs from the Open\+GL Programming wikibook\+: \href{http://en.wikibooks.org/wiki/OpenGL_Programming}{\texttt{ http\+://en.\+wikibooks.\+org/wiki/\+Open\+G\+L\+\_\+\+Programming}}. 
+\item {\bfseries{./fonts/}} has a few free/opensource font files used by the freetype2 library. 
+\end{DoxyItemize}\hypertarget{index_step3}{}\doxysubsection{Step 3\+: make}\label{index_step3}
+Makefile is in the {\bfseries{source}} folder. The binary file is output in {\bfseries{bin}} folder\hypertarget{index_step4}{}\doxysubsection{Step 4\+: run program}\label{index_step4}
+From folder {\bfseries{bin}} execute ./mde \mbox{[}O\+P\+T\+I\+ON\mbox{]}
 
 Options\+:
 
 
 \begin{DoxyItemize}
-\item {\bfseries no option}~\newline
+\item {\bfseries{no option}}~\newline
  if the program is executed with no options, all text mode menus will be displayed consecutively in the console. 
-\item {\bfseries -\/v, -\/-\/version}~\newline
+\item {\bfseries{-\/v, -\/-\/version}}~\newline
  to get the program\textquotesingle{}s version (and quit). 
-\item {\bfseries -\/g, -\/-\/glmode}~\newline
+\item {\bfseries{-\/g, -\/-\/glmode}}~\newline
  display directly in graphic mode (open\+GL), skip the Display Mode menu 
-\item {\bfseries -\/f, -\/-\/file} {\itshape file}~\newline
+\item {\bfseries{-\/f, -\/-\/file}} {\itshape file}~\newline
  load (xml) file, skip the Data menu 
-\item {\bfseries -\/n, -\/-\/font} {\itshape font}~\newline
+\item {\bfseries{-\/n, -\/-\/font}} {\itshape font}~\newline
  set the font (only open source font on the ./fonts folder for now). 
-\item {\bfseries -\/s, -\/-\/font-\/size} {\itshape size}~\newline
+\item {\bfseries{-\/s, -\/-\/font-\/size}} {\itshape size}~\newline
  set the font size as an integer, best to use multiple of 8. 
-\item {\bfseries -\/o, -\/-\/font-\/color} {\itshape r,g,b,a}~\newline
+\item {\bfseries{-\/o, -\/-\/font-\/color}} {\itshape r,g,b,a}~\newline
  set rgba colours for font with each values in range float\mbox{[}0,1\mbox{]}. 
-\item {\bfseries -\/b, -\/-\/box}~\newline
+\item {\bfseries{-\/b, -\/-\/box}}~\newline
  for displaying a frame box for each text. 
-\item {\bfseries -\/c, -\/-\/box-\/color} {\itshape r,g,b,a}~\newline
+\item {\bfseries{-\/c, -\/-\/box-\/color}} {\itshape r,g,b,a}~\newline
  set rgba colours/alpha for the box frames with each values in range float\mbox{[}0,1\mbox{]}. 
-\item {\bfseries -\/d, -\/-\/background-\/color} {\itshape r,g,b,a}~\newline
+\item {\bfseries{-\/d, -\/-\/background-\/color}} {\itshape r,g,b,a}~\newline
  set rgba colours/alpha for the background with each values in range float\mbox{[}0,1\mbox{]} (alpha has no effect). 
-\item {\bfseries -\/p, -\/-\/padding} {\itshape vertical\+\_\+padding,horizontal\+\_\+padding}~\newline
+\item {\bfseries{-\/p, -\/-\/padding}} {\itshape vertical\+\_\+padding,horizontal\+\_\+padding}~\newline
  add symetrical vertical and horizontal padding, creating a box frame larger than the text displayed. 
-\item {\bfseries -\/a, -\/-\/origin} {\itshape x,y,z}~\newline
+\item {\bfseries{-\/a, -\/-\/origin}} {\itshape x,y,z}~\newline
  set the coordinates of origin to (x,y,z). 
-\item {\bfseries -\/r, -\/-\/offset-\/rule} {\itshape name$<$-\/$>$index.\+x,name$<$-\/$>$index.\+y,name$<$-\/$>$index.\+z,index.\+x,index.\+y,index.\+z,level.\+x,level.\+y,level.\+z}~\newline
+\item {\bfseries{-\/r, -\/-\/offset-\/rule}} {\itshape name$<$-\/$>$index.\+x,name$<$-\/$>$index.\+y,name$<$-\/$>$index.\+z,index.\+x,index.\+y,index.\+z,level.\+x,level.\+y,level.\+z}~\newline
  set the offset rule with floats 
-\item {\bfseries -\/m, -\/-\/move}~\newline
- for moving mode (makes the \hyperlink{classMDE}{M\+DE} instance move on all axis). 
-\end{DoxyItemize}\hypertarget{index_Other}{}\section{documentation}\label{index_Other}
+\item {\bfseries{-\/m, -\/-\/move}}~\newline
+ for moving mode (makes the \mbox{\hyperlink{classMDE}{M\+DE}} instance move on all axis). 
+\end{DoxyItemize}\hypertarget{index_Other}{}\doxysection{documentation}\label{index_Other}
 
 \begin{DoxyItemize}
-\item \href{https://github.com/Gweno/MDE/blob/master/README.md}{\tt R\+E\+A\+D\+ME} 
-\item \href{https://github.com/Gweno/MDE/blob/master/dependencies.txt}{\tt Dependencies} 
+\item \href{https://github.com/Gweno/MDE/blob/master/README.md}{\texttt{ R\+E\+A\+D\+ME}} 
+\item \href{https://github.com/Gweno/MDE/blob/master/dependencies.txt}{\texttt{ Dependencies}} 
 \end{DoxyItemize}

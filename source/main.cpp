@@ -97,6 +97,10 @@ int main (int argc, char **argv){
     bool move_it = false;   // bool switch for testing moving display
     bool display_box = false;      //bool to switch box display on/off
     bool display_menu = true;   // display start menu
+    bool displayDataOnly = false; // This is set to true when displaying a defined window i.e. with a menu
+    bool hideParent = false; // used to discard the parent element before displaying in GL
+
+    const int n_space = 2;
 
     // initialise default value
     user_font= "../fonts/FreeSans.ttf";
@@ -108,6 +112,9 @@ int main (int argc, char **argv){
     std::string filename;
     std::string datasource_path="../datafiles/";//hardcoded data source
     std::string full_filename = "../datafiles/default.xml";
+    std::string mainWindowWidth = std::to_string(window_width); // value not really needed
+    std::string mainWindowHeight = std::to_string(window_height); // value not really needed
+    std::string mainWindowName = "MDE"; 
     
     // init GLfloat colors
     GLfloat red_user = 0.5,green_user = 0.5,blue_user = 0.5,alpha_user = 0.5;
@@ -126,7 +133,12 @@ int main (int argc, char **argv){
     vertex3D off_rule_name_data = {0.5,0.2,0.0};
     vertex3D off_rule_index = {0.0,0.0,-0.2};
     vertex3D off_rule_level = {0.0,0.0,0.0};
-    
+    std::vector<vertex3Dalpha> user_v_font_color;
+
+    // initialize vector of indexes and iterator for vMDE
+    std::vector<int> vect_index_file = {1};
+    std::vector<int>::const_iterator it_file;
+
     std::cout << "Current path: " << fs::current_path() << std::endl;
     
     // display terminal window number of rows and columns
@@ -148,7 +160,7 @@ int main (int argc, char **argv){
     // Check all arguments provided
     // 'Turn on' Relevant boolean variables and
     // stores other useful variables.
-    // arguments are:
+    // arguments and kwargs are:
     // -v, --version: get version
     // -e, --nomenu: GL display only, use all default or runtime arguments
     // -g, --glmode: for graphic display mode
@@ -173,19 +185,22 @@ int main (int argc, char **argv){
     pid_t pid = getpid();
     printf("pid: %lu\n", pid);
     
-    newMDE.new_vMDE_element();
-    newMDE.set_name_vMDE_back("pid");
-    newMDE.set_data_vMDE_back(to_string(pid));
-    
+    // store process identification number
+    newMDE.new_vMDE_element("pid",to_string(pid));
+    std::cout << "main #0" << std::endl;
+    int nspace = 2;
+    newMDE.display_all(2,1);
+    std::cout << "main #0.1" << std::endl;
+
     // load all runtime arguments into vMDE "arguments"
     newMDE.new_vMDE_element();
     newMDE.set_name_vMDE_back("arguments");
     newMDE.set_data_vMDE_back(to_string(argc));
     
     
-    std::vector<int> vect_index_file = {1};
+    //~ std::vector<int> vect_index_file = {1};
     //~ int index_file = 0;
-    std::vector<int>::const_iterator it_file;
+    //~ std::vector<int>::const_iterator it_file;
     
     //~ for (int i = 0; i < argc; ++i)
     //~ {
@@ -484,7 +499,7 @@ int main (int argc, char **argv){
     newMDE.set_data_vMDE_back(to_string(argc));
     
     vect_index_file[0] ++;
-    
+    MDE * ptMDE;
     (newMDE.vMDE_get_by_index(vect_index_file,it_file))->new_vMDE_element("version",VERSION_INFO);
     (newMDE.vMDE_get_by_index(vect_index_file,it_file))->new_vMDE_element("move",(move_it)? "true" : "false");
     (newMDE.vMDE_get_by_index(vect_index_file,it_file))->new_vMDE_element("box", (display_box)? "true" : "false");
@@ -503,7 +518,7 @@ int main (int argc, char **argv){
         
         string key_input="";
         int n=0;
-        const int n_space = 2;
+        //~ const int n_space = 2;
         
         //~ // testing if file not entered as arguement set default file.
         //~ if (!input_file){
@@ -532,6 +547,107 @@ int main (int argc, char **argv){
 
         // add new index in vector of indexes to reflect start of data from file in MDE, for later replacong with new loaded file
         vect_index_file.push_back(0);
+
+        //~ const std::string file_to_load="../datafiles/splashMenu.xml";
+        //~ full_filename="../datafiles/splashMenu.html";
+        full_filename="../datafiles/testMenu.html";
+        
+        // set index
+        //~ int index_splash = newMDE.vMDE.size() - 1;
+        index_file = newMDE.vMDE.size() - 1;
+        //~ index_file = newMDE.vMDE.size();
+        
+        std::cout << "start test ptMenu: " << std::endl;
+        MDE * ptMenu;
+        
+        /* commented for testing 01/08/21
+        newMDE.new_vMDE_element();
+        //~ newMDE.new_vMDE_element("test","test-data");
+        //~ loadXMLFileTovMDE(newMDE,index_splash,file_to_load);
+        std::cout << "OR here?" << std::endl;
+        //~ ptMenu = (newMDE.vMDE.back());
+        loadXMLFileTovMDE(newMDE,index_file,full_filename);
+        ptMenu = (newMDE.vMDE.back());
+        */
+        
+        //~ /*
+        MDE testMenu;
+        ptMenu = loadXMLFileToPtMDE(testMenu, full_filename);
+        newMDE.new_vMDE_element(ptMenu);
+        //~ */
+        
+        
+        newMDE.display_all(3,3);
+        std::cout << "ptMenu: " << ptMenu << std::endl;
+        printf("ptMenu name %s, data %s: \n", (ptMenu->name).c_str(),(ptMenu->data).c_str());
+        std::cout << "end test ptMenu: " << std::endl;
+        
+        // add Window element
+        string file_to_load="../datafiles/mainWindow.xml";
+        //~ newMDE.new_vMDE_element();
+        index_file = newMDE.vMDE.size() - 1;
+        //~ loadXMLFileTovMDE(newMDE,index_file,file_to_load);
+        std::cout << "start testing load to ptr" << std::endl;
+        MDE * ptFile;
+        MDE  xmlMDE;
+        ptFile = loadXMLFileToPtMDE(xmlMDE, file_to_load);
+        std::cout << "<<<<<<<<<display loaded XML: >>>>>>>>>" << std::endl;
+        ptFile->display_all(1,1);
+        newMDE.new_vMDE_element(ptFile);
+        
+        newMDE.display_all(3,3);
+        std::cout << "end testing load to ptr" << std::endl;
+        
+
+        //~ /* commented for testing 01/08/21
+        // add content from internal element
+        ptMDE = (newMDE.vMDE.back());
+        std::cout << "ptMDE: " << ptMDE << std::endl;
+        
+        ptMDE->new_vMDE_element("content","intern");
+        ptMDE = (ptMDE->vMDE.back());
+        
+        //~ ptMDE->new_vMDE_element();
+        //~ ptMDE->vMDE[0] = ptMenu;
+        ptMDE->new_vMDE_element(ptMenu);
+        //~ */
+        
+        // declare a pointer of MDE to store data that will be sent to GL
+        MDE * ptParser;
+        ptParser = nullptr;
+        MDE * ptRender;
+        ptRender = nullptr;
+        
+        // add display element within "window": the final display
+        // process the 'window' element,
+        // get to 'displayable' tag like <p>
+        // filter display = "none"
+        
+        
+        //~ newMDE.new_vMDE_element("glInstance","main window");
+        //~ std::cout << newMDE.vMDE.back()->data << std::endl;
+        //~ std::vector<MDE *> &main_screen = newMDE.vMDE.back()->vMDE;
+        //~ // ~ newMDE.vMDE.back()->vMDE.push_back(newMDE.vMDE[0]);
+        //~ main_screen.push_back(newMDE.vMDE[0]);
+        //~ std::cout << main_screen[0]->data << std::endl;
+        //~ std::cout << "check address pid element" << newMDE.vMDE[0] << std::endl;
+        //~ std::cout << "check address main_screen test element" << main_screen[0] << std::endl;
+        //~ newMDE.vMDE[0]->data = "test";
+        //~ std::cout << main_screen[0]->data << std::endl;
+        //~ std::cout << "check address pid element: " << newMDE.vMDE[0] << std::endl;
+        //~ std::cout << "check address main_screen test element" << main_screen[0] << std::endl;
+        //~ std::cout  << "check pid element data: " << newMDE.vMDE[0]->data << std::endl;
+        //~ std::cout  << "check main_screen test element: " << main_screen[0]->data << std::endl;
+        //~ main_screen[0]->data = "test2";
+        //~ std::cout << "check address pid element: " << newMDE.vMDE[0] << std::endl;
+        //~ std::cout << "check address main_screen test element" << main_screen[0] << std::endl;
+        //~ std::cout  << "check pid element data: " << newMDE.vMDE[0]->data << std::endl;
+        //~ std::cout  << "check main_screen test element: " << main_screen[0]->data << std::endl;
+        
+        //~ printf("test\n");
+        //~ printf("press any key then Enter:\n");
+        //~ char key;
+        //~ std::cin >> key;
 
         while (key_input!="q"){
                 printf("\n");
@@ -619,6 +735,7 @@ int main (int argc, char **argv){
                                             printf("  2: perma.xml (this file is on a single line)\n"); 
                                             printf("  3: bookstore.xml\n"); 
                                             printf("  4: activities.xml\n");
+                                            printf("  5: test6.svg\n");
                                             printf("\n");
                                             printf("  b) Back\n");
                                             printf("  q) Quit\n");
@@ -633,36 +750,45 @@ int main (int argc, char **argv){
                                                 case '1':
                                                     {
                                                         std::cin >> key_input;
-                                                        const std::string file_to_load="../datafiles/"+key_input;
-                                                        //~ newMDE.replace_vMDE_with_XML(vect_index_file,file_to_load);
-                                                        replaceVMDEwithXML(newMDE,vect_index_file,file_to_load);
-                                                        full_filename=file_to_load;
+                                                        //~ const std::string file_to_load="../datafiles/"+key_input;
+                                                        full_filename="../datafiles/"+key_input;
+                                                        replaceVMDEwithXML(newMDE,vect_index_file,full_filename);
+                                                        //~ full_filename=file_to_load;
                                                         break;
                                                     }
                                                 case '2':
                                                     {
-                                                        const std::string file_to_load="../datafiles/perma.xml";
-                                                        //~ newMDE.replace_vMDE_with_XML(vect_index_file,file_to_load);
-                                                        replaceVMDEwithXML(newMDE,vect_index_file,file_to_load);
-                                                        full_filename=file_to_load;
+                                                        //~ const std::string file_to_load="../datafiles/perma.xml";
+                                                        full_filename="../datafiles/perma.xml";
+                                                        replaceVMDEwithXML(newMDE,vect_index_file,full_filename);
+                                                        //~ full_filename=file_to_load;
                                                         break;
                                                     }
                                                     
                                                 case '3':
                                                     {
-                                                        const std::string file_to_load="../datafiles/bookstore.xml";
-                                                        //~ newMDE.replace_vMDE_with_XML(vect_index_file,file_to_load);
-                                                        replaceVMDEwithXML(newMDE,vect_index_file,file_to_load);
-                                                        full_filename=file_to_load;
+                                                        //~ const std::string file_to_load="../datafiles/bookstore.xml";
+                                                        full_filename="../datafiles/bookstore.xml";
+                                                        replaceVMDEwithXML(newMDE,vect_index_file,full_filename);
+                                                        //~ full_filename=file_to_load;
                                                         break;
                                                     }
                                                     
                                                 case '4':
                                                     {
-                                                        const std::string file_to_load="../datafiles/activities.xml";
-                                                        //~ newMDE.replace_vMDE_with_XML(vect_index_file,file_to_load);
-                                                        replaceVMDEwithXML(newMDE,vect_index_file,file_to_load);
-                                                        full_filename=file_to_load;
+                                                        //~ const std::string file_to_load="../datafiles/activities.xml";
+                                                        full_filename="../datafiles/activities.xml";
+                                                        replaceVMDEwithXML(newMDE,vect_index_file,full_filename);
+                                                        //~ full_filename=file_to_load;
+                                                        break;
+                                                    }
+                                                    
+                                                case '5':
+                                                    {
+                                                        //~ const std::string file_to_load="../datafiles/test6.svg";
+                                                        full_filename="../datafiles/test6.svg";
+                                                        replaceVMDEwithXML(newMDE,vect_index_file,full_filename);
+                                                        //~ full_filename=file_to_load;
                                                         break;
                                                     }
                                                     
@@ -726,7 +852,7 @@ int main (int argc, char **argv){
                                         std::cout << "Do you want to save the file?(y)" << std::endl;
                                         std::cin >> key_input;
                                         if (key_input=="y") newMDE.user_save_to_XML_file();
-                                        // TODO fix bug if no vMDE -> ! vMDE is private -> need a 'is_empty' function?    
+                                        // TODO fix bug if no vMDE -> ! when vMDE is private -> need a 'is_empty' function?    
                                         break;
                                         
                                     
@@ -1192,11 +1318,12 @@ int main (int argc, char **argv){
                                     newMDE.display_all(0, n_space);
 
                                     //~ std::cout << "display some vMDE: " << (newMDE.get_vMDE({3}))->data << std::endl;
-                                    int s_index = 0;
-                                    int s_level = 0;
-                                    std::vector<MDE**> my_search_result;
-                                    searchFor(newMDE, s_index,s_level,"toto",my_search_result);
-                                    fetchSearchResult(my_search_result);
+                                    //~ int s_index = 0;
+                                    //~ int s_level = 0;
+                                    //~ std::vector<MDE**> my_search_result;
+                                    //~ searchFor(newMDE, s_index,s_level,"menu",my_search_result);
+                                    //~ fetchSearchResult(my_search_result);
+                                    //~ ptMenu->vMDE[0]->data = "test";
                                     //~ int n_space = 2;
                                     //~ std::vector<int> vector_index={3,0,0,0,0};
                                     //~ int start_index = 0;
@@ -1205,7 +1332,14 @@ int main (int argc, char **argv){
                                     //~ std::cout << " data: " << (*(my_search_result.back()))->data << std::endl;
                                     //~ vector_index={3,0,0,0};
                                     //~ start_index = 0;
-                                    //~ std::cout << newMDE.loop_test3(vector_index,start_index)[0]->data << std::endl;
+                                    //~ std::cout << newMDE.get_vMDE(vector_index,start_index)[0]->data << std::endl;
+                                    
+                                    //~ std::cout << "test color management" << std::endl;
+                                    //~ int n = std::stoi(key_input);
+                                    //~ int n;
+                                    //~ std:: cin >> n;
+                                    //~ std::cout << std::hex << n << std::endl;
+                                    
 
                                     while (key_input!="b"){
                                         std::cout << std::endl;
@@ -1213,6 +1347,7 @@ int main (int argc, char **argv){
                                         std::cin >> key_input;
                                     }                                
                                     break;
+                                    
                                 }
                             case 'x':
                                 {
@@ -1229,19 +1364,183 @@ int main (int argc, char **argv){
                                 }
                                 
                             case 'g':
-                                GL_on=true;
-                                display_menu=false;
-                            break;
+                                {
+                                    GL_on=true;
+                                    display_menu=false;
+                                    int s_index = 0;
+                                    int s_level = 0;
+                                    std::vector<MDE**> my_search_result2;
+                                    searchFor(newMDE, s_index,s_level,"window",my_search_result2);
+                                    if (my_search_result2.size()>0){
+                                        fetchSearchResult(my_search_result2);
+                                        if ((**my_search_result2[0]).data == "main window"){
+                                            printf("Yeah!\n");
+                                            
+                                            // search for 'width'
+                                            s_index = 0;
+                                            s_level = 0;
+                                            // here we assume there is only one title -> taking the last one
+                                            searchFor((**my_search_result2[0]),s_index, s_level, "width", my_search_result2);
+                                            printf("width: %s\n",((**my_search_result2.back()).data).c_str());
+                                            window_width = std::stoi(((**my_search_result2.back()).data));
+                                            
+                                            // search for 'height'
+                                            s_index = 0;
+                                            s_level = 0;
+                                            // here we assume there is only one height -> taking the last one
+                                            searchFor((**my_search_result2[0]),s_index, s_level, "height", my_search_result2);
+                                            printf("height: %s\n",((**my_search_result2.back()).data).c_str());
+                                            window_height = std::stoi((**my_search_result2.back()).data);
+                                            
+                                            //~ // search for 'title'
+                                            //~ s_index = 0;
+                                            //~ s_level = 0;
+                                            //~ // here we assume there is only one title -> taking the last one
+                                            //~ searchFor((**my_search_result2[0]),s_index, s_level, "title", my_search_result2);
+                                            //~ printf("data: %s\n",((**my_search_result2.back()).data).c_str());
+                                            //~ mainWindowName = ((**my_search_result2.back()).data).c_str();
+                                            
+                                            
+                                            
+                                            // search for 'title'
+                                            s_index = 0;
+                                            s_level = 0;
+                                            // here we assume there is only one title -> taking the last one
+                                            searchFor((**my_search_result2[0]),s_index, s_level, "title", my_search_result2);
+                                            
+                                            fetchSearchResult(my_search_result2);
+                                            
+                                            printf("data: %s\n",((**my_search_result2.back()).data).c_str());
+                                            mainWindowName = ((**my_search_result2.back()).data).c_str();
+                                            newMDE.destructor_Search_results(my_search_result2);
+                                            }
+                                            
+                                            
+                                            // Need to set all offset_rule.x to zero as only displaying data
+                                            off_rule_name_data.x = 0;
+                                            off_rule_name_data.z = 0;
+                                            off_rule_name_data.y = 0;
+                                            displayDataOnly = true;
+                                            
+                                            //~ hideParent = true;
+                                            if (ptParser == NULL){
+                                                ptRender = ptMDE;
+                                            }
+                                        }
+                                    
+                                    else {
+                                            std::cout << "No window setup found. Using default setting" << std::endl; 
+                                    }
+                                    break;
+                                }
+                            case 'r':
+                                {
+                                    
+                                    //~ MDE * ptRender;
+                                    // access 'window' element -> back from mde.vMDE
+                                    ptMDE = newMDE.vMDE.back();
+                                    ptMDE->new_vMDE_element("render","openGL");
+                                    ptMDE = (ptMDE->vMDE.back());
+                                    
+                                    //~ std::cout << "ptRender: " << ptRender << std::endl;
+                                    // now filter what's in window/content
+                                    // to keep only what is to be displayed as data
+                                    // for now only searching in Menu,
+                                    // because we already have a pointer to it
+                                    //~ std::vector<MDE**> my_search_result0;
+                                    //~ int s_index = 0;
+                                    //~ int s_level = 0;
+                                    //~ searchFor(*ptMenu, s_index, s_level, "display", my_search_result0 );
+                                    //~ printf("display: %s\n",((**my_search_result0.back()).data).c_str());
+                                    
+        //~ /* // commented for testing 01/08/21                                    
+                                    printf("ptMenu name %s, data %s: \n", ((*ptMenu).name).c_str(),((*ptMenu).data).c_str());
 
+                                    //~ ptParser = htmlParser_element(*ptMenu);
+                                    std::vector<std::vector<float>> vect_colors;
+                                    ptParser = htmlParser(*ptMenu, vect_colors);
+                                    int i=0;
+                                    for(auto it:vect_colors){
+                                        std::cout << "i: " << i << " vect[0]" << it[0] << std::endl;
+                                        user_v_font_color.push_back({});
+                                        user_v_font_color[i].x=it[0];
+                                        user_v_font_color[i].y=it[1];
+                                        user_v_font_color[i].z=it[2];
+                                        user_v_font_color[i].a=it[3];
+                                        i++;
+                                    }
+                                    if (ptParser){
+                                        std::cout << "Check ptParser: " << ptParser->name << " , " << ptParser->data << std::endl;
+                                        printf("\n");
+                                        printf("\n");
+                                        printf("\n");
+                                        ptMDE->new_vMDE_element(ptParser);
+                                        
+                                    }
+                                    else{
+                                        std::cout << "Nothing to parse" << std::endl;
+                                    }
+                                    //~ ptMDE->new_vMDE_element();
+                                    //~ ptMDE->vMDE.back()=ptParser;
+        //~ */
+                                    
+                                    /*
+                                    // loop on the 'menu'
+                                    for (std::vector<MDE*>::iterator it=ptMenu->vMDE.begin(); it != ptMenu->vMDE.end(); ++it){
+                                        std::cout << "element: " << (*it)->name << std::endl;
+                                        if ((*it)->name == "p"){
+                                            // check size of vMDE
+                                            
+                                            // check attributes
+                                            if ((*it)->vMDE.size()>0 && (*it)->vMDE[0]->name == "attributes"){
+                                                std::cout << "attribute: " << (*it)->vMDE[0]->name << std::endl;
+                                                for (std::vector<MDE*>::iterator it2=(*it)->vMDE[0]->vMDE.begin(); it2 != (*it)->vMDE[0]->vMDE.end(); ++it2){
+                                                    if ((*it2)->name == "display"){
+                                                        std::cout << "display: " << (*it2)->data << std::endl;
+                                                        if ((*it2)->data=="block"){
+                                                            ptMDE->new_vMDE_element((*it));
+                                                            //~ ptMDE->vMDE.back()=(*it);                                
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            // if no arguments, then by default display = "block"
+                                            else if ((*it)->vMDE.size()==0) {
+                                                ptMDE->new_vMDE_element();
+                                                ptMDE->vMDE.back()=(*it);
+                                            }
+                                        }
+                                    };
+                                    */
+                                    ptRender = ptParser;
+                                    hideParent = true;                                          
+                                    
+                                    //~ ptParser->destructor_MDE();
+                                    break;
+                                }
+                                
                             case 'q':
-                                return 0;
+                                //~ std::cout << "Deleting pointers" << std::endl;
+                                //~ delete ptMDE;
+                                //~ delete ptMenu;
+                                //~ delete ptRender;
+                                //~ delete ptParser;
+                                std::cout <<"key: " << key << std::endl;
+                                key_input = key;
+                                //~ newMDE.delete_all_pt2();                            
+                                //~ return 0;
+                                
                             break;
                             
                             default:
                                 printf("Wrong choice\n");
                             break;
                         }
+                        if(key_input=="q"){
+                            break;
+                        }
                         key_input="";
+                        
 
                 
                 }
@@ -1257,7 +1556,8 @@ int main (int argc, char **argv){
                             glutInitDisplayMode(GLUT_RGBA|GLUT_ALPHA|GLUT_DOUBLE|GLUT_DEPTH);    
                             glutInitWindowSize(window_width, window_height);
                             //~ glutInitWindowPosition(100, 100);
-                            glutCreateWindow("Basic Text");
+                            //~ glutCreateWindow("Basic Text");
+                            glutCreateWindow(mainWindowName.c_str());
                 
                             GLenum glew_status = glewInit();
                             
@@ -1302,11 +1602,31 @@ int main (int argc, char **argv){
                                 blue_font_user,
                                 alpha_font_user
                             };
+                            
+                            //~ std::vector<vertex3Dalpha> user_v_font_color={
+                            if (user_v_font_color.empty()){
+                                user_v_font_color={
+                                    //~ {0.5,0.5,0.5,0.1},
+                                    {0.5,0.5,0.5,1.0},
+                                    {0.1,0.1,0.5,1.0},
+                                    {0.5,0.1,0.1,1.0},
+                                    {0.5,0.5,0.5,1.0},
+                                    {0.1,0.1,0.5,1.0},
+                                    {0.5,0.1,0.1,1.0}
+                                };
+                            }
+                            
+                            
                                       
                             set_options(move_it,display_box);
                             
-                            init_text_MDE(newMDE,user_origin, offset, offset_rule, user_padding, user_color,user_bg_color);
-                            init_font_color(user_font_color);
+                            //~ init_text_MDE(newMDE,user_origin, offset, offset_rule, user_padding, user_color,user_bg_color);
+                            //~ init_text_MDE(*ptMenu,user_origin, offset, offset_rule, user_padding, user_color,user_bg_color);
+                            std::cout << "in Main displayDataOnly: " << displayDataOnly << std::endl;
+                            //~ init_text_MDE(*ptMenu,user_origin, offset, offset_rule, user_padding, user_color,user_bg_color, displayDataOnly);
+                            //~ init_v_font_color(user_v_font_color);
+                            init_text_MDE(*ptRender,user_origin, offset, offset_rule, user_padding, user_color,user_bg_color, user_v_font_color, displayDataOnly, hideParent);
+                            //~ init_font_color(user_font_color);
                             init_matrices();
                             
                             glutDisplayFunc(display);
@@ -1340,16 +1660,42 @@ int main (int argc, char **argv){
                 //~ }
                 
                 // clear
-                newMDE.destructor_MDE();
+                //~ newMDE.destructor_MDE();
                 //~ fullfilename ="";
+                //~ delete newMDE.vMDE[0];
                 
+                if(key_input=="q"){
+                    std::cout << "Deleting pointers" << std::endl;
+                    //~ newMDE.delete_all_pt();
+                    //~ newMDE.deleteAll();
+                    newMDE.deleteAllPt();
+                    //~ xmlMDE.deleteAllPt();
+                    //~ ptParser->delete_all_pt();
+                    //~ ptMDE->delete_all_pt2();
+                    //~ delete ptMDE;
+                    //~ delete ptMenu;
+                    //~ delete ptRender;
+                    delete ptParser;
+                    std::cout <<"key_input: " << key_input << std::endl; 
+                    return 0;                    
+                }
                 
                 //reset booleans
                 GL_on = false;    // GL_on false by default
                 display_box = false;
-                move_it = false;   // switch for testing moving display            
+                move_it = false;   // switch for testing moving display       
                 
+                //~ std::cout << "Deleting pointers" << std::endl;
+                //~ delete ptMDE;
+                //~ delete ptMenu;
+                //~ delete ptRender;
+                //~ delete ptParser;
+                //~ newMDE.destructor_MDE();
+     
                 printf("Clearing Done!");
+                //~ if(key1=='q'){
+                    //~ return 0;
+                //~ }
         }
     exit(0);
 }

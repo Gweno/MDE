@@ -20,4 +20,7 @@ glew (libglew-dev) version 1.13.0-2
 glm (libglm-dev) version 0.9.7.2-1
 freetype2 (freetype2-demos) version 2.6.1-0.1ubuntu2.4
 
+installing dependancies
+freeglut3 (freeglut3-dev) version 2.8.1-2
 
+sudo apt install freeglut3-dev libglew-dev libglm-dev freetype2-demos libfreetype6-dev

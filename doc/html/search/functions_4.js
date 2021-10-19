@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['load_5fxml_5ffile_5fto_5fmde',['load_XML_File_to_MDE',['../group__group__io.html#ga299e26c85332bf5effaa64d986184cc6',1,'MDE']]],
-  ['load_5fxml_5ffile_5fto_5fvmde',['load_XML_File_to_vMDE',['../group__group__io.html#gaf9e35ce2a8841994485c22e9744a939f',1,'MDE']]]
+  ['get_5fdata_5fvmde_5fby_5findex_81',['get_data_vMDE_by_index',['../group__group__get.html#ga4ceb5c957197f9a85998d111d2308452',1,'MDE']]],
+  ['get_5fname_5fvmde_5fby_5findex_82',['get_name_vMDE_by_index',['../group__group__get.html#ga8bb6595c805411ef0c044763a1a3310a',1,'MDE']]]
 ];

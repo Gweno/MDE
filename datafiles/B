@@ -1,0 +1,203 @@
+Deleting pointers
+E: MDE
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: pid
+                 Checkpoint 2
+**    Deleting pid
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: arguments
+                 Checkpoint 2
+                 Has sub Es
+E: arguments
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: 0
+                 Checkpoint 2
+**    Deleting 0
+                 Has sub Es - Check after
+**    Deleting arguments
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: parameters
+                 Checkpoint 2
+                 Has sub Es
+E: parameters
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: version
+                 Checkpoint 2
+**    Deleting version
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: move
+                 Checkpoint 2
+**    Deleting move
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: box
+                 Checkpoint 2
+**    Deleting box
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: glmode
+                 Checkpoint 2
+**    Deleting glmode
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: nomenu
+                 Checkpoint 2
+**    Deleting nomenu
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: file
+                 Checkpoint 2
+**    Deleting file
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: box-color
+                 Checkpoint 2
+**    Deleting box-color
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: font
+                 Checkpoint 2
+**    Deleting font
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: font-size
+                 Checkpoint 2
+**    Deleting font-size
+                 Has sub Es - Check after
+**    Deleting parameters
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: file
+                 Checkpoint 2
+                 Has sub Es
+E: file
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: master
+                 Checkpoint 2
+                 Has sub Es
+E: master
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: tata
+                 Checkpoint 2
+                 Has sub Es
+E: tata
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: toto
+                 Checkpoint 2
+                 Has sub Es
+E: toto
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: truc
+                 Checkpoint 2
+**    Deleting truc
+                 Has sub Es - Check after
+**    Deleting toto
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: lili
+                 Checkpoint 2
+**    Deleting lili
+                 Has sub Es - Check after
+**    Deleting tata
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: titi
+                 Checkpoint 2
+                 Has sub Es
+E: titi
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: toto
+                 Checkpoint 2
+**    Deleting toto
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: lolo
+                 Checkpoint 2
+**    Deleting lolo
+                 Has sub Es - Check after
+**    Deleting titi
+                 Has sub Es - Check after
+**    Deleting master
+                 Has sub Es - Check after
+**    Deleting file
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: div
+                 Has first Ref
+                 vMDE.size() 2
+                 (*it)->refVmdeSize 2
+                 Has sub Es
+E: div
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: p
+                 Checkpoint 2
+**    Deleting p
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: p
+                 Checkpoint 2
+**    Deleting p
+*      Deleting div
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: window
+                 Has first Ref
+                 vMDE.size() 3
+                 (*it)->refVmdeSize 2
+                 Has sub Es
+E: window
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: attributes
+                 Checkpoint 2
+                 Has sub Es
+E: attributes
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: width
+                 Checkpoint 2
+**    Deleting width
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: height
+                 Checkpoint 2
+**    Deleting height
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: background-color
+                 Checkpoint 2
+**    Deleting background-color
+                 Has sub Es - Check after
+**    Deleting attributes
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: title
+                 Checkpoint 2
+**    Deleting title
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: content
+                 Checkpoint 2
+                 Has sub Es
+E: content
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: div
+                 Checkpoint 2
+                 Has sub Es
+**    Deleting div
+                 Has sub Es - Check after
+**    Deleting content
+*      Deleting window

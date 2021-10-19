@@ -62,12 +62,15 @@ bool init_font(uint uFontSize,const char *uFontFilename);
  */
 bool init_program();
 
-void init_color(vertex3Dalpha color_alpha, vertex3Dalpha bg_color_alpha, std::vector<vertex3D> &whd);
+//~ void init_color(vertex3Dalpha &color_alpha, vertex3Dalpha &bg_color_alpha, std::vector<vertex3D> &whd);
+void init_color(vertex3Dalpha &color_alpha, vertex3Dalpha &bg_color_alpha, std::vector<vertex3Dalpha> &font_color_alpha, std::vector<vertex3D> &whd, std::vector<unsigned int> &nb_glyphs_per_text);
 void init_vectors(std::vector<vertex3D> &vectors_boxes);
-void init_text_MDE(MDE &my_entity,vertex3D &origin, std::vector<vertex3D> &offset, std::vector<vertex3D> &offset_rule, vertex2D &padding, vertex3Dalpha &color_alpha, vertex3Dalpha &bg_color_alpha);
+void init_text_MDE(MDE &my_entity,vertex3D &origin, std::vector<vertex3D> &offset, std::vector<vertex3D> &offset_rule, vertex2D &padding, vertex3Dalpha &color_alpha, vertex3Dalpha &bg_color_alpha, std::vector<vertex3Dalpha> &font_color, bool displayDataOnly = false, bool hideParent=false);
 void init_text_coordinates(GLfloat x, GLfloat y, GLfloat z);
 
 void displayV3D(std::vector<vertex3D> &vector_3D);
+void displayV3Dalpha(std::vector<vertex3Dalpha> &vector_3Dalpha);
+void displayVuint(std::vector<unsigned int> &vector_uint);
 void text_display();
 void draw_box();
 void text_frame(std::vector<vertex3D> &vector_input, std::vector<uint> &nb_glyphs, vertex3D &offset, vertex2D &padding);
@@ -107,5 +110,7 @@ void add_padding(std::vector<vertex3D> & v_origin,std::vector<vertex3D> & v_orig
 void init_font_color(std::vector<GLfloat> &color);
 
 void set_options(bool move_it, bool display_box);
+
+void init_v_font_color(std::vector<vertex3Dalpha> &font_color);
 
 #endif /*text.h*/
