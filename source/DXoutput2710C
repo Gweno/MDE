@@ -1,0 +1,68 @@
+MDE : master
+d  pid : 5483
+d  arguments : 1
+d    0 : ./../bin/mde_debug
+d  parameters : 1
+d    version : v0.3.2
+d    move : false
+d    box : false
+d    glmode : false
+d    nomenu : false
+d    file : ../datafiles/default.xml
+d    box-color : 0.500000, 0.500000, 0.500000, 0.500000
+d    font : ../fonts/FreeSans.ttf
+d    font-size : 48
+d  file : ../datafiles/default.xml
+X  div : 
+d    p : test
+d      attributes : 1
+d        style : text/css
+d          display : none
+d    p : XML viewer
+d      attributes : 1
+d        style : text/css
+d          color : rgba(50,150,0,1.0)
+d    p : using
+d      attributes : 1
+d        class : ex1
+d    p : Multidimensional Data Entity
+d      attributes : 3
+d        style : text/css
+d          display : block
+d          color : rgba(127,0,127,0.5)
+d        class : ex2
+d        special : test
+d    p : Not this
+d      attributes : 1
+d        style : text/css
+d          display : none
+X  window : main window
+d    attributes : 3
+d      width : 1200
+d      height : 900
+d      background-color : #000000
+d    title : example
+d    content : intern
+X      div : 
+        p : test
+          attributes : 1
+            style : text/css
+              display : none
+        p : XML viewer
+          attributes : 1
+            style : text/css
+              color : rgba(50,150,0,1.0)
+        p : using
+          attributes : 1
+            class : ex1
+        p : Multidimensional Data Entity
+          attributes : 3
+            style : text/css
+              display : block
+              color : rgba(127,0,127,0.5)
+            class : ex2
+            special : test
+        p : Not this
+          attributes : 1
+            style : text/css
+              display : none

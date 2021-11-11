@@ -180,7 +180,9 @@ void extractKeyValuePairs(std::string &bufferLine, std::vector<std::string> &vKe
     std::string temp;
     std::string next = bufferLine;
     strToFind0 = next.find("=");
-    while (!next.empty()){
+    std::cout << "@extractKeyValuePairs";
+    std::cout << " #### bufferline  ####" << bufferLine << std::endl;
+    while (!next.empty() && next!="?" && next!=" /"){
         //~ key = bufferLine.substr(0,strToFind0+1);
         strToFind1 = next.find("\"");
         key = next.substr(0,strToFind1+1);
@@ -222,8 +224,9 @@ void extractXmlElement(std::string & bufferLine, std::string & buffer_Tag, std::
             element ="tag";
             checkToken(buffer_Tag, element);
             std::cout << "buffer_tag: " << buffer_Tag << std::endl;
+            std::cout << "element: " << element << std::endl;
             int firstSpace = buffer_Tag.find(' ');
-            if (firstSpace!=std::string::npos)
+            if (firstSpace!=std::string::npos && element!="comment_tag")
             {
                 std::string tag_name = buffer_Tag.substr(0,firstSpace);
                 vKVP.push_back(tag_name);
@@ -567,6 +570,7 @@ MDE * processFlatMDEToMDE(MDE & MDE_source,MDE & MDE_target,std::vector<MDE*>::i
     return  (&MDE_target);
 }
 */
+
 void keyValuePairParser(std::string expression, std::string &key, std::string &value, const char op, bool hasDleQuotes)
 {
     std::string temp;
@@ -646,10 +650,11 @@ MDE * processXMLAttributes(MDE & MDE_source,std::vector<MDE*>::iterator & it)
     //~ return std::make_shared<MDE>(MDE_target);
 }
 
-MDE * processFlatMDEToMDE(MDE & MDE_source,MDE & MDE_target,std::vector<MDE*>::iterator & it, std::stack<MDE**> & stack_MDE_pt)
+MDE * processFlatMDEToMDE_old(MDE & MDE_source,MDE & MDE_target,std::vector<MDE*>::iterator & it, std::stack<MDE**> & stack_MDE_pt)
 {
     std::cout << "processFlatMDEToMDE 0" << std::endl;
     //~ std::cout << (*it)->name << std::endl;
+    static MDE** ptr_to_ptr_to_MDE;
 
     while (it!=MDE_source.vMDE.end())
     {
@@ -688,6 +693,264 @@ MDE * processFlatMDEToMDE(MDE & MDE_source,MDE & MDE_target,std::vector<MDE*>::i
             
             (*(stack_MDE_pt.top()))->new_vMDE_element();
             std::cout << "stack top: " << (*(stack_MDE_pt.top()))->name << ", " << (*(stack_MDE_pt.top()))->data <<std::endl;
+            delete ptr_to_ptr_to_MDE;
+            return processFlatMDEToMDE(MDE_source,*((*(stack_MDE_pt.top()))->vMDE.back()),it, stack_MDE_pt);
+        }
+        else if ((*it)->name=="opening_tag")
+        {
+            std::cout << "processFlatMDEToMDE 5" <<  (*it)->name << std::endl;
+            // name of this element is in data of the flat MDE
+            MDE_target.name=(*it)->data;
+            // set empty data in case writing over existing MDE
+            std::cout << "processFlatMDEToMDE 5.01" << (*it)->name <<  std::endl;
+            MDE_target.data="";
+            std::cout << "processFlatMDEToMDE 5.02" << (*it)->name <<  std::endl;
+    
+            if (stack_MDE_pt.size()>0){
+                std::cout << "stack top: " << (*(stack_MDE_pt.top()))->name << ", " << (*(stack_MDE_pt.top()))->data <<std::endl;
+            }
+    
+            
+            // store tag in stack only if it's an opening tag 
+            // and not if it's a self closing tag
+            //~ MDE** ptr_to_ptr_to_MDE = new MDE*(&MDE_target);
+            ptr_to_ptr_to_MDE = new MDE*(&MDE_target);
+            stack_MDE_pt.push(ptr_to_ptr_to_MDE);
+            std::cout << "processFlatMDEToMDE 5.03" << (*it)->name <<  std::endl;
+            // go to next element
+            ++it;
+            //~ delete ptr_to_ptr_to_MDE;
+
+            
+            if ((it!=MDE_source.vMDE.end()) && ((*it)->name=="attribute"))
+            {
+                std::cout << "processFlatMDEToMDE 5.1" << (*it)->name <<  std::endl;
+                //~ while ((it!=MDE_source.vMDE.end()) && ((*it)->name=="attribute"))
+                //~ {
+                    //~ MDE_target.new_vMDE_element((*it)->name,(*it)->data);
+                    //~ ++it;
+                //~ }
+                (MDE_target.vMDE).push_back(processXMLAttributes(MDE_source,it));
+
+                if (it!=MDE_source.vMDE.end() && (*it)->name=="self_closing_tag")
+                {
+                    std::cout << "processFlatMDEToMDE 5.2" << (*it)->name <<  std::endl;
+                    (*(stack_MDE_pt.top()))->new_vMDE_element();
+                    std::cout << "stack top: " << (*(stack_MDE_pt.top()))->name << ", " << (*(stack_MDE_pt.top()))->data <<std::endl;
+                    delete ptr_to_ptr_to_MDE;
+                    return processFlatMDEToMDE(MDE_source,*((*(stack_MDE_pt.top()))->vMDE.back()),it, stack_MDE_pt);
+
+                }
+                else if (it!=MDE_source.vMDE.end() && (*it)->name=="data")
+                {
+                    std::cout << "processFlatMDEToMDE 5.3" << (*it)->name <<  std::endl;
+                    std::cout << "stack top: " << (*(stack_MDE_pt.top()))->name << ", " << (*(stack_MDE_pt.top()))->data <<std::endl;
+                    delete ptr_to_ptr_to_MDE;
+                    return processFlatMDEToMDE(MDE_source,*(*(stack_MDE_pt.top())),it, stack_MDE_pt);
+
+                    
+                }
+                else if (it!=MDE_source.vMDE.end() && (*it)->name!="closing_tag") MDE_target.new_vMDE_element();
+                std::cout << "processFlatMDEToMDE 5.4" << (*it)->name << std::endl;
+                delete ptr_to_ptr_to_MDE;
+                return processFlatMDEToMDE(MDE_source,*(MDE_target.vMDE.back()),it, stack_MDE_pt);
+
+            }
+            else if ((it!=MDE_source.vMDE.end()) && ((*it)->name=="data"))
+            {
+                std::cout << "processFlatMDEToMDE 6" << (*it)->name <<  std::endl;
+                MDE_target.data=(*it)->data;
+                ++it;
+                
+                if ((it!=MDE_source.vMDE.end()) && ((*it)->name=="closing_tag"))
+                {
+                    delete ptr_to_ptr_to_MDE;
+                    return processFlatMDEToMDE(MDE_source,MDE_target,it, stack_MDE_pt);
+                }
+                else
+                {
+                    MDE_target.new_vMDE_element();
+                    delete ptr_to_ptr_to_MDE;
+                    return processFlatMDEToMDE(MDE_source,*(MDE_target.vMDE.back()),it, stack_MDE_pt);
+                }
+                
+            }
+            else if ((it!=MDE_source.vMDE.end()) && ((*it)->name=="closing_tag"))
+            {
+                std::cout << "processFlatMDEToMDE 7" << (*it)->name << std::endl;
+                delete ptr_to_ptr_to_MDE;
+                return processFlatMDEToMDE(MDE_source,MDE_target,it, stack_MDE_pt);
+            }
+            else
+            {
+                std::cout << "processFlatMDEToMDE 7.1: " << (*it)->name << std::endl;
+                //~ MDE_target.data="";
+                MDE_target.new_vMDE_element();
+                delete ptr_to_ptr_to_MDE;
+                return processFlatMDEToMDE(MDE_source,*(MDE_target.vMDE.back()),it, stack_MDE_pt);
+            }
+        }
+        else if ((it!=MDE_source.vMDE.end()) && ((*it)->name=="attribute"))
+        {
+                std::cout << "processFlatMDEToMDE 8" << (*it)->name <<  std::endl;
+            //~ while ((it!=MDE_source.vMDE.end()) && ((*it)->name=="attribute"))
+                //~ {
+                    //~ MDE_target.new_vMDE_element((*it)->name,(*it)->data);
+                    //~ ++it;
+                //~ }
+                (MDE_target.vMDE).push_back(processXMLAttributes(MDE_source,it));
+                
+                if (it!=MDE_source.vMDE.end() && (*it)->name=="self_closing_tag")
+                {
+                    std::cout << "processFlatMDEToMDE 8.1" << (*it)->name <<  std::endl;
+                    (*(stack_MDE_pt.top()))->new_vMDE_element();
+                    std::cout << "stack top: " << (*(stack_MDE_pt.top()))->name << ", " << (*(stack_MDE_pt.top()))->data <<std::endl;
+                    delete ptr_to_ptr_to_MDE;
+                    return processFlatMDEToMDE(MDE_source,*((*(stack_MDE_pt.top()))->vMDE.back()),it, stack_MDE_pt);
+                    
+                }
+                else if (it!=MDE_source.vMDE.end() && (*it)->name!="closing_tag") MDE_target.new_vMDE_element();
+                std::cout << "End of attributes at " << (MDE_target.vMDE.back())->data << std::endl;
+                delete ptr_to_ptr_to_MDE;
+                return processFlatMDEToMDE(MDE_source,*(MDE_target.vMDE.back()),it, stack_MDE_pt);
+    
+        }
+        else if(((*it)->name=="closing_tag") && it!=MDE_source.vMDE.begin())
+        {
+            std::cout << "processFlatMDEToMDE 9" << (*it)->name <<  std::endl;
+            ++it;
+            //~ MDE** ptr_to_ptr_to_MDE = stack_MDE_pt.top();       // not sure why doing this
+            ptr_to_ptr_to_MDE = stack_MDE_pt.top();       // not sure why doing this
+            //~ delete ptr_to_ptr_to_MDE;
+            stack_MDE_pt.pop();
+            // tricky: if next element is opening tag we create
+            // a new vMDE element in the element at the top of the stack 
+            // (which should be the parent element of this current one)
+
+            if (it!=MDE_source.vMDE.end() && ((*it)->name=="opening_tag" || (*it)->name=="self_closing_tag" || (*it)->name=="comment_tag"))
+            {
+                std::cout << "processFlatMDEToMDE 9.1" << (*it)->name <<  std::endl;
+                (*(stack_MDE_pt.top()))->new_vMDE_element();
+                delete ptr_to_ptr_to_MDE;
+                return processFlatMDEToMDE(MDE_source,*((*(stack_MDE_pt.top()))->vMDE.back()),it, stack_MDE_pt);
+            }
+            else
+            {
+                std::cout << "processFlatMDEToMDE 9.2" << std::endl;
+                if (!stack_MDE_pt.empty()) return processFlatMDEToMDE(MDE_source,*(*(stack_MDE_pt.top())),it, stack_MDE_pt);
+                else 
+                {
+                    delete ptr_to_ptr_to_MDE;
+                    return &MDE_target;
+                }
+            }
+        }
+        else if ((it!=MDE_source.vMDE.end()) && ((*it)->name=="data"))
+        {
+            std::cout << "processFlatMDEToMDE 10" << (*it)->name <<  std::endl;
+            MDE_target.data=(*it)->data;
+            ++it;
+            
+            if ((it!=MDE_source.vMDE.end()) && ((*it)->name=="closing_tag"))
+            {
+                std::cout << "processFlatMDEToMDE 10.1" << (*it)->name <<  std::endl;
+                delete ptr_to_ptr_to_MDE;
+                return processFlatMDEToMDE(MDE_source,MDE_target,it, stack_MDE_pt);
+            }
+            else
+            {
+                std::cout << "processFlatMDEToMDE 10.2" << (*it)->name <<  std::endl;
+                MDE_target.new_vMDE_element();
+                delete ptr_to_ptr_to_MDE;
+                return processFlatMDEToMDE(MDE_source,*(MDE_target.vMDE.back()),it, stack_MDE_pt);
+            }
+            
+        }
+        else if (it!=MDE_source.vMDE.end() && ((*it)->name=="self_closing_tag" || (*it)->name=="comment_tag"))
+        {
+            std::cout << "processFlatMDEToMDE 11" << (*it)->name <<  std::endl;
+            // name of this element is in data of the flat MDE
+            MDE_target.name=(*it)->data;
+            // set empty data in case writing over existing MDE
+            MDE_target.data="";
+            
+            if (it!=MDE_source.vMDE.begin())
+            {
+                std::cout << "processFlatMDEToMDE 11.1" << (*it)->name <<  std::endl;
+                ++it;
+                if (it!=MDE_source.vMDE.end() && (*it)->name=="attribute")
+                {
+                    delete ptr_to_ptr_to_MDE;
+                    return processFlatMDEToMDE(MDE_source,*((*(stack_MDE_pt.top()))->vMDE.back()),it, stack_MDE_pt);
+                    
+                }
+                else if (it!=MDE_source.vMDE.end() && (*it)->name!="closing_tag") (*(stack_MDE_pt.top()))->new_vMDE_element();
+                printf("test!");
+                delete ptr_to_ptr_to_MDE;
+                return processFlatMDEToMDE(MDE_source,*((*(stack_MDE_pt.top()))->vMDE.back()),it, stack_MDE_pt);
+            }
+            else
+            {
+                it++;
+                MDE_target.new_vMDE_element();
+                delete ptr_to_ptr_to_MDE;
+                return processFlatMDEToMDE(MDE_source,*(MDE_target.vMDE.back()),it, stack_MDE_pt);
+            }
+        }
+        else
+        {
+            delete ptr_to_ptr_to_MDE;
+            return (&MDE_target);
+        }
+    }
+    delete ptr_to_ptr_to_MDE;
+    return  (&MDE_target);
+}
+
+MDE * processFlatMDEToMDE(MDE & MDE_source,MDE & MDE_target,std::vector<MDE*>::iterator & it, std::stack<MDE**> & stack_MDE_pt)
+{
+    std::cout << "* processFlatMDEToMDE 0 * " << std::endl;
+    //~ std::cout << (*it)->name << std::endl;
+
+    while (it!=MDE_source.vMDE.end())
+    {
+        std::cout << "* processFlatMDEToMDE 1 * " <<  (*it)->name << std::endl;
+        if ((*it)->name=="xml_declaration")
+        {
+            std::cout << "* processFlatMDEToMDE 2 * " <<  (*it)->name << std::endl;
+            // name of this element is name of the flat MDE element (e.g. "xml_declaration")
+            MDE_target.name = (*it)->name;
+            // set empty data in case writing over existing MDE
+            MDE_target.data="";
+            
+            MDE_target.new_vMDE_element((*it)->data,"");
+            
+            it++;
+
+            if ((it!=MDE_source.vMDE.end()) && ((*it)->name=="attribute"))
+            {
+                std::cout << "* processFlatMDEToMDE 3 * " << (*it)->name <<  std::endl;
+                // create an new MDE element at back of vMDE as ("attributes",num of attributes)
+                //~ (MDE_target.vMDE.back())->new_vMDE_element("attributes","");
+                //~ int n=0;
+                //~ while ((it!=MDE_source.vMDE.end()) && ((*it)->name=="attribute"))
+                //~ {
+                    //~ // add each attribute as new element of teh vMDE 'attributes'
+                    //~ // for now name and data are name='values' it will be name:name / data:value
+                    //~ ((MDE_target.vMDE.back())->vMDE.back())->new_vMDE_element((*it)->data,(*it)->data);
+                    //~ ++it;
+                    //~ n++;
+                //~ }
+                //~ // update number of attributes into the data od vMDE ' attributes'
+                //~ (MDE_target.vMDE.back())->set_data_vMDE_back(std::to_string(n));
+                (MDE_target.vMDE.back()->vMDE).push_back(processXMLAttributes(MDE_source,it));
+            }
+            std::cout << "* processFlatMDEToMDE 4 * " << (*it)->name << " : " << (*it)->data <<  std::endl;
+            
+            std::cout << "before, stack size " << stack_MDE_pt.size() << std::endl;
+            std::cout << "before, stack top: " << (*(stack_MDE_pt.top()))->name << ", " << (*(stack_MDE_pt.top()))->data <<std::endl;
+            (*(stack_MDE_pt.top()))->new_vMDE_element();
+            std::cout << "stack top: " << (*(stack_MDE_pt.top()))->name << ", " << (*(stack_MDE_pt.top()))->data <<std::endl;
             return processFlatMDEToMDE(MDE_source,*((*(stack_MDE_pt.top()))->vMDE.back()),it, stack_MDE_pt);
         }
         else if ((*it)->name=="opening_tag")
@@ -712,6 +975,7 @@ MDE * processFlatMDEToMDE(MDE & MDE_source,MDE & MDE_target,std::vector<MDE*>::i
             std::cout << "processFlatMDEToMDE 5.03" << (*it)->name <<  std::endl;
             // go to next element
             ++it;
+
             
             if ((it!=MDE_source.vMDE.end()) && ((*it)->name=="attribute"))
             {
@@ -801,7 +1065,8 @@ MDE * processFlatMDEToMDE(MDE & MDE_source,MDE & MDE_target,std::vector<MDE*>::i
         {
             std::cout << "processFlatMDEToMDE 9" << (*it)->name <<  std::endl;
             ++it;
-            MDE** ptr_to_ptr_to_MDE = stack_MDE_pt.top();       // not sure why doing this
+            //~ MDE** ptr_to_ptr_to_MDE = stack_MDE_pt.top();       // not sure why doing this
+            MDE **ptr_to_ptr_to_MDE = stack_MDE_pt.top();       // not sure why doing this
             delete ptr_to_ptr_to_MDE;
             stack_MDE_pt.pop();
             // tricky: if next element is opening tag we create
@@ -910,7 +1175,7 @@ bool loadXMLFileTovMDE(MDE & MDE_source, int & index, const std::string & full_f
         std::cout << "Here 4" << std::endl;
         
         MDE_source.display_all(0,2);
-        xmlFile.destructor_MDE();
+        //~ xmlFile.destructor_MDE();
         delete pt_to_pt_MDE;
         return true;
     }
@@ -934,21 +1199,39 @@ bool loadXMLFileToMDE(MDE & MDE_source, const std::string & full_filename)
     else return false;
         
 }
-MDE * loadXMLFileToPtMDE(MDE & xmlMDE,const std::string & full_filename)
+
+void loadXML(MDE & sourceMDE,  MDE & xmlMDE, std::vector<int> &vectIndex,const std::string & filename)
+{
+    std::vector<int> vectIndexTop = vectIndex;
+    bool destructAll=false;
+    vectIndexTop.pop_back();
+    std::cout << "###1###" << std::endl;
+    xmlMDE.destructor_MDE();
+    sourceMDE.get_vMDE(vectIndexTop)->destructor_MDE();
+    sourceMDE.get_vMDE(vectIndexTop)->name = "file";
+    sourceMDE.get_vMDE(vectIndexTop)->data = filename;
+    std::cout << "###2###" << std::endl;
+    //~ ptMenu = loadXMLFileToPtMDE(file, filename);
+    std::cout << "###3###" << std::endl;
+    sourceMDE.get_vMDE(vectIndexTop)->new_vMDE_element(loadXMLFileToPtMDE(xmlMDE, filename));                                           
+    std::cout << "###4###" << std::endl;
+}
+
+MDE * loadXMLFileToPtMDE(MDE & xmlMDE,const std::string & full_filename, bool destructAll)
 {
 
     MDE xmlFile;
-    //~ MDE xmlMDE;
     MDE * ptXmlMDE;
     ptXmlMDE = &xmlMDE;
     std::stack<MDE**> stack_MDE_pt;
     
     if (extractFileToFlatMDE(xmlFile, full_filename)){
         std::vector<MDE*>::iterator it_start =  xmlFile.vMDE.begin();
+        std::cout << "###[loadXMLFileoPtMDE]###" << std::endl;
         processFlatMDEToMDE(xmlFile, xmlMDE, it_start,  stack_MDE_pt);
-        std::cout << "loadXMLFileoPtMDE, display loaded XML:" << std::endl;
+        std::cout << "display loaded XML:" << std::endl;
         xmlMDE.display_all(1,1);
-        xmlFile.destructor_MDE();
+        if(destructAll) xmlFile.destructor_MDE();
         return ptXmlMDE;
     }
     else return nullptr;
@@ -956,7 +1239,7 @@ MDE * loadXMLFileToPtMDE(MDE & xmlMDE,const std::string & full_filename)
 }
 
 //~ bool replaceVMDEwithXML(MDE & MDE_source,std::vector<int> & vect_index_file, const std::string & full_filename)
-bool replaceVMDEwithXML(MDE & MDE_source,std::vector<int> & vect_index_file, std::string & full_filename)
+MDE * replaceVMDEwithXML(MDE & MDE_source,std::vector<int> & vect_index_file, std::string & full_filename)
 {
     std::cout << "file to load:" << full_filename << std::endl;
     //~ newMDE.destructor_MDE();
@@ -966,6 +1249,56 @@ bool replaceVMDEwithXML(MDE & MDE_source,std::vector<int> & vect_index_file, std
     MDE_source.display_vector_int(vect_index_file);
     //~ vect_index_file.push_back(0);
     //~ newMDE.display_vector_int(vect_index_file);
+    
+    MDE * ptMDE = MDE_source.get_vMDE(vect_index_file);
+    ptMDE->deleteAllPt();
+    
+    MDE_source.clear_all_vMDE_by_index(vect_index_file);
+    std::vector<int> tmp_vect_index= vect_index_file;
+    tmp_vect_index.pop_back();
+    //~ vect_index_file.pop_back();
+    MDE_source.display_vector_int(tmp_vect_index);
+    index_file = vect_index_file.back();
+    printf("index file:%i\n", index_file);
+
+
+    std::cout << "here 0" << std::endl;
+
+
+    // get vDME pointer at index just before last of vector of indexes, then load at that last index.
+    input_file = loadXMLFileTovMDE(*(MDE_source.get_vMDE(tmp_vect_index)), index_file, full_filename);
+    
+    //~ MDE * ptXmlFile;
+    //~ MDE xmlFile;
+    //~ ptXmlFile = loadXMLFileToPtMDE(xmlFile, full_filename);
+    //~ ptMDE->new_vMDE_element(ptXmlFile);
+    
+    
+    std::cout << "here 1" << std::endl;
+
+    
+    // set the name of the file to the mde pointer at the given index, one level above what has been loaded
+    MDE_source.get_vMDE(tmp_vect_index)->set_data(full_filename);
+    
+    std::cout << "here 2" << std::endl;
+
+    return ptMDE;
+}
+
+bool replaceVMDEwithXML_old(MDE & MDE_source,std::vector<int> & vect_index_file, std::string & full_filename)
+{
+    std::cout << "file to load:" << full_filename << std::endl;
+    //~ newMDE.destructor_MDE();
+    std::vector<int>::const_iterator it_file;
+    bool input_file = false;
+    int index_file;
+    MDE_source.display_vector_int(vect_index_file);
+    //~ vect_index_file.push_back(0);
+    //~ newMDE.display_vector_int(vect_index_file);
+    
+    MDE * ptMDE = MDE_source.get_vMDE(vect_index_file);
+    ptMDE->deleteAllPt();
+    
     MDE_source.clear_all_vMDE_by_index(vect_index_file);
     std::vector<int> tmp_vect_index= vect_index_file;
     tmp_vect_index.pop_back();

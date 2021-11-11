@@ -1,0 +1,32 @@
+void render_text(atlas * a) {
+
+     /* Use the texture containing the atlas */
+    glBindTexture(GL_TEXTURE_2D, a->tex);
+    
+   /* test color per block*/
+    glEnableVertexAttribArray(attribute_font_color);
+    glGenBuffers(1,&vbo_font_color);
+    glBindBuffer(GL_ARRAY_BUFFER,vbo_font_color);
+    glVertexAttribPointer(attribute_font_color, 4, GL_FLOAT, GL_FALSE, 0, 0);
+    glBufferData(GL_ARRAY_BUFFER,vector_font_color.size() * sizeof(vertex3Dalpha),&vector_font_color.front(),GL_STATIC_DRAW);
+
+    /* Set up the VBO for our vertex data */
+    glEnableVertexAttribArray(attribute_coord);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo_coord);
+    glVertexAttribPointer(attribute_coord, 3, GL_FLOAT, GL_FALSE, 0, 0);
+    /* Draw the character on the screen */
+    glBufferData(GL_ARRAY_BUFFER, glyphs_box.size() * sizeof(vertex3D), &glyphs_box.front(), GL_STATIC_DRAW);
+
+    /* Set up the VBO for our vertex data */
+    glEnableVertexAttribArray(attribute_tex_coord);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo_tex_coord);
+    glVertexAttribPointer(attribute_tex_coord, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    
+    /* Draw all the character on the screen in one go */
+    glBufferData(GL_ARRAY_BUFFER,glyphs_vertex.size() * sizeof(vertex2D),&glyphs_vertex.front(),GL_STATIC_DRAW);
+    glDrawArrays(GL_TRIANGLES, 0, nb_indices);
+    
+    glDisableVertexAttribArray(attribute_font_color);
+    glDisableVertexAttribArray(attribute_coord);
+    glDisableVertexAttribArray(attribute_tex_coord);
+}

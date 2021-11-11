@@ -1,0 +1,78 @@
+MDE : master
+d  pid : 7058
+d  arguments : 1
+d    0 : ./../bin/mde_debug
+d  parameters : 1
+d    version : v0.3.2
+d    move : false
+d    box : false
+d    glmode : false
+d    nomenu : false
+d    file : ../datafiles/default.xml
+d    box-color : 0.500000, 0.500000, 0.500000, 0.500000
+d    font : ../fonts/FreeSans.ttf
+d    font-size : 48
+d   : 
+X    Design : Food@Home
+d      Author : 
+d        Name : Gweno
+d        Age : 45
+d      Method : Design Web
+d      Tools : Input Output
+d        Input : output
+d        SWOC : Tool to analyse things
+d      Date : 10 February 2018
+X  div : 
+p    p : test
+p      attributes : 1
+p        style : text/css
+p          display : none
+p    p : XML viewer
+p      attributes : 1
+p        style : text/css
+p          color : rgba(50,150,0,1.0)
+p    p : using
+p      attributes : 1
+p        class : ex1
+p    p : Multidimensional Data Entity
+p      attributes : 3
+p        style : text/css
+p          display : block
+p          color : rgba(127,0,127,0.5)
+p        class : ex2
+p        special : test
+p    p : Not this
+p      attributes : 1
+p        style : text/css
+p          display : none
+X  window : main window
+d    attributes : 3
+d      width : 1200
+d      height : 900
+d      background-color : #000000
+d    title : example
+d    content : intern
+X      div : 
+        p : test
+          attributes : 1
+            style : text/css
+              display : none
+        p : XML viewer
+          attributes : 1
+            style : text/css
+              color : rgba(50,150,0,1.0)
+        p : using
+          attributes : 1
+            class : ex1
+        p : Multidimensional Data Entity
+          attributes : 3
+            style : text/css
+              display : block
+              color : rgba(127,0,127,0.5)
+            class : ex2
+            special : test
+        p : Not this
+          attributes : 1
+            style : text/css
+              display : none
+

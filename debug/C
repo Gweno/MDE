@@ -1,0 +1,50 @@
+void text_display() {
+
+    // Set the colored background, default is white.
+    glClearColor(bg_r, bg_g, bg_b, bg_a);
+    // need the depth buffer for 3d
+    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+
+
+    /* Enable blending, necessary for our alpha texture */
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_DEPTH_TEST);
+
+    // set the color of the non-glyph part of the glyph box to same color as the
+    // cube color: r,g,b
+    // keep alpha to zero
+    //~ GLfloat bg_rgb[4] = { r, g, b, a };
+    GLfloat bg_rgb[4] = { r, g, b, 0 };
+    
+    FT_Set_Pixel_Sizes(face, 0, fontSize);
+
+    
+    /* Drawing the text */    
+    //~ if(!display2d)
+    //~ {
+    // check option to display the box frame for the text.
+    if (display_box){
+        // Drawing a box
+        glUseProgram(program_box);
+        draw_box();
+        }
+    //~ else{
+        //~ // if no box, set box alpha to 0.0 to discard the non-glyph part of the glyhp's box
+        //~ a=0.0;
+    //~ }
+    glUseProgram(program_text);
+    //~ glUniform4fv(uniform_color_text, 1, font_color);
+    glUniform4fv(uniform_bgcolor_text, 1, bg_rgb);
+    render_text(a_any_size);
+    //~ }
+    //~ else
+    //~ {
+        //~ glUseProgram(program_text2d);
+        //~ display_text2d()
+    //~ }
+        
+    
+    glutSwapBuffers();
+    
+}

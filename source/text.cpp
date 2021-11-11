@@ -33,20 +33,33 @@
 
 int screen_width=800, screen_height=600;
 
+bool display2d=false;
+bool display3d=false;
+
 // programs
 GLuint program_text;
 GLuint program_box;
+// testing 2d
+GLuint program_text2d;
+
 
 // uniforms
 GLint uniform_tex_text;
 GLint uniform_color_text;
-GLint uniform_tex;
 GLint uniform_bgcolor_text;
 GLint uniform_m_transform;
 GLint uniform_m_view;
 GLint uniform_m_model;
 GLint uniform_m_projection;
 GLint uniform_m_camera;
+// testing 2d
+GLint uniform_m_projection2d;
+GLint uniform_m_model2d;
+GLint uniform_color;
+GLint uniform_tex2d;
+GLint uniform_bgcolor_text2d;
+
+
 
 // attributes
 GLint attribute_coord_text;
@@ -55,6 +68,11 @@ GLint attribute_tex_coord;
 GLint attribute_coord3d_box;
 GLint attribute_v_color_box;
 GLint attribute_font_color;
+// testing 2d
+GLint attribute_coord2d;
+GLint attribute_coord_text2d;
+GLint attribute_tex_coord2d;
+GLint attribute_font_color2d;
 
 // vbo
 GLuint vbo_coord;
@@ -62,6 +80,11 @@ GLuint vbo_tex_coord;
 GLuint vbo_vertices_box;
 GLuint vbo_vertices_color_box;
 GLuint vbo_font_color;
+// testing 2d
+GLuint vbo;
+GLuint vbo_coord2d;
+GLuint vbo_tex_coord2d;
+GLuint vbo_font_color2d;
 
 // ibo
 GLuint ibo_box_elements;
@@ -209,7 +232,7 @@ struct atlas {
 		glActiveTexture(GL_TEXTURE0);
 		glGenTextures(1, &tex);
 		glBindTexture(GL_TEXTURE_2D, tex);
-		glUniform1i(uniform_tex, 0);
+		glUniform1i(uniform_tex2d, 0);
 
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, w, h, 0, GL_ALPHA, GL_UNSIGNED_BYTE, 0);
 
@@ -447,6 +470,9 @@ bool init_font(uint uFontSize,const char *uFontFilename) {
     // Create the vertex buffer object
     glGenBuffers(1, &vbo_coord);
     glGenBuffers(1, &vbo_tex_coord);
+    // Create the vertex buffer object for 2d display
+	glGenBuffers(1, &vbo_coord2d);
+	glGenBuffers(1, &vbo_tex_coord2d);
     
     return 1;
 }
@@ -492,11 +518,42 @@ bool init_program(){
     uniform_m_projection = get_uniform(program_text, "m_projection");
     uniform_m_view = get_uniform(program_text, "m_view");
     
-    //~ if(attribute_coord_text == -1 ||attribute_tex_coord == -1 ||attribute_font_color == -1 || uniform_tex_text == -1 || uniform_color_text == -1 || uniform_m_model == -1 || uniform_m_projection == -1 || uniform_m_view == -1)
     if(attribute_coord_text == -1 ||attribute_tex_coord == -1 ||attribute_font_color == -1 || uniform_tex_text == -1 || uniform_m_model == -1 || uniform_m_projection == -1 || uniform_m_view == -1)
         return 0;
     
+    // program for the text in 2D
+    program_text2d = create_program("../source/shaders/text2d.v.glsl", "../source/shaders/text2d.f.glsl");
+    if(program_text2d == 0)
+    {
+        printf("Problem with creating program from shaders\n");
+        return 0;
+    }
 
+    attribute_font_color2d = get_attrib(program_text2d,"fontcolor");
+    attribute_tex_coord2d = get_attrib(program_text2d,"tex_coord");
+	attribute_coord2d = get_attrib(program_text2d, "coord");
+	uniform_tex2d = get_uniform(program_text2d, "tex");
+    uniform_bgcolor_text2d = get_uniform(program_text, "bgcolor");
+
+
+	//~ if(attribute_coord2d == -1 || attribute_tex_coord2d == -1 || uniform_tex == -1 || uniform_color == -1 || attribute_font_color2d == -1)
+	if(attribute_coord2d == -1 || attribute_tex_coord2d == -1 || attribute_font_color2d == -1 || uniform_tex2d == -1 || uniform_bgcolor_text2d ==-1)
+    {
+        printf("Problem with attribute or uniform\n");
+		return 0;
+    }
+
+    //~ program_box = create_program("../source/shaders/box2d.v.glsl", "../source/shaders/box2d.f.glsl");
+    //~ if(program_box == 0)
+        //~ return 0;
+
+    //~ attribute_coord3d_box2d = get_attrib(program_box, "coord3d_b");
+    //~ attribute_v_color_box2d = get_attrib(program_box, "v_color_b");
+
+    //~ uniform_m_model = get_uniform(program_box, "m_model");
+    //~ uniform_m_projection = get_uniform(program_box, "m_projection");
+    //~ uniform_m_view = get_uniform(program_box, "m_view");
+    
     return 1;
 }
 
@@ -525,6 +582,7 @@ void init_color(vertex3Dalpha &color_alpha, vertex3Dalpha &bg_color_alpha, std::
     
     std::vector<GLfloat> vect_color3;
 
+    printf("whd.size: %u\n",whd.size());
     int max_loop = whd.size();
     for(int i=0;i<max_loop;i++){
         vect_color3.insert (vect_color3.end(), box_vertices_color3, box_vertices_color3+32);
@@ -807,12 +865,10 @@ void text_display() {
     /* Enable blending, necessary for our alpha texture */
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-    GLfloat white[4] = { 1, 1, 1, 1 };
-    GLfloat green[4] = { 0, 1, 0, 1 };
-    GLfloat black[4] = { 0, 0, 0, 1 };
-    GLfloat red[4] = { 1, 0, 0, 1 };
+    if(display2d) glEnable(GL_DEPTH_TEST);
+    else glDisable(GL_DEPTH_TEST);
     
+
     // set the color of the non-glyph part of the glyph box to same color as the
     // cube color: r,g,b
     // keep alpha to zero
@@ -821,30 +877,36 @@ void text_display() {
     
     FT_Set_Pixel_Sizes(face, 0, fontSize);
 
-    // check option to display the box frame for the text.
-    if (display_box){
-        // Drawing a box
-        glUseProgram(program_box);
-        draw_box();
-        }
-    //~ else{
-        //~ // if no box, set box alpha to 0.0 to discard the non-glyph part of the glyhp's box
-        //~ a=0.0;
-    //~ }
     
     /* Drawing the text */    
-    glUseProgram(program_text);
-    //~ glUniform4fv(uniform_color_text, 1, font_color);
-    glUniform4fv(uniform_bgcolor_text, 1, bg_rgb);
-    render_text(a_any_size);
+    if(!display2d)
+    {
+        // check option to display the box frame for the text.
+        if (display_box){
+            // Drawing a box
+            glUseProgram(program_box);
+            draw_box();
+            }
+        glUseProgram(program_text);
+        glUniform4fv(uniform_bgcolor_text, 1, bg_rgb);
+        render_text(a_any_size);
+    }
+    else
+    {
+        glUseProgram(program_text2d);
+        glUniform4fv(uniform_bgcolor_text2d, 1, bg_rgb);
+        render_text2d(a_any_size);
+    }
+        
     
     glutSwapBuffers();
     
 }
 
-void set_options(bool a_move_it, bool a_display_box){
+void set_options(bool a_move_it, bool a_display_box, bool a_display2d){
     move_it = a_move_it;
     display_box = a_display_box;
+    display2d = a_display2d;
     printf("display box:%u\n", display_box);
 }
 
@@ -887,13 +949,14 @@ void display(){
     deltaTime = currentFrame - lastFrame;
     lastFrame = currentFrame;
     
+    // camera operations and text display
     camera();
     text_display();
 }
 
 
 void camera(){
-    //https://learnopengl.com/Getting-started/Camera
+    //Thanks to https://learnopengl.com/Getting-started/Camera
     
     // Camera direction
     glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -912,33 +975,75 @@ void camera(){
     // Projection matrix modified by field of view (fov) directed by the camera zoom from the mouse wheel
     glm::mat4 m_projection = glm::perspective(glm::radians(fov), 1.0f*screen_width/screen_height, 0.1f, 10.0f);
     
-    glUseProgram(program_text);
-    glUniformMatrix4fv(uniform_m_view, 1, GL_FALSE, glm::value_ptr(m_view));
-    glUniformMatrix4fv(uniform_m_projection, 1, GL_FALSE, glm::value_ptr(m_projection));
+    // testing 2D display
+    //~ float scale = glutGet(GLUT_ELAPSED_TIME) / 1000.0 * 1.2;  // 120% per second
+    //~ glm::mat4 m_projection2d = glm::ortho(0.0f, 1.0f*screen_width*scale, 1.0f*screen_height*scale, 0.0f);
+    if(display3d)
+    {
+        //~ m_view = glm::mat4(1.0f);
+        m_projection = glm::ortho(0.0f, 1.0f*screen_width, 1.0f*screen_height, 0.0f);
+        //~ m_projection = glm::ortho(1.0f*screen_width, 1.0f*screen_height, 0.0f, 0.0f);
+    }
     
-    glUseProgram(program_box);
-    glUniformMatrix4fv(uniform_m_view, 1, GL_FALSE, glm::value_ptr(m_view));
-    glUniformMatrix4fv(uniform_m_projection, 1, GL_FALSE, glm::value_ptr(m_projection));
-
+    if(!display2d){
+        glUseProgram(program_text);
+        glUniformMatrix4fv(uniform_m_view, 1, GL_FALSE, glm::value_ptr(m_view));
+        glUniformMatrix4fv(uniform_m_projection, 1, GL_FALSE, glm::value_ptr(m_projection));
+    
+        glUseProgram(program_box);
+        glUniformMatrix4fv(uniform_m_view, 1, GL_FALSE, glm::value_ptr(m_view));
+        glUniformMatrix4fv(uniform_m_projection, 1, GL_FALSE, glm::value_ptr(m_projection));
+    }
+    else
+    {
+        glUseProgram(program_text2d);
+    }
+    
     glutPostRedisplay();
 }
 
+//~ void test2D{
+    //~ float scale = glutGet(GLUT_ELAPSED_TIME) / 1000.0 * .2;  // 20% per second
+    //~ glm::mat4 projection = glm::ortho(0.0f, 1.0f*screen_width*scale, 1.0f*screen_height*scale, 0.0f);
+    
+    //~ float move = 128;
+    //~ float angle = glutGet(GLUT_ELAPSED_TIME) / 1000.0 * 45;  // 45° per second
+    //~ glm::vec3 axis_z(0, 0, 1);
+    //~ glm::mat4 m_transform = glm::translate(glm::mat4(1.0f), glm::vec3(move, move, 0.0))
+    //~ * glm::rotate(glm::mat4(1.0f), glm::radians(angle), axis_z)
+    //~ * glm::translate(glm::mat4(1.0f), glm::vec3(-256/2, -256/2, 0.0));
+    
+    //~ glm::mat4 mvp = projection * m_transform; // * view * model * anim;
+    //~ glUseProgram(program);
+    //~ glUniformMatrix4fv(uniform_mvp, 1, GL_FALSE, glm::value_ptr(mvp));
+    //~ glutPostRedisplay();    
+//~ }
+
 void init_matrices(){
+    
+    std::cout << "Init Matrices" << std::endl;
     
     glm::mat4 m_model = glm::translate(glm::mat4(1.0f), glm::vec3(1.0, 0.0, -1.0));
     glm::mat4 m_projection = glm::perspective(45.0f, 1.0f*screen_width/screen_height, 0.1f, 10.0f);
     glm::mat4 m_view = glm::lookAt(glm::vec3(0.0, 0.0, 4.0), glm::vec3(0.0, 0.0,-1.0), glm::vec3(0.0, 1.0, 0.0));//eye,center,up
+    //~ glm::mat4 m_projection2d = glm::ortho(0.0f, 1.0f*screen_width, 1.0f*screen_height, 0.0f);
     
     glUseProgram(program_text);
     glUniformMatrix4fv(uniform_m_model, 1, GL_FALSE, glm::value_ptr(m_model));
     glUniformMatrix4fv(uniform_m_projection, 1, GL_FALSE, glm::value_ptr(m_projection));
     glUniformMatrix4fv(uniform_m_view, 1, GL_FALSE, glm::value_ptr(m_view));
     
+    //~ glUseProgram(program_text2d);
+    //~ glUniformMatrix4fv(uniform_m_model, 1, GL_FALSE, glm::value_ptr(m_model));
+    //~ glUniformMatrix4fv(uniform_m_projection2d, 1, GL_FALSE, glm::value_ptr(m_projection2d));
+    //~ glUniformMatrix4fv(uniform_m_view, 1, GL_FALSE, glm::value_ptr(m_view));
+    
     glUseProgram(program_box);
     glUniformMatrix4fv(uniform_m_model, 1, GL_FALSE, glm::value_ptr(m_model));
     glUniformMatrix4fv(uniform_m_projection, 1, GL_FALSE, glm::value_ptr(m_projection));
     glUniformMatrix4fv(uniform_m_view, 1, GL_FALSE, glm::value_ptr(m_view));
     
+    std::cout << "End init Matrices" << std::endl;
 }
 
 void onIdle() {
@@ -969,27 +1074,110 @@ void onIdle() {
     
     m_model = m_model * m_translate * anim2 * anim;
     
-    glUseProgram(program_text);
-    glUniformMatrix4fv(uniform_m_model, 1, GL_FALSE, glm::value_ptr(m_model));
-    //~ glUniformMatrix4fv(uniform_m_projection, 1, GL_FALSE, glm::value_ptr(m_projection));
+    //~ glm::mat4 m_model2d = glm::translate(glm::mat4(1.0f), glm::vec3(1.0, 1.0, 0.0));
     
-    glUseProgram(program_box);
-    glUniformMatrix4fv(uniform_m_model, 1, GL_FALSE, glm::value_ptr(m_model));
-    //~ glUniformMatrix4fv(uniform_m_projection, 1, GL_FALSE, glm::value_ptr(m_projection));
+    if(!display2d){
+        
+        glUseProgram(program_text);
+        glUniformMatrix4fv(uniform_m_model, 1, GL_FALSE, glm::value_ptr(m_model));
+        //~ glUniformMatrix4fv(uniform_m_projection, 1, GL_FALSE, glm::value_ptr(m_projection));
+        
+        glUseProgram(program_box);
+        glUniformMatrix4fv(uniform_m_model, 1, GL_FALSE, glm::value_ptr(m_model));
+        //~ glUniformMatrix4fv(uniform_m_projection, 1, GL_FALSE, glm::value_ptr(m_projection));
+    }
+    //~ else{
+        
+        //~ glDisable(GL_DEPTH_TEST);
+    //~ }
 
     glutPostRedisplay();
 
 }
 
+//####### Testing 2d
+
+void render_text2d(atlas * a) {
+
+	/* Use the texture containing the atlas */
+	glBindTexture(GL_TEXTURE_2D, a->tex);
+    
+    /* test color per block*/
+    glEnableVertexAttribArray(attribute_font_color2d);
+    glGenBuffers(1,&vbo_font_color2d);
+    glBindBuffer(GL_ARRAY_BUFFER,vbo_font_color2d);
+    glVertexAttribPointer(attribute_font_color2d, 4, GL_FLOAT, GL_FALSE, 0, 0);
+    glBufferData(GL_ARRAY_BUFFER,vector_font_color.size() * sizeof(vertex3Dalpha),&vector_font_color.front(),GL_STATIC_DRAW);
+
+    /* Set up the VBO for our vertex data */
+    glEnableVertexAttribArray(attribute_coord2d);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo_coord2d);
+    glVertexAttribPointer(attribute_coord2d, 3, GL_FLOAT, GL_FALSE, 0, 0);
+    glBufferData(GL_ARRAY_BUFFER, glyphs_box.size() * sizeof(vertex3D), &glyphs_box.front(), GL_STATIC_DRAW);
+   
+    /* Set up the VBO for our vertex data */
+    glEnableVertexAttribArray(attribute_tex_coord2d);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo_tex_coord2d);
+    glVertexAttribPointer(attribute_tex_coord2d, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    glBufferData(GL_ARRAY_BUFFER,glyphs_vertex.size() * sizeof(vertex2D),&glyphs_vertex.front(),GL_STATIC_DRAW);
+
+    /* Draw all the character on the screen in one go */
+    glDrawArrays(GL_TRIANGLES, 0, nb_indices);
+
+	glDisableVertexAttribArray(attribute_font_color2d);
+	glDisableVertexAttribArray(attribute_coord2d);
+	glDisableVertexAttribArray(attribute_tex_coord2d);
+}
+
+void display_text2d() {
+	float sx = 2.0 / glutGet(GLUT_WINDOW_WIDTH);
+	float sy = 2.0 / glutGet(GLUT_WINDOW_HEIGHT);
+    
+	glUseProgram(program_text2d);
+    
+	/* White background */
+	glClearColor(1, 1, 1, 1);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	/* Enable blending, necessary for our alpha texture */
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glDisable(GL_DEPTH_TEST);
+
+	GLfloat black[4] = { 0, 0, 0, 1 };
+	GLfloat red[4] = { 1, 0, 0, 1 };
+	GLfloat transparent_green[4] = { 0, 1, 0, 0.5 };
+
+	/* Set color to black */
+	//~ glUniform4fv(uniform_color, 1, black);
+
+	//~ render_text2d("The Quick Brown Fox Jumps Over The Lazy Dog", a_any_size, -1 + 8 * sx, 1 - 50 * sy, sx, sy);
+    render_text2d(a_any_size);
+    //~ render_text(a_any_size);
+
+	glutSwapBuffers();
+}
+
+
+
+//#######
+
+
 
 void free_resources() {
     glDeleteProgram(program_box);
 	glDeleteProgram(program_text);
+	glDeleteProgram(program_text2d);
+    glDeleteBuffers(1, &vbo_coord2d);
+    glDeleteBuffers(1, &vbo_tex_coord2d);
     glDeleteBuffers(1, &vbo_coord);
     glDeleteBuffers(1, &vbo_tex_coord);
     glDeleteBuffers(1, &vbo_vertices_box);
     glDeleteBuffers(1, &vbo_vertices_color_box);
+    glDeleteBuffers(1, &vbo_font_color);
+    glDeleteBuffers(1, &vbo_font_color2d);
     glDeleteBuffers(1, &ibo_box_elements);
+    glDeleteBuffers(1, &vbo);
 }
 
 void mouse_movement(int xpos, int ypos)
@@ -1075,6 +1263,12 @@ void keyboard(unsigned char key, int x, int y)
             break;
         case 'z':
             cameraPos -= cameraSpeed * cameraUp;
+            break;
+        case '2':
+            display2d = !display2d;
+            break;
+        case '3':
+            display3d = !display3d;
             break;
         //~ case '+':
             //~ cameraSpeed +=0.05;

@@ -75,12 +75,15 @@ void text_display();
 void draw_box();
 void text_frame(std::vector<vertex3D> &vector_input, std::vector<uint> &nb_glyphs, vertex3D &offset, vertex2D &padding);
 void render_text(atlas * a) ;
+//~ void render_text2d(const char *text, atlas * a, float x, float y, float sx, float sy);
+void render_text2d(atlas * a);
 
 void create_vector(std::vector<vertex3D> &vector3D,std::vector<vertex3D> &v_origin, std::vector<vertex3D> &vector_blf, std::vector<vertex3D> &vector_trb);
 void create_coord_vector_text(const char *text, atlas * a, vertex3D origin, vertex2D &window_coord_scale);
 void onIdle();
 void camera();
 void display();
+void display_text2d();
 void init_matrices();
 
 void free_resources();
@@ -109,7 +112,7 @@ void add_padding(std::vector<vertex3D> & v_origin,std::vector<vertex3D> & v_orig
 
 void init_font_color(std::vector<GLfloat> &color);
 
-void set_options(bool move_it, bool display_box);
+void set_options(bool move_it, bool display_box, bool display2d=false);
 
 void init_v_font_color(std::vector<vertex3Dalpha> &font_color);
 

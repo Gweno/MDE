@@ -17,20 +17,13 @@
 //Constructors:
 MDE::MDE(){};
 
-//~ MDE::MDE(std::string init_name, std::string init_data, std::vector<MDE*> init_vMDE)
-//~ {
-    //~ this->name = init_name;
-    //~ this->data = init_data;
-    //~ for (auto it:init_vMDE)
-    //~ {
-        //~ this->vMDE.push_back(it);
-    //~ }
-//~ }
-
+MDE::MDE(std::string init_name, std::string init_data)
+{
+    this->name = init_name;
+    this->data = init_data;
+}
 
 // Destructors:
-
-
 
 //~ MDE::~MDE(){
     //~ std::cout << "Destructor called for " << this->name << std::endl;
@@ -206,13 +199,15 @@ void MDE::delete_all_pt()
     }        
 }
 
-void MDE::deleteAllPt(int sizeRef)
+void MDE::deleteAllPt(bool manual, int sizeRef)
 {
     std::cout << "E: " << this->name << std::endl;
+    std::cout << "delete mode is manual? " << manual << std::endl;
     for(auto it=this->vMDE.begin();it!=this->vMDE.end();it++){
         std::cout << "                 Checkpoint 1 " << std::endl;
         std::cout << "                 sizeRef: " << sizeRef << std::endl;
         std::cout << "                 before     sub E: " << (*it)->name << std::endl;
+        std::cout << "                 address: " << *it << std::endl;
         std::advance(it,sizeRef);
         if((*it)->isFirstRef()){
             std::cout << "                 Has first Ref" << std::endl;
@@ -220,26 +215,42 @@ void MDE::deleteAllPt(int sizeRef)
             std::cout << "                 (*it)->refVmdeSize " << (*it)->refVmdeSize << std::endl;
             if((*it)->vMDE.size()>0){
                 std::cout << "                 Has sub Es" << std::endl;
-                (*it)->deleteAllPt();
+                (*it)->deleteAllPt(manual);
             }
             (*it)->countRef--;
-            std::cout << "* NOT Deleting & " << (*it) << std::endl;
-            std::cout << "* NOT Deleting " << (*it)->name << std::endl;
-            //~ char del=0;
-            //~ std::cin >> del;
-            //~ if(del=='y'){
-                //~ delete (*it);
-            //~ }            
+            if(manual)
+            {
+                //~ std::cout << "* Deleting & ?" << (*it) << std::endl;
+                std::cout << "* Deleting ? " << (*it)->name << std::endl;
+                char del=0;
+                std::cin >> del;
+                if(del=='y'){
+                    //~ std::cout << "* Deleting & ?" << (*it) << std::endl;
+                    std::cout << "* Deleting ! " << (*it)->name << std::endl;
+                    delete (*it);
+                }
+                else
+                {
+                    //~ std::cout << "* NOT Deleting & " << (*it) << std::endl;
+                    std::cout << "* NOT Deleting " << (*it)->name << std::endl;
+                }          
+            }
+            else
+            {
+                //~ std::cout << "* NOT Deleting & " << (*it) << std::endl;
+                std::cout << "* NOT Deleting " << (*it)->name << std::endl;
+            }
             //~ delete (*it);
         }
         else {
             std::cout << "                 Checkpoint 2" << std::endl;
             if((*it)->vMDE.size()>0){
-            std::cout << "                 Has sub Es" << std::endl;
-            if((*it)->vMDE.size()>(*it)->refVmdeSize) {
-                (*it)->deleteAllPt((*it)->refVmdeSize);
-                std::cout << "                 Has sub Es - Check after" << std::endl;
-            }            
+                std::cout << "                 Has sub Es" << std::endl;
+                if((*it)->vMDE.size()>(*it)->refVmdeSize)
+                {
+                    (*it)->deleteAllPt(manual,(*it)->refVmdeSize);
+                    std::cout << "                 Has sub Es - Check after" << std::endl;
+                }            
             //~ (*it)->deleteAllPt();
             }
             //~ std::cout << "**    Deleting " << (*it)->name << std::endl;
@@ -247,23 +258,54 @@ void MDE::deleteAllPt(int sizeRef)
             // delete only if was not a ref
             if((*it)->countRef==0)
             {
-                std::cout << "***    Deleting & " << (*it) << std::endl;
-                std::cout << "***    Deleting " << (*it)->name << std::endl;
-                //~ char del=0;
-                //~ std::cin >> del;
-                //~ if(del=='y'){
-                    //~ delete (*it);
-                //~ }
-                delete (*it);
+                if(manual)
+                {
+                    //~ std::cout << "***    Deleting & ?" << (*it) << std::endl;
+                    std::cout << "***    Deleting ?" << (*it)->name << std::endl;
+                    char del=0;
+                    std::cin >> del;
+                    if(del=='y'){
+                        //~ std::cout << "***    Deleting & " << (*it) << std::endl;
+                        std::cout << "***    Deleting ! " << (*it)->name << std::endl;
+                        delete (*it);
+                    }
+                    else
+                    {
+                        //~ std::cout << "*** NOT   Deleting & " << (*it) << std::endl;
+                        std::cout << "*** NOT   Deleting " << (*it)->name << std::endl;
+                    }
+                }
+                else
+                {
+                    //~ std::cout << "***    Deleting & " << (*it) << std::endl;
+                    std::cout << "***    Deleting " << (*it)->name << std::endl;
+                    delete (*it);
+                }
             }
-            else{
-                std::cout << "****   On       & " << (*it) << std::endl;
-                std::cout << "****NOT Deleting " << (*it)->name << std::endl;
-                //~ char del=0;
-                //~ std::cin >> del;
-                //~ if(del=='y'){
-                    //~ delete (*it);
-                //~ }
+            else
+            {
+                if(manual)
+                {
+                    //~ std::cout << "****   On       & " << (*it) << std::endl;
+                    std::cout << "****   Deleting ? " << (*it)->name << std::endl;
+                    char del=0;
+                    std::cin >> del;
+                    if(del=='y'){
+                        //~ std::cout << "****   On       & " << (*it) << std::endl;
+                        std::cout << "****   Deleting !  " << (*it)->name << std::endl;
+                        delete (*it);
+                    }
+                    else
+                    {
+                        //~ std::cout << "****   On       & " << (*it) << std::endl;
+                        std::cout << "****NOT Deleting " << (*it)->name << std::endl;
+                    }
+                }
+                else
+                {
+                    //~ std::cout << "****   On       & " << (*it) << std::endl;
+                    std::cout << "****NOT Deleting " << (*it)->name << std::endl;
+                }
             }
                 
         }
@@ -383,7 +425,8 @@ void MDE::delete_all_pt_old()
 
 void MDE::destructor_MDE()
 {
-    this->delete_all_pt();
+    this->deleteAllPt();
+    //~ this->delete_all_pt();
     //~ this->delete_all_pt2();
     this->vMDE.clear();
     this->name = "";
@@ -1385,7 +1428,7 @@ void MDE::display_vector_int(std::vector<int>& vect_index) {
         std::cout << *it;
         if (it!=vect_index.end()-1) std::cout << ", " ;
     }
-    std::cout << ")" ;
+    std::cout << ")\n" ;
 }
 
 // test loop vMDE to get vector vMDE
@@ -1537,32 +1580,41 @@ std::size_t MDE::getVmdeSize()
 MDE * MDE::get_vMDE(std::vector<int> vect_index)
 {
     printf("in get_vMDE");
-    std::vector<int>::const_iterator it;
-    this->vMDE_get_by_index(vect_index, it);
+    std::vector<int>::const_iterator it=vect_index.begin();
+    //~ this->vMDE_get_by_index(vect_index, it);
+    this->display_vector_int(vect_index);
+    return this->vMDE_get_by_index(vect_index, it);
 }
 
 MDE * MDE::vMDE_get_by_index(std::vector<int>& vect_index, std::vector<int>::const_iterator it)
 {
     int store_it=0;
     //~ printf("0. %i", *it);
+    std::cout << "vMDE_get_by_index checkpoint 0" << std::endl;
     if (vect_index.size()==0)
     {
         //~ printf("1. %i", *it);
+    std::cout << "vMDE_get_by_index checkpoint 1" << std::endl;
         return this;
     }
     else if (vect_index.size()==1)
     {
+    std::cout << "vMDE_get_by_index checkpoint 2" << std::endl;
         //~ printf("2. %i", *it);
         return (this->vMDE).at(vect_index.front());
     }
     else if ((vect_index.size()>1) && (it!=vect_index.end()-1))
     {
-        //~ printf("3. %i", *it);
+        std::cout << "vMDE_get_by_index checkpoint 3" << std::endl;
+        printf("3. %i", *it);
         store_it=*it;
+        std::cout << "vMDE_get_by_index checkpoint 3.1" << std::endl;
         return ((this->vMDE).at(store_it))->vMDE_get_by_index(vect_index,++it);
+        std::cout << "vMDE_get_by_index checkpoint 3.2" << std::endl;
     }
     else
     {
+    std::cout << "vMDE_get_by_index checkpoint 4" << std::endl;
         //~ printf("4. %i", *it);
         return this->vMDE.at(vect_index.back());
     }

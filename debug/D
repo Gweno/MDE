@@ -1,0 +1,28 @@
+void display_text2d() {
+	float sx = 2.0 / glutGet(GLUT_WINDOW_WIDTH);
+	float sy = 2.0 / glutGet(GLUT_WINDOW_HEIGHT);
+    
+	glUseProgram(program_text2d);
+    
+	/* White background */
+	glClearColor(1, 1, 1, 1);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	/* Enable blending, necessary for our alpha texture */
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glDisable(GL_DEPTH_TEST);
+
+	GLfloat black[4] = { 0, 0, 0, 1 };
+	GLfloat red[4] = { 1, 0, 0, 1 };
+	GLfloat transparent_green[4] = { 0, 1, 0, 0.5 };
+
+	/* Set color to black */
+	//~ glUniform4fv(uniform_color, 1, black);
+
+	//~ render_text2d("The Quick Brown Fox Jumps Over The Lazy Dog", a_any_size, -1 + 8 * sx, 1 - 50 * sy, sx, sy);
+    render_text2d(a_any_size);
+    //~ render_text(a_any_size);
+
+	glutSwapBuffers();
+}

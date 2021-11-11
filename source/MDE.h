@@ -104,8 +104,8 @@ class MDE {
          * vMDE, vector of pointers to instance of MDE, to the vector
          * init_vMDE, standard vector of pointer to instance of MDE.
          */
-        MDE(std::string init_name, std::string init_data,
-        std::vector<MDE*> init_vMDE);
+        MDE(std::string init_name, std::string init_data);
+        //~ , std::vector<MDE*> init_vMDE);
         
         // Destructors and Member functions to clear member variables;
 
@@ -157,7 +157,7 @@ class MDE {
         
         public: void delete_all_pt();
         public: void delete_all_pt2_old();
-        void deleteAllPt(int sizeRef=0);
+        void deleteAllPt(bool manual = false, int sizeRef=0);
         bool deleteAllPt_old();
         void deleteAll();
         bool isFirstRef();
@@ -208,7 +208,9 @@ class MDE {
          * for the private member vector vMDE elements of an instance of 
          * a class MDE object recursively.
          */
-        private: void clear_all_vMDE();
+        //~ private: void clear_all_vMDE();
+        // set public for testing in main
+        public: void clear_all_vMDE();
         
          /**
          * 

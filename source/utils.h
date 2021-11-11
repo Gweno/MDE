@@ -148,6 +148,7 @@ bool extractFileToFlatMDE(MDE & MDE_source, std::string & full_filename);
          * Entity MDE from a flat source.
          */
 MDE * processFlatMDEToMDE(MDE & MDE_source,MDE & MDE_target,std::vector<MDE*>::iterator & it, std::stack<MDE**> & stack_MDE_pt);
+MDE * processFlatMDEToMDE_old(MDE & MDE_source,MDE & MDE_target,std::vector<MDE*>::iterator & it, std::stack<MDE**> & stack_MDE_pt);
 
 
         /**
@@ -195,8 +196,9 @@ bool loadXMLFileTovMDE(MDE & MDE_source, int & index, const std::string & full_f
          */
 bool loadXMLFileToMDE(MDE & MDE_source, const std::string & full_filename);
 
-MDE * loadXMLFileToPtMDE(MDE & xmlMDE, const std::string & full_filename);
+MDE * loadXMLFileToPtMDE(MDE & xmlMDE, const std::string & full_filename, bool destructAll = true);
 
+void loadXML(MDE & sourceMDE,  MDE & xmlMDE, std::vector<int> &vectIndex,const std::string & filename);
 
          /**
          * 
@@ -341,7 +343,8 @@ void fetchSearchResult(std::vector<MDE**> &search_result);
 void extractXmlElement(std::string & bufferLine, std::string & buffer_Tag, std::string & element, std::vector<std::string> & list_elements);
 void XprocessXmlElement(MDE & MDE_source, std::string & buffer_Tag, std::string & element, std::vector<std::string> & list_elements);
 //~ bool replaceVMDEwithXML(MDE & MDE_source,std::vector<int> & vect_index_file, const std::string & full_filename);
-bool replaceVMDEwithXML(MDE & MDE_source,std::vector<int> & vect_index_file, std::string & full_filename);
+MDE *  replaceVMDEwithXML(MDE & MDE_source,std::vector<int> & vect_index_file, std::string & full_filename);
+bool replaceVMDEwithXML_old(MDE & MDE_source,std::vector<int> & vect_index_file, std::string & full_filename);
 MDE * processXMLAttributes(MDE & MDE_source,MDE & MDE_target,std::vector<MDE*>::iterator & it);
 void keyValuePairParser(std::string expression, std::string &key, std::string &value, const char op='=', bool hasDleQuotes=true);
 //~ MDE * htmlParser_element(MDE & MDE_source);
