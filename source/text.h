@@ -67,10 +67,11 @@ void init_color(vertex3Dalpha &color_alpha, vertex3Dalpha &bg_color_alpha, std::
 void init_vectors(std::vector<vertex3D> &vectors_boxes);
 void init_text_MDE(MDE &my_entity,vertex3D &origin, std::vector<vertex3D> &offset, std::vector<vertex3D> &offset_rule, vertex2D &padding, vertex3Dalpha &color_alpha, vertex3Dalpha &bg_color_alpha, std::vector<vertex3Dalpha> &font_color, bool displayDataOnly = false, bool hideParent=false);
 void init_text_coordinates(GLfloat x, GLfloat y, GLfloat z);
-
+void displayV2D(std::vector<vertex2D> &vector_2D);
 void displayV3D(std::vector<vertex3D> &vector_3D);
 void displayV3Dalpha(std::vector<vertex3Dalpha> &vector_3Dalpha);
 void displayVuint(std::vector<unsigned int> &vector_uint);
+void displayVGLfloat(std::vector<GLfloat> &vector_glf);
 void text_display();
 void draw_box();
 void text_frame(std::vector<vertex3D> &vector_input, std::vector<uint> &nb_glyphs, vertex3D &offset, vertex2D &padding);
@@ -112,8 +113,19 @@ void add_padding(std::vector<vertex3D> & v_origin,std::vector<vertex3D> & v_orig
 
 void init_font_color(std::vector<GLfloat> &color);
 
-void set_options(bool move_it, bool display_box, bool display2d=false);
+void set_options(bool move_it, bool display_box, bool display2d=false, bool singleColor=true, uint nlines=1);
 
-void init_v_font_color(std::vector<vertex3Dalpha> &font_color);
+void init_v_font_color(std::vector<vertex3Dalpha> &font_color, uint &nlines, bool singleColor=true, bool displayDataOnly=false);
+//~ template <typename T>
+//~ void displayVec(std::vector<T> &vect)
 
+////
+void onReshape(int width, int height);
+int init_resources();
+void init_color_box(vertex3Dalpha &color_alpha);
+void onDisplay();
+void onIdle2();
+void init_vbo_box(std::vector<vertex3D> &vectors_boxes);
+void init_ibo_elements_box(std::vector<vertex3D> &vectors_boxes);
+void init_box(std::vector<vertex3D> &vectors_boxes);
 #endif /*text.h*/

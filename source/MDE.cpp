@@ -64,7 +64,7 @@ void MDE::new_vMDE_element(std::string name,std::string data)
 
 void MDE::new_vMDE_element(MDE * aMDE)
 {
-    std::cout << "New element from Vector" << std::endl;
+    std::clog << "New element from Vector" << std::endl;
     this->vMDE.push_back(aMDE);
     aMDE->countRef++;
     aMDE->totRef = std::max(aMDE->countRef,aMDE->totRef);
@@ -156,8 +156,8 @@ void MDE::delete_all_pt_v_old()
 {
     for (std::vector<MDE*>::iterator it_all=this->vMDE.begin();it_all!=this->vMDE.end();++it_all)
     {
-        std::cout << "deleting: " << this->name << std::endl;
-        std::cout << "size: " << this->vMDE.size() << std::endl;
+        std::clog << "deleting: " << this->name << std::endl;
+        std::clog << "size: " << this->vMDE.size() << std::endl;
         
         delete (*it_all);
     }
@@ -168,13 +168,13 @@ void MDE::delete_all_pt2_old()
     for (auto it:this->vMDE)
     {
         
-        std::cout << "(ref)checking subE " << this->name << std::endl;
+        std::clog << "(ref)checking subE " << this->name << std::endl;
         if(it->vMDE.size()>0){
             
-            std::cout << "(ref)checthere are subE:" << it->name << std::endl;
+            std::clog << "(ref)check there are subE:" << it->name << std::endl;
             it->delete_all_pt2_old();
         };
-        std::cout << "(ref)deleting " << it->name << std::endl;
+        std::clog << "(ref)deleting " << it->name << std::endl;
         delete it;
     }
 }
@@ -184,16 +184,16 @@ void MDE::delete_all_pt()
     for (auto it:this->vMDE)
     {
         if(it->vMDE.size()>0){
-            std::cout << " > - Checking vectors for " << it->name <<  " : " << it->data << std::endl;            
+            std::clog << " > - Checking vectors for " << it->name <<  " : " << it->data << std::endl;            
             it->delete_all_pt();
         }
         if(it->countRef>0){
-            std::cout << "Current count for (" << it->name <<  " : " << it->data << ") :" << it->countRef << " reference(s)." << std::endl;
+            std::clog << "Current count for (" << it->name <<  " : " << it->data << ") :" << it->countRef << " reference(s)." << std::endl;
             it->countRef--;
-            std::cout << "0 - NOT DELETING (" << it->name <<  " : " << it->data << ") still has " << it->countRef << " reference(s)." << std::endl;
+            std::clog << "0 - NOT DELETING (" << it->name <<  " : " << it->data << ") still has " << it->countRef << " reference(s)." << std::endl;
         }
         //~ else{
-        std::cout << "X - deleting " << it->name <<  " : " << it->data << std::endl;
+        std::clog << "X - deleting " << it->name <<  " : " << it->data << std::endl;
         delete it;
         //~ }
     }        
@@ -201,84 +201,84 @@ void MDE::delete_all_pt()
 
 void MDE::deleteAllPt(bool manual, int sizeRef)
 {
-    std::cout << "E: " << this->name << std::endl;
-    std::cout << "delete mode is manual? " << manual << std::endl;
+    std::clog << "E: " << this->name << std::endl;
+    std::clog << "delete mode is manual? " << manual << std::endl;
     for(auto it=this->vMDE.begin();it!=this->vMDE.end();it++){
-        std::cout << "                 Checkpoint 1 " << std::endl;
-        std::cout << "                 sizeRef: " << sizeRef << std::endl;
-        std::cout << "                 before     sub E: " << (*it)->name << std::endl;
-        std::cout << "                 address: " << *it << std::endl;
+        std::clog << "                 Checkpoint 1 " << std::endl;
+        std::clog << "                 sizeRef: " << sizeRef << std::endl;
+        std::clog << "                 before     sub E: " << (*it)->name << std::endl;
+        std::clog << "                 address: " << *it << std::endl;
         std::advance(it,sizeRef);
         if((*it)->isFirstRef()){
-            std::cout << "                 Has first Ref" << std::endl;
-            std::cout << "                 vMDE.size() " << (*it)->vMDE.size() << std::endl;
-            std::cout << "                 (*it)->refVmdeSize " << (*it)->refVmdeSize << std::endl;
+            std::clog << "                 Has first Ref" << std::endl;
+            std::clog << "                 vMDE.size() " << (*it)->vMDE.size() << std::endl;
+            std::clog << "                 (*it)->refVmdeSize " << (*it)->refVmdeSize << std::endl;
             if((*it)->vMDE.size()>0){
-                std::cout << "                 Has sub Es" << std::endl;
+                std::clog << "                 Has sub Es" << std::endl;
                 (*it)->deleteAllPt(manual);
             }
             (*it)->countRef--;
             if(manual)
             {
-                //~ std::cout << "* Deleting & ?" << (*it) << std::endl;
-                std::cout << "* Deleting ? " << (*it)->name << std::endl;
+                //~ std::clog << "* Deleting & ?" << (*it) << std::endl;
+                std::clog << "* Deleting ? " << (*it)->name << std::endl;
                 char del=0;
                 std::cin >> del;
                 if(del=='y'){
-                    //~ std::cout << "* Deleting & ?" << (*it) << std::endl;
-                    std::cout << "* Deleting ! " << (*it)->name << std::endl;
+                    //~ std::clog << "* Deleting & ?" << (*it) << std::endl;
+                    std::clog << "* Deleting ! " << (*it)->name << std::endl;
                     delete (*it);
                 }
                 else
                 {
-                    //~ std::cout << "* NOT Deleting & " << (*it) << std::endl;
-                    std::cout << "* NOT Deleting " << (*it)->name << std::endl;
+                    //~ std::clog << "* NOT Deleting & " << (*it) << std::endl;
+                    std::clog << "* NOT Deleting " << (*it)->name << std::endl;
                 }          
             }
             else
             {
-                //~ std::cout << "* NOT Deleting & " << (*it) << std::endl;
-                std::cout << "* NOT Deleting " << (*it)->name << std::endl;
+                //~ std::clog << "* NOT Deleting & " << (*it) << std::endl;
+                std::clog << "* NOT Deleting " << (*it)->name << std::endl;
             }
             //~ delete (*it);
         }
         else {
-            std::cout << "                 Checkpoint 2" << std::endl;
+            std::clog << "                 Checkpoint 2" << std::endl;
             if((*it)->vMDE.size()>0){
-                std::cout << "                 Has sub Es" << std::endl;
+                std::clog << "                 Has sub Es" << std::endl;
                 if((*it)->vMDE.size()>(*it)->refVmdeSize)
                 {
                     (*it)->deleteAllPt(manual,(*it)->refVmdeSize);
-                    std::cout << "                 Has sub Es - Check after" << std::endl;
+                    std::clog << "                 Has sub Es - Check after" << std::endl;
                 }            
             //~ (*it)->deleteAllPt();
             }
-            //~ std::cout << "**    Deleting " << (*it)->name << std::endl;
+            //~ std::clog << "**    Deleting " << (*it)->name << std::endl;
             //~ delete (*it);
             // delete only if was not a ref
             if((*it)->countRef==0)
             {
                 if(manual)
                 {
-                    //~ std::cout << "***    Deleting & ?" << (*it) << std::endl;
-                    std::cout << "***    Deleting ?" << (*it)->name << std::endl;
+                    //~ std::clog << "***    Deleting & ?" << (*it) << std::endl;
+                    std::clog << "***    Deleting ?" << (*it)->name << std::endl;
                     char del=0;
                     std::cin >> del;
                     if(del=='y'){
-                        //~ std::cout << "***    Deleting & " << (*it) << std::endl;
-                        std::cout << "***    Deleting ! " << (*it)->name << std::endl;
+                        //~ std::clog << "***    Deleting & " << (*it) << std::endl;
+                        std::clog << "***    Deleting ! " << (*it)->name << std::endl;
                         delete (*it);
                     }
                     else
                     {
-                        //~ std::cout << "*** NOT   Deleting & " << (*it) << std::endl;
-                        std::cout << "*** NOT   Deleting " << (*it)->name << std::endl;
+                        //~ std::clog << "*** NOT   Deleting & " << (*it) << std::endl;
+                        std::clog << "*** NOT   Deleting " << (*it)->name << std::endl;
                     }
                 }
                 else
                 {
-                    //~ std::cout << "***    Deleting & " << (*it) << std::endl;
-                    std::cout << "***    Deleting " << (*it)->name << std::endl;
+                    //~ std::clog << "***    Deleting & " << (*it) << std::endl;
+                    std::clog << "***    Deleting " << (*it)->name << std::endl;
                     delete (*it);
                 }
             }
@@ -286,25 +286,25 @@ void MDE::deleteAllPt(bool manual, int sizeRef)
             {
                 if(manual)
                 {
-                    //~ std::cout << "****   On       & " << (*it) << std::endl;
-                    std::cout << "****   Deleting ? " << (*it)->name << std::endl;
+                    //~ std::clog << "****   On       & " << (*it) << std::endl;
+                    std::clog << "****   Deleting ? " << (*it)->name << std::endl;
                     char del=0;
                     std::cin >> del;
                     if(del=='y'){
-                        //~ std::cout << "****   On       & " << (*it) << std::endl;
-                        std::cout << "****   Deleting !  " << (*it)->name << std::endl;
+                        //~ std::clog << "****   On       & " << (*it) << std::endl;
+                        std::clog << "****   Deleting !  " << (*it)->name << std::endl;
                         delete (*it);
                     }
                     else
                     {
-                        //~ std::cout << "****   On       & " << (*it) << std::endl;
-                        std::cout << "****NOT Deleting " << (*it)->name << std::endl;
+                        //~ std::clog << "****   On       & " << (*it) << std::endl;
+                        std::clog << "****NOT Deleting " << (*it)->name << std::endl;
                     }
                 }
                 else
                 {
-                    //~ std::cout << "****   On       & " << (*it) << std::endl;
-                    std::cout << "****NOT Deleting " << (*it)->name << std::endl;
+                    //~ std::clog << "****   On       & " << (*it) << std::endl;
+                    std::clog << "****NOT Deleting " << (*it)->name << std::endl;
                 }
             }
                 
@@ -392,14 +392,14 @@ void MDE::deleteAll()
 {
     for (auto it:this->vMDE)
     {
-        std::cout << "> " << it->name << " : " << it->data << std::endl;
+        std::clog << "> " << it->name << " : " << it->data << std::endl;
         if(it->isFirstRef()){
-            std::cout << "First ref # " << it->totRef << " / " <<  it->countRef << std::endl;
+            std::clog << "First ref # " << it->totRef << " / " <<  it->countRef << std::endl;
             it->delete_all_pt2_old();
             it->countRef--;
         }
-        else std::cout << "Ref # " << it->totRef << " / " <<  it->countRef << std::endl;
-        std::cout << "go next " << std::endl;
+        else std::clog << "Ref # " << it->totRef << " / " <<  it->countRef << std::endl;
+        std::clog << "go next " << std::endl;
     }
 }
 void MDE::delete_all_pt_old()
@@ -407,16 +407,16 @@ void MDE::delete_all_pt_old()
     for (auto it:this->vMDE)
     {
         if(it->vMDE.size()>0){
-            std::cout << " > - Checking vectors for " << it->name <<  " : " << it->data << std::endl;            
+            std::clog << " > - Checking vectors for " << it->name <<  " : " << it->data << std::endl;            
             it->delete_all_pt();
         }
         if(it->countRef>0){
-            std::cout << "Current count for (" << it->name <<  " : " << it->data << ") :" << it->countRef << " reference(s)." << std::endl;
+            std::clog << "Current count for (" << it->name <<  " : " << it->data << ") :" << it->countRef << " reference(s)." << std::endl;
             it->countRef--;
-            std::cout << "0 - NOT DELETING (" << it->name <<  " : " << it->data << ") still has " << it->countRef << " reference(s)." << std::endl;
+            std::clog << "0 - NOT DELETING (" << it->name <<  " : " << it->data << ") still has " << it->countRef << " reference(s)." << std::endl;
         }
         else{
-            std::cout << "X - deleting " << it->name <<  " : " << it->data << std::endl;
+            std::clog << "X - deleting " << it->name <<  " : " << it->data << std::endl;
             delete it;
         }
     }        
@@ -633,7 +633,7 @@ void MDE::save_to_file(int n_indent, const int & n_space,
 
 void MDE::print_flat_MDE()
 {
-    std::cout << this->name << " : " << this->data << std::endl;
+    std::clog << this->name << " : " << this->data << std::endl;
     if (this->vMDE.size()!=0)
     {
         //~ for (std::vector<MDE*>::iterator it=this->vMDE.begin();it!=this->vMDE.end();++it)
@@ -932,7 +932,7 @@ void MDE::char_array_to_vMDE_data(int n_element, char **array_char, bool create 
 {
     for (int i = 0; i < n_element; ++i)
     {
-        std::cout << i << ", " << array_char[i] << std::endl;
+        std::clog << i << ", " << array_char[i] << std::endl;
         if (create){
             this->new_vMDE_element(std::to_string(i),std::string(array_char[i]));
         }
@@ -1478,7 +1478,7 @@ void MDE::loop_test2(std::vector<int> & vect_index, int & index, std::vector<MDE
     {
         //~ printf("2. %i\n",index);
         //~ printf("2.1 %i\n",vect_index[index]);
-        std::cout << "2.2 " <<  this->data << std::endl;
+        std::clog << "2.2 " <<  this->data << std::endl;
         try
         {
             MDE** ptr_to_ptr_to_MDE = new MDE*((this->vMDE)[(vect_index[index])]);
@@ -1579,7 +1579,7 @@ std::size_t MDE::getVmdeSize()
 // simplified version of vMDE_get_by_index
 MDE * MDE::get_vMDE(std::vector<int> vect_index)
 {
-    printf("in get_vMDE");
+    fprintf(stderr,"in get_vMDE");
     std::vector<int>::const_iterator it=vect_index.begin();
     //~ this->vMDE_get_by_index(vect_index, it);
     this->display_vector_int(vect_index);
@@ -1590,31 +1590,31 @@ MDE * MDE::vMDE_get_by_index(std::vector<int>& vect_index, std::vector<int>::con
 {
     int store_it=0;
     //~ printf("0. %i", *it);
-    std::cout << "vMDE_get_by_index checkpoint 0" << std::endl;
+    std::clog << "vMDE_get_by_index checkpoint 0" << std::endl;
     if (vect_index.size()==0)
     {
         //~ printf("1. %i", *it);
-    std::cout << "vMDE_get_by_index checkpoint 1" << std::endl;
+    std::clog << "vMDE_get_by_index checkpoint 1" << std::endl;
         return this;
     }
     else if (vect_index.size()==1)
     {
-    std::cout << "vMDE_get_by_index checkpoint 2" << std::endl;
+    std::clog << "vMDE_get_by_index checkpoint 2" << std::endl;
         //~ printf("2. %i", *it);
         return (this->vMDE).at(vect_index.front());
     }
     else if ((vect_index.size()>1) && (it!=vect_index.end()-1))
     {
-        std::cout << "vMDE_get_by_index checkpoint 3" << std::endl;
-        printf("3. %i", *it);
+        std::clog << "vMDE_get_by_index checkpoint 3" << std::endl;
+        fprintf(stderr,"3. %i", *it);
         store_it=*it;
-        std::cout << "vMDE_get_by_index checkpoint 3.1" << std::endl;
+        std::clog << "vMDE_get_by_index checkpoint 3.1" << std::endl;
         return ((this->vMDE).at(store_it))->vMDE_get_by_index(vect_index,++it);
-        std::cout << "vMDE_get_by_index checkpoint 3.2" << std::endl;
+        std::clog << "vMDE_get_by_index checkpoint 3.2" << std::endl;
     }
     else
     {
-    std::cout << "vMDE_get_by_index checkpoint 4" << std::endl;
+    std::clog << "vMDE_get_by_index checkpoint 4" << std::endl;
         //~ printf("4. %i", *it);
         return this->vMDE.at(vect_index.back());
     }
@@ -1643,12 +1643,12 @@ std::vector<int> MDE::set_vector_of_indexes(std::string list_indexes)
     int num;
     while ((pos = list_indexes.find(delimiter)) != std::string::npos) {
         token = list_indexes.substr(0, pos);
-        std::cout << token;
+        std::clog << token;
         if(!(istringstream(token)>>num)) num=0;
         vect_index.push_back(num);
         list_indexes.erase(0, pos + delimiter.length());
     }
-    std::cout << list_indexes << std::endl;
+    std::clog << list_indexes << std::endl;
     if(!(istringstream(list_indexes)>>num)) num=0;
     vect_index.push_back(num);    
     return vect_index;

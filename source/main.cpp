@@ -86,10 +86,15 @@ int main (int argc, char **argv){
     bool display2d = false;   // display in 2d
     bool displayDataOnly = false; // This is set to true when displaying a defined window i.e. with a menu
     bool hideParent = false; // used to discard the parent element before displaying in GL
-
+    
+    bool tempTest = false;
+    bool singleColor = true;
     // font
     const char * user_font;
     uint user_font_size;
+    
+    // testing variable
+    uint nlines = 1;
     
     // initialise default value for gfont
     user_font= "../fonts/FreeSans.ttf";
@@ -134,23 +139,23 @@ int main (int argc, char **argv){
     std::vector<int> vect_index_file = {1};
     std::vector<int>::const_iterator it_file;
 
-    std::cout << "Current path: " << fs::current_path() << std::endl;
+    std::clog << "Current path: " << fs::current_path() << std::endl;
     
     // display terminal window number of rows and columns
     struct winsize w;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
 
-    printf ("lines %d\n", w.ws_row);
-    printf ("columns %d\n", w.ws_col);
+    fprintf (stderr, "lines %d\n", w.ws_row);
+    fprintf (stderr,"columns %d\n", w.ws_col);
 
     // display runtime arguments
-    std::cout << "Have " << argc << " arguments:" << std::endl;
+    std::clog << "Have " << argc << " arguments:" << std::endl;
     for (int i = 0; i < argc; ++i)
     {
-        std::cout << i << ", " << argv[i] << std::endl;
+        std::clog << i << ", " << argv[i] << std::endl;
         choice[i]=std::string(argv[i]);
     }
-    std::cout << VERSION_INFO << std::endl;
+    std::clog << VERSION_INFO << std::endl;
     
     // Check all arguments provided
     // 'Turn on' Relevant boolean variables and
@@ -171,6 +176,7 @@ int main (int argc, char **argv){
     // -m, --move  :for moving mode (makes the MDE move and all axis)
     // -d, --background-color r,g,b,a: to set background color with RGBA
     // -2, --2-dimensions set display in 2d instead of 3d
+    // -l, --nb-lines: to arbittaly set the number of lines/entities
 
     // Create the master instance of MDE
     MDE newMDE("MDE","master");
@@ -181,13 +187,13 @@ int main (int argc, char **argv){
     
     // get the process id
     pid_t pid = getpid();
-    printf("pid: %d\n", pid);
+    fprintf(stderr,"pid: %d\n", pid);
     
     // store process identification number
     newMDE.new_vMDE_element("pid",to_string(pid));
-    std::cout << "main #0" << std::endl;
-    newMDE.display_all(2,1);
-    std::cout << "main #0.1" << std::endl;
+    std::clog << "main #0" << std::endl;
+    //~ newMDE.display_all(2,1);
+    std::clog << "main #0.1" << std::endl;
 
     // load all runtime arguments into vMDE "arguments"
     newMDE.new_vMDE_element("arguments",to_string(argc));
@@ -196,7 +202,8 @@ int main (int argc, char **argv){
     // loop on arguments to modify parameters
     for (int i = 0; i < argc; ++i)
     {
-        std::cout << "arguments " << i << ": " << choice[i] << std::endl;
+        //~ std::cout << "arguments " << i << ": " << choice[i] << std::endl;
+        std::clog << "arguments " << i << ": " << choice[i] << std::endl;
         std::vector<int> c_v_index = {1};
         int c_index = 0;
         std::vector<MDE *> v_choice = newMDE.loop_test3(c_v_index,c_index);
@@ -237,11 +244,11 @@ int main (int argc, char **argv){
         // load file
         if (std::regex_match (v_choice[i]->data, std::regex("(-f)|(--file)")))
             {
-                cout << v_choice[i]->data<< endl;
+                clog << v_choice[i]->data<< endl;
                 if (i<argc-1){
-                    cout << v_choice[i+1]->data<< endl;
+                    clog << v_choice[i+1]->data<< endl;
                     full_filename=v_choice[i+1]->data;
-                    std::cout << "set file to load" << std::endl;
+                    std::clog << "set file to load" << std::endl;
                 }
                 else {
                     printf("Missing File name\n");
@@ -263,7 +270,7 @@ int main (int argc, char **argv){
                     blue_user = std::stof(part);
                     getline(is, part, ',');
                     alpha_user = std::stof(part);
-                    std::cout << "r,g,b: " << red_user << " , " << green_user << " , " << blue_user << " , " << alpha_user << std::endl;
+                    std::clog << "r,g,b: " << red_user << " , " << green_user << " , " << blue_user << " , " << alpha_user << std::endl;
                 }
                 else {
                     printf("Missing Color value\n");
@@ -273,13 +280,13 @@ int main (int argc, char **argv){
         if (std::regex_match (v_choice[i]->data, std::regex("(-n)|(--font)")))
             {
                 if (i<argc-1){
-                    cout << v_choice[i+1]->data<< endl;
+                    clog << v_choice[i+1]->data<< endl;
                     istringstream is(v_choice[i+1]->data);
                     std::string part;
                     getline(is, part, ',');
                     font_name = "../fonts/"+part+".ttf";
                     user_font = font_name.c_str();       //convert the string to const char*
-                    std::cout << "font: " << user_font << std::endl;
+                    std::clog << "font: " << user_font << std::endl;
                 }
                 else {
                     printf("Missing Font Name\n");
@@ -289,12 +296,12 @@ int main (int argc, char **argv){
         if (std::regex_match (v_choice[i]->data, std::regex("(-s)|(--font-size)")))
             {
                 if (i<argc-1){
-                    cout << v_choice[i+1]->data<< endl;
+                    clog << v_choice[i+1]->data<< endl;
                     istringstream is(v_choice[i+1]->data);
                     std::string part;
                     getline(is, part, ',');
                     user_font_size = std::stof(part);
-                    std::cout << "font size: " << user_font_size << std::endl;
+                    std::clog << "font size: " << user_font_size << std::endl;
                 }
                 else {
                     printf("Missing Font Size\n");
@@ -304,7 +311,7 @@ int main (int argc, char **argv){
         if (std::regex_match (v_choice[i]->data, std::regex("(-o)|(--font-color)")))
             {
                 if (i<argc-1){
-                    cout << v_choice[i+1]->data<< endl;
+                    clog << v_choice[i+1]->data<< endl;
                     istringstream is(v_choice[i+1]->data);
                     std::string part;
                     getline(is, part, ',');
@@ -315,7 +322,7 @@ int main (int argc, char **argv){
                     blue_font_user = std::stof(part);
                     getline(is, part, ',');
                     alpha_font_user = std::stof(part);
-                    std::cout << "r,g,b,a: " << red_font_user << " , " << green_font_user << " , " << blue_font_user << " , " << alpha_font_user << std::endl;
+                    std::clog << "r,g,b,a: " << red_font_user << " , " << green_font_user << " , " << blue_font_user << " , " << alpha_font_user << std::endl;
                 }
                 else {
                     printf("Missing Font Color and Alpha values\n");
@@ -325,7 +332,7 @@ int main (int argc, char **argv){
         if (std::regex_match (v_choice[i]->data, std::regex("(-d)|(--background-color)")))
             {
                 if (i<argc-1){
-                    cout << v_choice[i+1]->data<< endl;
+                    clog << v_choice[i+1]->data<< endl;
                     istringstream is(v_choice[i+1]->data);
                     std::string part;
                     getline(is, part, ',');
@@ -336,7 +343,7 @@ int main (int argc, char **argv){
                     blue_bg_user = std::stof(part);
                     getline(is, part, ',');
                     alpha_bg_user = std::stof(part);
-                    std::cout << "background: r,g,b,a: " << red_bg_user << " , " << green_bg_user << " , " << blue_bg_user << " , " << alpha_bg_user << std::endl;
+                    std::clog << "background: r,g,b,a: " << red_bg_user << " , " << green_bg_user << " , " << blue_bg_user << " , " << alpha_bg_user << std::endl;
                 }
                 else {
                     printf("Missing Font Color and Alpha values\n");
@@ -354,7 +361,7 @@ int main (int argc, char **argv){
                     Y_user = std::stof(part);
                     getline(is, part, ',');
                     Z_user = std::stof(part);
-                    std::cout << "x,y,z: " << X_user << " , " << Y_user << " , " << Z_user << std::endl;
+                    std::clog << "x,y,z: " << X_user << " , " << Y_user << " , " << Z_user << std::endl;
                 }
                 else {
                     printf("Missing Coordinates of origin values\n");
@@ -371,7 +378,7 @@ int main (int argc, char **argv){
                     V_padding_user = std::stof(part);
                     getline(is, part, ',');
                     H_padding_user = std::stof(part);
-                    std::cout << "padding set" << std::endl;
+                    std::clog << "padding set" << std::endl;
                  }
                 else {
                     printf("Missing Padding values\n");
@@ -384,6 +391,7 @@ int main (int argc, char **argv){
                     // offset rule.x is the name-data offset
                     // offset rule.y is the index offset
                     // offset rule.z is the level offset
+                    std::clog<<"found some rules"<<std::endl;
                     vertex3D off_rul;
                     std::string part;
                     istringstream is(v_choice[i+1]->data);
@@ -405,6 +413,8 @@ int main (int argc, char **argv){
                         
                     }
                     displayV3D(offset_rule);
+                    //~ std::clog<<"Testing template function: " << std::endl;
+                    //~ displayVec<vertex3D>(offset_rule);
                 }
                 else {
                     printf("Missing values for the Offset rules\n");
@@ -416,6 +426,23 @@ int main (int argc, char **argv){
             {
                 display2d = true;  // 2d mode
                 printf("Display is in 2 dimensions\n");
+            }            
+        // set number of lines
+        if (std::regex_match (v_choice[i]->data, std::regex("(-l)|(--nb-lines)")))
+
+            {
+                
+                if (i<argc-1){
+                    clog << v_choice[i+1]->data<< endl;
+                    istringstream is(v_choice[i+1]->data);
+                    std::string part;
+                    getline(is, part, ',');
+                    nlines = (uint)std::stoi(part);
+                    std::clog << "nb of lines: " << nlines << std::endl;
+                }
+                else {
+                    printf("Missing Font Size\n");
+                }                
             }            
     }
     
@@ -447,7 +474,7 @@ int main (int argc, char **argv){
     MDE defaultFile;
     ptDefault = loadXMLFileToPtMDE(defaultFile,const_full_filename);
     (newMDE.vMDE_get_by_index(vect_index_file,it_file))->new_vMDE_element(ptDefault);
-    newMDE.display_vector_int(vect_index_file);
+    //~ newMDE.display_vector_int(vect_index_file);
 
     // add new index in vector of indexes to reflect start of data from file in MDE, for later replacong with new loaded file
     vect_index_file.push_back(0);
@@ -465,7 +492,7 @@ int main (int argc, char **argv){
     // add content from existing sub-Entity
     MDE * ptMDE;
     ptMDE = (newMDE.vMDE.back());
-    std::cout << "ptMDE: " << ptMDE << std::endl;
+    std::clog << "ptMDE: " << ptMDE << std::endl;
     ptMDE->new_vMDE_element("content","intern");
     ptMDE = (ptMDE->vMDE.back());
     ptMDE->new_vMDE_element(ptMenu);
@@ -516,7 +543,7 @@ int main (int argc, char **argv){
             if(display_box) printf("          Frame Box Color&Alpha (r,g,b,a): (%.2f,%.2f,%.2f,%.2f)\n", red_user, green_user, blue_user, alpha_user);
             printf("\n");
             printf("  r) Render html file\n");
-            printf("  t) Display In Terminal\n");
+            printf("  t) Display In Terminal and testing mode: %s\n",(tempTest?"ON":"OFF"));
             printf("  x) Display In Terminal as Xml\n");
             printf("  g) Display in Gl mode\n");
             printf("\n");
@@ -874,7 +901,7 @@ int main (int argc, char **argv){
                                                 
                                                 case '2':
                                                 {
-                                                    std::cout << "Set the name <-> data offset x,y,z" << std::endl;
+                                                    std::cout << "Set the index offset x,y,z" << std::endl;
                                                     std::cin >> key_input;
                                                     istringstream is(key_input);
                                                     std::string part;
@@ -892,7 +919,7 @@ int main (int argc, char **argv){
                                                 
                                                 case '3':
                                                 {
-                                                    std::cout << "Set the name <-> data offset x,y,z" << std::endl;
+                                                    std::cout << "Set the level offset x,y,z" << std::endl;
                                                     std::cin >> key_input;
                                                     istringstream is(key_input);
                                                     std::string part;
@@ -1108,7 +1135,8 @@ int main (int argc, char **argv){
                 case 't':
                     {
                         newMDE.display_all(0, n_space);
-                        
+                        tempTest = !tempTest;
+                        printf("testing %s",(tempTest?"On":"Off"));
                         /*
                         // test things here
                         std::cout << "display some vMDE: " << (newMDE.get_vMDE({3}))->data << std::endl;
@@ -1136,11 +1164,11 @@ int main (int argc, char **argv){
                         // end of testing 
                         */
 
-                        while (key_input!="b"){
-                            std::cout << std::endl;
-                            std::cout <<"Press b to come Back to Main Menu" << std::endl;
-                            std::cin >> key_input;
-                        }                                
+                        //~ while (key_input!="b"){
+                            //~ std::cout << std::endl;
+                            //~ std::cout <<"Press b to come Back to Main Menu" << std::endl;
+                            //~ std::cin >> key_input;
+                        //~ }                                
                         break;
                         
                     }
@@ -1159,60 +1187,63 @@ int main (int argc, char **argv){
                     {
                         GL_on=true;
                         display_menu=false;
-                        int s_index = 0;
-                        int s_level = 0;
-                        std::vector<MDE**> my_search_result2;
-                        searchFor(newMDE, s_index,s_level,"window",my_search_result2);
-                        if (my_search_result2.size()>0){
-                            fetchSearchResult(my_search_result2);
-                            if ((**my_search_result2[0]).data == "main window"){
-                                printf("Yeah!\n");
-                                
-                                // search for 'width'
-                                s_index = 0;
-                                s_level = 0;
-                                // here we assume there is only one title -> taking the last one
-                                searchFor((**my_search_result2[0]),s_index, s_level, "width", my_search_result2);
-                                printf("width: %s\n",((**my_search_result2.back()).data).c_str());
-                                window_width = std::stoi(((**my_search_result2.back()).data));
-                                
-                                // search for 'height'
-                                s_index = 0;
-                                s_level = 0;
-                                // here we assume there is only one height -> taking the last one
-                                searchFor((**my_search_result2[0]),s_index, s_level, "height", my_search_result2);
-                                printf("height: %s\n",((**my_search_result2.back()).data).c_str());
-                                window_height = std::stoi((**my_search_result2.back()).data);
-                                
-                                // search for 'title'
-                                s_index = 0;
-                                s_level = 0;
-                                // here we assume there is only one title -> taking the last one
-                                searchFor((**my_search_result2[0]),s_index, s_level, "title", my_search_result2);
-                                
+                        if(tempTest)
+                        {
+                            int s_index = 0;
+                            int s_level = 0;
+                            std::vector<MDE**> my_search_result2;
+                            searchFor(newMDE, s_index,s_level,"window",my_search_result2);
+                            if (my_search_result2.size()>0){
                                 fetchSearchResult(my_search_result2);
-                                
-                                printf("data: %s\n",((**my_search_result2.back()).data).c_str());
-                                mainWindowName = ((**my_search_result2.back()).data).c_str();
-                                newMDE.destructor_Search_results(my_search_result2);
+                                if ((**my_search_result2[0]).data == "main window"){
+                                    printf("Yeah!\n");
+                                    
+                                    // search for 'width'
+                                    s_index = 0;
+                                    s_level = 0;
+                                    // here we assume there is only one title -> taking the last one
+                                    searchFor((**my_search_result2[0]),s_index, s_level, "width", my_search_result2);
+                                    fprintf(stderr,"width: %s\n",((**my_search_result2.back()).data).c_str());
+                                    window_width = std::stoi(((**my_search_result2.back()).data));
+                                    
+                                    // search for 'height'
+                                    s_index = 0;
+                                    s_level = 0;
+                                    // here we assume there is only one height -> taking the last one
+                                    searchFor((**my_search_result2[0]),s_index, s_level, "height", my_search_result2);
+                                    fprintf(stderr,"height: %s\n",((**my_search_result2.back()).data).c_str());
+                                    window_height = std::stoi((**my_search_result2.back()).data);
+                                    
+                                    // search for 'title'
+                                    s_index = 0;
+                                    s_level = 0;
+                                    // here we assume there is only one title -> taking the last one
+                                    searchFor((**my_search_result2[0]),s_index, s_level, "title", my_search_result2);
+                                    
+                                    fetchSearchResult(my_search_result2);
+                                    
+                                    fprintf(stderr,"data: %s\n",((**my_search_result2.back()).data).c_str());
+                                    mainWindowName = ((**my_search_result2.back()).data).c_str();
+                                    newMDE.destructor_Search_results(my_search_result2);
+                                    }
+    
+                                    // Need to set all offset_rule.x to zero as only displaying data
+                                    off_rule_name_data.x = 0;
+                                    off_rule_name_data.z = 0;
+                                    off_rule_name_data.y = 0;
+                                    displayDataOnly = true;
+                                    
+                                    //~ hideParent = true;
+                                    if (ptParser == NULL){
+                                        ptRender = ptMDE;
+                                    }
                                 }
-
-                                // Need to set all offset_rule.x to zero as only displaying data
-                                off_rule_name_data.x = 0;
-                                off_rule_name_data.z = 0;
-                                off_rule_name_data.y = 0;
-                                //~ displayDataOnly = true;
-                                displayDataOnly = false;
-                                
-                                //~ hideParent = true;
-                                if (ptParser == NULL){
-                                    ptRender = ptMDE;
-                                }
+                            else {
+                                    std::cout << "No window setup found. Using default setting" << std::endl; 
                             }
-                        
-                        else {
-                                std::cout << "No window setup found. Using default setting" << std::endl; 
+                            
                         }
+                        
                         break;
                     }
                 case 'r':
@@ -1229,7 +1260,7 @@ int main (int argc, char **argv){
                         ptParser = htmlParser(*ptMenu, vect_colors);
                         int i=0;
                         for(auto it:vect_colors){
-                            std::cout << "i: " << i << " vect[0]" << it[0] << std::endl;
+                            std::clog << "i: " << i << " vect[0]" << it[0] << std::endl;
                             user_v_font_color.push_back({});
                             user_v_font_color[i].x=it[0];
                             user_v_font_color[i].y=it[1];
@@ -1238,15 +1269,15 @@ int main (int argc, char **argv){
                             i++;
                         }
                         if (ptParser){
-                            std::cout << "Check ptParser: " << ptParser->name << " , " << ptParser->data << std::endl;
-                            printf("\n");
-                            printf("\n");
-                            printf("\n");
+                            std::clog << "Check ptParser: " << ptParser->name << " , " << ptParser->data << std::endl;
+                            fprintf(stderr,"\n");
+                            fprintf(stderr,"\n");
+                            fprintf(stderr,"\n");
                             ptMDE->new_vMDE_element(ptParser);
                             
                         }
                         else{
-                            std::cout << "Nothing to parse" << std::endl;
+                            std::clog << "Nothing to parse" << std::endl;
                         }
                         ptRender = ptParser;
                         hideParent = true;                                          
@@ -1266,7 +1297,7 @@ int main (int argc, char **argv){
             }
             key_input="";
         }
-        printf("Done!\n");
+        fprintf(stderr,"Done!\n");
             // if any of the bool is false, then display the menu...
 
             if (GL_on){
@@ -1308,24 +1339,27 @@ int main (int argc, char **argv){
                     return 1;
                 }
 
-                std::cout << "User coordinates: " << X_user << ", "<< Y_user << ", "<< Z_user << std::endl;
+                std::clog << "User coordinates: " << X_user << ", "<< Y_user << ", "<< Z_user << std::endl;
                 vertex3D user_origin={X_user,Y_user, Z_user};
                 
                 // declare the offset vector of vertex3D for later calculation of offset from offset rules, text coordinates and padding.
                 std::vector<vertex3D> offset;
 
-                offset_rule={
-                    off_rule_name_data,
-                    off_rule_index,
-                    off_rule_level
-                };
-                displayV3D(offset_rule);
+                if(offset_rule.empty())
+                {
+                    offset_rule={
+                        off_rule_name_data,
+                        off_rule_index,
+                        off_rule_level
+                    };
+                }
+                //~ displayV3D(offset_rule);
 
                 vertex2D user_padding = {H_padding_user,V_padding_user};
                 vertex3Dalpha user_color = {red_user,green_user,blue_user,alpha_user};
                 vertex3Dalpha user_bg_color = {red_bg_user,green_bg_user,blue_bg_user,alpha_bg_user};
-                printf("user_color = {%.2f,%.2f,%.2f,%.2f)",red_user,green_user,blue_user,alpha_user);
-                printf("user_bg_color = {%.2f,%.2f,%.2f,%.2f)",red_bg_user,green_bg_user,blue_bg_user,alpha_bg_user);
+                fprintf(stderr,"user_color = {%.2f,%.2f,%.2f,%.2f}\n",red_user,green_user,blue_user,alpha_user);
+                fprintf(stderr,"user_bg_color = {%.2f,%.2f,%.2f,%.2f}\n",red_bg_user,green_bg_user,blue_bg_user,alpha_bg_user);
                 
                 std::vector<GLfloat> user_font_color = {
                     red_font_user,
@@ -1333,27 +1367,48 @@ int main (int argc, char **argv){
                     blue_font_user,
                     alpha_font_user
                 };
+
                 
                 if (user_v_font_color.empty()){
+                    singleColor=true;
                     user_v_font_color={
-                        //~ {0.5,0.5,0.5,0.1},
-                        {0.5,0.5,0.5,1.0},
-                        {0.1,0.1,0.5,1.0},
-                        {0.5,0.1,0.1,1.0},
-                        {0.5,0.5,0.5,1.0},
-                        {0.1,0.1,0.5,1.0},
-                        {0.5,0.1,0.1,1.0}
+                        {red_font_user,green_font_user,blue_font_user,alpha_font_user}
+                    //~ user_v_font_color={
+                        //~ {0.5,0.5,0.5,1.0},
+                        //~ {0.1,0.1,0.5,1.0},
+                        //~ {0.5,0.1,0.1,1.0},
+                        //~ {0.5,0.5,0.5,1.0},
+                        //~ {0.1,0.1,0.5,1.0},
+                        //~ {0.5,0.1,0.1,1.0}
                     };
                 }
-                
                 // initialize options, text parameters and matrices
-                set_options(move_it,display_box, display2d);
-                //~ init_text_MDE(*ptRender,user_origin, offset, offset_rule, user_padding, user_color,user_bg_color, user_v_font_color, displayDataOnly, hideParent);
-                init_text_MDE(newMDE,user_origin, offset, offset_rule, user_padding, user_color,user_bg_color, user_v_font_color, displayDataOnly, hideParent);
+                fprintf(stderr,"number of lines:%u\n",nlines);
+                set_options(move_it,display_box, display2d,singleColor,nlines);
+                if(tempTest)
+                {
+                    init_text_MDE(*ptRender,user_origin, offset, offset_rule, user_padding, user_color,user_bg_color, user_v_font_color, displayDataOnly, hideParent);
+                }
+                else
+                {
+                    init_text_MDE(newMDE,user_origin, offset, offset_rule, user_padding, user_color,user_bg_color, user_v_font_color, displayDataOnly, hideParent);
+                }
                 init_matrices();
+                //~ init_box();
+                // for testing cube
+                //~ if(!init_resources()) return 0;
+                //~ if(!init_resources_box()) return 0;
                 
                 // Callback functions to display MDE
+                //~ glutDisplayFunc(display);
+                //~ std::vector<vertex3D> vertex_3D;
+                //~ init_vectors(vertex_3D);
+                //~ if (init_resources_box()){
+                //~ if (init_vectors(vertex_3D)){
+                    
                 glutDisplayFunc(display);
+                //~ glutDisplayFunc(draw_box);
+    //~ glutReshapeFunc(onReshape);  /// testing                
                 glutKeyboardFunc(keyboard);
                 glutSpecialFunc(special_key);
                 
@@ -1361,18 +1416,20 @@ int main (int argc, char **argv){
                 glutMotionFunc(mouse_movement); //check for Mouse movement with button down
                 glutMouseFunc(mouse_wheel);
                 glutIdleFunc(onIdle);
+                //~ glutIdleFunc(onIdle2);
                 
                 // openGL parameters
                 glEnable(GL_BLEND);
                 glEnable(GL_DEPTH_TEST);
                 glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
                 
+                //~ }
                 // Function to call when exiting gl context
                 glutCloseFunc(byebye);
                 
                 // exit GL loop
                 glutMainLoop();
-                printf("GL Done!");
+                fprintf(stderr,"GL Done!");
                 
                 // free all resources
                 free_resources();
@@ -1407,8 +1464,8 @@ int main (int argc, char **argv){
                 newMDE.deleteAllPt(bmanual);
                 //~ newMDE.destructor_MDE();
                 delete ptParser;
-                printf("Clearing Done!");
-                std::cout <<"key_input: " << key_input << std::endl; 
+                fprintf(stderr,"Clearing Done!");
+                std::clog <<"key_input: " << key_input << std::endl; 
                 return 0;                    
             }
             

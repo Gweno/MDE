@@ -20,9 +20,11 @@
 #include <GL/freeglut.h>
 
 #define GLM_FORCE_RADIANS
+#define GLM_ENABLE_EXPERIMENTAL
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <glm/gtx/string_cast.hpp>
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -52,13 +54,29 @@ GLint uniform_m_view;
 GLint uniform_m_model;
 GLint uniform_m_projection;
 GLint uniform_m_camera;
+GLint uniform_m_view_b;
+GLint uniform_m_model_b;
+GLint uniform_m_projection_b;
 // testing 2d
 GLint uniform_m_projection2d;
 GLint uniform_m_model2d;
 GLint uniform_color;
 GLint uniform_tex2d;
 GLint uniform_bgcolor_text2d;
+// testing box bug
 
+///////////
+
+GLuint vbo_cube_vertices, vbo_cube_colors;
+GLuint ibo_cube_elements;
+GLuint program;
+GLint attribute_coord3d, attribute_v_color;
+GLint uniform_mvp;
+
+GLint uniform_mvp_box;
+
+
+////////////
 
 
 // attributes
@@ -78,10 +96,10 @@ GLint attribute_font_color2d;
 GLuint vbo_coord;
 GLuint vbo_tex_coord;
 GLuint vbo_vertices_box;
-GLuint vbo_vertices_color_box;
+GLuint vbo_color_box;
 GLuint vbo_font_color;
 // testing 2d
-GLuint vbo;
+//~ GLuint vbo;
 GLuint vbo_coord2d;
 GLuint vbo_tex_coord2d;
 GLuint vbo_font_color2d;
@@ -97,6 +115,11 @@ GLfloat bg_r, bg_g, bg_b, bg_a;
 
 float x_pos = 0, y_pos = 0, z_pos = 0, x_rot = 0, y_rot = 0;
 float lastx, lasty;
+float multiply = 1;
+float unit = 1;
+
+// for testing
+float scale = 0.001f;
 
 vertex3D text_coordinates ={0.0,0.0,0.0};
 vertex2D padding ={0.0,0.0};
@@ -154,6 +177,7 @@ float fov   =  45.0f;
 
 bool firstMouse = true;
 
+uint nlines = 1;
 //~ int xOrigin = -1;
 
 //~ // actual vector representing the camera's direction
@@ -161,6 +185,9 @@ bool firstMouse = true;
 
 
 //~ glm::mat4 m_view;
+
+// For debugging misaligned box
+glm::vec3 check_coord3d_b;
 
 /**
  * The atlas struct holds a texture that contains the visible US-ASCII characters
@@ -193,7 +220,7 @@ struct atlas {
 	 atlas(FT_Face face, int height) {
 		//~ FT_Set_Pixel_Sizes(face, 0, height);
 		int error = FT_Set_Pixel_Sizes(face, 0, height);
-        printf("FT_set_Pixel_Sizes:%d\n",error);
+        fprintf(stderr,"FT_set_Pixel_Sizes:%d\n",error);
 		FT_GlyphSlot g = face->glyph;
 
 		unsigned int roww = 0;
@@ -363,9 +390,10 @@ void create_coord_vector_text(const char *text, atlas * a, vertex3D origin, vert
     //~ displayV3D(glyphs_box);
     nb_glyphs_per_text.push_back(c);
     nb_indices+=c;
-    std::cout << "nb_glyphs_per_text" << std::endl;
-    displayVuint(nb_glyphs_per_text);
-    std::cout << " nb_indices " << nb_indices << std::endl;
+    //~ std::clog << "nb_glyphs_per_text" << std::endl;
+    //~ displayVuint(nb_glyphs_per_text);
+    //~ std::clog << " nb_indices " << nb_indices << std::endl;
+    //~ std::clog << " size of glyphs_vertex " << glyphs_vertex.size() << std::endl;
     
 }
 
@@ -391,13 +419,13 @@ void text_frame(std::vector<vertex3D> &vector_input, std::vector<uint> &nb_glyph
             hmax = std::max(hmax,(*it3).y);
             wmin= std::min(wmin,(*it3).x);
             wmax = std::max(wmax,(*it3).x);
-            //~ std::cout << " x: "<< (*it3).x << " y: " << (*it3).y << " z: " << (*it3).z << std::endl;
-            //~ std::cout << " hmin: "<< hmin << " hmax: " << hmax << std::endl;
+            //~ std::clog << " x: "<< (*it3).x << " y: " << (*it3).y << " z: " << (*it3).z << std::endl;
+            //~ std::clog << " hmin: "<< hmin << " hmax: " << hmax << std::endl;
         }
-        //~ std::cout << std::endl;
+        //~ std::clog << std::endl;
         h = std::abs(hmax - hmin);
         // for now depth is the same as the width of the text
-        //~ std::cout << "h: " << h << " hmax: " << hmax << " hmin: " << hmin << std::endl;
+        //~ std::clog << "h: " << h << " hmax: " << hmax << " hmin: " << hmin << std::endl;
         d=h;
         
         bottom_left_front.push_back({wmin,hmin,0});
@@ -406,21 +434,36 @@ void text_frame(std::vector<vertex3D> &vector_input, std::vector<uint> &nb_glyph
         std::advance(it,(*it2));
         std::advance(it2,1);
     }
-    
+    std::clog << " bottom_left_front :" << std::endl;
+    displayV3D(bottom_left_front);
+    std::clog << " top_right_back :" << std::endl;
+    displayV3D(top_right_back);
+
     create_vector(vertex_3D, v_origin, bottom_left_front, top_right_back);
+    // !!!!!! commented below for testing box display bug
+    std::clog << "1) vertex_3D :" << std::endl;
+    displayV3D(vertex_3D);
     init_vectors(vertex_3D);
+    std::clog << "2) vertex_3D :" << std::endl;
+    displayV3D(vertex_3D);
+    init_box(vertex_3D);
+    std::clog << "3) vertex_3D :" << std::endl;
+    displayV3D(vertex_3D);
     
 }
 
 void render_text(atlas * a) {
     
-    
+    //~ std::clog<<"######## In render_text ###########"<<std::endl;
+    //~ std::clog<<"1"<<std::endl;
+    //~ displayV3Dalpha(vector_font_color);
     /* test color per block*/
     glEnableVertexAttribArray(attribute_font_color);
     glGenBuffers(1,&vbo_font_color);
     glBindBuffer(GL_ARRAY_BUFFER,vbo_font_color);
     glVertexAttribPointer(attribute_font_color, 4, GL_FLOAT, GL_FALSE, 0, 0);
     glBufferData(GL_ARRAY_BUFFER,vector_font_color.size() * sizeof(vertex3Dalpha),&vector_font_color.front(),GL_STATIC_DRAW);
+    //~ std::clog<<"2"<<std::endl;
  
     /* Use the texture containing the atlas */
     glBindTexture(GL_TEXTURE_2D, a->tex);
@@ -431,20 +474,26 @@ void render_text(atlas * a) {
     glVertexAttribPointer(attribute_coord, 3, GL_FLOAT, GL_FALSE, 0, 0);
     /* Draw the character on the screen */
     glBufferData(GL_ARRAY_BUFFER, glyphs_box.size() * sizeof(vertex3D), &glyphs_box.front(), GL_STATIC_DRAW);
-    
+    //~ displayV3D(glyphs_box);
+    //~ std::clog<<"3"<<std::endl;
     
     /* Set up the VBO for our vertex data */
     glEnableVertexAttribArray(attribute_tex_coord);
     glBindBuffer(GL_ARRAY_BUFFER, vbo_tex_coord);
     glVertexAttribPointer(attribute_tex_coord, 2, GL_FLOAT, GL_FALSE, 0, 0);
     
+    //~ std::clog<<"4"<<std::endl;
+    //~ std::clog<<"nb_indices: "<<nb_indices<<std::endl;
+    displayV2D(glyphs_vertex);
     /* Draw all the character on the screen in one go */
     glBufferData(GL_ARRAY_BUFFER,glyphs_vertex.size() * sizeof(vertex2D),&glyphs_vertex.front(),GL_STATIC_DRAW);
     glDrawArrays(GL_TRIANGLES, 0, nb_indices);
+    //~ std::clog<<"5"<<std::endl;
     
     glDisableVertexAttribArray(attribute_font_color);
     glDisableVertexAttribArray(attribute_coord);
     glDisableVertexAttribArray(attribute_tex_coord);
+    //~ std::clog<<"######## End render_text ###########"<<std::endl;
 }
 
 bool init_font(uint uFontSize,const char *uFontFilename) {
@@ -481,7 +530,7 @@ bool init_program(){
 
     int nrAttributes;
     glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes);
-    std::cout << "Maximum nr of vertex attributes supported: " << nrAttributes << std::endl;
+    std::clog << "Maximum nr of vertex attributes supported: " << nrAttributes << std::endl;
     
     // testing boxes
     //~ program_box = create_program("./shaders/box.v.glsl", "./shaders/box.f.glsl");
@@ -493,12 +542,18 @@ bool init_program(){
     attribute_coord3d_box = get_attrib(program_box, "coord3d_b");
     attribute_v_color_box = get_attrib(program_box, "v_color_b");
 
-    uniform_m_model = get_uniform(program_box, "m_model");
-    uniform_m_projection = get_uniform(program_box, "m_projection");
-    uniform_m_view = get_uniform(program_box, "m_view");
+    //~ uniform_m_model_b = get_uniform(program_box, "m_model");
+    //~ uniform_m_projection_b = get_uniform(program_box, "m_projection");
+    //~ uniform_m_view_b = get_uniform(program_box, "m_view");
+    uniform_m_model_b = get_uniform(program_box, "m_model_b");
+    uniform_m_projection_b = get_uniform(program_box, "m_projection_b");
+    uniform_m_view_b = get_uniform(program_box, "m_view_b");
+    
+    //~ uniform_mvp = get_uniform(program_box, "mvp");
         
 
-    if(attribute_coord3d_box == -1 || attribute_v_color_box == -1 || uniform_m_model == -1 || uniform_m_projection == -1 || uniform_m_view == -1)
+    if(attribute_coord3d_box == -1 || attribute_v_color_box == -1 || uniform_m_model_b == -1 || uniform_m_projection_b == -1 || uniform_m_view_b == -1)
+    //~ if(attribute_coord3d_box == -1 || attribute_v_color_box == -1 || uniform_mvp == -1)
         return 0;
 
     // program for the text
@@ -525,7 +580,7 @@ bool init_program(){
     program_text2d = create_program("../source/shaders/text2d.v.glsl", "../source/shaders/text2d.f.glsl");
     if(program_text2d == 0)
     {
-        printf("Problem with creating program from shaders\n");
+        fprintf(stderr,"Problem with creating program from shaders\n");
         return 0;
     }
 
@@ -539,7 +594,7 @@ bool init_program(){
 	//~ if(attribute_coord2d == -1 || attribute_tex_coord2d == -1 || uniform_tex == -1 || uniform_color == -1 || attribute_font_color2d == -1)
 	if(attribute_coord2d == -1 || attribute_tex_coord2d == -1 || attribute_font_color2d == -1 || uniform_tex2d == -1 || uniform_bgcolor_text2d ==-1)
     {
-        printf("Problem with attribute or uniform\n");
+        fprintf(stderr,"Problem with attribute or uniform\n");
 		return 0;
     }
 
@@ -555,6 +610,58 @@ bool init_program(){
     //~ uniform_m_view = get_uniform(program_box, "m_view");
     
     return 1;
+}
+
+void init_color_box(vertex3Dalpha &color_alpha)
+{
+
+  GLfloat cube_colors_box[] = {
+    // front colors
+    0.0,0.5,1.0,0.2,
+    0.0,0.5,1.0,0.2,
+    0.0,0.5,1.0,0.2,
+    0.0,0.5,1.0,0.2,
+    // back colors
+    0.0,0.5,0.5,1.0,
+    0.0,0.5,0.5,1.0,
+    0.0,0.5,0.5,1.0,
+    0.0,0.5,0.5,1.0
+  };
+  //~ glGenBuffers(1, &vbo_cube_colors_box);
+  //~ glBindBuffer(GL_ARRAY_BUFFER, vbo_cube_colors_box);
+  glGenBuffers(1, &vbo_color_box);
+  glBindBuffer(GL_ARRAY_BUFFER, vbo_color_box);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(cube_colors_box), cube_colors_box, GL_STATIC_DRAW);
+  
+    //~ r=color_alpha.x;
+    //~ g=color_alpha.y;
+    //~ b=color_alpha.z;
+    //~ a=color_alpha.a;
+      
+    //~ GLfloat box_vertices_color3[]={
+        //~ r,g,b,a,
+        //~ r,g,b,a,
+        //~ r,g,b,a,
+        //~ r,g,b,a,
+        //~ r,g,b,a,
+        //~ r,g,b,a,
+        //~ r,g,b,a,
+        //~ r,g,b,a
+    //~ };  
+  
+    
+    //~ std::vector<GLfloat> vect_color3;
+
+    //~ fprintf(stderr,"whd.size: %u\n",whd.size());
+    //~ int max_loop = whd.size();
+    //~ for(int i=0;i<max_loop;i++){
+        //~ vect_color3.insert (vect_color3.end(), box_vertices_color3, box_vertices_color3+32);
+        //~ }  
+  
+    //~ glGenBuffers(1,&vbo_color_box);
+    //~ glBindBuffer(GL_ARRAY_BUFFER,vbo_color_box);
+    //~ glBufferData(GL_ARRAY_BUFFER,vect_color3.size() * sizeof(GLfloat),&vect_color3.front(),GL_STATIC_DRAW);  
+
 }
 
 void init_color(vertex3Dalpha &color_alpha, vertex3Dalpha &bg_color_alpha, std::vector<vertex3Dalpha> &font_color_alpha, std::vector<vertex3D> &whd, std::vector<unsigned int> &nb_glyphs_per_text){
@@ -582,30 +689,61 @@ void init_color(vertex3Dalpha &color_alpha, vertex3Dalpha &bg_color_alpha, std::
     
     std::vector<GLfloat> vect_color3;
 
-    printf("whd.size: %u\n",whd.size());
+    fprintf(stderr,"whd.size: %u\n",whd.size());
     int max_loop = whd.size();
     for(int i=0;i<max_loop;i++){
         vect_color3.insert (vect_color3.end(), box_vertices_color3, box_vertices_color3+32);
         }
 
+  GLfloat cube_colors[] = {
+    //~ // front colors
+    //~ 1.0, 0.0, 0.0,
+    //~ 0.0, 1.0, 0.0,
+    //~ 0.0, 0.0, 1.0,
+    //~ 1.0, 1.0, 1.0,
+    //~ // back colors
+    //~ 1.0, 0.0, 0.0,
+    //~ 0.0, 1.0, 0.0,
+    //~ 0.0, 0.0, 1.0,
+    //~ 1.0, 1.0, 1.0,
+    // front colors
+    0.5,0.5,0.5,0.5,
+    0.5,0.5,0.5,0.5,
+    0.5,0.5,0.5,0.5,
+    0.5,0.5,0.5,0.5,
+    // back colors
+    0.5,0.5,0.5,0.5,
+    0.5,0.5,0.5,0.5,
+    0.5,0.5,0.5,0.5,
+    0.5,0.5,0.5,0.5
+  };
 
-    glGenBuffers(1,&vbo_vertices_color_box);
-    glBindBuffer(GL_ARRAY_BUFFER,vbo_vertices_color_box);
+    glGenBuffers(1,&vbo_color_box);
+    glBindBuffer(GL_ARRAY_BUFFER,vbo_color_box);
     glBufferData(GL_ARRAY_BUFFER,vect_color3.size() * sizeof(GLfloat),&vect_color3.front(),GL_STATIC_DRAW);
+    //~ glBufferData(GL_ARRAY_BUFFER, sizeof(cube_colors), cube_colors, GL_STATIC_DRAW);
     
     // font colors
-    std::cout << "init font color" << std::endl;
+    std::clog << "########init font color########" << std::endl;
     int ind = 0;
     for(std::vector<unsigned int>::iterator it=nb_glyphs_per_text.begin(); it!=nb_glyphs_per_text.end();it++){
-        std::cout << "nb glyphs: " << (*it) << std::endl;
+        //~ std::clog << "nb glyphs: " << (*it) << std::endl;
         for(unsigned int i=0;i<(*it);i++){
             
             vector_font_color.push_back(font_color_alpha[ind]);
         }
         ind++;
     }
+    std::clog << "display vect_color3 size: " << vect_color3.size() << std::endl;
+    displayVGLfloat(vect_color3);
+    std::clog << "display font_color_alpha size: " << font_color_alpha.size() << std::endl;
+    std::clog << "display font_color_alpha:" << std::endl;
+    displayV3Dalpha(font_color_alpha);
+    std::clog << "display nb_glyphs_per_text size: " << nb_glyphs_per_text.size() << std::endl;
+    std::clog << "display vector_font_color size: " << vector_font_color.size() << std::endl;
+    //~ std::clog << "display vector_font_color:" << std::endl;
     //~ displayV3Dalpha(vector_font_color);
-    std::cout << "init font color done" << std::endl;
+    std::clog << "########init font color done########" << std::endl;
     
     
     //~ vector<GLfloat> vect_font_color;
@@ -619,13 +757,35 @@ void init_color(vertex3Dalpha &color_alpha, vertex3Dalpha &bg_color_alpha, std::
         //~ }    
 }
 
-void init_v_font_color(std::vector<vertex3Dalpha> &font_color){
+void init_v_font_color(std::vector<vertex3Dalpha> &font_color, uint &nlines, bool singleColor, bool displayDataOnly){
+    
+    std::clog<<"####### init_v_font_color ########" << std::endl;
+    if(singleColor)
+    {
+        // add same color for each glyph
+        for(uint i=0;i<nlines;i++)
+        {
+            for(std::vector<vertex3Dalpha>::iterator it=font_color.begin();it!=font_color.end();++it){
+                v_font_color.push_back((*it));
+                //~ v_font_color.push_back((*it).x,(*it).y,(*it).z,(*it).a);
+                // if displaying name and data we push back another set of same color
+                //TODO introduce different color for name and data
+                //~ if(!displayDataOnly) v_font_color.push_back((*it).x,(*it).y,(*it).z,(*it).a);
+                if(!displayDataOnly) v_font_color.push_back((*it));
+            }
+            
+        }
+    }
+    //~ else
+    //~ {
+        //~ v_font_color = font_color;
+    //~ }
     //~ for(std::vector<vertex3D>::iterator it=font_color.begin();it!=font_color.end();++it){
         //~ v_font_color.push_back((*it).x,(*it).y,(*it).z);
     //~ }
-    v_font_color = font_color;
-    std::cout << "init_v_font_color" << std::endl;
-    displayV3Dalpha(v_font_color);
+    font_color = v_font_color;
+    displayV3Dalpha(font_color);
+    std::clog << "####### End init_v_font_color #######" << std::endl;
     //~ v_font_color = font_color[0];
     //~ glEnableVertexAttribArray(attribute_font_color);
     //~ glGenBuffers(1,&vbo_font_color);
@@ -641,49 +801,83 @@ void init_v_font_color(std::vector<vertex3Dalpha> &font_color){
 //~ }
     
 
-void displayVuint(std::vector<unsigned int> &vector_uint){
-    std::cout<<"loop Vint"<<std::endl;
-        std::cout<<"| ";
-    for(std::vector<unsigned int>::iterator it=vector_uint.begin();it!=vector_uint.end();++it){
-        std::cout<<(*it)<<", ";
+//~ template <typename T>
+//~ void displayVec(std::vector<T> &vect)
+//~ {
+    //~ std::clog<<"| ";
+    //~ for(auto& it : vect){
+        //~ std::clog<<it<<", ";
+    //~ }
+    //~ std::clog<<" |"<<std::endl;    
+//~ }
+
+
+void displayVGLfloat(std::vector<GLfloat> &vector_glf){
+    std::clog<<"loop GLfloat"<<std::endl;
+        std::clog<<"| ";
+    for(std::vector<GLfloat>::iterator it=vector_glf.begin();it!=vector_glf.end();++it){
+        std::clog<<(*it)<<", ";
     }
-    std::cout<<" |"<<std::endl;
+    std::clog<<" |"<<std::endl;
+    
+}
+
+void displayVuint(std::vector<unsigned int> &vector_uint){
+    std::clog<<"loop Vint"<<std::endl;
+        std::clog<<"| ";
+    for(std::vector<unsigned int>::iterator it=vector_uint.begin();it!=vector_uint.end();++it){
+        std::clog<<(*it)<<", ";
+    }
+    std::clog<<" |"<<std::endl;
     
 }
 
 void displayV3D(std::vector<vertex3D> &vector_3D){
-    std::cout<<"loop V3D"<<std::endl;
+    std::clog<<"loop V3D"<<std::endl;
     for(std::vector<vertex3D>::iterator it=vector_3D.begin();it!=vector_3D.end();++it){
         
-        std::cout<<"| ";
-        std::cout<<(*it).x<<", ";
-        std::cout<<(*it).y<<", ";        
-        std::cout<<(*it).z;        
-        std::cout<<" |"<<std::endl;
+        std::clog<<"| ";
+        std::clog<<(*it).x<<", ";
+        std::clog<<(*it).y<<", ";        
+        std::clog<<(*it).z;        
+        std::clog<<" |"<<std::endl;
+    }
+    
+}
+
+void displayV2D(std::vector<vertex2D> &vector_2D){
+    std::clog<<"loop V2D"<<std::endl;
+    for(std::vector<vertex2D>::iterator it=vector_2D.begin();it!=vector_2D.end();++it){
+        
+        std::clog<<"| ";
+        std::clog<<(*it).x<<", ";
+        std::clog<<(*it).y;
+        std::clog<<" |"<<std::endl;
     }
     
 }
 
 void displayV3Dalpha(std::vector<vertex3Dalpha> &vector_3Dalpha){
-    std::cout<<"loop V3Dalpha"<<std::endl;
+    std::clog<<"loop V3Dalpha"<<std::endl;
     for(std::vector<vertex3Dalpha>::iterator it=vector_3Dalpha.begin();it!=vector_3Dalpha.end();++it){
         
-        std::cout<<"| ";
-        std::cout<<(*it).x<<", ";
-        std::cout<<(*it).y<<", ";        
-        std::cout<<(*it).z<<", ";;        
-        std::cout<<(*it).a;        
-        std::cout<<" |"<<std::endl;
+        std::clog<<"| ";
+        std::clog<<(*it).x<<", ";
+        std::clog<<(*it).y<<", ";        
+        std::clog<<(*it).z<<", ";;        
+        std::clog<<(*it).a;        
+        std::clog<<" |"<<std::endl;
     }
     
 }
 
  // blf: bottom-left-front, trb: top-right-back
-void create_vector(std::vector<vertex3D> &vector3D,std::vector<vertex3D> &v_origin, std::vector<vertex3D> &vector_blf, std::vector<vertex3D> &vector_trb){
+void create_vector(std::vector<vertex3D> &vector3D,std::vector<vertex3D> &v_origin, std::vector<vertex3D> &vector_blf, std::vector<vertex3D> &vector_trb)
+{
     
     std::vector<vertex3D>::iterator v_origin_it;
-    std::vector<vertex3D>::iterator v_blf_it;
-    std::vector<vertex3D>::iterator v_trb_it;
+    std::vector<vertex3D>::iterator v_blf_it;   // bottom left front
+    std::vector<vertex3D>::iterator v_trb_it;   // top right back 
 
     for(v_origin_it=v_origin.begin(), v_blf_it=vector_blf.begin(), v_trb_it=vector_trb.begin(); v_origin_it!=v_origin.end() && v_blf_it!=vector_blf.end() && v_trb_it!=vector_trb.end();++v_origin_it, ++v_blf_it, ++v_trb_it){
         // 1st vertex is bottom left corner, front face
@@ -706,14 +900,56 @@ void create_vector(std::vector<vertex3D> &vector3D,std::vector<vertex3D> &v_orig
             }
 }
 
-void init_vectors(std::vector<vertex3D> &vectors_boxes){
+void init_vbo_box(std::vector<vertex3D> &vectors_boxes)
+{
+//~ GLfloat cube_vertices[] = {
+
+//~ -0.99833333,1.677778,0.5,
+//~ -0.581667,1.677778,0.5,
+//~ -0.581667,1.595556,0.5,
+//~ -0.99833333,1.595556,-0.5822222,
+//~ -0.99833333,1.677778,-0.5822222,
+//~ -0.581667,1.677778,-0.5822222,
+//~ -0.581667,1.595556,-0.5822222,
+//~ -0.581667,1.595556,-0.5822222,
+
+    //~ // front
+    //~ -1.0, 0.8,  0.5,
+     //~ 1.0, 0.8,  0.5,
+     //~ 1.0,  1.0,  0.5,
+    //~ -1.0,  1.0,  0.5,
+    //~ // back
+    //~ -1.0, 0.8, -0.5,
+     //~ 1.0, 0.8, -0.5,
+     //~ 1.0,  1.0, -0.5,
+    //~ -1.0,  1.0, -0.5,
+    
+//~ -2,1.3,0,
+//~ -1,1.3,0,
+//~ -1,1.5,0,
+//~ -2,1.5,0,
+//~ -2,1.3,-1,
+//~ -1,1.3,-1,
+//~ -1,1.5,-1,
+//~ -2,1.5,-1,
+
+
+    
+
+  //~ };
     
     glGenBuffers(1,&vbo_vertices_box);
     glBindBuffer(GL_ARRAY_BUFFER,vbo_vertices_box);
     glBufferData(GL_ARRAY_BUFFER,vectors_boxes.size() * sizeof(vertex3D),&vectors_boxes.front(),GL_STATIC_DRAW);
+    //~ glBufferData(GL_ARRAY_BUFFER, sizeof(cube_vertices), cube_vertices, GL_STATIC_DRAW);    
 
-    // set the array of indexes for a rectangle
+}
+
+void init_ibo_elements_box(std::vector<vertex3D> &vectors_boxes)
+{
+        // set the array of indexes for a rectangle
     std::array<GLushort,36> box_elements3 = {
+    //~ GLushort box_elements3[] = {
         // front
         0, 1, 2,
         2, 3, 0,
@@ -731,25 +967,191 @@ void init_vectors(std::vector<vertex3D> &vectors_boxes){
         1, 0, 4,
         // top
         3, 2, 6,
-        6, 7, 3
+        6, 7, 3,
         };
 
     std::vector<GLushort> vect_index;
 
     int max_loop = vectors_boxes.size();
+    std::clog<< "######init vectors######"<<std::endl;
+    std::clog<< "max_loop(vectors_boxes.size): "<< max_loop << std::endl;
+    displayV3D(vectors_boxes);
     for(GLushort i=0;i<max_loop;i++){
         for ( auto it = box_elements3.begin(); it != box_elements3.end(); ++it ){
             vect_index.push_back((*it)+8*i);
         }
     }
+    std::clog<< "vect_index size: "<< vect_index.size() << std::endl;
+    std::clog<< "######End init vectors######"<<std::endl;
+
+
 
     glGenBuffers(1, &ibo_box_elements);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_box_elements);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, vect_index.size() * sizeof(GLushort), &vect_index.front(), GL_STATIC_DRAW);
+    //~ glGenBuffers(1, &ibo_box_elements);
+    //~ glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_box_elements);
+    //~ glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLushort), box_elements3, GL_STATIC_DRAW);
+    //~ glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(box_elements3), box_elements3, GL_STATIC_DRAW);
+    
+}
+
+//~ void init_box(std::vector<vertex3D> &vectors_boxes, vertex3Dalpha &color_alpha)
+void init_box(std::vector<vertex3D> &vectors_boxes)
+{
+    //~ std::vector<vertex3D> vectors_boxes;
+    
+    std::clog << "######## init box #########" << std::endl;
+    displayV3D(vectors_boxes);
+    init_vbo_box(vectors_boxes);
+    //~ init_color_box(vertex3Dalpha color_alpha);
+    init_ibo_elements_box(vectors_boxes);
+    std::clog << "######## End init box #########" << std::endl;
+}
+
+void init_vectors(std::vector<vertex3D> &vectors_boxes)
+{
+
+
+//~ GLfloat cube_vertices[] = {
+    //~ 0.00166667, -0.404444, 0,
+    //~ 0.00166667, -0.322222, 0,
+    //~ 0.418333, -0.322222, 0,
+    //~ 0.418333, -0.404444, 0,
+    
+    //~ 0.00166667, -0.404444, -0.0822222,
+    //~ 0.00166667, -0.322222, -0.0822222,
+    //~ 0.418333, -0.322222, -0.0822222,
+    //~ 0.418333, -0.404444, -0.0822222      
+
+//~ -0.99833333,1.677778,0.5,
+//~ -0.581667,1.677778,0.5,
+//~ -0.581667,1.595556,0.5,
+//~ -0.99833333,1.595556,-0.5822222,
+//~ -0.99833333,1.677778,-0.5822222,
+//~ -0.581667,1.677778,-0.5822222,
+//~ -0.581667,1.595556,-0.5822222,
+//~ -0.581667,1.595556,-0.5822222,
+
+
+
+    //~ // front
+    //~ -1.0, -1.0,  1.0,
+     //~ 1.0, -1.0,  1.0,
+     //~ 1.0,  1.0,  1.0,
+    //~ -1.0,  1.0,  1.0,
+    //~ // back
+    //~ -1.0, -1.0, -1.0,
+     //~ 1.0, -1.0, -1.0,
+     //~ 1.0,  1.0, -1.0,
+    //~ -1.0,  1.0, -1.0,
+  //~ };
+  //~ glGenBuffers(1, &vbo_cube_vertices);
+  //~ glBindBuffer(GL_ARRAY_BUFFER, vbo_cube_vertices);
+  //~ glBufferData(GL_ARRAY_BUFFER, sizeof(cube_vertices), cube_vertices, GL_STATIC_DRAW);
+    
+    
+    
+    //~ glGenBuffers(1,&vbo_vertices_box);
+    //~ glBindBuffer(GL_ARRAY_BUFFER,vbo_vertices_box);
+    //~ glBufferData(GL_ARRAY_BUFFER,vectors_boxes.size() * sizeof(vertex3D),&vectors_boxes.front(),GL_STATIC_DRAW);
+    //~ glBufferData(GL_ARRAY_BUFFER, sizeof(cube_vertices), cube_vertices, GL_STATIC_DRAW);
+    
+//////
+
+/*
+
+  GLfloat cube_colors[] = {
+    // front colors
+    0.0,0.5,0.5,1.0,
+    0.0,0.5,0.5,1.0,
+    0.0,0.5,0.5,1.0,
+    0.0,0.5,0.5,1.0,
+    // back colors
+    0.5,0.5,0.5,1.0,
+    0.5,0.5,0.5,1.0,
+    0.5,0.5,0.5,1.0,
+    0.5,0.5,0.5,1.0
+  };
+
+    glGenBuffers(1,&vbo_color_box);
+    glBindBuffer(GL_ARRAY_BUFFER,vbo_color_box);
+    //~ glBufferData(GL_ARRAY_BUFFER,vect_color3.size() * sizeof(GLfloat),&vect_color3.front(),GL_STATIC_DRAW);
+glBufferData(GL_ARRAY_BUFFER, sizeof(cube_colors), cube_colors, GL_STATIC_DRAW);
+
+
+////////
+
+*/
+
+
+    // set the array of indexes for a rectangle
+    //~ std::array<GLushort,36> box_elements3 = {
+    GLushort box_elements3[] = {
+        // front
+        0, 1, 2,
+        2, 3, 0,
+        // right
+        1, 5, 6,
+        6, 2, 1,
+        // back
+        7, 6, 5,
+        5, 4, 7,
+        // left
+        4, 0, 3,
+        3, 7, 4,
+        // bottom
+        4, 5, 1,
+        1, 0, 4,
+        // top
+        3, 2, 6,
+        6, 7, 3,
+        };
+
+    std::vector<GLushort> vect_index;
+
+    // Creating s vec3 from the first element of vectors_boxes for debugging bax misaligment
+    check_coord3d_b = glm::vec3(vectors_boxes[0].x,vectors_boxes[0].y,vectors_boxes[0].z);
+    
+
+    int max_loop = vectors_boxes.size();
+    std::clog<< "######init vectors######"<<std::endl;
+    std::clog<< "max_loop(vectors_boxes.size): "<< max_loop << std::endl;
+    displayV3D(vectors_boxes);
+    //~ for(GLushort i=0;i<max_loop;i++){
+        //~ for ( auto it = box_elements3.begin(); it != box_elements3.end(); ++it ){
+            //~ vect_index.push_back((*it)+8*i);
+        //~ }
+    //~ }
+    std::clog<< "vect_index size: "<< vect_index.size() << std::endl;
+    
+
+    std::clog<<"check_coord3d_b:"<< std::endl;
+    std::clog<<glm::to_string(check_coord3d_b)<<std::endl;
+    
+    std::clog<< "######End init vectors######"<<std::endl;
+
+
+
+    //~ glGenBuffers(1, &ibo_box_elements);
+    //~ glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_box_elements);
+    //~ glBufferData(GL_ELEMENT_ARRAY_BUFFER, vect_index.size() * sizeof(GLushort), &vect_index.front(), GL_STATIC_DRAW);
+    glGenBuffers(1, &ibo_box_elements);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_box_elements);
+    //~ glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLushort), box_elements3, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(box_elements3), box_elements3, GL_STATIC_DRAW);
+    
+    //~ return 1;
     
     }
-
+    
 void draw_box(){
+    //~ glClearColor(1.0, 1.0, 1.0, 1.0);
+    //~ glClearColor(0.0, 0.0, 0.0, 1.0);
+    //~ glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);    
+    
+    glUseProgram(program_box);
+    
     glEnableVertexAttribArray(attribute_coord3d_box);
     glBindBuffer(GL_ARRAY_BUFFER, vbo_vertices_box);
     glVertexAttribPointer(
@@ -761,7 +1163,7 @@ void draw_box(){
     0                    // offset of first element
     );
     glEnableVertexAttribArray(attribute_v_color_box);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo_vertices_color_box);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo_color_box);
     glVertexAttribPointer(
     attribute_v_color_box,      // attribute
     //~ 3,                      // number of elements per vertex, here (r,g,b)
@@ -780,6 +1182,7 @@ void draw_box(){
     
     glDisableVertexAttribArray(attribute_coord3d_box);
     glDisableVertexAttribArray(attribute_v_color_box);
+    //~ glutSwapBuffers();
 }
 
 void init_text_MDE(MDE &my_entity,vertex3D &origin, std::vector<vertex3D> &offset, std::vector<vertex3D> &offset_rule, vertex2D &padding, vertex3Dalpha &color_alpha, vertex3Dalpha &bg_color_alpha, std::vector<vertex3Dalpha> &font_color, bool displayDataOnly, bool hideParent) {
@@ -787,6 +1190,10 @@ void init_text_MDE(MDE &my_entity,vertex3D &origin, std::vector<vertex3D> &offse
     /* Create texture atlasses for a given font size */
     //~ a_any_size = new atlas(face, 48);
     a_any_size = new atlas(face,(int)fontSize);
+    
+    //~ std::clog << "####### Checking MDE in init_text_MDE    ########" << std::endl;
+    //~ my_entity.display_all(1,1);
+    //~ std::clog << "####### End Checking MDE in init_text_MDE########" << std::endl;
     
     vertex2D window_scale;
     window_scale.x = 2.0 / glutGet(GLUT_WINDOW_WIDTH);
@@ -808,6 +1215,14 @@ void init_text_MDE(MDE &my_entity,vertex3D &origin, std::vector<vertex3D> &offse
     
     // Adding padding at first and last elements of v_origin
     add_padding(v_origin, v_origin_fb, padding);
+    std::clog<<"offset_rule: "<<std::endl;
+    displayV3D(offset_rule);
+    std::clog<<"offset: "<<std::endl;
+    displayV3D(offset);
+    std::clog<<"v_origin: "<<std::endl;
+    displayV3D(v_origin);
+    std::clog<<"v_origin_fb: "<<std::endl;
+    displayV3D(v_origin_fb);
     
 
     
@@ -819,9 +1234,21 @@ void init_text_MDE(MDE &my_entity,vertex3D &origin, std::vector<vertex3D> &offse
         index_v_origin++;
     }
     //~ text_frame(glyphs_box, nb_glyphs_per_text, v_origin);
+    std::clog << "size of glyphs box: " << glyphs_box.size() << std::endl;  
     text_frame(glyphs_box, nb_glyphs_per_text, v_origin_fb, padding);
     //~ init_color(color_alpha,bg_color_alpha,v_origin);
+    nlines = (uint)nb_glyphs_per_text.size();
+    //~ bool singleColor = true;
+    fprintf(stderr,"number of lines in init_text_MDE:%u\n",nlines);
+    init_v_font_color(font_color,nlines , true, true);
+    // !!!! commented below for testing solving box display bug
     init_color(color_alpha,bg_color_alpha,font_color,v_origin,nb_glyphs_per_text);
+    
+    //~ std::clog << "####### Checking MDE in init_text_MDE (at the end)   ########" << std::endl;
+    //~ my_entity.display_all(1,1);
+    //~ std::clog << "####### End Checking MDE in init_text_MDE (at the end)########" << std::endl;    
+    //~ init_color_box();
+    
 }
 
 void process_v_MDE_data(std::vector<GLdata> & v_MDE_data,std::vector<vertex3D> & v_offset, std::vector<vertex3D> & v_offset_rule){
@@ -856,18 +1283,20 @@ void add_padding(std::vector<vertex3D> & v_origin, std::vector<vertex3D> & v_ori
 
 void text_display() {
 
-    // Set the colored background, default is white.
-    glClearColor(bg_r, bg_g, bg_b, bg_a);
-    // need the depth buffer for 3d
-    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+    //~ // Set the colored background, default is white.
+    //~ glClearColor(bg_r, bg_g, bg_b, bg_a);
+    //~ // need the depth buffer for 3d
+    //~ glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
-
+    //~ std::clog<<"##### in text_display ######"<<std::endl;
+    //~ std::clog<<"1"<<std::endl;
     /* Enable blending, necessary for our alpha texture */
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     if(display2d) glEnable(GL_DEPTH_TEST);
     else glDisable(GL_DEPTH_TEST);
     
+    //~ std::clog<<"2"<<std::endl;
 
     // set the color of the non-glyph part of the glyph box to same color as the
     // cube color: r,g,b
@@ -877,42 +1306,46 @@ void text_display() {
     
     FT_Set_Pixel_Sizes(face, 0, fontSize);
 
+    //~ std::clog<<"3"<<std::endl;
     
     /* Drawing the text */    
-    if(!display2d)
-    {
+    //~ if(!display2d)
+    //~ {
         // check option to display the box frame for the text.
-        if (display_box){
-            // Drawing a box
-            glUseProgram(program_box);
-            draw_box();
-            }
+        //~ if (display_box){
+            //~ // Drawing a box
+            //~ glUseProgram(program_box);
+            //~ draw_box();
+            //~ }
         glUseProgram(program_text);
         glUniform4fv(uniform_bgcolor_text, 1, bg_rgb);
+    //~ std::clog<<"4"<<std::endl;
         render_text(a_any_size);
-    }
-    else
-    {
-        glUseProgram(program_text2d);
-        glUniform4fv(uniform_bgcolor_text2d, 1, bg_rgb);
-        render_text2d(a_any_size);
-    }
+    //~ std::clog<<"##### End text_display ######"<<std::endl;
+    //~ }
+    //~ else
+    //~ {
+        //~ glUseProgram(program_text2d);
+        //~ glUniform4fv(uniform_bgcolor_text2d, 1, bg_rgb);
+        //~ render_text2d(a_any_size);
+    //~ }
         
     
-    glutSwapBuffers();
+    //~ glutSwapBuffers();
     
 }
 
-void set_options(bool a_move_it, bool a_display_box, bool a_display2d){
+void set_options(bool a_move_it, bool a_display_box, bool a_display2d, bool singleColor,uint a_nlines){
     move_it = a_move_it;
     display_box = a_display_box;
     display2d = a_display2d;
-    printf("display box:%u\n", display_box);
+    nlines = a_nlines;
+    fprintf(stderr,"display box:%u\n", display_box);
 }
 
 void mouse_wheel(int button, int state, int x, int y)
 {
-    //~ printf("Button %d is %s At %d %d\n", button, (state == GLUT_DOWN) ? "Down" : "Up", x, y);
+    //~ fprintf(stderr,"Button %d is %s At %d %d\n", button, (state == GLUT_DOWN) ? "Down" : "Up", x, y);
     if ((button == 0) && (state == GLUT_DOWN))
     {
         // first reset firstMouse to get init mouse position in mouse callback
@@ -949,9 +1382,22 @@ void display(){
     deltaTime = currentFrame - lastFrame;
     lastFrame = currentFrame;
     
+    //~ // Set the colored background, default is white.
+    glClearColor(bg_r, bg_g, bg_b, bg_a);
+    // need the depth buffer for 3d
+    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);    
+    
     // camera operations and text display
     camera();
+    //~ std::clog<<"####### In display ######"<<std::endl;
+    //~ std::clog<<"####### first is draw_box ######"<<std::endl;
+    if(display_box) draw_box();
+    //~ std::clog<<"####### next is text_display ######"<<std::endl;
     text_display();
+    //~ std::clog<<"####### End display ######"<<std::endl;
+    //~ onDisplay();
+    
+    glutSwapBuffers();
 }
 
 
@@ -971,33 +1417,74 @@ void camera(){
     cameraUp = glm::cross(cameraDirection, cameraRight);
     
     glm::mat4 m_view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp); //eye,center,up
+    if (display2d) m_view = glm::ortho(-1.0f*multiply, 1.0f*multiply, -1.0f*multiply, 1.0f*multiply, 0.1f*multiply, 100.0f*multiply);
+    //~ if (display2d) m_view = glm::ortho(-1000.0f, 1000.0f, -1000.0f, 1000.0f, -1000.0f, 1000.0f);
     
     // Projection matrix modified by field of view (fov) directed by the camera zoom from the mouse wheel
     glm::mat4 m_projection = glm::perspective(glm::radians(fov), 1.0f*screen_width/screen_height, 0.1f, 10.0f);
+    //~ glm::mat4 m_projection = glm::perspective(45.0f, 1.0f*screen_width/screen_height, 0.1f, 10.0f);
+    //~ if(display2d) m_projection = glm::ortho(1.0f*screen_width, 1.0f*screen_height, 0.0f, 0.0f);
+    //~ if(display2d) m_projection = glm::ortho(1.0f*(float)screen_width*scale, 1.0f*(float)screen_height*scale, 0.0f, 0.0f);
+    //~ if(display2d) m_projection = glm::ortho(0.0f,1.0f*(float)screen_width*scale, 0.0f,1.0f*(float)screen_height*scale, -1.0f, 1.0f);
+    if(display2d) m_projection = glm::ortho(0.0f,1.0f*(float)screen_width*scale, 0.0f,1.0f*(float)screen_height*scale);
+
     
+    //~ std::clog<<"Up:"<< std::endl;
+    //~ std::clog<<glm::to_string(up)<<std::endl;
+
     // testing 2D display
     //~ float scale = glutGet(GLUT_ELAPSED_TIME) / 1000.0 * 1.2;  // 120% per second
     //~ glm::mat4 m_projection2d = glm::ortho(0.0f, 1.0f*screen_width*scale, 1.0f*screen_height*scale, 0.0f);
-    if(display3d)
-    {
-        //~ m_view = glm::mat4(1.0f);
-        m_projection = glm::ortho(0.0f, 1.0f*screen_width, 1.0f*screen_height, 0.0f);
-        //~ m_projection = glm::ortho(1.0f*screen_width, 1.0f*screen_height, 0.0f, 0.0f);
-    }
     
-    if(!display2d){
+    glm::mat4 m_view_b = m_view;
+    glm::mat4 m_projection_b = m_projection;
+        
+    std::clog<<"######## camera ########:"<< std::endl;
+    if(display2d) std::clog<<"!!!! 2D !!!!:"<< std::endl;
+    //~ std::clog<<"m_view:"<< std::endl;
+    //~ std::clog<<glm::to_string(m_view)<<std::endl;
+    std::clog<<"m_projection:"<< std::endl;
+    std::clog<<glm::to_string(m_projection)<<std::endl;
+    std::clog<<"m_projection_b:"<< std::endl;
+    std::clog<<glm::to_string(m_projection_b)<<std::endl;
+    std::clog<<"m_view:"<< std::endl;
+    std::clog<<glm::to_string(m_view)<<std::endl;
+    std::clog<<"m_view_b:"<< std::endl;
+    std::clog<<glm::to_string(m_view_b)<<std::endl;
+
+    
+    std::clog<<"screen: " << screen_width << " , " << screen_height << std::endl;
+    std::clog<<"multiply: " << multiply << " , unit: " << unit << std::endl;
+    //~ if(display3d)
+    //~ {
+        //~ // m_view = glm::mat4(1.0f);
+        //~ m_projection = glm::ortho(0.0f, 1.0f*screen_width, 1.0f*screen_height, 0.0f);
+        //~ m_projection = glm::ortho(1.0f*screen_width, 1.0f*screen_height, 0.0f, 0.0f);
+    //~ }
+    
+    //~ if(!display2d){
         glUseProgram(program_text);
         glUniformMatrix4fv(uniform_m_view, 1, GL_FALSE, glm::value_ptr(m_view));
         glUniformMatrix4fv(uniform_m_projection, 1, GL_FALSE, glm::value_ptr(m_projection));
     
         glUseProgram(program_box);
-        glUniformMatrix4fv(uniform_m_view, 1, GL_FALSE, glm::value_ptr(m_view));
-        glUniformMatrix4fv(uniform_m_projection, 1, GL_FALSE, glm::value_ptr(m_projection));
-    }
-    else
-    {
-        glUseProgram(program_text2d);
-    }
+        //~ glUniformMatrix4fv(uniform_m_view_b, 1, GL_FALSE, glm::value_ptr(m_view));
+        //~ glUniformMatrix4fv(uniform_m_projection_b, 1, GL_FALSE, glm::value_ptr(m_projection));
+        glUniformMatrix4fv(uniform_m_view_b, 1, GL_FALSE, glm::value_ptr(m_view_b));
+        glUniformMatrix4fv(uniform_m_projection_b, 1, GL_FALSE, glm::value_ptr(m_projection_b));
+        // attempt to get the position matrix for the box by doing same calculation as in hte shader:
+        // gl_Position = m_projection_b * m_view_b * m_model_b * vec4(coord3d_b, 1.0);
+        
+
+
+    
+    //~ }
+    //~ else
+    //~ {
+        //~ glUseProgram(program_text2d);
+    //~ }
+    
+    
     
     glutPostRedisplay();
 }
@@ -1021,12 +1508,26 @@ void camera(){
 
 void init_matrices(){
     
-    std::cout << "Init Matrices" << std::endl;
-    
+    std::clog << "######## Init Matrices ########" << std::endl;
+     
     glm::mat4 m_model = glm::translate(glm::mat4(1.0f), glm::vec3(1.0, 0.0, -1.0));
-    glm::mat4 m_projection = glm::perspective(45.0f, 1.0f*screen_width/screen_height, 0.1f, 10.0f);
+    //~ glm::mat4 m_projection = glm::perspective(45.0f, 1.0f*screen_width/screen_height, 0.1f, 10.0f);
+    glm::mat4 m_projection = glm::perspective(glm::radians(fov), 1.0f*screen_width/screen_height, 0.1f, 10.0f);    
+    //~ if(display2d) m_projection = glm::ortho(1.0f*screen_width, 1.0f*screen_height, 0.0f, 0.0f);
+    //~ if(display2d) m_projection = glm::ortho(1.0f*(float)screen_width*scale, 1.0f*(float)screen_height*scale, 0.0f, 0.0f);
+    //~ if(display2d) m_projection = glm::ortho(0.0f,1.0f*(float)screen_width*scale, 0.0f,1.0f*(float)screen_height*scale, -1.0f, 1.0f);
+    if(display2d) m_projection = glm::ortho(0.0f,1.0f*(float)screen_width*scale, 0.0f,1.0f*(float)screen_height*scale);
+
     glm::mat4 m_view = glm::lookAt(glm::vec3(0.0, 0.0, 4.0), glm::vec3(0.0, 0.0,-1.0), glm::vec3(0.0, 1.0, 0.0));//eye,center,up
     //~ glm::mat4 m_projection2d = glm::ortho(0.0f, 1.0f*screen_width, 1.0f*screen_height, 0.0f);
+    glm::mat4 m_view_b = m_view;
+    glm::mat4 m_projection_b = m_projection;
+    glm::mat4 m_model_b = m_model;
+ 
+    std::clog<<"m_model:"<< std::endl;
+    std::clog<<glm::to_string(m_model)<<std::endl;
+    std::clog<<"m_model_b:"<< std::endl;
+    std::clog<<glm::to_string(m_model_b)<<std::endl;
     
     glUseProgram(program_text);
     glUniformMatrix4fv(uniform_m_model, 1, GL_FALSE, glm::value_ptr(m_model));
@@ -1039,12 +1540,236 @@ void init_matrices(){
     //~ glUniformMatrix4fv(uniform_m_view, 1, GL_FALSE, glm::value_ptr(m_view));
     
     glUseProgram(program_box);
-    glUniformMatrix4fv(uniform_m_model, 1, GL_FALSE, glm::value_ptr(m_model));
-    glUniformMatrix4fv(uniform_m_projection, 1, GL_FALSE, glm::value_ptr(m_projection));
-    glUniformMatrix4fv(uniform_m_view, 1, GL_FALSE, glm::value_ptr(m_view));
+    //~ glUniformMatrix4fv(uniform_m_model_b, 1, GL_FALSE, glm::value_ptr(m_model));
+    //~ glUniformMatrix4fv(uniform_m_projection_b, 1, GL_FALSE, glm::value_ptr(m_projection));
+    //~ glUniformMatrix4fv(uniform_m_view_b, 1, GL_FALSE, glm::value_ptr(m_view));
+    glUniformMatrix4fv(uniform_m_model_b, 1, GL_FALSE, glm::value_ptr(m_model_b));
+    glUniformMatrix4fv(uniform_m_projection_b, 1, GL_FALSE, glm::value_ptr(m_projection_b));
+    glUniformMatrix4fv(uniform_m_view_b, 1, GL_FALSE, glm::value_ptr(m_view_b));
     
-    std::cout << "End init Matrices" << std::endl;
+    // Debugging box misalignement
+    // glyphs
+    //~ glm::vec4 gl_Position = m_projection * m_view * m_model * vec4(coord.xy, coord.z + 0.01, 1);
+    // box
+    glm::vec4 gl_Position_b = m_projection_b * m_view_b * m_model_b * glm::vec4(check_coord3d_b, 1.0);
+
+    std::clog<<"Debugging !!! gl_Position_b:"<< std::endl;
+    std::clog<<glm::to_string(gl_Position_b)<<std::endl;    
+ 
+    //~ std::clog<<"m_model:"<< std::endl;
+    //~ std::clog<<glm::to_string(m_model)<<std::endl;
+    std::clog<<"m_projection:"<< std::endl;
+    std::clog<<glm::to_string(m_projection)<<std::endl;
+    std::clog<<"screen: " << screen_width << " , " << screen_height << std::endl;
+    //~ std::clog<<"m_view:"<< std::endl;
+    //~ std::clog<<glm::to_string(m_view)<<std::endl;   
+    std::clog << "End init Matrices" << std::endl;
 }
+
+/*
+int init_resources()
+{
+  //~ GLfloat cube_vertices[] = {
+    //~ // front
+    //~ -1.0, -1.0,  1.0,
+     //~ 1.0, -1.0,  1.0,
+     //~ 1.0,  1.0,  1.0,
+    //~ -1.0,  1.0,  1.0,
+    //~ // back
+    //~ -1.0, -1.0, -1.0,
+     //~ 1.0, -1.0, -1.0,
+     //~ 1.0,  1.0, -1.0,
+    //~ -1.0,  1.0, -1.0,
+  //~ };
+  GLfloat cube_vertices[] = {
+
+    //~ 0,0,0,
+    //~ 0.41666633,0.322222,0,
+    //~ 0.41666633,0.404444,0,
+    //~ 0,0.404444,0.0822222,
+    //~ 0,0.322222,0.0822222,
+    //~ 0.41666633,0.322222,0.0822222,
+    //~ 0.41666633,0.404444,0.0822222
+
+      
+    //~ 0,0,0,
+    //~ 0.41666633,0,0,
+    //~ 0.41666633,0.082222,0,
+    //~ 0,0.082222,0.0822222,
+    //~ 0,0,0.0822222,
+    //~ 0.41666633,0,0.0822222,
+    //~ 0.41666633,0.082222,0.0822222
+      
+    0.00166667, -0.404444, 0,
+    0.00166667, -0.322222, 0,
+    0.418333, -0.322222, 0,
+    0.418333, -0.404444, 0,
+    
+    0.00166667, -0.404444, -0.0822222,
+    0.00166667, -0.322222, -0.0822222,
+    0.418333, -0.322222, -0.0822222,
+    0.418333, -0.404444, -0.0822222      
+
+    //~ // front
+    //~ -1.0, -1.0,  1.0,
+     //~ 1.0, -1.0,  1.0,
+     //~ 1.0,  1.0,  1.0,
+    //~ -1.0,  1.0,  1.0,
+    //~ // back
+    //~ -1.0, -1.0, -1.0,
+     //~ 1.0, -1.0, -1.0,
+     //~ 1.0,  1.0, -1.0,
+    //~ -1.0,  1.0, -1.0,
+  };
+  glGenBuffers(1, &vbo_cube_vertices);
+  glBindBuffer(GL_ARRAY_BUFFER, vbo_cube_vertices);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(cube_vertices), cube_vertices, GL_STATIC_DRAW);
+
+  GLfloat cube_colors[] = {
+    //~ // front colors
+    //~ 1.0, 0.0, 0.0,
+    //~ 0.0, 1.0, 0.0,
+    //~ 0.0, 0.0, 1.0,
+    //~ 1.0, 1.0, 1.0,
+    //~ // back colors
+    //~ 1.0, 0.0, 0.0,
+    //~ 0.0, 1.0, 0.0,
+    //~ 0.0, 0.0, 1.0,
+    //~ 1.0, 1.0, 1.0,
+    // front colors
+    0.5,0.5,0.5,0.5,
+    0.5,0.5,0.5,0.5,
+    0.5,0.5,0.5,0.5,
+    0.5,0.5,0.5,0.5,
+    // back colors
+    0.5,0.5,0.5,0.5,
+    0.5,0.5,0.5,0.5,
+    0.5,0.5,0.5,0.5,
+    0.5,0.5,0.5,0.5
+  };
+  glGenBuffers(1, &vbo_cube_colors);
+  glBindBuffer(GL_ARRAY_BUFFER, vbo_cube_colors);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(cube_colors), cube_colors, GL_STATIC_DRAW);
+
+  GLushort cube_elements[] = {
+    // front
+    0, 1, 2,
+    2, 3, 0,
+    // top
+    1, 5, 6,
+    6, 2, 1,
+    // back
+    7, 6, 5,
+    5, 4, 7,
+    // bottom
+    4, 0, 3,
+    3, 7, 4,
+    // left
+    4, 5, 1,
+    1, 0, 4,
+    // right
+    3, 2, 6,
+    6, 7, 3,
+  };
+  glGenBuffers(1, &ibo_cube_elements);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_cube_elements);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(cube_elements), cube_elements, GL_STATIC_DRAW);
+
+  GLint link_ok = GL_FALSE;
+
+  GLuint vs, fs;
+  if ((vs = create_shader("../source/shaders/cube.v.glsl", GL_VERTEX_SHADER))   == 0) return 0;
+  if ((fs = create_shader("../source/shaders/cube.f.glsl", GL_FRAGMENT_SHADER)) == 0) return 0;
+
+  program = glCreateProgram();
+  glAttachShader(program, vs);
+  glAttachShader(program, fs);
+  glLinkProgram(program);
+  glGetProgramiv(program, GL_LINK_STATUS, &link_ok);
+  if (!link_ok) {
+    fprintf(stderr, "glLinkProgram:");
+    print_log(program);
+    return 0;
+  }
+
+  const char* attribute_name;
+  attribute_name = "coord3d";
+  attribute_coord3d = glGetAttribLocation(program, attribute_name);
+  if (attribute_coord3d == -1) {
+    fprintf(stderr, "Could not bind attribute %s\n", attribute_name);
+    return 0;
+  }
+  attribute_name = "v_color";
+  attribute_v_color = glGetAttribLocation(program, attribute_name);
+  if (attribute_v_color == -1) {
+    fprintf(stderr, "Could not bind attribute %s\n", attribute_name);
+    return 0;
+  }
+  const char* uniform_name;
+  uniform_name = "mvp";
+  uniform_mvp = glGetUniformLocation(program, uniform_name);
+  if (uniform_mvp == -1) {
+    fprintf(stderr, "Could not bind uniform %s\n", uniform_name);
+    return 0;
+  }
+
+  return 1;
+}
+*/
+
+
+
+void onDisplay()
+{
+  //~ glClearColor(1.0, 1.0, 1.0, 1.0);
+  //~ glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+
+  glUseProgram(program);
+  glEnableVertexAttribArray(attribute_coord3d);
+  // Describe our vertices array to OpenGL (it can't guess its format automatically)
+  glBindBuffer(GL_ARRAY_BUFFER, vbo_cube_vertices);
+  glVertexAttribPointer(
+    attribute_coord3d, // attribute
+    3,                 // number of elements per vertex, here (x,y,z)
+    GL_FLOAT,          // the type of each element
+    GL_FALSE,          // take our values as-is
+    0,                 // no extra data between each position
+    0                  // offset of first element
+  );
+
+  glEnableVertexAttribArray(attribute_v_color);
+  glBindBuffer(GL_ARRAY_BUFFER, vbo_cube_colors);
+  glVertexAttribPointer(
+    attribute_v_color, // attribute
+    4,                 // number of elements per vertex, here (R,G,B)
+    GL_FLOAT,          // the type of each element
+    GL_FALSE,          // take our values as-is
+    0,                 // no extra data between each position
+    0                  // offset of first element
+  );
+
+  /* Push each element in buffer_vertices to the vertex shader */
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_cube_elements);
+  int size;  glGetBufferParameteriv(GL_ELEMENT_ARRAY_BUFFER, GL_BUFFER_SIZE, &size);
+  glDrawElements(GL_TRIANGLES, size/sizeof(GLushort), GL_UNSIGNED_SHORT, 0);
+
+  glDisableVertexAttribArray(attribute_coord3d);
+  glDisableVertexAttribArray(attribute_v_color);
+  //~ glutSwapBuffers();
+}
+
+
+void onReshape(int width, int height) {
+  screen_width = width;
+  screen_height = height;
+  glViewport(0, 0, screen_width, screen_height);
+}
+
+void orthoTest()
+{
+    //~ gluOrtho2D(GLdouble left, GLdouble right, GLdouble bottom, GLdouble top);
+}
+
 
 void onIdle() {
 //~ void camera() {
@@ -1071,29 +1796,111 @@ void onIdle() {
     
     glm::mat4 m_model = glm::translate(glm::mat4(1.0f), glm::vec3(1.0, 0.0, -1.0));
     //~ glm::mat4 m_projection = glm::perspective(45.0f, 1.0f*screen_width/screen_height, 0.1f, 10.0f);
-    
+    glm::mat4 m_projection = glm::perspective(glm::radians(fov), 1.0f*screen_width/screen_height, 0.1f, 10.0f);
+    //~ if(display2d) m_projection = glm::ortho(1.0f*screen_width, 1.0f*screen_height, 0.0f, 0.0f);
+    //~ if(display2d) m_projection = glm::ortho(1.0f*(float)screen_width*scale, 1.0f*(float)screen_height*scale, 0.0f, 0.0f);
+    //~ if(display2d) m_projection = glm::ortho(0.0f,1.0f*(float)screen_width*scale, 0.0f,1.0f*(float)screen_height*scale, -1.0f, 1.0f);
+    if(display2d) m_projection = glm::ortho(0.0f,1.0f*(float)screen_width*scale, 0.0f,1.0f*(float)screen_height*scale);
+
+
     m_model = m_model * m_translate * anim2 * anim;
+    //~ glm::mat4 mvp = m_model * m_translate * anim2 * anim;
     
     //~ glm::mat4 m_model2d = glm::translate(glm::mat4(1.0f), glm::vec3(1.0, 1.0, 0.0));
+
+    //~ glm::mat4 m_view = glm::lookAt(glm::vec3(0.0, 2.0, 0.0), glm::vec3(0.0, 0.0, -4.0), glm::vec3(0.0, 1.0, 0.0));
     
-    if(!display2d){
+    //~ glm::mat4 test = m_projection * m_view * m_model;
+
+    //~ glm::mat4 m_view_b = m_view;
+    glm::mat4 m_projection_b = m_projection;
+    glm::mat4 m_model_b = m_model;
+
+    std::clog<<"######### onIdle ########"<< std::endl;
+    //~ std::clog<<"m_model:"<< std::endl;
+    //~ std::clog<<glm::to_string(m_model)<<std::endl;
+    std::clog<<"m_projection:"<< std::endl;
+    std::clog<<glm::to_string(m_projection)<<std::endl;
+    //~ std::clog<<"m_view:"<< std::endl;
+    //~ std::clog<<glm::to_string(m_view)<<std::endl;
+    //~ std::clog<<"test:"<< std::endl;
+    //~ std::clog<<glm::to_string(test)<<std::endl;
+    std::clog<<"screen: " << screen_width << " , " << screen_height << std::endl;
+
+    //~ if(!display2d){
         
         glUseProgram(program_text);
         glUniformMatrix4fv(uniform_m_model, 1, GL_FALSE, glm::value_ptr(m_model));
-        //~ glUniformMatrix4fv(uniform_m_projection, 1, GL_FALSE, glm::value_ptr(m_projection));
+        glUniformMatrix4fv(uniform_m_projection, 1, GL_FALSE, glm::value_ptr(m_projection));
         
         glUseProgram(program_box);
-        glUniformMatrix4fv(uniform_m_model, 1, GL_FALSE, glm::value_ptr(m_model));
-        //~ glUniformMatrix4fv(uniform_m_projection, 1, GL_FALSE, glm::value_ptr(m_projection));
-    }
+        //~ glUniformMatrix4fv(uniform_m_model_b, 1, GL_FALSE, glm::value_ptr(m_view));
+        //~ glUniformMatrix4fv(uniform_m_model_b, 1, GL_FALSE, glm::value_ptr(m_model));
+        //~ glUniformMatrix4fv(uniform_mvp, 1, GL_FALSE, glm::value_ptr(mvp));
+        //~ glUniformMatrix4fv(uniform_m_projection_b, 1, GL_FALSE, glm::value_ptr(m_projection));
+        //~ glUniformMatrix4fv(uniform_m_model_b, 1, GL_FALSE, glm::value_ptr(m_view_b));
+        glUniformMatrix4fv(uniform_m_model_b, 1, GL_FALSE, glm::value_ptr(m_model_b));
+        //~ glUniformMatrix4fv(uniform_mvp, 1, GL_FALSE, glm::value_ptr(mvp));
+        glUniformMatrix4fv(uniform_m_projection_b, 1, GL_FALSE, glm::value_ptr(m_projection_b));
+    //~ }
     //~ else{
         
         //~ glDisable(GL_DEPTH_TEST);
     //~ }
 
+/////////
+
+        //~ glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0, 0.0, -4.0));
+        //~ glm::mat4 view = glm::lookAt(glm::vec3(0.0, 2.0, 0.0), glm::vec3(0.0, 0.0, -4.0), glm::vec3(0.0, 1.0, 0.0));
+        //~ glm::mat4 projection = glm::perspective(45.0f, 1.0f*screen_width/screen_height, 0.1f, 10.0f);
+        
+        //~ glm::mat4 mvp = projection * view * model * anim;
+        
+        //~ glUseProgram(program);
+        //~ glUniformMatrix4fv(uniform_mvp, 1, GL_FALSE, glm::value_ptr(mvp));
+
+
+/////////
+
+
+
     glutPostRedisplay();
 
 }
+
+void onIdle2() {
+    //~ float angle = glutGet(GLUT_ELAPSED_TIME) / 1000.0 * 45;  // 45° per second
+    float angle = 0;
+    glm::vec3 axis_y(0, 1, 0);
+    glm::mat4 anim = glm::rotate(glm::mat4(1.0f), glm::radians(angle), axis_y);
+    
+    //~ glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0, 0.0, -4.0));
+    glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(1.0, 0.0, -1.0));
+    glm::mat4 view = glm::lookAt(glm::vec3(0.0, 2.0, 0.0), glm::vec3(0.0, 0.0, -4.0), glm::vec3(0.0, 1.0, 0.0));
+    //~ glm::mat4 projection = glm::perspective(45.0f, 1.0f*screen_width/screen_height, 0.1f, 10.0f);
+    glm::mat4 projection = glm::perspective(glm::radians(fov), 1.0f*screen_width/screen_height, 0.1f, 10.0f);    
+
+    glm::mat4 mvp = projection * view * model * anim;
+
+    //~ std::clog<<"######### onIdle2 ########"<< std::endl;
+    //~ std::clog<<"anim:"<< std::endl;
+    //~ std::clog<<glm::to_string(anim)<<std::endl;
+    //~ std::clog<<"model:"<< std::endl;
+    //~ std::clog<<glm::to_string(model)<<std::endl;
+    //~ std::clog<<"view:"<< std::endl;
+    //~ std::clog<<glm::to_string(view)<<std::endl;
+    //~ std::clog<<"projection:"<< std::endl;
+    //~ std::clog<<glm::to_string(projection)<<std::endl;
+    //~ std::clog<<"mvp:"<< std::endl;
+    //~ std::clog<<glm::to_string(mvp)<<std::endl;
+
+    //~ glUseProgram(program);
+    //~ glUniformMatrix4fv(uniform_mvp, 1, GL_FALSE, glm::value_ptr(mvp));
+    glUseProgram(program_box);
+    glUniformMatrix4fv(uniform_mvp, 1, GL_FALSE, glm::value_ptr(mvp));
+    glutPostRedisplay();
+}
+
 
 //####### Testing 2d
 
@@ -1173,11 +1980,16 @@ void free_resources() {
     glDeleteBuffers(1, &vbo_coord);
     glDeleteBuffers(1, &vbo_tex_coord);
     glDeleteBuffers(1, &vbo_vertices_box);
-    glDeleteBuffers(1, &vbo_vertices_color_box);
+    glDeleteBuffers(1, &vbo_color_box);
     glDeleteBuffers(1, &vbo_font_color);
     glDeleteBuffers(1, &vbo_font_color2d);
     glDeleteBuffers(1, &ibo_box_elements);
-    glDeleteBuffers(1, &vbo);
+    //~ glDeleteBuffers(1, &vbo);
+    
+    glDeleteProgram(program);
+    glDeleteBuffers(1, &vbo_cube_vertices);
+    glDeleteBuffers(1, &vbo_cube_colors);
+    glDeleteBuffers(1, &ibo_cube_elements);    
 }
 
 void mouse_movement(int xpos, int ypos)
@@ -1270,12 +2082,24 @@ void keyboard(unsigned char key, int x, int y)
         case '3':
             display3d = !display3d;
             break;
+        case '<':
+            multiply -=1.0;
+            break; 
+        case '>':
+            multiply +=1.0;
+            break; 
+        case ',':
+            unit /=10.0;
+            break; 
+        case '.':
+            unit *=10.0;
+            break; 
         //~ case '+':
             //~ cameraSpeed +=0.05;
             //~ break;
         //~ case '-':
             //~ (cameraSpeed >= 0) ? cameraSpeed -=0.05 : cameraSpeed = 0.05;
-            //~ printf("speed: %.2f/n", cameraSpeed);
+            //~ fprintf(stderr,"speed: %.2f/n", cameraSpeed);
             //~ break;
             
        // Check if 'ESC' is pressed

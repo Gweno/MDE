@@ -367,6 +367,7 @@ void splitCssKeyValuePairs(std::string &bufferLine, std::vector<std::string> &vK
 void processCssColor(std::string &cssColor, std::vector<std::vector<float>> &vect_color);
 std::vector<float> processCssColor_RGBA(std::string &cssColor);
 void splitStringSep(std::string &strSource, std::vector<std::string> &vTarget, std::string sep);
+
 /*
 bool extractFileToFlatMDE(const std::string & full_filename, MDE & oMDE);
 bool loadXMLFileTovMDE(int & index, const std::string & full_filename, MDE & oMDE);
