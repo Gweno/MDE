@@ -35,7 +35,7 @@
 
 int screen_width=800, screen_height=600;
 
-bool display2d=false;
+bool ortho_mode=false;
 bool display3d=false;
 
 // programs
@@ -484,10 +484,11 @@ void render_text(atlas * a) {
     
     //~ std::clog<<"4"<<std::endl;
     //~ std::clog<<"nb_indices: "<<nb_indices<<std::endl;
-    displayV2D(glyphs_vertex);
+    //~ displayV2D(glyphs_vertex);
     /* Draw all the character on the screen in one go */
     glBufferData(GL_ARRAY_BUFFER,glyphs_vertex.size() * sizeof(vertex2D),&glyphs_vertex.front(),GL_STATIC_DRAW);
     glDrawArrays(GL_TRIANGLES, 0, nb_indices);
+
     //~ std::clog<<"5"<<std::endl;
     
     glDisableVertexAttribArray(attribute_font_color);
@@ -530,11 +531,9 @@ bool init_program(){
 
     int nrAttributes;
     glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes);
-    std::clog << "Maximum nr of vertex attributes supported: " << nrAttributes << std::endl;
+    //~ std::clog << "Maximum nr of vertex attributes supported: " << nrAttributes << std::endl;
     
     // testing boxes
-    //~ program_box = create_program("./shaders/box.v.glsl", "./shaders/box.f.glsl");
-    
     program_box = create_program("../source/shaders/box.v.glsl", "../source/shaders/box.f.glsl");
     if(program_box == 0)
         return 0;
@@ -542,22 +541,16 @@ bool init_program(){
     attribute_coord3d_box = get_attrib(program_box, "coord3d_b");
     attribute_v_color_box = get_attrib(program_box, "v_color_b");
 
-    //~ uniform_m_model_b = get_uniform(program_box, "m_model");
-    //~ uniform_m_projection_b = get_uniform(program_box, "m_projection");
-    //~ uniform_m_view_b = get_uniform(program_box, "m_view");
     uniform_m_model_b = get_uniform(program_box, "m_model_b");
     uniform_m_projection_b = get_uniform(program_box, "m_projection_b");
     uniform_m_view_b = get_uniform(program_box, "m_view_b");
     
     //~ uniform_mvp = get_uniform(program_box, "mvp");
-        
 
     if(attribute_coord3d_box == -1 || attribute_v_color_box == -1 || uniform_m_model_b == -1 || uniform_m_projection_b == -1 || uniform_m_view_b == -1)
-    //~ if(attribute_coord3d_box == -1 || attribute_v_color_box == -1 || uniform_mvp == -1)
         return 0;
 
     // program for the text
-    //~ program_text = create_program("shaders/text.v.glsl", "shaders/text.f.glsl");
     program_text = create_program("../source/shaders/text.v.glsl", "../source/shaders/text.f.glsl");
     if(program_text == 0)
         return 0;
@@ -598,17 +591,6 @@ bool init_program(){
 		return 0;
     }
 
-    //~ program_box = create_program("../source/shaders/box2d.v.glsl", "../source/shaders/box2d.f.glsl");
-    //~ if(program_box == 0)
-        //~ return 0;
-
-    //~ attribute_coord3d_box2d = get_attrib(program_box, "coord3d_b");
-    //~ attribute_v_color_box2d = get_attrib(program_box, "v_color_b");
-
-    //~ uniform_m_model = get_uniform(program_box, "m_model");
-    //~ uniform_m_projection = get_uniform(program_box, "m_projection");
-    //~ uniform_m_view = get_uniform(program_box, "m_view");
-    
     return 1;
 }
 
@@ -627,45 +609,14 @@ void init_color_box(vertex3Dalpha &color_alpha)
     0.0,0.5,0.5,1.0,
     0.0,0.5,0.5,1.0
   };
-  //~ glGenBuffers(1, &vbo_cube_colors_box);
-  //~ glBindBuffer(GL_ARRAY_BUFFER, vbo_cube_colors_box);
+
   glGenBuffers(1, &vbo_color_box);
   glBindBuffer(GL_ARRAY_BUFFER, vbo_color_box);
   glBufferData(GL_ARRAY_BUFFER, sizeof(cube_colors_box), cube_colors_box, GL_STATIC_DRAW);
   
-    //~ r=color_alpha.x;
-    //~ g=color_alpha.y;
-    //~ b=color_alpha.z;
-    //~ a=color_alpha.a;
-      
-    //~ GLfloat box_vertices_color3[]={
-        //~ r,g,b,a,
-        //~ r,g,b,a,
-        //~ r,g,b,a,
-        //~ r,g,b,a,
-        //~ r,g,b,a,
-        //~ r,g,b,a,
-        //~ r,g,b,a,
-        //~ r,g,b,a
-    //~ };  
-  
-    
-    //~ std::vector<GLfloat> vect_color3;
-
-    //~ fprintf(stderr,"whd.size: %u\n",whd.size());
-    //~ int max_loop = whd.size();
-    //~ for(int i=0;i<max_loop;i++){
-        //~ vect_color3.insert (vect_color3.end(), box_vertices_color3, box_vertices_color3+32);
-        //~ }  
-  
-    //~ glGenBuffers(1,&vbo_color_box);
-    //~ glBindBuffer(GL_ARRAY_BUFFER,vbo_color_box);
-    //~ glBufferData(GL_ARRAY_BUFFER,vect_color3.size() * sizeof(GLfloat),&vect_color3.front(),GL_STATIC_DRAW);  
-
 }
 
 void init_color(vertex3Dalpha &color_alpha, vertex3Dalpha &bg_color_alpha, std::vector<vertex3Dalpha> &font_color_alpha, std::vector<vertex3D> &whd, std::vector<unsigned int> &nb_glyphs_per_text){
-//~ void init_color(vertex3Dalpha &color_alpha, vertex3Dalpha &bg_color_alpha, std::vector<vertex3D> &whd){
     r=color_alpha.x;
     g=color_alpha.y;
     b=color_alpha.z;
@@ -696,16 +647,7 @@ void init_color(vertex3Dalpha &color_alpha, vertex3Dalpha &bg_color_alpha, std::
         }
 
   GLfloat cube_colors[] = {
-    //~ // front colors
-    //~ 1.0, 0.0, 0.0,
-    //~ 0.0, 1.0, 0.0,
-    //~ 0.0, 0.0, 1.0,
-    //~ 1.0, 1.0, 1.0,
-    //~ // back colors
-    //~ 1.0, 0.0, 0.0,
-    //~ 0.0, 1.0, 0.0,
-    //~ 0.0, 0.0, 1.0,
-    //~ 1.0, 1.0, 1.0,
+
     // front colors
     0.5,0.5,0.5,0.5,
     0.5,0.5,0.5,0.5,
@@ -721,7 +663,6 @@ void init_color(vertex3Dalpha &color_alpha, vertex3Dalpha &bg_color_alpha, std::
     glGenBuffers(1,&vbo_color_box);
     glBindBuffer(GL_ARRAY_BUFFER,vbo_color_box);
     glBufferData(GL_ARRAY_BUFFER,vect_color3.size() * sizeof(GLfloat),&vect_color3.front(),GL_STATIC_DRAW);
-    //~ glBufferData(GL_ARRAY_BUFFER, sizeof(cube_colors), cube_colors, GL_STATIC_DRAW);
     
     // font colors
     std::clog << "########init font color########" << std::endl;
@@ -734,27 +675,17 @@ void init_color(vertex3Dalpha &color_alpha, vertex3Dalpha &bg_color_alpha, std::
         }
         ind++;
     }
-    std::clog << "display vect_color3 size: " << vect_color3.size() << std::endl;
-    displayVGLfloat(vect_color3);
-    std::clog << "display font_color_alpha size: " << font_color_alpha.size() << std::endl;
-    std::clog << "display font_color_alpha:" << std::endl;
-    displayV3Dalpha(font_color_alpha);
-    std::clog << "display nb_glyphs_per_text size: " << nb_glyphs_per_text.size() << std::endl;
-    std::clog << "display vector_font_color size: " << vector_font_color.size() << std::endl;
+    //~ std::clog << "display vect_color3 size: " << vect_color3.size() << std::endl;
+    //~ displayVGLfloat(vect_color3);
+    //~ std::clog << "display font_color_alpha size: " << font_color_alpha.size() << std::endl;
+    //~ std::clog << "display font_color_alpha:" << std::endl;
+    //~ displayV3Dalpha(font_color_alpha);
+    //~ std::clog << "display nb_glyphs_per_text size: " << nb_glyphs_per_text.size() << std::endl;
+    //~ std::clog << "display vector_font_color size: " << vector_font_color.size() << std::endl;
     //~ std::clog << "display vector_font_color:" << std::endl;
     //~ displayV3Dalpha(vector_font_color);
-    std::clog << "########init font color done########" << std::endl;
+    //~ std::clog << "########init font color done########" << std::endl;
     
-    
-    //~ vector<GLfloat> vect_font_color;
-    
-    //~ for(std::vector<vertex3Dalpha>::iterator it=font_color_alpha.begin();it!=font_color_alpha.en();it++){
-        //~ vect_font_color
-        
-    //~ }
-    //~ for(int i=0;i<max_loop;i++){
-        //~ vect_font_color.insert (vect_font_color.end(), font_color_alpha, font_color_alpha+);
-        //~ }    
 }
 
 void init_v_font_color(std::vector<vertex3Dalpha> &font_color, uint &nlines, bool singleColor, bool displayDataOnly){
@@ -776,41 +707,11 @@ void init_v_font_color(std::vector<vertex3Dalpha> &font_color, uint &nlines, boo
             
         }
     }
-    //~ else
-    //~ {
-        //~ v_font_color = font_color;
-    //~ }
-    //~ for(std::vector<vertex3D>::iterator it=font_color.begin();it!=font_color.end();++it){
-        //~ v_font_color.push_back((*it).x,(*it).y,(*it).z);
-    //~ }
     font_color = v_font_color;
     displayV3Dalpha(font_color);
     std::clog << "####### End init_v_font_color #######" << std::endl;
-    //~ v_font_color = font_color[0];
-    //~ glEnableVertexAttribArray(attribute_font_color);
-    //~ glGenBuffers(1,&vbo_font_color);
-    //~ glBindBuffer(GL_ARRAY_BUFFER,vbo_font_color);
-    //~ glBufferData(GL_ARRAY_BUFFER,v_font_color.size() * sizeof(vertex3Dalpha),&v_font_color.front(),GL_STATIC_DRAW);
     
 }
-
-//~ void init_font_color(std::vector<GLfloat> &color){
-    
-    //~ font_color=&color[0];
-    
-//~ }
-    
-
-//~ template <typename T>
-//~ void displayVec(std::vector<T> &vect)
-//~ {
-    //~ std::clog<<"| ";
-    //~ for(auto& it : vect){
-        //~ std::clog<<it<<", ";
-    //~ }
-    //~ std::clog<<" |"<<std::endl;    
-//~ }
-
 
 void displayVGLfloat(std::vector<GLfloat> &vector_glf){
     std::clog<<"loop GLfloat"<<std::endl;
@@ -902,52 +803,15 @@ void create_vector(std::vector<vertex3D> &vector3D,std::vector<vertex3D> &v_orig
 
 void init_vbo_box(std::vector<vertex3D> &vectors_boxes)
 {
-//~ GLfloat cube_vertices[] = {
-
-//~ -0.99833333,1.677778,0.5,
-//~ -0.581667,1.677778,0.5,
-//~ -0.581667,1.595556,0.5,
-//~ -0.99833333,1.595556,-0.5822222,
-//~ -0.99833333,1.677778,-0.5822222,
-//~ -0.581667,1.677778,-0.5822222,
-//~ -0.581667,1.595556,-0.5822222,
-//~ -0.581667,1.595556,-0.5822222,
-
-    //~ // front
-    //~ -1.0, 0.8,  0.5,
-     //~ 1.0, 0.8,  0.5,
-     //~ 1.0,  1.0,  0.5,
-    //~ -1.0,  1.0,  0.5,
-    //~ // back
-    //~ -1.0, 0.8, -0.5,
-     //~ 1.0, 0.8, -0.5,
-     //~ 1.0,  1.0, -0.5,
-    //~ -1.0,  1.0, -0.5,
-    
-//~ -2,1.3,0,
-//~ -1,1.3,0,
-//~ -1,1.5,0,
-//~ -2,1.5,0,
-//~ -2,1.3,-1,
-//~ -1,1.3,-1,
-//~ -1,1.5,-1,
-//~ -2,1.5,-1,
-
-
-    
-
-  //~ };
-    
     glGenBuffers(1,&vbo_vertices_box);
     glBindBuffer(GL_ARRAY_BUFFER,vbo_vertices_box);
     glBufferData(GL_ARRAY_BUFFER,vectors_boxes.size() * sizeof(vertex3D),&vectors_boxes.front(),GL_STATIC_DRAW);
-    //~ glBufferData(GL_ARRAY_BUFFER, sizeof(cube_vertices), cube_vertices, GL_STATIC_DRAW);    
 
 }
 
 void init_ibo_elements_box(std::vector<vertex3D> &vectors_boxes)
 {
-        // set the array of indexes for a rectangle
+    // set the array of indexes for a rectangle
     std::array<GLushort,36> box_elements3 = {
     //~ GLushort box_elements3[] = {
         // front
@@ -984,15 +848,9 @@ void init_ibo_elements_box(std::vector<vertex3D> &vectors_boxes)
     std::clog<< "vect_index size: "<< vect_index.size() << std::endl;
     std::clog<< "######End init vectors######"<<std::endl;
 
-
-
     glGenBuffers(1, &ibo_box_elements);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_box_elements);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, vect_index.size() * sizeof(GLushort), &vect_index.front(), GL_STATIC_DRAW);
-    //~ glGenBuffers(1, &ibo_box_elements);
-    //~ glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_box_elements);
-    //~ glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLushort), box_elements3, GL_STATIC_DRAW);
-    //~ glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(box_elements3), box_elements3, GL_STATIC_DRAW);
     
 }
 
@@ -1011,79 +869,6 @@ void init_box(std::vector<vertex3D> &vectors_boxes)
 
 void init_vectors(std::vector<vertex3D> &vectors_boxes)
 {
-
-
-//~ GLfloat cube_vertices[] = {
-    //~ 0.00166667, -0.404444, 0,
-    //~ 0.00166667, -0.322222, 0,
-    //~ 0.418333, -0.322222, 0,
-    //~ 0.418333, -0.404444, 0,
-    
-    //~ 0.00166667, -0.404444, -0.0822222,
-    //~ 0.00166667, -0.322222, -0.0822222,
-    //~ 0.418333, -0.322222, -0.0822222,
-    //~ 0.418333, -0.404444, -0.0822222      
-
-//~ -0.99833333,1.677778,0.5,
-//~ -0.581667,1.677778,0.5,
-//~ -0.581667,1.595556,0.5,
-//~ -0.99833333,1.595556,-0.5822222,
-//~ -0.99833333,1.677778,-0.5822222,
-//~ -0.581667,1.677778,-0.5822222,
-//~ -0.581667,1.595556,-0.5822222,
-//~ -0.581667,1.595556,-0.5822222,
-
-
-
-    //~ // front
-    //~ -1.0, -1.0,  1.0,
-     //~ 1.0, -1.0,  1.0,
-     //~ 1.0,  1.0,  1.0,
-    //~ -1.0,  1.0,  1.0,
-    //~ // back
-    //~ -1.0, -1.0, -1.0,
-     //~ 1.0, -1.0, -1.0,
-     //~ 1.0,  1.0, -1.0,
-    //~ -1.0,  1.0, -1.0,
-  //~ };
-  //~ glGenBuffers(1, &vbo_cube_vertices);
-  //~ glBindBuffer(GL_ARRAY_BUFFER, vbo_cube_vertices);
-  //~ glBufferData(GL_ARRAY_BUFFER, sizeof(cube_vertices), cube_vertices, GL_STATIC_DRAW);
-    
-    
-    
-    //~ glGenBuffers(1,&vbo_vertices_box);
-    //~ glBindBuffer(GL_ARRAY_BUFFER,vbo_vertices_box);
-    //~ glBufferData(GL_ARRAY_BUFFER,vectors_boxes.size() * sizeof(vertex3D),&vectors_boxes.front(),GL_STATIC_DRAW);
-    //~ glBufferData(GL_ARRAY_BUFFER, sizeof(cube_vertices), cube_vertices, GL_STATIC_DRAW);
-    
-//////
-
-/*
-
-  GLfloat cube_colors[] = {
-    // front colors
-    0.0,0.5,0.5,1.0,
-    0.0,0.5,0.5,1.0,
-    0.0,0.5,0.5,1.0,
-    0.0,0.5,0.5,1.0,
-    // back colors
-    0.5,0.5,0.5,1.0,
-    0.5,0.5,0.5,1.0,
-    0.5,0.5,0.5,1.0,
-    0.5,0.5,0.5,1.0
-  };
-
-    glGenBuffers(1,&vbo_color_box);
-    glBindBuffer(GL_ARRAY_BUFFER,vbo_color_box);
-    //~ glBufferData(GL_ARRAY_BUFFER,vect_color3.size() * sizeof(GLfloat),&vect_color3.front(),GL_STATIC_DRAW);
-glBufferData(GL_ARRAY_BUFFER, sizeof(cube_colors), cube_colors, GL_STATIC_DRAW);
-
-
-////////
-
-*/
-
 
     // set the array of indexes for a rectangle
     //~ std::array<GLushort,36> box_elements3 = {
@@ -1146,9 +931,6 @@ glBufferData(GL_ARRAY_BUFFER, sizeof(cube_colors), cube_colors, GL_STATIC_DRAW);
     }
     
 void draw_box(){
-    //~ glClearColor(1.0, 1.0, 1.0, 1.0);
-    //~ glClearColor(0.0, 0.0, 0.0, 1.0);
-    //~ glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);    
     
     glUseProgram(program_box);
     
@@ -1183,17 +965,13 @@ void draw_box(){
     glDisableVertexAttribArray(attribute_coord3d_box);
     glDisableVertexAttribArray(attribute_v_color_box);
     //~ glutSwapBuffers();
+    
 }
 
 void init_text_MDE(MDE &my_entity,vertex3D &origin, std::vector<vertex3D> &offset, std::vector<vertex3D> &offset_rule, vertex2D &padding, vertex3Dalpha &color_alpha, vertex3Dalpha &bg_color_alpha, std::vector<vertex3Dalpha> &font_color, bool displayDataOnly, bool hideParent) {
     
     /* Create texture atlasses for a given font size */
-    //~ a_any_size = new atlas(face, 48);
     a_any_size = new atlas(face,(int)fontSize);
-    
-    //~ std::clog << "####### Checking MDE in init_text_MDE    ########" << std::endl;
-    //~ my_entity.display_all(1,1);
-    //~ std::clog << "####### End Checking MDE in init_text_MDE########" << std::endl;
     
     vertex2D window_scale;
     window_scale.x = 2.0 / glutGet(GLUT_WINDOW_WIDTH);
@@ -1206,7 +984,6 @@ void init_text_MDE(MDE &my_entity,vertex3D &origin, std::vector<vertex3D> &offse
     std::vector<GLdata> my_v_MDE_data;
     int level=0;
     int index=0;
-    //~ my_entity.extract_MDE_data_for_v_offset(my_v_MDE_data, level);
     extractMDEdataForVoffset(my_entity, my_v_MDE_data, level,index ,displayDataOnly = displayDataOnly, hideParent = hideParent);
     process_v_MDE_data(my_v_MDE_data,offset, offset_rule);
     for (std::vector<vertex3D>::iterator it_offset=offset.begin(); it_offset!=offset.end();++it_offset){
@@ -1227,44 +1004,28 @@ void init_text_MDE(MDE &my_entity,vertex3D &origin, std::vector<vertex3D> &offse
 
     
     uint index_v_origin=0;
-    for (std::vector<GLdata>::iterator it_v_MDE_data=my_v_MDE_data.begin(); it_v_MDE_data!=my_v_MDE_data.end();++it_v_MDE_data){
-        
-        //~ create_coord_vector_text(((*it_v_MDE_data).MDE_data).c_str(), a48, v_origin[index_v_origin], window_scale );
+    for (std::vector<GLdata>::iterator it_v_MDE_data=my_v_MDE_data.begin(); it_v_MDE_data!=my_v_MDE_data.end();++it_v_MDE_data)
+    {
         create_coord_vector_text(((*it_v_MDE_data).MDE_data).c_str(), a_any_size, v_origin[index_v_origin], window_scale );
         index_v_origin++;
     }
-    //~ text_frame(glyphs_box, nb_glyphs_per_text, v_origin);
     std::clog << "size of glyphs box: " << glyphs_box.size() << std::endl;  
     text_frame(glyphs_box, nb_glyphs_per_text, v_origin_fb, padding);
-    //~ init_color(color_alpha,bg_color_alpha,v_origin);
     nlines = (uint)nb_glyphs_per_text.size();
     //~ bool singleColor = true;
     fprintf(stderr,"number of lines in init_text_MDE:%u\n",nlines);
     init_v_font_color(font_color,nlines , true, true);
-    // !!!! commented below for testing solving box display bug
     init_color(color_alpha,bg_color_alpha,font_color,v_origin,nb_glyphs_per_text);
-    
-    //~ std::clog << "####### Checking MDE in init_text_MDE (at the end)   ########" << std::endl;
-    //~ my_entity.display_all(1,1);
-    //~ std::clog << "####### End Checking MDE in init_text_MDE (at the end)########" << std::endl;    
-    //~ init_color_box();
     
 }
 
 void process_v_MDE_data(std::vector<GLdata> & v_MDE_data,std::vector<vertex3D> & v_offset, std::vector<vertex3D> & v_offset_rule){
-    
-    //~ GLfloat nd_offset = 0.5; // name-data offset, distance between the name and the data 
-    //~ GLfloat index_offset = 0.5; // index offset, distance to separate index values 
-    //~ GLfloat level_offset = -0.2; // level offset, distance to separate level values 
     
     // offset rule.x is the name-data offset
     // offset rule.y is the index offset
     // offset rule.x is the level offset
     
     for (std::vector<GLdata>::iterator it_v_MDE_data=v_MDE_data.begin();it_v_MDE_data!=v_MDE_data.end(); ++it_v_MDE_data){
-        //~ v_offset.push_back({(*it_v_MDE_data).mde_member*.5+(*it_v_MDE_data).index*0.5,(*it_v_MDE_data).level*(-0.2),0});
-        //~ v_offset.push_back({(*it_v_MDE_data).mde_member*nd_offset+(*it_v_MDE_data).index*index_offset,(*it_v_MDE_data).level*level_offset,0});
-        //~ v_offset.push_back({(*it_v_MDE_data).mde_member*v_offset_rule.x+(*it_v_MDE_data).index*v_offset_rule.y,(*it_v_MDE_data).level*v_offset_rule.z,0});
         v_offset.push_back({
             (*it_v_MDE_data).mde_member*v_offset_rule[0].x+(*it_v_MDE_data).index*v_offset_rule[0].y+(*it_v_MDE_data).level*v_offset_rule[0].z ,
             (*it_v_MDE_data).mde_member*v_offset_rule[1].x+(*it_v_MDE_data).index*v_offset_rule[1].y+(*it_v_MDE_data).level*v_offset_rule[1].z ,
@@ -1283,21 +1044,6 @@ void add_padding(std::vector<vertex3D> & v_origin, std::vector<vertex3D> & v_ori
 
 void text_display() {
 
-    //~ // Set the colored background, default is white.
-    //~ glClearColor(bg_r, bg_g, bg_b, bg_a);
-    //~ // need the depth buffer for 3d
-    //~ glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-
-    //~ std::clog<<"##### in text_display ######"<<std::endl;
-    //~ std::clog<<"1"<<std::endl;
-    /* Enable blending, necessary for our alpha texture */
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    if(display2d) glEnable(GL_DEPTH_TEST);
-    else glDisable(GL_DEPTH_TEST);
-    
-    //~ std::clog<<"2"<<std::endl;
-
     // set the color of the non-glyph part of the glyph box to same color as the
     // cube color: r,g,b
     // keep alpha to zero
@@ -1306,39 +1052,16 @@ void text_display() {
     
     FT_Set_Pixel_Sizes(face, 0, fontSize);
 
-    //~ std::clog<<"3"<<std::endl;
-    
-    /* Drawing the text */    
-    //~ if(!display2d)
-    //~ {
-        // check option to display the box frame for the text.
-        //~ if (display_box){
-            //~ // Drawing a box
-            //~ glUseProgram(program_box);
-            //~ draw_box();
-            //~ }
-        glUseProgram(program_text);
-        glUniform4fv(uniform_bgcolor_text, 1, bg_rgb);
-    //~ std::clog<<"4"<<std::endl;
-        render_text(a_any_size);
-    //~ std::clog<<"##### End text_display ######"<<std::endl;
-    //~ }
-    //~ else
-    //~ {
-        //~ glUseProgram(program_text2d);
-        //~ glUniform4fv(uniform_bgcolor_text2d, 1, bg_rgb);
-        //~ render_text2d(a_any_size);
-    //~ }
-        
-    
-    //~ glutSwapBuffers();
+    glUseProgram(program_text);
+    glUniform4fv(uniform_bgcolor_text, 1, bg_rgb);
+    render_text(a_any_size);
     
 }
 
-void set_options(bool a_move_it, bool a_display_box, bool a_display2d, bool singleColor,uint a_nlines){
+void set_options(bool a_move_it, bool a_display_box, bool a_ortho_mode, bool singleColor,uint a_nlines){
     move_it = a_move_it;
     display_box = a_display_box;
-    display2d = a_display2d;
+    ortho_mode = a_ortho_mode;
     nlines = a_nlines;
     fprintf(stderr,"display box:%u\n", display_box);
 }
@@ -1385,14 +1108,24 @@ void display(){
     //~ // Set the colored background, default is white.
     glClearColor(bg_r, bg_g, bg_b, bg_a);
     // need the depth buffer for 3d
-    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);    
-    
+    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+    //~ if(ortho_mode)
+    //~ {
+        //~ glEnable(GL_DEPTH_TEST);
+        //~ glDepthFunc(GL_NOTEQUAL);
+    //~ }
+    //~ else
+    //~ {
+        //~ glDisable(GL_DEPTH_TEST);
+    //~ }
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_NOTEQUAL);
     // camera operations and text display
     camera();
     //~ std::clog<<"####### In display ######"<<std::endl;
     //~ std::clog<<"####### first is draw_box ######"<<std::endl;
-    if(display_box) draw_box();
     //~ std::clog<<"####### next is text_display ######"<<std::endl;
+    if(display_box) draw_box();
     text_display();
     //~ std::clog<<"####### End display ######"<<std::endl;
     //~ onDisplay();
@@ -1417,109 +1150,49 @@ void camera(){
     cameraUp = glm::cross(cameraDirection, cameraRight);
     
     glm::mat4 m_view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp); //eye,center,up
-    if (display2d) m_view = glm::ortho(-1.0f*multiply, 1.0f*multiply, -1.0f*multiply, 1.0f*multiply, 0.1f*multiply, 100.0f*multiply);
+    if (ortho_mode) m_view = glm::ortho(-1.0f*multiply, 1.0f*multiply, -1.0f*multiply, 1.0f*multiply, 0.1f*multiply, 100.0f*multiply);
     //~ if (display2d) m_view = glm::ortho(-1000.0f, 1000.0f, -1000.0f, 1000.0f, -1000.0f, 1000.0f);
     
     // Projection matrix modified by field of view (fov) directed by the camera zoom from the mouse wheel
     glm::mat4 m_projection = glm::perspective(glm::radians(fov), 1.0f*screen_width/screen_height, 0.1f, 10.0f);
-    //~ glm::mat4 m_projection = glm::perspective(45.0f, 1.0f*screen_width/screen_height, 0.1f, 10.0f);
-    //~ if(display2d) m_projection = glm::ortho(1.0f*screen_width, 1.0f*screen_height, 0.0f, 0.0f);
-    //~ if(display2d) m_projection = glm::ortho(1.0f*(float)screen_width*scale, 1.0f*(float)screen_height*scale, 0.0f, 0.0f);
-    //~ if(display2d) m_projection = glm::ortho(0.0f,1.0f*(float)screen_width*scale, 0.0f,1.0f*(float)screen_height*scale, -1.0f, 1.0f);
-    if(display2d) m_projection = glm::ortho(0.0f,1.0f*(float)screen_width*scale, 0.0f,1.0f*(float)screen_height*scale);
-
-    
-    //~ std::clog<<"Up:"<< std::endl;
-    //~ std::clog<<glm::to_string(up)<<std::endl;
-
-    // testing 2D display
-    //~ float scale = glutGet(GLUT_ELAPSED_TIME) / 1000.0 * 1.2;  // 120% per second
-    //~ glm::mat4 m_projection2d = glm::ortho(0.0f, 1.0f*screen_width*scale, 1.0f*screen_height*scale, 0.0f);
+    if(ortho_mode) m_projection = glm::ortho(0.0f,1.0f*(float)screen_width*scale, 0.0f,1.0f*(float)screen_height*scale);
     
     glm::mat4 m_view_b = m_view;
     glm::mat4 m_projection_b = m_projection;
         
-    std::clog<<"######## camera ########:"<< std::endl;
-    if(display2d) std::clog<<"!!!! 2D !!!!:"<< std::endl;
+    //~ std::clog<<"######## camera ########:"<< std::endl;
+    //~ if(ortho_mode) std::clog<<"!!!! Ortho Mode !!!!:"<< std::endl;
+    //~ std::clog<<"m_projection:"<< std::endl;
+    //~ std::clog<<glm::to_string(m_projection)<<std::endl;
+    //~ std::clog<<"m_projection_b:"<< std::endl;
+    //~ std::clog<<glm::to_string(m_projection_b)<<std::endl;
     //~ std::clog<<"m_view:"<< std::endl;
     //~ std::clog<<glm::to_string(m_view)<<std::endl;
-    std::clog<<"m_projection:"<< std::endl;
-    std::clog<<glm::to_string(m_projection)<<std::endl;
-    std::clog<<"m_projection_b:"<< std::endl;
-    std::clog<<glm::to_string(m_projection_b)<<std::endl;
-    std::clog<<"m_view:"<< std::endl;
-    std::clog<<glm::to_string(m_view)<<std::endl;
-    std::clog<<"m_view_b:"<< std::endl;
-    std::clog<<glm::to_string(m_view_b)<<std::endl;
+    //~ std::clog<<"m_view_b:"<< std::endl;
+    //~ std::clog<<glm::to_string(m_view_b)<<std::endl;
+    //~ std::clog<<"screen: " << screen_width << " , " << screen_height << std::endl;
+    //~ std::clog<<"multiply: " << multiply << " , unit: " << unit << std::endl;
+    
+    glUseProgram(program_text);
+    glUniformMatrix4fv(uniform_m_view, 1, GL_FALSE, glm::value_ptr(m_view));
+    glUniformMatrix4fv(uniform_m_projection, 1, GL_FALSE, glm::value_ptr(m_projection));
 
-    
-    std::clog<<"screen: " << screen_width << " , " << screen_height << std::endl;
-    std::clog<<"multiply: " << multiply << " , unit: " << unit << std::endl;
-    //~ if(display3d)
-    //~ {
-        //~ // m_view = glm::mat4(1.0f);
-        //~ m_projection = glm::ortho(0.0f, 1.0f*screen_width, 1.0f*screen_height, 0.0f);
-        //~ m_projection = glm::ortho(1.0f*screen_width, 1.0f*screen_height, 0.0f, 0.0f);
-    //~ }
-    
-    //~ if(!display2d){
-        glUseProgram(program_text);
-        glUniformMatrix4fv(uniform_m_view, 1, GL_FALSE, glm::value_ptr(m_view));
-        glUniformMatrix4fv(uniform_m_projection, 1, GL_FALSE, glm::value_ptr(m_projection));
-    
-        glUseProgram(program_box);
-        //~ glUniformMatrix4fv(uniform_m_view_b, 1, GL_FALSE, glm::value_ptr(m_view));
-        //~ glUniformMatrix4fv(uniform_m_projection_b, 1, GL_FALSE, glm::value_ptr(m_projection));
-        glUniformMatrix4fv(uniform_m_view_b, 1, GL_FALSE, glm::value_ptr(m_view_b));
-        glUniformMatrix4fv(uniform_m_projection_b, 1, GL_FALSE, glm::value_ptr(m_projection_b));
-        // attempt to get the position matrix for the box by doing same calculation as in hte shader:
-        // gl_Position = m_projection_b * m_view_b * m_model_b * vec4(coord3d_b, 1.0);
-        
-
-
-    
-    //~ }
-    //~ else
-    //~ {
-        //~ glUseProgram(program_text2d);
-    //~ }
-    
-    
+    glUseProgram(program_box);
+    glUniformMatrix4fv(uniform_m_view_b, 1, GL_FALSE, glm::value_ptr(m_view_b));
+    glUniformMatrix4fv(uniform_m_projection_b, 1, GL_FALSE, glm::value_ptr(m_projection_b));
     
     glutPostRedisplay();
 }
-
-//~ void test2D{
-    //~ float scale = glutGet(GLUT_ELAPSED_TIME) / 1000.0 * .2;  // 20% per second
-    //~ glm::mat4 projection = glm::ortho(0.0f, 1.0f*screen_width*scale, 1.0f*screen_height*scale, 0.0f);
-    
-    //~ float move = 128;
-    //~ float angle = glutGet(GLUT_ELAPSED_TIME) / 1000.0 * 45;  // 45° per second
-    //~ glm::vec3 axis_z(0, 0, 1);
-    //~ glm::mat4 m_transform = glm::translate(glm::mat4(1.0f), glm::vec3(move, move, 0.0))
-    //~ * glm::rotate(glm::mat4(1.0f), glm::radians(angle), axis_z)
-    //~ * glm::translate(glm::mat4(1.0f), glm::vec3(-256/2, -256/2, 0.0));
-    
-    //~ glm::mat4 mvp = projection * m_transform; // * view * model * anim;
-    //~ glUseProgram(program);
-    //~ glUniformMatrix4fv(uniform_mvp, 1, GL_FALSE, glm::value_ptr(mvp));
-    //~ glutPostRedisplay();    
-//~ }
 
 void init_matrices(){
     
     std::clog << "######## Init Matrices ########" << std::endl;
      
     glm::mat4 m_model = glm::translate(glm::mat4(1.0f), glm::vec3(1.0, 0.0, -1.0));
-    //~ glm::mat4 m_projection = glm::perspective(45.0f, 1.0f*screen_width/screen_height, 0.1f, 10.0f);
     glm::mat4 m_projection = glm::perspective(glm::radians(fov), 1.0f*screen_width/screen_height, 0.1f, 10.0f);    
-    //~ if(display2d) m_projection = glm::ortho(1.0f*screen_width, 1.0f*screen_height, 0.0f, 0.0f);
-    //~ if(display2d) m_projection = glm::ortho(1.0f*(float)screen_width*scale, 1.0f*(float)screen_height*scale, 0.0f, 0.0f);
-    //~ if(display2d) m_projection = glm::ortho(0.0f,1.0f*(float)screen_width*scale, 0.0f,1.0f*(float)screen_height*scale, -1.0f, 1.0f);
-    if(display2d) m_projection = glm::ortho(0.0f,1.0f*(float)screen_width*scale, 0.0f,1.0f*(float)screen_height*scale);
+    if(ortho_mode) m_projection = glm::ortho(0.0f,1.0f*(float)screen_width*scale, 0.0f,1.0f*(float)screen_height*scale);
 
     glm::mat4 m_view = glm::lookAt(glm::vec3(0.0, 0.0, 4.0), glm::vec3(0.0, 0.0,-1.0), glm::vec3(0.0, 1.0, 0.0));//eye,center,up
-    //~ glm::mat4 m_projection2d = glm::ortho(0.0f, 1.0f*screen_width, 1.0f*screen_height, 0.0f);
     glm::mat4 m_view_b = m_view;
     glm::mat4 m_projection_b = m_projection;
     glm::mat4 m_model_b = m_model;
@@ -1540,29 +1213,13 @@ void init_matrices(){
     //~ glUniformMatrix4fv(uniform_m_view, 1, GL_FALSE, glm::value_ptr(m_view));
     
     glUseProgram(program_box);
-    //~ glUniformMatrix4fv(uniform_m_model_b, 1, GL_FALSE, glm::value_ptr(m_model));
-    //~ glUniformMatrix4fv(uniform_m_projection_b, 1, GL_FALSE, glm::value_ptr(m_projection));
-    //~ glUniformMatrix4fv(uniform_m_view_b, 1, GL_FALSE, glm::value_ptr(m_view));
     glUniformMatrix4fv(uniform_m_model_b, 1, GL_FALSE, glm::value_ptr(m_model_b));
     glUniformMatrix4fv(uniform_m_projection_b, 1, GL_FALSE, glm::value_ptr(m_projection_b));
     glUniformMatrix4fv(uniform_m_view_b, 1, GL_FALSE, glm::value_ptr(m_view_b));
-    
-    // Debugging box misalignement
-    // glyphs
-    //~ glm::vec4 gl_Position = m_projection * m_view * m_model * vec4(coord.xy, coord.z + 0.01, 1);
-    // box
-    glm::vec4 gl_Position_b = m_projection_b * m_view_b * m_model_b * glm::vec4(check_coord3d_b, 1.0);
-
-    std::clog<<"Debugging !!! gl_Position_b:"<< std::endl;
-    std::clog<<glm::to_string(gl_Position_b)<<std::endl;    
  
-    //~ std::clog<<"m_model:"<< std::endl;
-    //~ std::clog<<glm::to_string(m_model)<<std::endl;
     std::clog<<"m_projection:"<< std::endl;
     std::clog<<glm::to_string(m_projection)<<std::endl;
     std::clog<<"screen: " << screen_width << " , " << screen_height << std::endl;
-    //~ std::clog<<"m_view:"<< std::endl;
-    //~ std::clog<<glm::to_string(m_view)<<std::endl;   
     std::clog << "End init Matrices" << std::endl;
 }
 
@@ -1717,12 +1374,8 @@ int init_resources()
 }
 */
 
-
-
 void onDisplay()
 {
-  //~ glClearColor(1.0, 1.0, 1.0, 1.0);
-  //~ glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
   glUseProgram(program);
   glEnableVertexAttribArray(attribute_coord3d);
@@ -1795,75 +1448,34 @@ void onIdle() {
     glm::mat4 anim2 = glm::rotate(glm::mat4(1.0f), glm::radians(angle), axis_z);
     
     glm::mat4 m_model = glm::translate(glm::mat4(1.0f), glm::vec3(1.0, 0.0, -1.0));
-    //~ glm::mat4 m_projection = glm::perspective(45.0f, 1.0f*screen_width/screen_height, 0.1f, 10.0f);
     glm::mat4 m_projection = glm::perspective(glm::radians(fov), 1.0f*screen_width/screen_height, 0.1f, 10.0f);
-    //~ if(display2d) m_projection = glm::ortho(1.0f*screen_width, 1.0f*screen_height, 0.0f, 0.0f);
-    //~ if(display2d) m_projection = glm::ortho(1.0f*(float)screen_width*scale, 1.0f*(float)screen_height*scale, 0.0f, 0.0f);
-    //~ if(display2d) m_projection = glm::ortho(0.0f,1.0f*(float)screen_width*scale, 0.0f,1.0f*(float)screen_height*scale, -1.0f, 1.0f);
-    if(display2d) m_projection = glm::ortho(0.0f,1.0f*(float)screen_width*scale, 0.0f,1.0f*(float)screen_height*scale);
+    if(ortho_mode) m_projection = glm::ortho(0.0f,1.0f*(float)screen_width*scale, 0.0f,1.0f*(float)screen_height*scale);
 
 
     m_model = m_model * m_translate * anim2 * anim;
-    //~ glm::mat4 mvp = m_model * m_translate * anim2 * anim;
-    
-    //~ glm::mat4 m_model2d = glm::translate(glm::mat4(1.0f), glm::vec3(1.0, 1.0, 0.0));
 
-    //~ glm::mat4 m_view = glm::lookAt(glm::vec3(0.0, 2.0, 0.0), glm::vec3(0.0, 0.0, -4.0), glm::vec3(0.0, 1.0, 0.0));
-    
-    //~ glm::mat4 test = m_projection * m_view * m_model;
-
-    //~ glm::mat4 m_view_b = m_view;
     glm::mat4 m_projection_b = m_projection;
     glm::mat4 m_model_b = m_model;
 
-    std::clog<<"######### onIdle ########"<< std::endl;
+    //~ std::clog<<"######### onIdle ########"<< std::endl;
     //~ std::clog<<"m_model:"<< std::endl;
     //~ std::clog<<glm::to_string(m_model)<<std::endl;
-    std::clog<<"m_projection:"<< std::endl;
-    std::clog<<glm::to_string(m_projection)<<std::endl;
+    //~ std::clog<<"m_projection:"<< std::endl;
+    //~ std::clog<<glm::to_string(m_projection)<<std::endl;
     //~ std::clog<<"m_view:"<< std::endl;
     //~ std::clog<<glm::to_string(m_view)<<std::endl;
     //~ std::clog<<"test:"<< std::endl;
     //~ std::clog<<glm::to_string(test)<<std::endl;
-    std::clog<<"screen: " << screen_width << " , " << screen_height << std::endl;
+    //~ std::clog<<"screen: " << screen_width << " , " << screen_height << std::endl;
 
-    //~ if(!display2d){
-        
-        glUseProgram(program_text);
-        glUniformMatrix4fv(uniform_m_model, 1, GL_FALSE, glm::value_ptr(m_model));
-        glUniformMatrix4fv(uniform_m_projection, 1, GL_FALSE, glm::value_ptr(m_projection));
-        
-        glUseProgram(program_box);
-        //~ glUniformMatrix4fv(uniform_m_model_b, 1, GL_FALSE, glm::value_ptr(m_view));
-        //~ glUniformMatrix4fv(uniform_m_model_b, 1, GL_FALSE, glm::value_ptr(m_model));
-        //~ glUniformMatrix4fv(uniform_mvp, 1, GL_FALSE, glm::value_ptr(mvp));
-        //~ glUniformMatrix4fv(uniform_m_projection_b, 1, GL_FALSE, glm::value_ptr(m_projection));
-        //~ glUniformMatrix4fv(uniform_m_model_b, 1, GL_FALSE, glm::value_ptr(m_view_b));
-        glUniformMatrix4fv(uniform_m_model_b, 1, GL_FALSE, glm::value_ptr(m_model_b));
-        //~ glUniformMatrix4fv(uniform_mvp, 1, GL_FALSE, glm::value_ptr(mvp));
-        glUniformMatrix4fv(uniform_m_projection_b, 1, GL_FALSE, glm::value_ptr(m_projection_b));
-    //~ }
-    //~ else{
-        
-        //~ glDisable(GL_DEPTH_TEST);
-    //~ }
-
-/////////
-
-        //~ glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0, 0.0, -4.0));
-        //~ glm::mat4 view = glm::lookAt(glm::vec3(0.0, 2.0, 0.0), glm::vec3(0.0, 0.0, -4.0), glm::vec3(0.0, 1.0, 0.0));
-        //~ glm::mat4 projection = glm::perspective(45.0f, 1.0f*screen_width/screen_height, 0.1f, 10.0f);
-        
-        //~ glm::mat4 mvp = projection * view * model * anim;
-        
-        //~ glUseProgram(program);
-        //~ glUniformMatrix4fv(uniform_mvp, 1, GL_FALSE, glm::value_ptr(mvp));
-
-
-/////////
-
-
-
+    glUseProgram(program_text);
+    glUniformMatrix4fv(uniform_m_model, 1, GL_FALSE, glm::value_ptr(m_model));
+    glUniformMatrix4fv(uniform_m_projection, 1, GL_FALSE, glm::value_ptr(m_projection));
+    
+    glUseProgram(program_box);
+    glUniformMatrix4fv(uniform_m_model_b, 1, GL_FALSE, glm::value_ptr(m_model_b));
+    glUniformMatrix4fv(uniform_m_projection_b, 1, GL_FALSE, glm::value_ptr(m_projection_b));
+ 
     glutPostRedisplay();
 
 }
@@ -2076,8 +1688,11 @@ void keyboard(unsigned char key, int x, int y)
         case 'z':
             cameraPos -= cameraSpeed * cameraUp;
             break;
+        case 'b':
+            display_box = !display_box;
+            break;
         case '2':
-            display2d = !display2d;
+            ortho_mode = !ortho_mode;
             break;
         case '3':
             display3d = !display3d;
@@ -2110,8 +1725,4 @@ void keyboard(unsigned char key, int x, int y)
         
     }
     
-    //~ if (key==27) {
-        //~ free_resources();
-        //~ glutLeaveMainLoop();   // Check if 'ESC' is pressed
-    //~ }
 }

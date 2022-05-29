@@ -83,7 +83,7 @@ int main (int argc, char **argv){
     bool move_it = false;   // bool switch for testing moving display
     bool display_box = false;      //bool to switch box display on/off
     bool display_menu = true;   // display start menu
-    bool display2d = false;   // display in 2d
+    bool ortho_mode = false;   // orthographic mode
     bool displayDataOnly = false; // This is set to true when displaying a defined window i.e. with a menu
     bool hideParent = false; // used to discard the parent element before displaying in GL
     
@@ -420,11 +420,11 @@ int main (int argc, char **argv){
                     printf("Missing values for the Offset rules\n");
                 }
             }
-        // set 2d mode
+        // set orthographic mode
         if (std::regex_match (v_choice[i]->data, std::regex("(-2)|(--2-dimensions)")))
 
             {
-                display2d = true;  // 2d mode
+                ortho_mode = true;  // orthographic mode
                 printf("Display is in 2 dimensions\n");
             }            
         // set number of lines
@@ -1373,18 +1373,11 @@ int main (int argc, char **argv){
                     singleColor=true;
                     user_v_font_color={
                         {red_font_user,green_font_user,blue_font_user,alpha_font_user}
-                    //~ user_v_font_color={
-                        //~ {0.5,0.5,0.5,1.0},
-                        //~ {0.1,0.1,0.5,1.0},
-                        //~ {0.5,0.1,0.1,1.0},
-                        //~ {0.5,0.5,0.5,1.0},
-                        //~ {0.1,0.1,0.5,1.0},
-                        //~ {0.5,0.1,0.1,1.0}
                     };
                 }
                 // initialize options, text parameters and matrices
                 fprintf(stderr,"number of lines:%u\n",nlines);
-                set_options(move_it,display_box, display2d,singleColor,nlines);
+                set_options(move_it,display_box, ortho_mode,singleColor,nlines);
                 if(tempTest)
                 {
                     init_text_MDE(*ptRender,user_origin, offset, offset_rule, user_padding, user_color,user_bg_color, user_v_font_color, displayDataOnly, hideParent);
@@ -1394,21 +1387,11 @@ int main (int argc, char **argv){
                     init_text_MDE(newMDE,user_origin, offset, offset_rule, user_padding, user_color,user_bg_color, user_v_font_color, displayDataOnly, hideParent);
                 }
                 init_matrices();
-                //~ init_box();
-                // for testing cube
-                //~ if(!init_resources()) return 0;
-                //~ if(!init_resources_box()) return 0;
                 
                 // Callback functions to display MDE
                 //~ glutDisplayFunc(display);
-                //~ std::vector<vertex3D> vertex_3D;
-                //~ init_vectors(vertex_3D);
-                //~ if (init_resources_box()){
-                //~ if (init_vectors(vertex_3D)){
-                    
                 glutDisplayFunc(display);
-                //~ glutDisplayFunc(draw_box);
-    //~ glutReshapeFunc(onReshape);  /// testing                
+                glutReshapeFunc(onReshape);  // testing                
                 glutKeyboardFunc(keyboard);
                 glutSpecialFunc(special_key);
                 
