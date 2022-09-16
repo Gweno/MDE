@@ -115,7 +115,7 @@ GLfloat bg_r, bg_g, bg_b, bg_a;
 
 float x_pos = 0, y_pos = 0, z_pos = 0, x_rot = 0, y_rot = 0;
 float lastx, lasty;
-float multiply = 1;
+float multiply = 4.0f;
 float unit = 1;
 
 // for testing
@@ -162,6 +162,15 @@ glm::vec3 cameraPos   = glm::vec3(0.0f, 0.0f,  3.0f);
 glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 glm::vec3 cameraUp    = glm::vec3(0.0f, 1.0f,  0.0f);
 
+// variables to control orthographic view
+float orthoX = -0.6f;
+//~ float orthoXmax = 1.0;
+float orthoY = -0.5f;
+//~ float orthoYmax = 1.0;
+float orthoZ = 0.0;
+//~ float orthoZmax = 1.0;
+
+
 //~ const float cameraSpeed = 0.05f; // adjust accordingly
 float cameraSpeed = 0.05f; // adjust accordingly
 
@@ -174,6 +183,8 @@ float pitch =  0.0f;
 float lastX =  800.0f / 2.0;
 float lastY =  600.0 / 2.0;
 float fov   =  45.0f;
+
+
 
 bool firstMouse = true;
 
@@ -1089,12 +1100,15 @@ void mouse_wheel(int button, int state, int x, int y)
             if (fov >= 1.0f && fov <= 45.0f) fov --;
             if (fov <= 1.0f) fov = 1.0f;
             if (fov >= 45.0f) fov = 45.0f;
+            if(ortho_mode) multiply-=0.05f;
         }
     if ((button == 4) && (state == GLUT_UP)) // Scroll down
         {
             if (fov >= 1.0f && fov <= 45.0f) fov ++;
             if (fov <= 1.0f) fov = 1.0f;
             if (fov >= 45.0f) fov = 45.0f;
+            if(ortho_mode) multiply+=0.05f;
+
         }
     }
    
@@ -1150,7 +1164,8 @@ void camera(){
     cameraUp = glm::cross(cameraDirection, cameraRight);
     
     glm::mat4 m_view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp); //eye,center,up
-    if (ortho_mode) m_view = glm::ortho(-1.0f*multiply, 1.0f*multiply, -1.0f*multiply, 1.0f*multiply, 0.1f*multiply, 100.0f*multiply);
+    //~ if (ortho_mode) m_view = glm::ortho(-1.0f*multiply, 1.0f*multiply, -1.0f*multiply, 1.0f*multiply, 0.1f*multiply, 100.0f*multiply);
+    if (ortho_mode) m_view = glm::ortho((-1.0f+orthoX)*multiply, (1.0f+orthoX)*multiply, (-1.0f+orthoY)*multiply, (1.0f+orthoY)*multiply, (0.1f+orthoZ)*multiply, (100.0f+orthoZ)*multiply);
     //~ if (display2d) m_view = glm::ortho(-1000.0f, 1000.0f, -1000.0f, 1000.0f, -1000.0f, 1000.0f);
     
     // Projection matrix modified by field of view (fov) directed by the camera zoom from the mouse wheel
@@ -1638,6 +1653,10 @@ void mouse_movement(int xpos, int ypos)
         direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
         direction.y = sin(glm::radians(pitch));
         direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+        if(ortho_mode){
+            orthoX+=xoffset;
+            orthoY+=yoffset;
+        }
         cameraFront = glm::normalize(direction);
     }
 }  
@@ -1672,21 +1691,27 @@ void keyboard(unsigned char key, int x, int y)
     {
         case 'w':
             cameraPos += cameraSpeed * cameraFront;
+            if(ortho_mode)orthoZ -= 1.0;
             break;
         case 's':
             cameraPos -= cameraSpeed * cameraFront;
+            if(ortho_mode)orthoZ += 1.0;
             break;
         case 'a':
             cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+            if(ortho_mode)orthoX -= 0.1;
             break;
         case 'd':
             cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+            if(ortho_mode)orthoX += 0.1;
             break;
         case 'q':
             cameraPos += cameraSpeed * cameraUp;
+            if(ortho_mode)orthoY += 0.1;
             break;
         case 'z':
             cameraPos -= cameraSpeed * cameraUp;
+            if(ortho_mode)orthoY -= 0.1;
             break;
         case 'b':
             display_box = !display_box;
@@ -1709,6 +1734,9 @@ void keyboard(unsigned char key, int x, int y)
         case '.':
             unit *=10.0;
             break; 
+        case 'r':
+            resetCameraMatrices();
+            break; 
         //~ case '+':
             //~ cameraSpeed +=0.05;
             //~ break;
@@ -1725,4 +1753,16 @@ void keyboard(unsigned char key, int x, int y)
         
     }
     
+}
+
+void resetCameraMatrices(){
+    cameraPos   = glm::vec3(0.0f, 0.0f,  3.0f);
+    cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+    cameraUp    = glm::vec3(0.0f, 1.0f,  0.0f);
+    if(ortho_mode){
+        orthoX = -0.6f;
+        orthoY = -0.5f;
+        orthoZ = 0.0f;
+        multiply = 4.0; 
+    }        
 }

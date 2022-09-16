@@ -176,7 +176,7 @@ int main (int argc, char **argv){
     // -m, --move  :for moving mode (makes the MDE move and all axis)
     // -d, --background-color r,g,b,a: to set background color with RGBA
     // -2, --2-dimensions set display in 2d instead of 3d
-    // -l, --nb-lines: to arbittaly set the number of lines/entities
+    // -l, --nb-lines: to arbitrarily set the number of lines/entities
 
     // Create the master instance of MDE
     MDE newMDE("MDE","master");
@@ -545,6 +545,7 @@ int main (int argc, char **argv){
             printf("  r) Render html file\n");
             printf("  t) Display In Terminal and testing mode: %s\n",(tempTest?"ON":"OFF"));
             printf("  x) Display In Terminal as Xml\n");
+            printf("  p) Display in Page mode for GL display\n");
             printf("  g) Display in Gl mode\n");
             printf("\n");
             printf("  q) Quit\n");
@@ -831,7 +832,7 @@ int main (int argc, char **argv){
                             printf("  2) Set the offset rules\n");
                             printf("            Current name <-> data offset Rule (x,y,z):(%.2f,%.2f,%.2f)\n",off_rule_name_data.x,off_rule_name_data.y,off_rule_name_data.z);
                             printf("            Current index offset Rule (x,y,z):        (%.2f,%.2f,%.2f)\n",off_rule_index.x,off_rule_index.y,off_rule_index.z);
-                            printf("            Current level offset Rule (x,y,z):        (%.2f,%.2f,%.2f)\n",off_rule_level.x,off_rule_level.y,off_rule_level.z);                                        
+                            printf("            Current level offset Rule (x,y,z):        (%.2f,%.2f,%.2f)\n",off_rule_level.x,off_rule_level.y,off_rule_level.z);
                             printf("\n");
                             printf("  b) Back\n");
                             printf("  q) Quit\n");
@@ -1171,6 +1172,13 @@ int main (int argc, char **argv){
                         //~ }                                
                         break;
                         
+                    }
+                case 'p':                   // option to display text as a page
+                    {
+                        X_user=-3.0f;
+                        Y_user=1.8f;
+                        Z_user=0.0f;
+                        break;
                     }
                 case 'x':
                     {

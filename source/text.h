@@ -128,4 +128,5 @@ void onIdle2();
 void init_vbo_box(std::vector<vertex3D> &vectors_boxes);
 void init_ibo_elements_box(std::vector<vertex3D> &vectors_boxes);
 void init_box(std::vector<vertex3D> &vectors_boxes);
+void resetCameraMatrices();
 #endif /*text.h*/
