@@ -23,10 +23,6 @@
 #include "MDE.h"
 #include "utils.h"
 
-//~ #include <unistd.h>
-//~ #include <algorithm>
-
-//~ #include <filesystem>
 #include <experimental/filesystem>
 namespace fs = std::experimental::filesystem;
 
@@ -413,8 +409,6 @@ int main (int argc, char **argv){
                         
                     }
                     displayV3D(offset_rule);
-                    //~ std::clog<<"Testing template function: " << std::endl;
-                    //~ displayVec<vertex3D>(offset_rule);
                 }
                 else {
                     printf("Missing values for the Offset rules\n");
@@ -467,14 +461,12 @@ int main (int argc, char **argv){
     
     // add the file's content at vMde with index 2 for file
     vect_index_file[0] ++;
-    //~ int index_file = 0;
     
     // add a new element for loading file into it;
     MDE * ptDefault;
     MDE defaultFile;
     ptDefault = loadXMLFileToPtMDE(defaultFile,const_full_filename);
     (newMDE.vMDE_get_by_index(vect_index_file,it_file))->new_vMDE_element(ptDefault);
-    //~ newMDE.display_vector_int(vect_index_file);
 
     // add new index in vector of indexes to reflect start of data from file in MDE, for later replacong with new loaded file
     vect_index_file.push_back(0);
@@ -482,7 +474,9 @@ int main (int argc, char **argv){
     // load the menu html file to an MDE pointer then add the pointer to the master MDE
     MDE * ptMenu;
     MDE splash;
-    ptMenu = loadXMLFileToPtMDE(splash, "../datafiles/splashMenu.html");
+    //~ ptMenu = loadXMLFileToPtMDE(splash, "../datafiles/splashMenu.html");
+    //~ ptMenu = loadXMLFileToPtMDE(splash, "../datafiles/startMenu.html");
+    ptMenu = loadXMLFileToPtMDE(splash, "../datafiles/mainMenu.html");
     newMDE.new_vMDE_element(ptMenu);
     
     // add Window element

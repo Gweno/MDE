@@ -1469,6 +1469,165 @@ void simpleLoopVMDEnextLevel(MDE & MDE_source, std::string searchName,  std::vec
         std::clog<<"No tag to parse" <<std::endl;
         return nullptr;
     }
+    bool container;
+    bool subtags;
+    bool displayTag;
+    bool display;
+    bool attributes;
+    bool hasStyle;
+    bool hasColor;
+    
+    MDE * newMDE = new MDE();
+    newMDE->name=MDE_source.name;
+    newMDE->data = MDE_source.data;
+    
+    std::string color;
+
+    // a vector for the colors
+    //~ std::vector<std::vector<float>> vect_color;
+    // default (font) color
+    std::vector<float> defaultColor = {0.0,0.0,0.0,1.0};
+    
+    // Checking if MDE name is a Div -> later will add further MDE above , like <HTML>, <body>...
+    container = false;
+    if (checkHtmlTag(MDE_source,"div")){
+        // check if it's a div...
+        std::clog<<"It's a Div!\n"<<std::endl;
+        container = true;
+        for(auto it:MDE_source.vMDE){
+            std::clog <<"Checking if it's a ul\n"<<std::endl;
+            if (checkHtmlTag(*it,"ul")){
+                container = true;
+                std::clog <<"It's a ul\n"<<std::endl;
+                // check all tags for a 'p' or ul or li 
+                    for(auto it1:it->vMDE){
+                        //
+                        if (checkHtmlTag(*it1,"p") || checkHtmlTag(*it1,"li")){
+                            container = false;
+                            subtags = false;
+                            displayTag = false;
+                            display = false;
+                            attributes = false;
+                            hasStyle = false; 
+                            hasColor =false;            
+                            std::clog << "Checking:" << it1->name << std::endl;
+                            std::clog << "Does it have a style?: " << hasCssStyle(*it1,true)<< std::endl ;
+                            if (it1->vMDE.size()>0){
+                                subtags = true;
+                                for(auto it2:it1->vMDE){
+                                    std::clog << "Now Checking:" << it2->name << std::endl;
+                                    if (checkHtmlTag(*it2,"attributes")){
+                                        attributes = true;
+                                        for(auto it3:it2->vMDE){
+                                            std::clog << "And now Checking:" << (it3)->name << std::endl;
+                                            if (checkHtmlTag(*it3,"style")){
+                                                hasStyle = true;
+                                                for(auto it4:it3->vMDE){
+                                                    std::clog << "And further Checking:" << it4->name << std::endl;
+                                                    if (checkHtmlTag(*it4,"display")){
+                                                        displayTag = true;
+                                                        display = rawDisplayContent(*it4);
+                                                        //~ break;
+                                                    }
+                                                    else if (checkHtmlTag(*it4,"color")){
+                                                        std::clog << "Found some font color style! " << std::endl;
+                                                        hasColor = true;
+                                                        color = it4->data;
+                                                        std::clog << "color: " << color << std::endl;
+                
+                                                    }
+                                                }
+                                            }
+                                            
+                                        }
+                                        if (display)break;
+                                    }
+                                }
+                            }
+                            if (!subtags || !attributes || !displayTag || display){
+                                newMDE->new_vMDE_element(it1->name,it1->data);
+                                std::clog << "Tag is to be displayed: " << it->name << std::endl;
+                                if(hasColor){
+                                    std::clog << "has color: " << color << std::endl;
+                                    processCssColor(color, vect_color);
+                                }
+                                else{
+                                    // use default color for font
+                                    vect_color.push_back(defaultColor);
+                                }
+                            }
+                        }
+                        
+                        
+                        //
+                                                
+                    }
+                    }
+                    else{
+                        std::clog << "Not a ul\n"<<std::endl;
+                    }
+                }
+            }
+    else{
+        std::clog << "Not a div\n"<<std::endl;
+    }
+    
+    for(auto it:vect_color){
+        for(std::vector<float>::iterator it2=it.begin();it2!=it.end();++it2){
+            std::clog << *it2 << " , ";
+        }
+        std::clog << std::endl;
+    }
+    
+    //~ newMDE->new_vMDE_element("font","color");
+    //~ int index=0;
+    //~ MDE *ptBack;
+    //~ ptBack = newMDE->vMDE.back();
+    //~ for(auto it:vect_color){
+        //~ ptBack->new_vMDE_element();
+        //~ ptBack->vMDE.back()->name = "index"; 
+        //~ ptBack->vMDE.back()->data = std::to_string(index);
+        
+        //~ std::ostringstream ssRed;        
+        //~ ssRed << it[0];
+        //~ std::string red(ssRed.str());
+        //~ std::clog << "red: " << red << std::endl;
+        //~ ptBack->vMDE.back()->new_vMDE_element("red",red);
+        
+        
+        //~ std::ostringstream ssGreen;        
+        //~ ssGreen << it[1];
+        //~ std::string green(ssGreen.str());
+        //~ std::clog << "green: " << green << std::endl;
+        //~ ptBack->vMDE.back()->new_vMDE_element("green",green);
+        
+        
+        //~ std::ostringstream ssBlue;        
+        //~ ssBlue << it[2];
+        //~ std::string blue(ssBlue.str());
+        //~ std::clog << "blue: " << blue << std::endl;
+        //~ ptBack->vMDE.back()->new_vMDE_element("blue",blue);
+        
+        
+        //~ std::ostringstream ssAlpha;        
+        //~ ssAlpha << it[3];
+        //~ std::string alpha(ssAlpha.str());
+        //~ std::clog << "alpha: " << alpha << std::endl;
+        //~ ptBack->vMDE.back()->new_vMDE_element("alpha",alpha);
+        
+        //~ index++;
+    //~ }
+    //~ delete ptBack;
+    
+    return newMDE;
+}
+
+ MDE * htmlParser_old(MDE & MDE_source, std::vector<std::vector<float>> &vect_color){
+    fprintf(stderr,"MDE_source name %s, data %s: \n", (MDE_source.name).c_str(),MDE_source.data.c_str());
+    if (MDE_source.vMDE.size()==0){
+        std::clog<<"No tag to parse" <<std::endl;
+        return nullptr;
+    }
     bool subtags;
     bool displayTag;
     bool display;
@@ -1491,8 +1650,8 @@ void simpleLoopVMDEnextLevel(MDE & MDE_source, std::string searchName,  std::vec
     std::vector<float> defaultColor = {0.0,0.0,0.0,1.0};
 
     for(auto it:MDE_source.vMDE){
-        // check all tags for a 'p'
-        if (checkHtmlTag(*it,"p")){
+        // check all tags for a 'p' or ul or li 
+        if (checkHtmlTag(*it,"p") || checkHtmlTag(*it,"li")){
             subtags = false;
             displayTag = false;
             display = false;
@@ -1710,7 +1869,7 @@ std::vector<float> processCssColor_RGBA(std::string &cssColor){
 
 
 bool checkHtmlTag(MDE & MDE_source, std::string tag){
-    //~ std::clog << "Checking if " << MDE_source.name << " is " << tag << std::endl;
+    std::clog << "Checking if " << MDE_source.name << " is " << tag << std::endl;
     
     if (MDE_source.name == tag)return true;
     else return false; 
