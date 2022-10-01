@@ -1495,8 +1495,12 @@ void simpleLoopVMDEnextLevel(MDE & MDE_source, std::string searchName,  std::vec
         std::clog<<"It's a Div!\n"<<std::endl;
         container = true;
         for(auto it:MDE_source.vMDE){
-            std::clog <<"Checking if it's a ul\n"<<std::endl;
-            if (checkHtmlTag(*it,"ul")){
+            std::clog <<"Checking if it's a h3 or ul\n"<<std::endl;
+            if (checkHtmlTag(*it,"h3")){
+                std::clog <<"It's a h3\n"<<std::endl;
+                newMDE->new_vMDE_element(it->name,it->data);
+            }
+            else if (checkHtmlTag(*it,"ul")){
                 container = true;
                 std::clog <<"It's a ul\n"<<std::endl;
                 // check all tags for a 'p' or ul or li 

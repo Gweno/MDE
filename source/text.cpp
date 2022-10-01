@@ -109,7 +109,7 @@ GLuint ibo_box_elements;
 
 const char *inputText;
 //~ uint fontSize=48;
-uint fontSize=12;
+uint fontSize=16;
 GLfloat r,g,b,a;
 GLfloat bg_r, bg_g, bg_b, bg_a;
 
