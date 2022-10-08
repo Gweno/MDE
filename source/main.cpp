@@ -1407,7 +1407,6 @@ int main (int argc, char **argv){
                 glutMotionFunc(mouse_movement); //check for Mouse movement with button down
                 glutMouseFunc(mouse_wheel);
                 glutIdleFunc(onIdle);
-                //~ glutIdleFunc(onIdle2);
                 
                 // openGL parameters
                 glEnable(GL_BLEND);

@@ -70,7 +70,6 @@ void user_input_bridge(MDE &user_input_MDE, vertex3D &origin, std::vector<vertex
                     vertex3Dalpha &bg_color_alpha, std::vector<vertex3Dalpha> &font_color,
                     bool displayDataOnly, bool hideParent);
 
-void init_text_coordinates(GLfloat x, GLfloat y, GLfloat z);
 void displayV2D(std::vector<vertex2D> &vector_2D);
 void displayV3D(std::vector<vertex3D> &vector_3D);
 void displayV3Dalpha(std::vector<vertex3Dalpha> &vector_3Dalpha);
@@ -79,16 +78,12 @@ void displayVGLfloat(std::vector<GLfloat> &vector_glf);
 void text_display();
 void draw_box();
 void text_frame(std::vector<vertex3D> &vector_input, std::vector<uint> &nb_glyphs, vertex3D &offset, vertex2D &padding);
-void render_text(atlas * a) ;
-//~ void render_text2d(const char *text, atlas * a, float x, float y, float sx, float sy);
-void render_text2d(atlas * a);
 
 void create_vector(std::vector<vertex3D> &vector3D,std::vector<vertex3D> &v_origin, std::vector<vertex3D> &vector_blf, std::vector<vertex3D> &vector_trb);
 void create_coord_vector_text(const char *text, atlas * a, vertex3D &origin, vertex2D &window_coord_scale);
 void onIdle();
 void camera();
 void display();
-void display_text2d();
 void init_matrices();
 
 void free_resources();
@@ -128,7 +123,6 @@ void onReshape(int width, int height);
 int init_resources();
 void init_color_box(vertex3Dalpha &color_alpha);
 void onDisplay();
-void onIdle2();
 void init_vbo_box(std::vector<vertex3D> &vectors_boxes);
 void init_ibo_elements_box(std::vector<vertex3D> &vectors_boxes);
 void init_box(std::vector<vertex3D> &vectors_boxes);
