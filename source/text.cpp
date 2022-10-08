@@ -147,6 +147,24 @@ struct point3D {
 	GLfloat t;
 };
 
+// global variable for glyphs and their coordinates, to be used in the bridg method 
+
+MDE *my_entity;
+vertex3D *origin;
+std::vector<vertex3D> *offset;
+std::vector<vertex3D> *offset_rule;
+vertex3Dalpha *color_alpha;
+vertex3Dalpha *bg_color_alpha;
+std::vector<vertex3Dalpha> *font_color;
+bool *displayDataOnly;
+bool *hideParent;
+//
+std::vector<GLdata> my_v_MDE_data;
+
+std::vector<vertex3D> v_origin;      // coordinates of origin for the glyphs/text
+std::vector<vertex3D> v_origin_fb;   // coordinates of origin for the frame box to include padding
+
+
 
 //~ GLfloat *font_color[4] = {NULL};
 //~ GLfloat *font_color = NULL;
@@ -341,12 +359,16 @@ uint nb_indices=0;
 std::vector<vertex3D> glyphs_box;
 std::vector<vertex2D> glyphs_vertex;
 
+// testing with a second set of glyhs for testing multiple size of ont on screen
+std::vector<vertex3D> glyphs_box2;
+std::vector<vertex2D> glyphs_vertex2;
+
 std::vector<vertex3Dalpha> v_font_color;
 std::vector<vertex3Dalpha> vector_font_color;
 
 std::vector<uint> nb_glyphs_per_text;
 
-void create_coord_vector_text(const char *text, atlas * a, vertex3D origin, vertex2D &window_coord_scale){
+void create_coord_vector_text(const char *text, atlas * a, vertex3D &origin, vertex2D &window_coord_scale){
     
     const uint8_t *p;
     uint c = 0;
@@ -979,40 +1001,68 @@ void draw_box(){
     
 }
 
-void init_text_MDE(MDE &my_entity,vertex3D &origin, std::vector<vertex3D> &offset, std::vector<vertex3D> &offset_rule, vertex2D &padding, vertex3Dalpha &color_alpha, vertex3Dalpha &bg_color_alpha, std::vector<vertex3Dalpha> &font_color, bool displayDataOnly, bool hideParent) {
-    
-    /* Create texture atlasses for a given font size */
-    a_any_size = new atlas(face,(int)fontSize);
-    
-    vertex2D window_scale;
-    window_scale.x = 2.0 / glutGet(GLUT_WINDOW_WIDTH);
-    window_scale.y = 2.0 / glutGet(GLUT_WINDOW_HEIGHT);
-    //~ window_scale.x = 1.0 / glutGet(GLUT_WINDOW_WIDTH);
-    //~ window_scale.y = 1.0 / glutGet(GLUT_WINDOW_HEIGHT);
-    std::vector<vertex3D> v_origin;      // coordinates of origin for the glyphs/text
-    std::vector<vertex3D> v_origin_fb;   // coordinates of origin for the frame box to include padding
+void user_input_bridge(MDE &user_input_MDE, vertex3D &user_input_origin, std::vector<vertex3D> &user_input_offset,
+                    std::vector<vertex3D> &user_input_offset_rule, vertex2D &user_input_padding, vertex3Dalpha &user_input_color_alpha,
+                    vertex3Dalpha &user_input_bg_color_alpha, std::vector<vertex3Dalpha> &user_input_font_color,
+                    bool _displayDataOnly, bool _hideParent){
+                        
+    my_entity = &user_input_MDE;
+    origin = &user_input_origin;
+    offset = &user_input_offset;
+    offset_rule = &user_input_offset_rule;
+    color_alpha = &user_input_color_alpha;
+    bg_color_alpha = &user_input_bg_color_alpha;
+    font_color = &user_input_font_color;
+    displayDataOnly = &_displayDataOnly;
+    hideParent = &_hideParent;
 
-    std::vector<GLdata> my_v_MDE_data;
+    // non-pointer variable
+    padding = user_input_padding;
+    
+}
+
+// prepare MDE Data for futrher processing, hidding parent and 'name' if boolean set to True
+void init_data(){
     int level=0;
     int index=0;
-    extractMDEdataForVoffset(my_entity, my_v_MDE_data, level,index ,displayDataOnly = displayDataOnly, hideParent = hideParent);
-    process_v_MDE_data(my_v_MDE_data,offset, offset_rule);
-    for (std::vector<vertex3D>::iterator it_offset=offset.begin(); it_offset!=offset.end();++it_offset){
-        v_origin.push_back({origin.x+(*it_offset).x,origin.y+(*it_offset).y,origin.z+(*it_offset).z});
+    extractMDEdataForVoffset(*my_entity, my_v_MDE_data, level,index ,displayDataOnly = displayDataOnly, hideParent = hideParent);
+}
+
+void init_offset_rules(){
+    process_v_MDE_data(my_v_MDE_data,*offset, *offset_rule);
+    std::clog<<"offset_rule: "<<std::endl;
+    displayV3D(*offset_rule);
+    std::clog<<"offset: "<<std::endl;
+    displayV3D(*offset);
+}
+
+void init_origin(){
+       
+    for (std::vector<vertex3D>::iterator it_offset=offset->begin(); it_offset!=offset->end();++it_offset){
+        v_origin.push_back({origin->x+(*it_offset).x,origin->y+(*it_offset).y,origin->z+(*it_offset).z});
     }
+        
+}
+
+void init_padding(){
     
     // Adding padding at first and last elements of v_origin
     add_padding(v_origin, v_origin_fb, padding);
-    std::clog<<"offset_rule: "<<std::endl;
-    displayV3D(offset_rule);
-    std::clog<<"offset: "<<std::endl;
-    displayV3D(offset);
+    std::clog<<"padding: " << padding.x << ", " << padding.y <<std::endl;
     std::clog<<"v_origin: "<<std::endl;
     displayV3D(v_origin);
     std::clog<<"v_origin_fb: "<<std::endl;
     displayV3D(v_origin_fb);
     
+}
 
+void init_glyphs(){
+    
+    vertex2D window_scale;
+    window_scale.x = 2.0 / glutGet(GLUT_WINDOW_WIDTH);
+    window_scale.y = 2.0 / glutGet(GLUT_WINDOW_HEIGHT);
+    /* Create texture atlasses for a given font size */
+    a_any_size = new atlas(face,(int)fontSize);
     
     uint index_v_origin=0;
     for (std::vector<GLdata>::iterator it_v_MDE_data=my_v_MDE_data.begin(); it_v_MDE_data!=my_v_MDE_data.end();++it_v_MDE_data)
@@ -1020,14 +1070,30 @@ void init_text_MDE(MDE &my_entity,vertex3D &origin, std::vector<vertex3D> &offse
         create_coord_vector_text(((*it_v_MDE_data).MDE_data).c_str(), a_any_size, v_origin[index_v_origin], window_scale );
         index_v_origin++;
     }
-    std::clog << "size of glyphs box: " << glyphs_box.size() << std::endl;  
-    text_frame(glyphs_box, nb_glyphs_per_text, v_origin_fb, padding);
+    std::clog << "size of glyphs box: " << glyphs_box.size() << std::endl;     
+}
+
+
+void init_frame(){
+        text_frame(glyphs_box, nb_glyphs_per_text, v_origin_fb, padding);
+
+}
+
+void init_color_scheme(){
+ 
     nlines = (uint)nb_glyphs_per_text.size();
     //~ bool singleColor = true;
     fprintf(stderr,"number of lines in init_text_MDE:%u\n",nlines);
-    init_v_font_color(font_color,nlines , true, true);
-    init_color(color_alpha,bg_color_alpha,font_color,v_origin,nb_glyphs_per_text);
-    
+    init_v_font_color(*font_color,nlines , true, true);
+    init_color(*color_alpha,*bg_color_alpha,*font_color,v_origin,nb_glyphs_per_text);
+}
+
+void init_text_MDE(){
+ 
+    nlines = (uint)nb_glyphs_per_text.size();
+    fprintf(stderr,"number of lines in init_text_MDE:%u\n",nlines);
+    init_v_font_color(*font_color,nlines , true, true);
+    init_color(*color_alpha,*bg_color_alpha,*font_color,v_origin,nb_glyphs_per_text);
 }
 
 void process_v_MDE_data(std::vector<GLdata> & v_MDE_data,std::vector<vertex3D> & v_offset, std::vector<vertex3D> & v_offset_rule){
@@ -1066,6 +1132,12 @@ void text_display() {
     glUseProgram(program_text);
     glUniform4fv(uniform_bgcolor_text, 1, bg_rgb);
     render_text(a_any_size);
+    
+    //~ FT_Set_Pixel_Sizes(face, 0, 96);
+    
+    //~ glUseProgram(program_text);
+    //~ glUniform4fv(uniform_bgcolor_text, 1, bg_rgb);
+    //~ render_text(a96);
     
 }
 

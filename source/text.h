@@ -62,10 +62,14 @@ bool init_font(uint uFontSize,const char *uFontFilename);
  */
 bool init_program();
 
-//~ void init_color(vertex3Dalpha &color_alpha, vertex3Dalpha &bg_color_alpha, std::vector<vertex3D> &whd);
 void init_color(vertex3Dalpha &color_alpha, vertex3Dalpha &bg_color_alpha, std::vector<vertex3Dalpha> &font_color_alpha, std::vector<vertex3D> &whd, std::vector<unsigned int> &nb_glyphs_per_text);
 void init_vectors(std::vector<vertex3D> &vectors_boxes);
-void init_text_MDE(MDE &my_entity,vertex3D &origin, std::vector<vertex3D> &offset, std::vector<vertex3D> &offset_rule, vertex2D &padding, vertex3Dalpha &color_alpha, vertex3Dalpha &bg_color_alpha, std::vector<vertex3Dalpha> &font_color, bool displayDataOnly = false, bool hideParent=false);
+
+void user_input_bridge(MDE &user_input_MDE, vertex3D &origin, std::vector<vertex3D> &offset,
+                    std::vector<vertex3D> &offset_rule, vertex2D &padding, vertex3Dalpha &color_alpha,
+                    vertex3Dalpha &bg_color_alpha, std::vector<vertex3Dalpha> &font_color,
+                    bool displayDataOnly, bool hideParent);
+
 void init_text_coordinates(GLfloat x, GLfloat y, GLfloat z);
 void displayV2D(std::vector<vertex2D> &vector_2D);
 void displayV3D(std::vector<vertex3D> &vector_3D);
@@ -80,7 +84,7 @@ void render_text(atlas * a) ;
 void render_text2d(atlas * a);
 
 void create_vector(std::vector<vertex3D> &vector3D,std::vector<vertex3D> &v_origin, std::vector<vertex3D> &vector_blf, std::vector<vertex3D> &vector_trb);
-void create_coord_vector_text(const char *text, atlas * a, vertex3D origin, vertex2D &window_coord_scale);
+void create_coord_vector_text(const char *text, atlas * a, vertex3D &origin, vertex2D &window_coord_scale);
 void onIdle();
 void camera();
 void display();
@@ -129,4 +133,15 @@ void init_vbo_box(std::vector<vertex3D> &vectors_boxes);
 void init_ibo_elements_box(std::vector<vertex3D> &vectors_boxes);
 void init_box(std::vector<vertex3D> &vectors_boxes);
 void resetCameraMatrices();
+
+
+void init_data();
+void init_offset_rules();
+void init_origin();
+void init_padding();
+void init_glyphs();
+void init_frame();
+void init_color_scheme();
+
+
 #endif /*text.h*/

@@ -1382,16 +1382,22 @@ int main (int argc, char **argv){
                 set_options(move_it,display_box, ortho_mode,singleColor,nlines);
                 if(tempTest)
                 {
-                    init_text_MDE(*ptRender,user_origin, offset, offset_rule, user_padding, user_color,user_bg_color, user_v_font_color, displayDataOnly, hideParent);
+                    user_input_bridge(*ptRender, user_origin, offset, offset_rule, user_padding, user_color,user_bg_color, user_v_font_color, displayDataOnly, hideParent);
                 }
                 else
                 {
-                    init_text_MDE(newMDE,user_origin, offset, offset_rule, user_padding, user_color,user_bg_color, user_v_font_color, displayDataOnly, hideParent);
+                    user_input_bridge(newMDE, user_origin, offset, offset_rule, user_padding, user_color,user_bg_color, user_v_font_color, displayDataOnly, hideParent);
                 }
+                init_data();
+                init_offset_rules();
+                init_origin();
+                init_padding();
+                init_glyphs();
+                init_frame();
+                init_color_scheme();
                 init_matrices();
                 
                 // Callback functions to display MDE
-                //~ glutDisplayFunc(display);
                 glutDisplayFunc(display);
                 glutReshapeFunc(onReshape);  // testing                
                 glutKeyboardFunc(keyboard);
