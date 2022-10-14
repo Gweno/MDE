@@ -1499,6 +1499,7 @@ void simpleLoopVMDEnextLevel(MDE & MDE_source, std::string searchName,  std::vec
             if (checkHtmlTag(*it,"h3")){
                 std::clog <<"It's a h3\n"<<std::endl;
                 newMDE->new_vMDE_element(it->name,it->data);
+                vect_color.push_back(defaultColor);
             }
             else if (checkHtmlTag(*it,"ul")){
                 container = true;

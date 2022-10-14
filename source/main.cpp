@@ -1377,6 +1377,9 @@ int main (int argc, char **argv){
                         {red_font_user,green_font_user,blue_font_user,alpha_font_user}
                     };
                 }
+                
+                displayV3Dalpha(user_v_font_color);
+                
                 // initialize options, text parameters and matrices
                 fprintf(stderr,"number of lines:%u\n",nlines);
                 set_options(move_it,display_box, ortho_mode,singleColor,nlines);

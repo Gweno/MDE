@@ -156,6 +156,7 @@ std::vector<vertex3D> *offset_rule;
 vertex3Dalpha *color_alpha;
 vertex3Dalpha *bg_color_alpha;
 std::vector<vertex3Dalpha> *font_color;
+std::vector<vertex3Dalpha> *font_color2;
 bool *displayDataOnly;
 bool *hideParent;
 //
@@ -365,10 +366,76 @@ std::vector<vertex2D> glyphs_vertex2;
 
 std::vector<vertex3Dalpha> v_font_color;
 std::vector<vertex3Dalpha> vector_font_color;
+std::vector<vertex3Dalpha> v_font_color2;
+std::vector<vertex3Dalpha> vector_font_color2;
 
 std::vector<uint> nb_glyphs_per_text;
+std::vector<uint> nglyphs0;
+std::vector<uint> nglyphs1;
 
-void create_coord_vector_text(const char *text, atlas * a, vertex3D &origin, vertex2D &window_coord_scale){
+void create_coord_vector_text(const char *text, atlas * a, vertex3D &origin, vertex2D &window_coord_scale,
+                                std::vector<vertex3D> &a_glyphs_box, std::vector<vertex2D> &a_glyphs_vertex){    
+    const uint8_t *p;
+    uint c = 0;
+
+    /* Loop through all characters */
+
+    for (p = (const uint8_t *)text; *p; p++) {
+        
+        /* Calculate the vertex and texture coordinates */
+        float x2 = origin.x + a->c[*p].bl * window_coord_scale.x;
+        float y2 = -origin.y - a->c[*p].bt * window_coord_scale.y;
+        float w = a->c[*p].bw * window_coord_scale.x;
+        float h = a->c[*p].bh * window_coord_scale.y;
+        
+        /* Advance the cursor to the start of the next character */
+        origin.x += a->c[*p].ax * window_coord_scale.x;
+        origin.y += a->c[*p].ay * window_coord_scale.y;
+    
+        /* Skip glyphs that have no pixels */
+        if (!w || !h)
+            continue;
+        c+=6;
+        
+        a_glyphs_box.push_back((vertex3D) {
+        x2, -y2, origin.z});
+        a_glyphs_box.push_back((vertex3D) {
+        x2 + w, -y2, origin.z});
+        a_glyphs_box.push_back((vertex3D) {
+        x2, -y2 - h, origin.z});
+        a_glyphs_box.push_back((vertex3D) {
+        x2 + w, -y2, origin.z});
+        a_glyphs_box.push_back((vertex3D) {
+        x2, -y2 - h, origin.z});
+        a_glyphs_box.push_back((vertex3D) {
+        x2 + w, -y2 - h, origin.z});
+
+        a_glyphs_vertex.push_back((vertex2D) {
+        a->c[*p].tx, a->c[*p].ty});
+        a_glyphs_vertex.push_back((vertex2D) {
+        a->c[*p].tx + a->c[*p].bw / a->w, a->c[*p].ty});
+        a_glyphs_vertex.push_back((vertex2D) {
+        a->c[*p].tx, a->c[*p].ty + a->c[*p].bh / a->h});
+        a_glyphs_vertex.push_back((vertex2D) {
+        a->c[*p].tx + a->c[*p].bw / a->w, a->c[*p].ty});
+        a_glyphs_vertex.push_back((vertex2D) {
+        a->c[*p].tx, a->c[*p].ty + a->c[*p].bh / a->h});
+        a_glyphs_vertex.push_back((vertex2D) {
+        a->c[*p].tx + a->c[*p].bw / a->w, a->c[*p].ty + a->c[*p].bh / a->h});
+
+    }
+    
+    //~ displayV3D(glyphs_box);
+    nb_glyphs_per_text.push_back(c);
+    nb_indices+=c;
+    std::clog << "nb_glyphs_per_text" << std::endl;
+    displayVuint(nb_glyphs_per_text);
+    std::clog << " nb_indices " << nb_indices << std::endl;
+    std::clog << " size of glyphs_vertex " << glyphs_vertex.size() << std::endl;
+    
+}
+
+void create_coord_vector_text_old(const char *text, atlas * a, vertex3D &origin, vertex2D &window_coord_scale){
     
     const uint8_t *p;
     uint c = 0;
@@ -485,7 +552,53 @@ void text_frame(std::vector<vertex3D> &vector_input, std::vector<uint> &nb_glyph
     
 }
 
-void render_text(atlas * a) {
+void render_text(atlas * a, std::vector<vertex3Dalpha> &vector_font_color_part,
+             std::vector<vertex3D> &glyphs_box_part, std::vector<vertex2D> &glyphs_vertex_part ) {
+    
+    //~ std::clog<<"######## In render_text ###########"<<std::endl;
+    //~ std::clog<<"1"<<std::endl;
+    //~ displayV3Dalpha(vector_font_color);
+    /* test color per block*/
+    glEnableVertexAttribArray(attribute_font_color);
+    glGenBuffers(1,&vbo_font_color);
+    glBindBuffer(GL_ARRAY_BUFFER,vbo_font_color);
+    glVertexAttribPointer(attribute_font_color, 4, GL_FLOAT, GL_FALSE, 0, 0);
+    glBufferData(GL_ARRAY_BUFFER,vector_font_color_part.size() * sizeof(vertex3Dalpha),&vector_font_color_part.front(),GL_STATIC_DRAW);
+    //~ std::clog<<"2"<<std::endl;
+ 
+    //~ /* Use the texture containing the atlas */
+    glBindTexture(GL_TEXTURE_2D, a->tex);
+    
+    /* Set up the VBO for our vertex data */
+    glEnableVertexAttribArray(attribute_coord);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo_coord);
+    glVertexAttribPointer(attribute_coord, 3, GL_FLOAT, GL_FALSE, 0, 0);
+    /* Draw the character on the screen */
+    glBufferData(GL_ARRAY_BUFFER, glyphs_box_part.size() * sizeof(vertex3D), &glyphs_box_part.front(), GL_STATIC_DRAW);
+    //~ displayV3D(glyphs_box);
+    //~ std::clog<<"3"<<std::endl;
+    
+    /* Set up the VBO for our vertex data */
+    glEnableVertexAttribArray(attribute_tex_coord);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo_tex_coord);
+    glVertexAttribPointer(attribute_tex_coord, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    
+    //~ std::clog<<"4"<<std::endl;
+    //~ std::clog<<"nb_indices: "<<nb_indices<<std::endl;
+    //~ displayV2D(glyphs_vertex);
+    /* Draw all the character on the screen in one go */
+    glBufferData(GL_ARRAY_BUFFER,glyphs_vertex_part.size() * sizeof(vertex2D),&glyphs_vertex_part.front(),GL_STATIC_DRAW);
+    glDrawArrays(GL_TRIANGLES, 0, nb_indices);
+
+    //~ std::clog<<"5"<<std::endl;
+    
+    glDisableVertexAttribArray(attribute_font_color);
+    glDisableVertexAttribArray(attribute_coord);
+    glDisableVertexAttribArray(attribute_tex_coord);
+    //~ std::clog<<"######## End render_text ###########"<<std::endl;
+}
+
+void render_text_old(atlas * a) {
     
     //~ std::clog<<"######## In render_text ###########"<<std::endl;
     //~ std::clog<<"1"<<std::endl;
@@ -673,8 +786,10 @@ void init_color(vertex3Dalpha &color_alpha, vertex3Dalpha &bg_color_alpha, std::
     
     std::vector<GLfloat> vect_color3;
 
-    fprintf(stderr,"whd.size: %u\n",whd.size());
-    int max_loop = whd.size();
+    //~ fprintf(stderr,"whd.size: %u\n",whd.size());
+    fprintf(stderr,"font_color_alpha.size: %u\n",font_color_alpha.size());
+    //~ int max_loop = whd.size();
+    int max_loop = font_color_alpha.size();
     for(int i=0;i<max_loop;i++){
         vect_color3.insert (vect_color3.end(), box_vertices_color3, box_vertices_color3+32);
         }
@@ -720,8 +835,41 @@ void init_color(vertex3Dalpha &color_alpha, vertex3Dalpha &bg_color_alpha, std::
     //~ std::clog << "########init font color done########" << std::endl;
     
 }
-
-void init_v_font_color(std::vector<vertex3Dalpha> &font_color, uint &nlines, bool singleColor, bool displayDataOnly){
+// bypassing singlecolor for testing
+//~ void init_v_font_color(std::vector<vertex3Dalpha> &font_color, uint &nlines, bool singleColor, bool displayDataOnly){
+void init_v_font_color(std::vector<vertex3Dalpha> &font_color,std::vector<vertex3Dalpha> &v_font_color, uint &nlines, bool singleColor, bool displayDataOnly){
+    
+    std::clog<<"####### init_v_font_color ########" << std::endl;
+    std::clog<<"Size of  font_color: " << (font_color).size() << std::endl;
+    displayV3Dalpha(font_color);
+    std::clog << "single color: " << ((singleColor)?"True":"False") << std::endl;
+    if(singleColor)
+    {
+        // add same color for each glyph
+        std::clog << "Check number of lines: " << nlines << std::endl;
+        for(uint i=0;i<nlines;i++)
+        {
+            for(std::vector<vertex3Dalpha>::iterator it=font_color.begin();it!=font_color.end();++it){
+                std::clog << "Step " << i <<std::endl;
+                v_font_color.push_back((*it));
+                //~ std::clog<<"Size of  font_color: " << font_color.size() << " at loop step " << i << std::endl;
+                //~ v_font_color.push_back((*it).x,(*it).y,(*it).z,(*it).a);
+                // if displaying name and data we push back another set of same color
+                //TODO introduce different color for name and data
+                //~ if(!displayDataOnly) v_font_color.push_back((*it).x,(*it).y,(*it).z,(*it).a);
+                if(!displayDataOnly) v_font_color.push_back((*it));
+            }
+            
+        }
+    }
+    //~ font_color = v_font_color2;
+    //~ displayV3Dalpha(font_color);
+    font_color = v_font_color;
+    displayV3Dalpha(font_color);
+    std::clog << "####### End init_v_font_color #######" << std::endl;
+    
+}
+void init_v_font_color_old(std::vector<vertex3Dalpha> &font_color, uint &nlines, bool singleColor, bool displayDataOnly){
     
     std::clog<<"####### init_v_font_color ########" << std::endl;
     if(singleColor)
@@ -1008,11 +1156,17 @@ void user_input_bridge(MDE &user_input_MDE, vertex3D &user_input_origin, std::ve
                         
     my_entity = &user_input_MDE;
     origin = &user_input_origin;
+    
+    
     offset = &user_input_offset;
     offset_rule = &user_input_offset_rule;
     color_alpha = &user_input_color_alpha;
     bg_color_alpha = &user_input_bg_color_alpha;
+    
     font_color = &user_input_font_color;
+    // for testing
+    font_color2 = &user_input_font_color;
+    
     displayDataOnly = &_displayDataOnly;
     hideParent = &_hideParent;
 
@@ -1063,11 +1217,22 @@ void init_glyphs(){
     window_scale.y = 2.0 / glutGet(GLUT_WINDOW_HEIGHT);
     /* Create texture atlasses for a given font size */
     a_any_size = new atlas(face,(int)fontSize);
+    a96 = new atlas(face,96);
+    a48 = new atlas(face,48);
+    //~ a40;
+    //~ a24;
+    //~ a12;    
+    
     
     uint index_v_origin=0;
+    
     for (std::vector<GLdata>::iterator it_v_MDE_data=my_v_MDE_data.begin(); it_v_MDE_data!=my_v_MDE_data.end();++it_v_MDE_data)
     {
-        create_coord_vector_text(((*it_v_MDE_data).MDE_data).c_str(), a_any_size, v_origin[index_v_origin], window_scale );
+        //~ create_coord_vector_text(((*it_v_MDE_data).MDE_data).c_str(), a_any_size, v_origin[index_v_origin], window_scale );
+        if(index_v_origin==0)create_coord_vector_text(((*it_v_MDE_data).MDE_data).c_str(), a96, v_origin[index_v_origin], window_scale, glyphs_box2, glyphs_vertex2 );
+        else create_coord_vector_text(((*it_v_MDE_data).MDE_data).c_str(), a_any_size, v_origin[index_v_origin], window_scale, glyphs_box, glyphs_vertex );
+        //~ create_coord_vector_text(((*it_v_MDE_data).MDE_data).c_str(), swap, v_origin[index_v_origin], window_scale );
+        //~ create_coord_vector_text(((*it_v_MDE_data).MDE_data).c_str(), a96, v_origin[index_v_origin], window_scale );
         index_v_origin++;
     }
     std::clog << "size of glyphs box: " << glyphs_box.size() << std::endl;     
@@ -1082,19 +1247,39 @@ void init_frame(){
 void init_color_scheme(){
  
     nlines = (uint)nb_glyphs_per_text.size();
+    vector<uint>::const_iterator first = nb_glyphs_per_text.begin();
+    vector<uint>::const_iterator last = nb_glyphs_per_text.begin() + 1;
+    vector<uint> newVec(first, last);
+    nglyphs0=newVec;
+    displayVuint(nglyphs0);
+    vector<uint>::const_iterator end = nb_glyphs_per_text.end();
+    vector<uint> newVec2(last, end);
+    nglyphs1=newVec2;
+    displayVuint(nglyphs1);
     //~ bool singleColor = true;
     fprintf(stderr,"number of lines in init_text_MDE:%u\n",nlines);
-    init_v_font_color(*font_color,nlines , true, true);
-    init_color(*color_alpha,*bg_color_alpha,*font_color,v_origin,nb_glyphs_per_text);
+    uint nl0 = 1;
+    uint nl1 = nlines-1;
+    init_v_font_color(*font_color2,vector_font_color2, nl0 , true, true);
+    //~ init_v_font_color(*font_color,nlines , true, true);
+    init_v_font_color(*font_color, vector_font_color,nl1 , true, true);
+    
+    
+    
+    //~ init_color(*color_alpha,*bg_color_alpha,*font_color2,v_origin,nb_glyphs_per_text);
+    //~ init_color(*color_alpha,*bg_color_alpha,*font_color,v_origin,nb_glyphs_per_text);
+    
+    init_color(*color_alpha,*bg_color_alpha,*font_color2,v_origin,nglyphs0);
+    init_color(*color_alpha,*bg_color_alpha,*font_color,v_origin,nglyphs1);
 }
 
-void init_text_MDE(){
+//~ void init_text_MDE(){
  
-    nlines = (uint)nb_glyphs_per_text.size();
-    fprintf(stderr,"number of lines in init_text_MDE:%u\n",nlines);
-    init_v_font_color(*font_color,nlines , true, true);
-    init_color(*color_alpha,*bg_color_alpha,*font_color,v_origin,nb_glyphs_per_text);
-}
+    //~ nlines = (uint)nb_glyphs_per_text.size();
+    //~ fprintf(stderr,"number of lines in init_text_MDE:%u\n",nlines);
+    //~ init_v_font_color(*font_color,nlines , true, true);
+    //~ init_color(*color_alpha,*bg_color_alpha,*font_color,v_origin,nb_glyphs_per_text);
+//~ }
 
 void process_v_MDE_data(std::vector<GLdata> & v_MDE_data,std::vector<vertex3D> & v_offset, std::vector<vertex3D> & v_offset_rule){
     
@@ -1127,17 +1312,23 @@ void text_display() {
     //~ GLfloat bg_rgb[4] = { r, g, b, a };
     GLfloat bg_rgb[4] = { r, g, b, 0 };
     
-    FT_Set_Pixel_Sizes(face, 0, fontSize);
-
-    glUseProgram(program_text);
-    glUniform4fv(uniform_bgcolor_text, 1, bg_rgb);
-    render_text(a_any_size);
+    //~ const void* pointer;
+    //~ pointer=0;
     
     //~ FT_Set_Pixel_Sizes(face, 0, 96);
-    
+
     //~ glUseProgram(program_text);
     //~ glUniform4fv(uniform_bgcolor_text, 1, bg_rgb);
-    //~ render_text(a96);
+    //~ render_text(a96, pointer);
+    
+    //~ pointer=1;
+    
+    //~ FT_Set_Pixel_Sizes(face, 0, fontSize);
+    
+    glUseProgram(program_text);
+    glUniform4fv(uniform_bgcolor_text, 1, bg_rgb);
+    render_text(a96, vector_font_color, glyphs_box2, glyphs_vertex2);
+    //~ render_text(a_any_size, vector_font_color2, glyphs_box, glyphs_vertex);
     
 }
 

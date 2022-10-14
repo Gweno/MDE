@@ -80,7 +80,9 @@ void draw_box();
 void text_frame(std::vector<vertex3D> &vector_input, std::vector<uint> &nb_glyphs, vertex3D &offset, vertex2D &padding);
 
 void create_vector(std::vector<vertex3D> &vector3D,std::vector<vertex3D> &v_origin, std::vector<vertex3D> &vector_blf, std::vector<vertex3D> &vector_trb);
-void create_coord_vector_text(const char *text, atlas * a, vertex3D &origin, vertex2D &window_coord_scale);
+void create_coord_vector_text(const char *text, atlas * a, vertex3D &origin, vertex2D &window_coord_scale,
+                                std::vector<vertex3D> &a_glyphs_box, std::vector<vertex2D> &a_glyphs_vertex);
+void create_coord_vector_text_old(const char *text, atlas * a, vertex3D &origin, vertex2D &window_coord_scale);
 void onIdle();
 void camera();
 void display();
@@ -115,6 +117,8 @@ void init_font_color(std::vector<GLfloat> &color);
 void set_options(bool move_it, bool display_box, bool display2d=false, bool singleColor=true, uint nlines=1);
 
 void init_v_font_color(std::vector<vertex3Dalpha> &font_color, uint &nlines, bool singleColor=true, bool displayDataOnly=false);
+void init_v_font_color(std::vector<vertex3Dalpha> &font_color,std::vector<vertex3Dalpha> &v_font_color, uint &nlines, bool singleColor, bool displayDataOnly);
+
 //~ template <typename T>
 //~ void displayVec(std::vector<T> &vect)
 
@@ -136,6 +140,9 @@ void init_padding();
 void init_glyphs();
 void init_frame();
 void init_color_scheme();
-
+//~ void render_text(atlas * a, const void * pointer);
+void render_text(atlas * a, std::vector<vertex3Dalpha> &vector_font_color_part,
+             std::vector<vertex3D> &glyphs_box_part, std::vector<vertex2D> &glyphs_vertex_part );
+void render_text_old(atlas * a);
 
 #endif /*text.h*/
