@@ -1,0 +1,3161 @@
+Current path: "/home/gweno/Documents/Projects/Cpp/MDE/source"
+lines 32719
+columns 0
+Have 1 arguments:
+0, ./../bin/mde_debug
+v0.3.2
+pid: 10909
+main #0
+main #0.1
+in get_vMDEvMDE_get_by_index checkpoint 0
+vMDE_get_by_index checkpoint 2
+0, ./../bin/mde_debug
+arguments 0: ./../bin/mde_debug
+vMDE_get_by_index checkpoint 0
+vMDE_get_by_index checkpoint 2
+vMDE_get_by_index checkpoint 0
+vMDE_get_by_index checkpoint 2
+vMDE_get_by_index checkpoint 0
+vMDE_get_by_index checkpoint 2
+vMDE_get_by_index checkpoint 0
+vMDE_get_by_index checkpoint 2
+vMDE_get_by_index checkpoint 0
+vMDE_get_by_index checkpoint 2
+vMDE_get_by_index checkpoint 0
+vMDE_get_by_index checkpoint 2
+vMDE_get_by_index checkpoint 0
+vMDE_get_by_index checkpoint 2
+vMDE_get_by_index checkpoint 0
+vMDE_get_by_index checkpoint 2
+vMDE_get_by_index checkpoint 0
+vMDE_get_by_index checkpoint 2
+actually Here
+buffer_tag: master
+element: opening_tag
+buffer_Input master ,output_Tag  ,buffer_End_of_Line master
+buffer_End_of_Line master ,output2  ,buffer_End_of_Line2 master
+actually Here
+actually Here
+buffer_tag: tata
+element: opening_tag
+buffer_Input tata ,output_Tag  ,buffer_End_of_Line tata
+buffer_End_of_Line tata ,output2  ,buffer_End_of_Line2 tata
+actually Here
+actually Here
+buffer_tag: toto
+element: opening_tag
+buffer_Input toto ,output_Tag  ,buffer_End_of_Line toto
+buffer_End_of_Line toto ,output2  ,buffer_End_of_Line2 toto
+actually Here
+actually Here
+buffer_tag: truc
+element: opening_tag
+buffer_Input truc ,output_Tag  ,buffer_End_of_Line truc
+buffer_End_of_Line truc ,output2  ,buffer_End_of_Line2 truc
+actually Here
+actually Here
+buffer_tag: /truc
+element: closing_tag
+buffer_Input /truc ,output_Tag  ,buffer_End_of_Line /truc
+buffer_End_of_Line /truc ,output2  ,buffer_End_of_Line2 /truc
+actually Here
+buffer_tag: /toto
+element: closing_tag
+buffer_Input /toto ,output_Tag  ,buffer_End_of_Line /toto
+buffer_End_of_Line /toto ,output2  ,buffer_End_of_Line2 /toto
+actually Here
+buffer_tag: lili
+element: opening_tag
+buffer_Input lili ,output_Tag  ,buffer_End_of_Line lili
+buffer_End_of_Line lili ,output2  ,buffer_End_of_Line2 lili
+actually Here
+actually Here
+buffer_tag: /lili
+element: closing_tag
+buffer_Input /lili ,output_Tag  ,buffer_End_of_Line /lili
+buffer_End_of_Line /lili ,output2  ,buffer_End_of_Line2 /lili
+actually Here
+buffer_tag: /tata
+element: closing_tag
+buffer_Input /tata ,output_Tag  ,buffer_End_of_Line /tata
+buffer_End_of_Line /tata ,output2  ,buffer_End_of_Line2 /tata
+actually Here
+buffer_tag: titi
+element: opening_tag
+buffer_Input titi ,output_Tag  ,buffer_End_of_Line titi
+buffer_End_of_Line titi ,output2  ,buffer_End_of_Line2 titi
+actually Here
+actually Here
+buffer_tag: toto
+element: opening_tag
+buffer_Input toto ,output_Tag  ,buffer_End_of_Line toto
+buffer_End_of_Line toto ,output2  ,buffer_End_of_Line2 toto
+actually Here
+actually Here
+buffer_tag: /toto
+element: closing_tag
+buffer_Input /toto ,output_Tag  ,buffer_End_of_Line /toto
+buffer_End_of_Line /toto ,output2  ,buffer_End_of_Line2 /toto
+actually Here
+buffer_tag: lolo
+element: opening_tag
+buffer_Input lolo ,output_Tag  ,buffer_End_of_Line lolo
+buffer_End_of_Line lolo ,output2  ,buffer_End_of_Line2 lolo
+actually Here
+actually Here
+buffer_tag: /lolo
+element: closing_tag
+buffer_Input /lolo ,output_Tag  ,buffer_End_of_Line /lolo
+buffer_End_of_Line /lolo ,output2  ,buffer_End_of_Line2 /lolo
+actually Here
+buffer_tag: /titi
+element: closing_tag
+buffer_Input /titi ,output_Tag  ,buffer_End_of_Line /titi
+buffer_End_of_Line /titi ,output2  ,buffer_End_of_Line2 /titi
+actually Here
+buffer_tag: /master
+element: closing_tag
+buffer_Input /master ,output_Tag  ,buffer_End_of_Line /master
+buffer_End_of_Line /master ,output2  ,buffer_End_of_Line2 /master
+Done
+###[loadXMLFileoPtMDE]###
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * opening_tag
+processFlatMDEToMDE 5opening_tag
+processFlatMDEToMDE 5.01opening_tag
+processFlatMDEToMDE 5.02opening_tag
+processFlatMDEToMDE 5.03opening_tag
+processFlatMDEToMDE 6data
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * opening_tag
+processFlatMDEToMDE 5opening_tag
+processFlatMDEToMDE 5.01opening_tag
+processFlatMDEToMDE 5.02opening_tag
+stack top: master, 123
+processFlatMDEToMDE 5.03opening_tag
+processFlatMDEToMDE 6data
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * opening_tag
+processFlatMDEToMDE 5opening_tag
+processFlatMDEToMDE 5.01opening_tag
+processFlatMDEToMDE 5.02opening_tag
+stack top: tata, 1
+processFlatMDEToMDE 5.03opening_tag
+processFlatMDEToMDE 6data
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * opening_tag
+processFlatMDEToMDE 5opening_tag
+processFlatMDEToMDE 5.01opening_tag
+processFlatMDEToMDE 5.02opening_tag
+stack top: toto, 11
+processFlatMDEToMDE 5.03opening_tag
+processFlatMDEToMDE 6data
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * closing_tag
+processFlatMDEToMDE 9closing_tag
+processFlatMDEToMDE 9.2
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * closing_tag
+processFlatMDEToMDE 9closing_tag
+processFlatMDEToMDE 9.1opening_tag
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * opening_tag
+processFlatMDEToMDE 5opening_tag
+processFlatMDEToMDE 5.01opening_tag
+processFlatMDEToMDE 5.02opening_tag
+stack top: tata, 1
+processFlatMDEToMDE 5.03opening_tag
+processFlatMDEToMDE 6data
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * closing_tag
+processFlatMDEToMDE 9closing_tag
+processFlatMDEToMDE 9.2
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * closing_tag
+processFlatMDEToMDE 9closing_tag
+processFlatMDEToMDE 9.1opening_tag
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * opening_tag
+processFlatMDEToMDE 5opening_tag
+processFlatMDEToMDE 5.01opening_tag
+processFlatMDEToMDE 5.02opening_tag
+stack top: master, 123
+processFlatMDEToMDE 5.03opening_tag
+processFlatMDEToMDE 6data
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * opening_tag
+processFlatMDEToMDE 5opening_tag
+processFlatMDEToMDE 5.01opening_tag
+processFlatMDEToMDE 5.02opening_tag
+stack top: titi, 2
+processFlatMDEToMDE 5.03opening_tag
+processFlatMDEToMDE 6data
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * closing_tag
+processFlatMDEToMDE 9closing_tag
+processFlatMDEToMDE 9.1opening_tag
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * opening_tag
+processFlatMDEToMDE 5opening_tag
+processFlatMDEToMDE 5.01opening_tag
+processFlatMDEToMDE 5.02opening_tag
+stack top: titi, 2
+processFlatMDEToMDE 5.03opening_tag
+processFlatMDEToMDE 6data
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * closing_tag
+processFlatMDEToMDE 9closing_tag
+processFlatMDEToMDE 9.2
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * closing_tag
+processFlatMDEToMDE 9closing_tag
+processFlatMDEToMDE 9.2
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * closing_tag
+processFlatMDEToMDE 9closing_tag
+processFlatMDEToMDE 9.2
+display loaded XML:
+E: File
+delete mode is manual? 0
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: opening_tag
+                 address: 0x21f20f0
+                 Checkpoint 2
+***    Deleting opening_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: data
+                 address: 0x21f2160
+                 Checkpoint 2
+***    Deleting data
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: opening_tag
+                 address: 0x21f21d0
+                 Checkpoint 2
+***    Deleting opening_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: data
+                 address: 0x21f2270
+                 Checkpoint 2
+***    Deleting data
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: opening_tag
+                 address: 0x21f22e0
+                 Checkpoint 2
+***    Deleting opening_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: data
+                 address: 0x21f2350
+                 Checkpoint 2
+***    Deleting data
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: opening_tag
+                 address: 0x21f23c0
+                 Checkpoint 2
+***    Deleting opening_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: data
+                 address: 0x21f2430
+                 Checkpoint 2
+***    Deleting data
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: closing_tag
+                 address: 0x21f24a0
+                 Checkpoint 2
+***    Deleting closing_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: closing_tag
+                 address: 0x21f25a0
+                 Checkpoint 2
+***    Deleting closing_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: opening_tag
+                 address: 0x21f2610
+                 Checkpoint 2
+***    Deleting opening_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: data
+                 address: 0x21f2680
+                 Checkpoint 2
+***    Deleting data
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: closing_tag
+                 address: 0x21f26f0
+                 Checkpoint 2
+***    Deleting closing_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: closing_tag
+                 address: 0x21f2760
+                 Checkpoint 2
+***    Deleting closing_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: opening_tag
+                 address: 0x21f27d0
+                 Checkpoint 2
+***    Deleting opening_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: data
+                 address: 0x21f2840
+                 Checkpoint 2
+***    Deleting data
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: opening_tag
+                 address: 0x21f28b0
+                 Checkpoint 2
+***    Deleting opening_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: data
+                 address: 0x21f2a30
+                 Checkpoint 2
+***    Deleting data
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: closing_tag
+                 address: 0x21f2aa0
+                 Checkpoint 2
+***    Deleting closing_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: opening_tag
+                 address: 0x21f2b10
+                 Checkpoint 2
+***    Deleting opening_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: data
+                 address: 0x21f2b80
+                 Checkpoint 2
+***    Deleting data
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: closing_tag
+                 address: 0x21f2bf0
+                 Checkpoint 2
+***    Deleting closing_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: closing_tag
+                 address: 0x21f2c60
+                 Checkpoint 2
+***    Deleting closing_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: closing_tag
+                 address: 0x21f2cd0
+                 Checkpoint 2
+***    Deleting closing_tag
+vMDE_get_by_index checkpoint 0
+vMDE_get_by_index checkpoint 2
+New element from Vector
+actually Here
+buffer_tag: div
+element: opening_tag
+buffer_Input div ,output_Tag  ,buffer_End_of_Line div
+buffer_End_of_Line div ,output2  ,buffer_End_of_Line2 div
+actually Here
+buffer_tag: h3
+element: opening_tag
+buffer_Input h3 ,output_Tag  ,buffer_End_of_Line h3
+buffer_End_of_Line h3 ,output2  ,buffer_End_of_Line2 h3
+actually Here
+actually Here
+buffer_tag: /h3
+element: closing_tag
+buffer_Input /h3 ,output_Tag  ,buffer_End_of_Line /h3
+buffer_End_of_Line /h3 ,output2  ,buffer_End_of_Line2 /h3
+actually Here
+buffer_tag: ul
+element: opening_tag
+buffer_Input ul ,output_Tag  ,buffer_End_of_Line ul
+buffer_End_of_Line ul ,output2  ,buffer_End_of_Line2 ul
+actually Here
+buffer_tag: li class="menu-item-sub" onclick="display()"
+element: opening_tag
+tag name: li
+buffer end:  class="menu-item-sub" onclick="display()"
+@extractKeyValuePairs #### bufferline  #### class="menu-item-sub" onclick="display()"
+key:  class="
+temp: menu-item-sub" onclick="display()"
+value: menu-item-sub"
+pair:  class="menu-item-sub"
+next:  onclick="display()"
+key:  onclick="
+temp: display()"
+value: display()"
+pair:  onclick="display()"
+next: 
+split: li
+split:  class="menu-item-sub"
+split:  onclick="display()"
+buffer_Input li class="menu-item-sub" onclick="display()" ,output_Tag li class ,buffer_End_of_Line ="menu-item-sub" onclick="display()"
+buffer_End_of_Line ="menu-item-sub" onclick="display()" ,output2 menu-item-sub" onclick="display()" ,buffer_End_of_Line2 menu-item-sub" onclick="display()"
+element:  class="menu-item-sub"
+element:  onclick="display()"
+actually Here
+actually Here
+buffer_tag: splan
+element: opening_tag
+buffer_Input splan ,output_Tag  ,buffer_End_of_Line splan
+buffer_End_of_Line splan ,output2  ,buffer_End_of_Line2 splan
+actually Here
+actually Here
+buffer_tag: /splan
+element: closing_tag
+buffer_Input /splan ,output_Tag  ,buffer_End_of_Line /splan
+buffer_End_of_Line /splan ,output2  ,buffer_End_of_Line2 /splan
+actually Here
+buffer_tag: /li
+element: closing_tag
+buffer_Input /li ,output_Tag  ,buffer_End_of_Line /li
+buffer_End_of_Line /li ,output2  ,buffer_End_of_Line2 /li
+actually Here
+buffer_tag: li class="menu-item" onclick="next()"
+element: opening_tag
+tag name: li
+buffer end:  class="menu-item" onclick="next()"
+@extractKeyValuePairs #### bufferline  #### class="menu-item" onclick="next()"
+key:  class="
+temp: menu-item" onclick="next()"
+value: menu-item"
+pair:  class="menu-item"
+next:  onclick="next()"
+key:  onclick="
+temp: next()"
+value: next()"
+pair:  onclick="next()"
+next: 
+split: li
+split:  class="menu-item"
+split:  onclick="next()"
+buffer_Input li class="menu-item" onclick="next()" ,output_Tag li class ,buffer_End_of_Line ="menu-item" onclick="next()"
+buffer_End_of_Line ="menu-item" onclick="next()" ,output2 menu-item" onclick="next()" ,buffer_End_of_Line2 menu-item" onclick="next()"
+element:  class="menu-item"
+element:  onclick="next()"
+actually Here
+actually Here
+buffer_tag: /li
+element: closing_tag
+buffer_Input /li ,output_Tag  ,buffer_End_of_Line /li
+buffer_End_of_Line /li ,output2  ,buffer_End_of_Line2 /li
+actually Here
+buffer_tag: li class="menu-item" onclick="next()" style="display:none"
+element: opening_tag
+tag name: li
+buffer end:  class="menu-item" onclick="next()" style="display:none"
+@extractKeyValuePairs #### bufferline  #### class="menu-item" onclick="next()" style="display:none"
+key:  class="
+temp: menu-item" onclick="next()" style="display:none"
+value: menu-item"
+pair:  class="menu-item"
+next:  onclick="next()" style="display:none"
+key:  onclick="
+temp: next()" style="display:none"
+value: next()"
+pair:  onclick="next()"
+next:  style="display:none"
+key:  style="
+temp: display:none"
+value: display:none"
+pair:  style="display:none"
+next: 
+split: li
+split:  class="menu-item"
+split:  onclick="next()"
+split:  style="display:none"
+buffer_Input li class="menu-item" onclick="next()" style="display:none" ,output_Tag li class ,buffer_End_of_Line ="menu-item" onclick="next()" style="display:none"
+buffer_End_of_Line ="menu-item" onclick="next()" style="display:none" ,output2 menu-item" onclick="next()" style="display:none" ,buffer_End_of_Line2 menu-item" onclick="next()" style="display:none"
+element:  class="menu-item"
+element:  onclick="next()"
+element:  style="display:none"
+actually Here
+actually Here
+buffer_tag: /li
+element: closing_tag
+buffer_Input /li ,output_Tag  ,buffer_End_of_Line /li
+buffer_End_of_Line /li ,output2  ,buffer_End_of_Line2 /li
+actually Here
+buffer_tag: li class="menu-item" onclick="next()"
+element: opening_tag
+tag name: li
+buffer end:  class="menu-item" onclick="next()"
+@extractKeyValuePairs #### bufferline  #### class="menu-item" onclick="next()"
+key:  class="
+temp: menu-item" onclick="next()"
+value: menu-item"
+pair:  class="menu-item"
+next:  onclick="next()"
+key:  onclick="
+temp: next()"
+value: next()"
+pair:  onclick="next()"
+next: 
+split: li
+split:  class="menu-item"
+split:  onclick="next()"
+buffer_Input li class="menu-item" onclick="next()" ,output_Tag li class ,buffer_End_of_Line ="menu-item" onclick="next()"
+buffer_End_of_Line ="menu-item" onclick="next()" ,output2 menu-item" onclick="next()" ,buffer_End_of_Line2 menu-item" onclick="next()"
+element:  class="menu-item"
+element:  onclick="next()"
+actually Here
+actually Here
+buffer_tag: /li
+element: closing_tag
+buffer_Input /li ,output_Tag  ,buffer_End_of_Line /li
+buffer_End_of_Line /li ,output2  ,buffer_End_of_Line2 /li
+actually Here
+buffer_tag: li class="menu-item" onclick="next()" style="color:rgba(50,150,0,1.0)"
+element: opening_tag
+tag name: li
+buffer end:  class="menu-item" onclick="next()" style="color:rgba(50,150,0,1.0)"
+@extractKeyValuePairs #### bufferline  #### class="menu-item" onclick="next()" style="color:rgba(50,150,0,1.0)"
+key:  class="
+temp: menu-item" onclick="next()" style="color:rgba(50,150,0,1.0)"
+value: menu-item"
+pair:  class="menu-item"
+next:  onclick="next()" style="color:rgba(50,150,0,1.0)"
+key:  onclick="
+temp: next()" style="color:rgba(50,150,0,1.0)"
+value: next()"
+pair:  onclick="next()"
+next:  style="color:rgba(50,150,0,1.0)"
+key:  style="
+temp: color:rgba(50,150,0,1.0)"
+value: color:rgba(50,150,0,1.0)"
+pair:  style="color:rgba(50,150,0,1.0)"
+next: 
+split: li
+split:  class="menu-item"
+split:  onclick="next()"
+split:  style="color:rgba(50,150,0,1.0)"
+buffer_Input li class="menu-item" onclick="next()" style="color:rgba(50,150,0,1.0)" ,output_Tag li class ,buffer_End_of_Line ="menu-item" onclick="next()" style="color:rgba(50,150,0,1.0)"
+buffer_End_of_Line ="menu-item" onclick="next()" style="color:rgba(50,150,0,1.0)" ,output2 menu-item" onclick="next()" style="color:rgba(50,150,0,1.0)" ,buffer_End_of_Line2 menu-item" onclick="next()" style="color:rgba(50,150,0,1.0)"
+element:  class="menu-item"
+element:  onclick="next()"
+element:  style="color:rgba(50,150,0,1.0)"
+actually Here
+actually Here
+buffer_tag: /li
+element: closing_tag
+buffer_Input /li ,output_Tag  ,buffer_End_of_Line /li
+buffer_End_of_Line /li ,output2  ,buffer_End_of_Line2 /li
+actually Here
+buffer_tag: li class="menu-item" onclick="executeStatement()"
+element: opening_tag
+tag name: li
+buffer end:  class="menu-item" onclick="executeStatement()"
+@extractKeyValuePairs #### bufferline  #### class="menu-item" onclick="executeStatement()"
+key:  class="
+temp: menu-item" onclick="executeStatement()"
+value: menu-item"
+pair:  class="menu-item"
+next:  onclick="executeStatement()"
+key:  onclick="
+temp: executeStatement()"
+value: executeStatement()"
+pair:  onclick="executeStatement()"
+next: 
+split: li
+split:  class="menu-item"
+split:  onclick="executeStatement()"
+buffer_Input li class="menu-item" onclick="executeStatement()" ,output_Tag li class ,buffer_End_of_Line ="menu-item" onclick="executeStatement()"
+buffer_End_of_Line ="menu-item" onclick="executeStatement()" ,output2 menu-item" onclick="executeStatement()" ,buffer_End_of_Line2 menu-item" onclick="executeStatement()"
+element:  class="menu-item"
+element:  onclick="executeStatement()"
+actually Here
+actually Here
+buffer_tag: /li
+element: closing_tag
+buffer_Input /li ,output_Tag  ,buffer_End_of_Line /li
+buffer_End_of_Line /li ,output2  ,buffer_End_of_Line2 /li
+actually Here
+buffer_tag: li class="menu-item" onclick="toggleOption()" style="display:none"
+element: opening_tag
+tag name: li
+buffer end:  class="menu-item" onclick="toggleOption()" style="display:none"
+@extractKeyValuePairs #### bufferline  #### class="menu-item" onclick="toggleOption()" style="display:none"
+key:  class="
+temp: menu-item" onclick="toggleOption()" style="display:none"
+value: menu-item"
+pair:  class="menu-item"
+next:  onclick="toggleOption()" style="display:none"
+key:  onclick="
+temp: toggleOption()" style="display:none"
+value: toggleOption()"
+pair:  onclick="toggleOption()"
+next:  style="display:none"
+key:  style="
+temp: display:none"
+value: display:none"
+pair:  style="display:none"
+next: 
+split: li
+split:  class="menu-item"
+split:  onclick="toggleOption()"
+split:  style="display:none"
+buffer_Input li class="menu-item" onclick="toggleOption()" style="display:none" ,output_Tag li class ,buffer_End_of_Line ="menu-item" onclick="toggleOption()" style="display:none"
+buffer_End_of_Line ="menu-item" onclick="toggleOption()" style="display:none" ,output2 menu-item" onclick="toggleOption()" style="display:none" ,buffer_End_of_Line2 menu-item" onclick="toggleOption()" style="display:none"
+element:  class="menu-item"
+element:  onclick="toggleOption()"
+element:  style="display:none"
+actually Here
+actually Here
+buffer_tag: span class="toggle"
+element: opening_tag
+tag name: span
+buffer end:  class="toggle"
+@extractKeyValuePairs #### bufferline  #### class="toggle"
+key:  class="
+temp: toggle"
+value: toggle"
+pair:  class="toggle"
+next: 
+split: span
+split:  class="toggle"
+buffer_Input span class="toggle" ,output_Tag span class ,buffer_End_of_Line ="toggle"
+buffer_End_of_Line ="toggle" ,output2 toggle" ,buffer_End_of_Line2 toggle"
+element:  class="toggle"
+actually Here
+actually Here
+buffer_tag: /span
+element: closing_tag
+buffer_Input /span ,output_Tag  ,buffer_End_of_Line /span
+buffer_End_of_Line /span ,output2  ,buffer_End_of_Line2 /span
+actually Here
+buffer_tag: /li
+element: closing_tag
+buffer_Input /li ,output_Tag  ,buffer_End_of_Line /li
+buffer_End_of_Line /li ,output2  ,buffer_End_of_Line2 /li
+actually Here
+buffer_tag: li class="menu-item" onclick="executeStatement()"  style="display:none"
+element: opening_tag
+tag name: li
+buffer end:  class="menu-item" onclick="executeStatement()"  style="display:none"
+@extractKeyValuePairs #### bufferline  #### class="menu-item" onclick="executeStatement()"  style="display:none"
+key:  class="
+temp: menu-item" onclick="executeStatement()"  style="display:none"
+value: menu-item"
+pair:  class="menu-item"
+next:  onclick="executeStatement()"  style="display:none"
+key:  onclick="
+temp: executeStatement()"  style="display:none"
+value: executeStatement()"
+pair:  onclick="executeStatement()"
+next:   style="display:none"
+key:   style="
+temp: display:none"
+value: display:none"
+pair:   style="display:none"
+next: 
+split: li
+split:  class="menu-item"
+split:  onclick="executeStatement()"
+split:   style="display:none"
+buffer_Input li class="menu-item" onclick="executeStatement()"  style="display:none" ,output_Tag li class ,buffer_End_of_Line ="menu-item" onclick="executeStatement()"  style="display:none"
+buffer_End_of_Line ="menu-item" onclick="executeStatement()"  style="display:none" ,output2 menu-item" onclick="executeStatement()"  style="display:none" ,buffer_End_of_Line2 menu-item" onclick="executeStatement()"  style="display:none"
+element:  class="menu-item"
+element:  onclick="executeStatement()"
+element:   style="display:none"
+actually Here
+actually Here
+buffer_tag: /li
+element: closing_tag
+buffer_Input /li ,output_Tag  ,buffer_End_of_Line /li
+buffer_End_of_Line /li ,output2  ,buffer_End_of_Line2 /li
+actually Here
+buffer_tag: li class="menu-item" onclick="toggleOption()"  style="display:none"
+element: opening_tag
+tag name: li
+buffer end:  class="menu-item" onclick="toggleOption()"  style="display:none"
+@extractKeyValuePairs #### bufferline  #### class="menu-item" onclick="toggleOption()"  style="display:none"
+key:  class="
+temp: menu-item" onclick="toggleOption()"  style="display:none"
+value: menu-item"
+pair:  class="menu-item"
+next:  onclick="toggleOption()"  style="display:none"
+key:  onclick="
+temp: toggleOption()"  style="display:none"
+value: toggleOption()"
+pair:  onclick="toggleOption()"
+next:   style="display:none"
+key:   style="
+temp: display:none"
+value: display:none"
+pair:   style="display:none"
+next: 
+split: li
+split:  class="menu-item"
+split:  onclick="toggleOption()"
+split:   style="display:none"
+buffer_Input li class="menu-item" onclick="toggleOption()"  style="display:none" ,output_Tag li class ,buffer_End_of_Line ="menu-item" onclick="toggleOption()"  style="display:none"
+buffer_End_of_Line ="menu-item" onclick="toggleOption()"  style="display:none" ,output2 menu-item" onclick="toggleOption()"  style="display:none" ,buffer_End_of_Line2 menu-item" onclick="toggleOption()"  style="display:none"
+element:  class="menu-item"
+element:  onclick="toggleOption()"
+element:   style="display:none"
+actually Here
+actually Here
+buffer_tag: /li
+element: closing_tag
+buffer_Input /li ,output_Tag  ,buffer_End_of_Line /li
+buffer_End_of_Line /li ,output2  ,buffer_End_of_Line2 /li
+actually Here
+buffer_tag: li class="menu-item" onclick="executeStatement()" style="color:rgba(250,0,0,0.5)"
+element: opening_tag
+tag name: li
+buffer end:  class="menu-item" onclick="executeStatement()" style="color:rgba(250,0,0,0.5)"
+@extractKeyValuePairs #### bufferline  #### class="menu-item" onclick="executeStatement()" style="color:rgba(250,0,0,0.5)"
+key:  class="
+temp: menu-item" onclick="executeStatement()" style="color:rgba(250,0,0,0.5)"
+value: menu-item"
+pair:  class="menu-item"
+next:  onclick="executeStatement()" style="color:rgba(250,0,0,0.5)"
+key:  onclick="
+temp: executeStatement()" style="color:rgba(250,0,0,0.5)"
+value: executeStatement()"
+pair:  onclick="executeStatement()"
+next:  style="color:rgba(250,0,0,0.5)"
+key:  style="
+temp: color:rgba(250,0,0,0.5)"
+value: color:rgba(250,0,0,0.5)"
+pair:  style="color:rgba(250,0,0,0.5)"
+next: 
+split: li
+split:  class="menu-item"
+split:  onclick="executeStatement()"
+split:  style="color:rgba(250,0,0,0.5)"
+buffer_Input li class="menu-item" onclick="executeStatement()" style="color:rgba(250,0,0,0.5)" ,output_Tag li class ,buffer_End_of_Line ="menu-item" onclick="executeStatement()" style="color:rgba(250,0,0,0.5)"
+buffer_End_of_Line ="menu-item" onclick="executeStatement()" style="color:rgba(250,0,0,0.5)" ,output2 menu-item" onclick="executeStatement()" style="color:rgba(250,0,0,0.5)" ,buffer_End_of_Line2 menu-item" onclick="executeStatement()" style="color:rgba(250,0,0,0.5)"
+element:  class="menu-item"
+element:  onclick="executeStatement()"
+element:  style="color:rgba(250,0,0,0.5)"
+actually Here
+actually Here
+buffer_tag: /li
+element: closing_tag
+buffer_Input /li ,output_Tag  ,buffer_End_of_Line /li
+buffer_End_of_Line /li ,output2  ,buffer_End_of_Line2 /li
+actually Here
+buffer_tag: /ul
+element: closing_tag
+buffer_Input /ul ,output_Tag  ,buffer_End_of_Line /ul
+buffer_End_of_Line /ul ,output2  ,buffer_End_of_Line2 /ul
+actually Here
+buffer_tag: /div
+element: closing_tag
+buffer_Input /div ,output_Tag  ,buffer_End_of_Line /div
+buffer_End_of_Line /div ,output2  ,buffer_End_of_Line2 /div
+Done
+###[loadXMLFileoPtMDE]###
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * opening_tag
+processFlatMDEToMDE 5opening_tag
+processFlatMDEToMDE 5.01opening_tag
+processFlatMDEToMDE 5.02opening_tag
+processFlatMDEToMDE 5.03opening_tag
+processFlatMDEToMDE 7.1: opening_tag
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * opening_tag
+processFlatMDEToMDE 5opening_tag
+processFlatMDEToMDE 5.01opening_tag
+processFlatMDEToMDE 5.02opening_tag
+stack top: div, 
+processFlatMDEToMDE 5.03opening_tag
+processFlatMDEToMDE 6data
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * closing_tag
+processFlatMDEToMDE 9closing_tag
+processFlatMDEToMDE 9.1opening_tag
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * opening_tag
+processFlatMDEToMDE 5opening_tag
+processFlatMDEToMDE 5.01opening_tag
+processFlatMDEToMDE 5.02opening_tag
+stack top: div, 
+processFlatMDEToMDE 5.03opening_tag
+processFlatMDEToMDE 7.1: opening_tag
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * opening_tag
+processFlatMDEToMDE 5opening_tag
+processFlatMDEToMDE 5.01opening_tag
+processFlatMDEToMDE 5.02opening_tag
+stack top: ul, 
+processFlatMDEToMDE 5.03opening_tag
+processFlatMDEToMDE 5.1attribute
+Send data:  class="menu-item-sub"
+expression  class="menu-item-sub"
+trail,temp,trail2 ="menu-item-sub" menu-item-sub" menu-item-sub"
+Send data:  onclick="display()"
+expression  onclick="display()"
+trail,temp,trail2 ="display()" display()" display()"
+processFlatMDEToMDE 5.3data
+stack top: li, 
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * data
+processFlatMDEToMDE 10data
+processFlatMDEToMDE 10.2opening_tag
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * opening_tag
+processFlatMDEToMDE 5opening_tag
+processFlatMDEToMDE 5.01opening_tag
+processFlatMDEToMDE 5.02opening_tag
+stack top: li, File
+processFlatMDEToMDE 5.03opening_tag
+processFlatMDEToMDE 6data
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * closing_tag
+processFlatMDEToMDE 9closing_tag
+processFlatMDEToMDE 9.2
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * closing_tag
+processFlatMDEToMDE 9closing_tag
+processFlatMDEToMDE 9.1opening_tag
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * opening_tag
+processFlatMDEToMDE 5opening_tag
+processFlatMDEToMDE 5.01opening_tag
+processFlatMDEToMDE 5.02opening_tag
+stack top: ul, 
+processFlatMDEToMDE 5.03opening_tag
+processFlatMDEToMDE 5.1attribute
+Send data:  class="menu-item"
+expression  class="menu-item"
+trail,temp,trail2 ="menu-item" menu-item" menu-item"
+Send data:  onclick="next()"
+expression  onclick="next()"
+trail,temp,trail2 ="next()" next()" next()"
+processFlatMDEToMDE 5.3data
+stack top: li, 
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * data
+processFlatMDEToMDE 10data
+processFlatMDEToMDE 10.1closing_tag
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * closing_tag
+processFlatMDEToMDE 9closing_tag
+processFlatMDEToMDE 9.1opening_tag
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * opening_tag
+processFlatMDEToMDE 5opening_tag
+processFlatMDEToMDE 5.01opening_tag
+processFlatMDEToMDE 5.02opening_tag
+stack top: ul, 
+processFlatMDEToMDE 5.03opening_tag
+processFlatMDEToMDE 5.1attribute
+Send data:  class="menu-item"
+expression  class="menu-item"
+trail,temp,trail2 ="menu-item" menu-item" menu-item"
+Send data:  onclick="next()"
+expression  onclick="next()"
+trail,temp,trail2 ="next()" next()" next()"
+Send data:  style="display:none"
+expression  style="display:none"
+trail,temp,trail2 ="display:none" display:none" display:none"
+CSS style here!
+last: display:none
+kvp pair: display:none
+processFlatMDEToMDE 5.3data
+stack top: li, 
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * data
+processFlatMDEToMDE 10data
+processFlatMDEToMDE 10.1closing_tag
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * closing_tag
+processFlatMDEToMDE 9closing_tag
+processFlatMDEToMDE 9.1opening_tag
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * opening_tag
+processFlatMDEToMDE 5opening_tag
+processFlatMDEToMDE 5.01opening_tag
+processFlatMDEToMDE 5.02opening_tag
+stack top: ul, 
+processFlatMDEToMDE 5.03opening_tag
+processFlatMDEToMDE 5.1attribute
+Send data:  class="menu-item"
+expression  class="menu-item"
+trail,temp,trail2 ="menu-item" menu-item" menu-item"
+Send data:  onclick="next()"
+expression  onclick="next()"
+trail,temp,trail2 ="next()" next()" next()"
+processFlatMDEToMDE 5.3data
+stack top: li, 
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * data
+processFlatMDEToMDE 10data
+processFlatMDEToMDE 10.1closing_tag
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * closing_tag
+processFlatMDEToMDE 9closing_tag
+processFlatMDEToMDE 9.1opening_tag
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * opening_tag
+processFlatMDEToMDE 5opening_tag
+processFlatMDEToMDE 5.01opening_tag
+processFlatMDEToMDE 5.02opening_tag
+stack top: ul, 
+processFlatMDEToMDE 5.03opening_tag
+processFlatMDEToMDE 5.1attribute
+Send data:  class="menu-item"
+expression  class="menu-item"
+trail,temp,trail2 ="menu-item" menu-item" menu-item"
+Send data:  onclick="next()"
+expression  onclick="next()"
+trail,temp,trail2 ="next()" next()" next()"
+Send data:  style="color:rgba(50,150,0,1.0)"
+expression  style="color:rgba(50,150,0,1.0)"
+trail,temp,trail2 ="color:rgba(50,150,0,1.0)" color:rgba(50,150,0,1.0)" color:rgba(50,150,0,1.0)"
+CSS style here!
+last: color:rgba(50,150,0,1.0)
+kvp pair: color:rgba(50,150,0,1.0)
+processFlatMDEToMDE 5.3data
+stack top: li, 
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * data
+processFlatMDEToMDE 10data
+processFlatMDEToMDE 10.1closing_tag
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * closing_tag
+processFlatMDEToMDE 9closing_tag
+processFlatMDEToMDE 9.1opening_tag
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * opening_tag
+processFlatMDEToMDE 5opening_tag
+processFlatMDEToMDE 5.01opening_tag
+processFlatMDEToMDE 5.02opening_tag
+stack top: ul, 
+processFlatMDEToMDE 5.03opening_tag
+processFlatMDEToMDE 5.1attribute
+Send data:  class="menu-item"
+expression  class="menu-item"
+trail,temp,trail2 ="menu-item" menu-item" menu-item"
+Send data:  onclick="executeStatement()"
+expression  onclick="executeStatement()"
+trail,temp,trail2 ="executeStatement()" executeStatement()" executeStatement()"
+processFlatMDEToMDE 5.3data
+stack top: li, 
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * data
+processFlatMDEToMDE 10data
+processFlatMDEToMDE 10.1closing_tag
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * closing_tag
+processFlatMDEToMDE 9closing_tag
+processFlatMDEToMDE 9.1opening_tag
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * opening_tag
+processFlatMDEToMDE 5opening_tag
+processFlatMDEToMDE 5.01opening_tag
+processFlatMDEToMDE 5.02opening_tag
+stack top: ul, 
+processFlatMDEToMDE 5.03opening_tag
+processFlatMDEToMDE 5.1attribute
+Send data:  class="menu-item"
+expression  class="menu-item"
+trail,temp,trail2 ="menu-item" menu-item" menu-item"
+Send data:  onclick="toggleOption()"
+expression  onclick="toggleOption()"
+trail,temp,trail2 ="toggleOption()" toggleOption()" toggleOption()"
+Send data:  style="display:none"
+expression  style="display:none"
+trail,temp,trail2 ="display:none" display:none" display:none"
+CSS style here!
+last: display:none
+kvp pair: display:none
+processFlatMDEToMDE 5.3data
+stack top: li, 
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * data
+processFlatMDEToMDE 10data
+processFlatMDEToMDE 10.2opening_tag
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * opening_tag
+processFlatMDEToMDE 5opening_tag
+processFlatMDEToMDE 5.01opening_tag
+processFlatMDEToMDE 5.02opening_tag
+stack top: li, Display In Terminal and Testing mode:
+processFlatMDEToMDE 5.03opening_tag
+processFlatMDEToMDE 5.1attribute
+Send data:  class="toggle"
+expression  class="toggle"
+trail,temp,trail2 ="toggle" toggle" toggle"
+processFlatMDEToMDE 5.3data
+stack top: span, 
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * data
+processFlatMDEToMDE 10data
+processFlatMDEToMDE 10.1closing_tag
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * closing_tag
+processFlatMDEToMDE 9closing_tag
+processFlatMDEToMDE 9.2
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * closing_tag
+processFlatMDEToMDE 9closing_tag
+processFlatMDEToMDE 9.1opening_tag
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * opening_tag
+processFlatMDEToMDE 5opening_tag
+processFlatMDEToMDE 5.01opening_tag
+processFlatMDEToMDE 5.02opening_tag
+stack top: ul, 
+processFlatMDEToMDE 5.03opening_tag
+processFlatMDEToMDE 5.1attribute
+Send data:  class="menu-item"
+expression  class="menu-item"
+trail,temp,trail2 ="menu-item" menu-item" menu-item"
+Send data:  onclick="executeStatement()"
+expression  onclick="executeStatement()"
+trail,temp,trail2 ="executeStatement()" executeStatement()" executeStatement()"
+Send data:   style="display:none"
+expression   style="display:none"
+trail,temp,trail2 ="display:none" display:none" display:none"
+CSS style here!
+last: display:none
+kvp pair: display:none
+processFlatMDEToMDE 5.3data
+stack top: li, 
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * data
+processFlatMDEToMDE 10data
+processFlatMDEToMDE 10.1closing_tag
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * closing_tag
+processFlatMDEToMDE 9closing_tag
+processFlatMDEToMDE 9.1opening_tag
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * opening_tag
+processFlatMDEToMDE 5opening_tag
+processFlatMDEToMDE 5.01opening_tag
+processFlatMDEToMDE 5.02opening_tag
+stack top: ul, 
+processFlatMDEToMDE 5.03opening_tag
+processFlatMDEToMDE 5.1attribute
+Send data:  class="menu-item"
+expression  class="menu-item"
+trail,temp,trail2 ="menu-item" menu-item" menu-item"
+Send data:  onclick="toggleOption()"
+expression  onclick="toggleOption()"
+trail,temp,trail2 ="toggleOption()" toggleOption()" toggleOption()"
+Send data:   style="display:none"
+expression   style="display:none"
+trail,temp,trail2 ="display:none" display:none" display:none"
+CSS style here!
+last: display:none
+kvp pair: display:none
+processFlatMDEToMDE 5.3data
+stack top: li, 
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * data
+processFlatMDEToMDE 10data
+processFlatMDEToMDE 10.1closing_tag
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * closing_tag
+processFlatMDEToMDE 9closing_tag
+processFlatMDEToMDE 9.1opening_tag
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * opening_tag
+processFlatMDEToMDE 5opening_tag
+processFlatMDEToMDE 5.01opening_tag
+processFlatMDEToMDE 5.02opening_tag
+stack top: ul, 
+processFlatMDEToMDE 5.03opening_tag
+processFlatMDEToMDE 5.1attribute
+Send data:  class="menu-item"
+expression  class="menu-item"
+trail,temp,trail2 ="menu-item" menu-item" menu-item"
+Send data:  onclick="executeStatement()"
+expression  onclick="executeStatement()"
+trail,temp,trail2 ="executeStatement()" executeStatement()" executeStatement()"
+Send data:  style="color:rgba(250,0,0,0.5)"
+expression  style="color:rgba(250,0,0,0.5)"
+trail,temp,trail2 ="color:rgba(250,0,0,0.5)" color:rgba(250,0,0,0.5)" color:rgba(250,0,0,0.5)"
+CSS style here!
+last: color:rgba(250,0,0,0.5)
+kvp pair: color:rgba(250,0,0,0.5)
+processFlatMDEToMDE 5.3data
+stack top: li, 
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * data
+processFlatMDEToMDE 10data
+processFlatMDEToMDE 10.1closing_tag
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * closing_tag
+processFlatMDEToMDE 9closing_tag
+processFlatMDEToMDE 9.2
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * closing_tag
+processFlatMDEToMDE 9closing_tag
+processFlatMDEToMDE 9.2
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * closing_tag
+processFlatMDEToMDE 9closing_tag
+processFlatMDEToMDE 9.2
+display loaded XML:
+E: File
+delete mode is manual? 0
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: opening_tag
+                 address: 0x21f23c0
+                 Checkpoint 2
+***    Deleting opening_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: opening_tag
+                 address: 0x21f2350
+                 Checkpoint 2
+***    Deleting opening_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: data
+                 address: 0x21f22e0
+                 Checkpoint 2
+***    Deleting data
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: closing_tag
+                 address: 0x21f2270
+                 Checkpoint 2
+***    Deleting closing_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: opening_tag
+                 address: 0x21f21d0
+                 Checkpoint 2
+***    Deleting opening_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: opening_tag
+                 address: 0x21f20f0
+                 Checkpoint 2
+***    Deleting opening_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: attribute
+                 address: 0x21f2730
+                 Checkpoint 2
+***    Deleting attribute
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: attribute
+                 address: 0x21f27a0
+                 Checkpoint 2
+***    Deleting attribute
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: data
+                 address: 0x21f2810
+                 Checkpoint 2
+***    Deleting data
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: opening_tag
+                 address: 0x21f2880
+                 Checkpoint 2
+***    Deleting opening_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: data
+                 address: 0x21f0410
+                 Checkpoint 2
+***    Deleting data
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: closing_tag
+                 address: 0x21f0480
+                 Checkpoint 2
+***    Deleting closing_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: closing_tag
+                 address: 0x21f04f0
+                 Checkpoint 2
+***    Deleting closing_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: opening_tag
+                 address: 0x21f0680
+                 Checkpoint 2
+***    Deleting opening_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: attribute
+                 address: 0x21f06f0
+                 Checkpoint 2
+***    Deleting attribute
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: attribute
+                 address: 0x21f0760
+                 Checkpoint 2
+***    Deleting attribute
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: data
+                 address: 0x21f07d0
+                 Checkpoint 2
+***    Deleting data
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: closing_tag
+                 address: 0x21f0840
+                 Checkpoint 2
+***    Deleting closing_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: opening_tag
+                 address: 0x21f2160
+                 Checkpoint 2
+***    Deleting opening_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: attribute
+                 address: 0x21f0af0
+                 Checkpoint 2
+***    Deleting attribute
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: attribute
+                 address: 0x21f0b60
+                 Checkpoint 2
+***    Deleting attribute
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: attribute
+                 address: 0x21f0bd0
+                 Checkpoint 2
+***    Deleting attribute
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: data
+                 address: 0x21f0c40
+                 Checkpoint 2
+***    Deleting data
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: closing_tag
+                 address: 0x21f0cb0
+                 Checkpoint 2
+***    Deleting closing_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: opening_tag
+                 address: 0x21f0e40
+                 Checkpoint 2
+***    Deleting opening_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: attribute
+                 address: 0x21f0eb0
+                 Checkpoint 2
+***    Deleting attribute
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: attribute
+                 address: 0x21f0f20
+                 Checkpoint 2
+***    Deleting attribute
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: data
+                 address: 0x21f0f90
+                 Checkpoint 2
+***    Deleting data
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: closing_tag
+                 address: 0x21f1000
+                 Checkpoint 2
+***    Deleting closing_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: opening_tag
+                 address: 0x21f10f0
+                 Checkpoint 2
+***    Deleting opening_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: attribute
+                 address: 0x21f1160
+                 Checkpoint 2
+***    Deleting attribute
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: attribute
+                 address: 0x21f11d0
+                 Checkpoint 2
+***    Deleting attribute
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: attribute
+                 address: 0x21f1240
+                 Checkpoint 2
+***    Deleting attribute
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: data
+                 address: 0x21f14f0
+                 Checkpoint 2
+***    Deleting data
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: closing_tag
+                 address: 0x21f1560
+                 Checkpoint 2
+***    Deleting closing_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: opening_tag
+                 address: 0x21f1600
+                 Checkpoint 2
+***    Deleting opening_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: attribute
+                 address: 0x21f1670
+                 Checkpoint 2
+***    Deleting attribute
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: attribute
+                 address: 0x21f16e0
+                 Checkpoint 2
+***    Deleting attribute
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: data
+                 address: 0x21f1780
+                 Checkpoint 2
+***    Deleting data
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: closing_tag
+                 address: 0x21f17f0
+                 Checkpoint 2
+***    Deleting closing_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: opening_tag
+                 address: 0x21f18c0
+                 Checkpoint 2
+***    Deleting opening_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: attribute
+                 address: 0x21f1930
+                 Checkpoint 2
+***    Deleting attribute
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: attribute
+                 address: 0x21f19a0
+                 Checkpoint 2
+***    Deleting attribute
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: attribute
+                 address: 0x21f1a40
+                 Checkpoint 2
+***    Deleting attribute
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: data
+                 address: 0x21f1ae0
+                 Checkpoint 2
+***    Deleting data
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: opening_tag
+                 address: 0x21f1bb0
+                 Checkpoint 2
+***    Deleting opening_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: attribute
+                 address: 0x21f1c20
+                 Checkpoint 2
+***    Deleting attribute
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: data
+                 address: 0x21f1c90
+                 Checkpoint 2
+***    Deleting data
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: closing_tag
+                 address: 0x21f1d00
+                 Checkpoint 2
+***    Deleting closing_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: closing_tag
+                 address: 0x21f1d70
+                 Checkpoint 2
+***    Deleting closing_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: opening_tag
+                 address: 0x21f1de0
+                 Checkpoint 2
+***    Deleting opening_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: attribute
+                 address: 0x21f1e50
+                 Checkpoint 2
+***    Deleting attribute
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: attribute
+                 address: 0x21f1ec0
+                 Checkpoint 2
+***    Deleting attribute
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: attribute
+                 address: 0x21f1f60
+                 Checkpoint 2
+***    Deleting attribute
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: data
+                 address: 0x21f2000
+                 Checkpoint 2
+***    Deleting data
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: closing_tag
+                 address: 0x21f4a40
+                 Checkpoint 2
+***    Deleting closing_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: opening_tag
+                 address: 0x21f4b90
+                 Checkpoint 2
+***    Deleting opening_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: attribute
+                 address: 0x21f4c00
+                 Checkpoint 2
+***    Deleting attribute
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: attribute
+                 address: 0x21f4c70
+                 Checkpoint 2
+***    Deleting attribute
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: attribute
+                 address: 0x21f4d10
+                 Checkpoint 2
+***    Deleting attribute
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: data
+                 address: 0x21f4db0
+                 Checkpoint 2
+***    Deleting data
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: closing_tag
+                 address: 0x21f4e80
+                 Checkpoint 2
+***    Deleting closing_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: opening_tag
+                 address: 0x21f4fc0
+                 Checkpoint 2
+***    Deleting opening_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: attribute
+                 address: 0x21f5030
+                 Checkpoint 2
+***    Deleting attribute
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: attribute
+                 address: 0x21f50a0
+                 Checkpoint 2
+***    Deleting attribute
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: attribute
+                 address: 0x21f5520
+                 Checkpoint 2
+***    Deleting attribute
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: data
+                 address: 0x21f55c0
+                 Checkpoint 2
+***    Deleting data
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: closing_tag
+                 address: 0x21f5630
+                 Checkpoint 2
+***    Deleting closing_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: closing_tag
+                 address: 0x21f56a0
+                 Checkpoint 2
+***    Deleting closing_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: closing_tag
+                 address: 0x21f5710
+                 Checkpoint 2
+***    Deleting closing_tag
+New element from Vector
+actually Here
+buffer_tag: window width="1200" height="900" background-color="#000000"
+element: opening_tag
+tag name: window
+buffer end:  width="1200" height="900" background-color="#000000"
+@extractKeyValuePairs #### bufferline  #### width="1200" height="900" background-color="#000000"
+key:  width="
+temp: 1200" height="900" background-color="#000000"
+value: 1200"
+pair:  width="1200"
+next:  height="900" background-color="#000000"
+key:  height="
+temp: 900" background-color="#000000"
+value: 900"
+pair:  height="900"
+next:  background-color="#000000"
+key:  background-color="
+temp: #000000"
+value: #000000"
+pair:  background-color="#000000"
+next: 
+split: window
+split:  width="1200"
+split:  height="900"
+split:  background-color="#000000"
+buffer_Input window width="1200" height="900" background-color="#000000" ,output_Tag window width ,buffer_End_of_Line ="1200" height="900" background-color="#000000"
+buffer_End_of_Line ="1200" height="900" background-color="#000000" ,output2 1200" height="900" background-color="#000000" ,buffer_End_of_Line2 1200" height="900" background-color="#000000"
+element:  width="1200"
+element:  height="900"
+element:  background-color="#000000"
+actually Here
+actually Here
+buffer_tag: title
+element: opening_tag
+buffer_Input title ,output_Tag  ,buffer_End_of_Line title
+buffer_End_of_Line title ,output2  ,buffer_End_of_Line2 title
+actually Here
+actually Here
+buffer_tag: /title
+element: closing_tag
+buffer_Input /title ,output_Tag  ,buffer_End_of_Line /title
+buffer_End_of_Line /title ,output2  ,buffer_End_of_Line2 /title
+actually Here
+buffer_tag: /window
+element: closing_tag
+buffer_Input /window ,output_Tag  ,buffer_End_of_Line /window
+buffer_End_of_Line /window ,output2  ,buffer_End_of_Line2 /window
+Done
+###[loadXMLFileoPtMDE]###
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * opening_tag
+processFlatMDEToMDE 5opening_tag
+processFlatMDEToMDE 5.01opening_tag
+processFlatMDEToMDE 5.02opening_tag
+processFlatMDEToMDE 5.03opening_tag
+processFlatMDEToMDE 5.1attribute
+Send data:  width="1200"
+expression  width="1200"
+trail,temp,trail2 ="1200" 1200" 1200"
+Send data:  height="900"
+expression  height="900"
+trail,temp,trail2 ="900" 900" 900"
+Send data:  background-color="#000000"
+expression  background-color="#000000"
+trail,temp,trail2 ="#000000" #000000" #000000"
+processFlatMDEToMDE 5.3data
+stack top: window, 
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * data
+processFlatMDEToMDE 10data
+processFlatMDEToMDE 10.2opening_tag
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * opening_tag
+processFlatMDEToMDE 5opening_tag
+processFlatMDEToMDE 5.01opening_tag
+processFlatMDEToMDE 5.02opening_tag
+stack top: window, main window
+processFlatMDEToMDE 5.03opening_tag
+processFlatMDEToMDE 6data
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * closing_tag
+processFlatMDEToMDE 9closing_tag
+processFlatMDEToMDE 9.2
+* processFlatMDEToMDE 0 * 
+* processFlatMDEToMDE 1 * closing_tag
+processFlatMDEToMDE 9closing_tag
+processFlatMDEToMDE 9.2
+display loaded XML:
+E: File
+delete mode is manual? 0
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: opening_tag
+                 address: 0x21f2730
+                 Checkpoint 2
+***    Deleting opening_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: attribute
+                 address: 0x21f20f0
+                 Checkpoint 2
+***    Deleting attribute
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: attribute
+                 address: 0x21f21d0
+                 Checkpoint 2
+***    Deleting attribute
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: attribute
+                 address: 0x21f2270
+                 Checkpoint 2
+***    Deleting attribute
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: data
+                 address: 0x21f22e0
+                 Checkpoint 2
+***    Deleting data
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: opening_tag
+                 address: 0x21f2350
+                 Checkpoint 2
+***    Deleting opening_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: data
+                 address: 0x21f23c0
+                 Checkpoint 2
+***    Deleting data
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: closing_tag
+                 address: 0x21f2160
+                 Checkpoint 2
+***    Deleting closing_tag
+                 Checkpoint 1 
+                 sizeRef: 0
+                 before     sub E: closing_tag
+                 address: 0x21f4fc0
+                 Checkpoint 2
+***    Deleting closing_tag
+New element from Vector
+ptMDE: 0x7ffce25335a0
+New element from Vector
+(1)
+
+**********************************
+*                                *
+*     MDE Version v0.3.2       *
+*                                *
+*********************************
+*                                *
+*        Welcome!                *
+*                                *
+*                                *
+*  This is session 1             *
+*                                *
+**********************************
+
+******************************Main Menu******************************
+
+  1) Data Menu
+          File: ../datafiles/default.xml  
+  2) Font Menu
+          Font: ../fonts/FreeSans.ttf
+          Size: 48
+          Color & Alpha (r,g,b,a): (0.00, 0.00, 0.00, 1.00)
+  3) Coordinates Menu
+          Coordinates(x,y,z): (0.00,0.00,0.00)
+          Name <-> data offset Rule (x,y,z): (0.50,0.20,0.00)
+          Index offset Rule (x,y,z):         (0.00,0.00,-0.20)
+          Level offset Rule (x,y,z):        (0.00,0.00,0.00)
+  4) Frame Menu
+          Frame Box:OFF
+          Color & Alpha (r,g,b,a): (0.50,0.50,0.50,0.50)
+          Padding(px) (horizontal, vertical): (0.00,0.00)
+  5) Color Menu
+          Background color&alpha (r,g,b,a): (1.00,1.00,1.00,1.00)
+          Font Color&Alpha (r,g,b,a): (0.00,0.00,0.00,1.00)
+
+  r) Render html file
+  t) Display In Terminal and testing mode: OFF
+  x) Display In Terminal as Xml
+  p) Display in Page mode for GL display
+  g) Display in Gl mode
+
+  q) Quit
+
+*********************************************************************
+Your choice:
+MDE_source name div, data : 
+Checking if div is div
+It's a Div!
+
+Checking if it's a h3 or ul
+
+Checking if h3 is h3
+It's a h3
+
+Checking if it's a h3 or ul
+
+Checking if ul is h3
+Checking if ul is ul
+It's a ul
+
+Checking if li is p
+Checking if li is li
+Checking:li
+Does it have a style?: Checking if attributes is attributes
+Checking if class is style
+Checking if onclick is style
+Checking if splan is attributes
+0
+Now Checking:attributes
+Checking if attributes is attributes
+And now Checking:class
+Checking if class is style
+And now Checking:onclick
+Checking if onclick is style
+Now Checking:splan
+Checking if splan is attributes
+Tag is to be displayed: ul
+Checking if li is p
+Checking if li is li
+Checking:li
+Does it have a style?: Checking if attributes is attributes
+Checking if class is style
+Checking if onclick is style
+0
+Now Checking:attributes
+Checking if attributes is attributes
+And now Checking:class
+Checking if class is style
+And now Checking:onclick
+Checking if onclick is style
+Tag is to be displayed: ul
+Checking if li is p
+Checking if li is li
+Checking:li
+Does it have a style?: Checking if attributes is attributes
+Checking if class is style
+Checking if onclick is style
+Checking if style is style
+1
+Now Checking:attributes
+Checking if attributes is attributes
+And now Checking:class
+Checking if class is style
+And now Checking:onclick
+Checking if onclick is style
+And now Checking:style
+Checking if style is style
+And further Checking:display
+Checking if display is display
+It's a none!
+Checking if li is p
+Checking if li is li
+Checking:li
+Does it have a style?: Checking if attributes is attributes
+Checking if class is style
+Checking if onclick is style
+0
+Now Checking:attributes
+Checking if attributes is attributes
+And now Checking:class
+Checking if class is style
+And now Checking:onclick
+Checking if onclick is style
+Tag is to be displayed: ul
+Checking if li is p
+Checking if li is li
+Checking:li
+Does it have a style?: Checking if attributes is attributes
+Checking if class is style
+Checking if onclick is style
+Checking if style is style
+1
+Now Checking:attributes
+Checking if attributes is attributes
+And now Checking:class
+Checking if class is style
+And now Checking:onclick
+Checking if onclick is style
+And now Checking:style
+Checking if style is style
+And further Checking:color
+Checking if color is display
+Checking if color is color
+Found some font color style! 
+color: rgba(50,150,0,1.0)
+Tag is to be displayed: ul
+has color: rgba(50,150,0,1.0)
+head: rgba
+output: 50,150,0,1.0 tail: 
+strToFind0: 3
+element: 50
+next: 150,0,1.0
+strToFind0: 1
+element: 150
+next: 0,1.0
+strToFind0: 18446744073709551615
+element: 0
+next: 1.0
+last: 1.0
+RGBA
+Checking if li is p
+Checking if li is li
+Checking:li
+Does it have a style?: Checking if attributes is attributes
+Checking if class is style
+Checking if onclick is style
+0
+Now Checking:attributes
+Checking if attributes is attributes
+And now Checking:class
+Checking if class is style
+And now Checking:onclick
+Checking if onclick is style
+Tag is to be displayed: ul
+Checking if li is p
+Checking if li is li
+Checking:li
+Does it have a style?: Checking if attributes is attributes
+Checking if class is style
+Checking if onclick is style
+Checking if style is style
+1
+Now Checking:attributes
+Checking if attributes is attributes
+And now Checking:class
+Checking if class is style
+And now Checking:onclick
+Checking if onclick is style
+And now Checking:style
+Checking if style is style
+And further Checking:display
+Checking if display is display
+It's a none!
+Now Checking:span
+Checking if span is attributes
+Checking if li is p
+Checking if li is li
+Checking:li
+Does it have a style?: Checking if attributes is attributes
+Checking if class is style
+Checking if onclick is style
+Checking if style is style
+1
+Now Checking:attributes
+Checking if attributes is attributes
+And now Checking:class
+Checking if class is style
+And now Checking:onclick
+Checking if onclick is style
+And now Checking:style
+Checking if style is style
+And further Checking:display
+Checking if display is display
+It's a none!
+Checking if li is p
+Checking if li is li
+Checking:li
+Does it have a style?: Checking if attributes is attributes
+Checking if class is style
+Checking if onclick is style
+Checking if style is style
+1
+Now Checking:attributes
+Checking if attributes is attributes
+And now Checking:class
+Checking if class is style
+And now Checking:onclick
+Checking if onclick is style
+And now Checking:style
+Checking if style is style
+And further Checking:display
+Checking if display is display
+It's a none!
+Checking if li is p
+Checking if li is li
+Checking:li
+Does it have a style?: Checking if attributes is attributes
+Checking if class is style
+Checking if onclick is style
+Checking if style is style
+1
+Now Checking:attributes
+Checking if attributes is attributes
+And now Checking:class
+Checking if class is style
+And now Checking:onclick
+Checking if onclick is style
+And now Checking:style
+Checking if style is style
+And further Checking:color
+Checking if color is display
+Checking if color is color
+Found some font color style! 
+color: rgba(250,0,0,0.5)
+Tag is to be displayed: ul
+has color: rgba(250,0,0,0.5)
+head: rgba
+output: 250,0,0,0.5 tail: 
+strToFind0: 1
+element: 250
+next: 0,0,0.5
+strToFind0: 1
+element: 0
+next: 0,0.5
+strToFind0: 18446744073709551615
+element: 0
+next: 0.5
+last: 0.5
+RGBA
+0 , 0 , 0 , 1 , 
+0 , 0 , 0 , 1 , 
+0 , 0 , 0 , 1 , 
+0.196078 , 0.588235 , 0 , 1 , 
+0 , 0 , 0 , 1 , 
+0.980392 , 0 , 0 , 0.5 , 
+i: 0 vect[0]0
+i: 1 vect[0]0
+i: 2 vect[0]0
+i: 3 vect[0]0.196078
+i: 4 vect[0]0
+i: 5 vect[0]0.980392
+Check ptParser: div , 
+
+
+
+New element from Vector
+******************************Main Menu******************************
+
+  1) Data Menu
+          File: ../datafiles/default.xml  
+  2) Font Menu
+          Font: ../fonts/FreeSans.ttf
+          Size: 48
+          Color & Alpha (r,g,b,a): (0.00, 0.00, 0.00, 1.00)
+  3) Coordinates Menu
+          Coordinates(x,y,z): (0.00,0.00,0.00)
+          Name <-> data offset Rule (x,y,z): (0.50,0.20,0.00)
+          Index offset Rule (x,y,z):         (0.00,0.00,-0.20)
+          Level offset Rule (x,y,z):        (0.00,0.00,0.00)
+  4) Frame Menu
+          Frame Box:OFF
+          Color & Alpha (r,g,b,a): (0.50,0.50,0.50,0.50)
+          Padding(px) (horizontal, vertical): (0.00,0.00)
+  5) Color Menu
+          Background color&alpha (r,g,b,a): (1.00,1.00,1.00,1.00)
+          Font Color&Alpha (r,g,b,a): (0.00,0.00,0.00,1.00)
+
+  r) Render html file
+  t) Display In Terminal and testing mode: OFF
+  x) Display In Terminal as Xml
+  p) Display in Page mode for GL display
+  g) Display in Gl mode
+
+  q) Quit
+
+*********************************************************************
+Your choice:
+MDE : master
+  pid : 10909
+  arguments : 1
+    0 : ./../bin/mde_debug
+  parameters : 1
+    version : v0.3.2
+    move : false
+    box : false
+    glmode : false
+    nomenu : false
+    file : ../datafiles/default.xml
+    box-color : 0.500000, 0.500000, 0.500000, 0.500000
+    font : ../fonts/FreeSans.ttf
+    font-size : 48
+  file : ../datafiles/default.xml
+    master : 123
+      tata : 1
+        toto : 11
+          truc : 999
+        lili : 12
+      titi : 2
+        toto : 21
+        lolo : 22
+  div : 
+    h3 : Data Menu
+    ul : 
+      li : File
+        attributes : 2
+          class : menu-item-sub
+          onclick : display()
+        splan : filename
+      li : Font Menu
+        attributes : 2
+          class : menu-item
+          onclick : next()
+      li : Coordinates Menu
+        attributes : 3
+          class : menu-item
+          onclick : next()
+          style : text/css
+            display : none
+      li : Frame Menu
+        attributes : 2
+          class : menu-item
+          onclick : next()
+      li : Color Menu
+        attributes : 3
+          class : menu-item
+          onclick : next()
+          style : text/css
+            color : rgba(50,150,0,1.0)
+      li : Render Html File
+        attributes : 2
+          class : menu-item
+          onclick : executeStatement()
+      li : Display In Terminal and Testing mode:
+        attributes : 3
+          class : menu-item
+          onclick : toggleOption()
+          style : text/css
+            display : none
+        span : On
+          attributes : 1
+            class : toggle
+      li : Display In Terminal as Xml
+        attributes : 3
+          class : menu-item
+          onclick : executeStatement()
+          style : text/css
+            display : none
+      li : Display in Page mode for GL displayl
+        attributes : 3
+          class : menu-item
+          onclick : toggleOption()
+          style : text/css
+            display : none
+      li : quit
+        attributes : 3
+          class : menu-item
+          onclick : executeStatement()
+          style : text/css
+            color : rgba(250,0,0,0.5)
+  window : main window
+    attributes : 3
+      width : 1200
+      height : 900
+      background-color : #000000
+    title : example
+    content : intern
+      div : 
+        h3 : Data Menu
+        ul : 
+          li : File
+            attributes : 2
+              class : menu-item-sub
+              onclick : display()
+            splan : filename
+          li : Font Menu
+            attributes : 2
+              class : menu-item
+              onclick : next()
+          li : Coordinates Menu
+            attributes : 3
+              class : menu-item
+              onclick : next()
+              style : text/css
+                display : none
+          li : Frame Menu
+            attributes : 2
+              class : menu-item
+              onclick : next()
+          li : Color Menu
+            attributes : 3
+              class : menu-item
+              onclick : next()
+              style : text/css
+                color : rgba(50,150,0,1.0)
+          li : Render Html File
+            attributes : 2
+              class : menu-item
+              onclick : executeStatement()
+          li : Display In Terminal and Testing mode:
+            attributes : 3
+              class : menu-item
+              onclick : toggleOption()
+              style : text/css
+                display : none
+            span : On
+              attributes : 1
+                class : toggle
+          li : Display In Terminal as Xml
+            attributes : 3
+              class : menu-item
+              onclick : executeStatement()
+              style : text/css
+                display : none
+          li : Display in Page mode for GL displayl
+            attributes : 3
+              class : menu-item
+              onclick : toggleOption()
+              style : text/css
+                display : none
+          li : quit
+            attributes : 3
+              class : menu-item
+              onclick : executeStatement()
+              style : text/css
+                color : rgba(250,0,0,0.5)
+    render : openGL
+      div : 
+        h3 : Data Menu
+        li : File
+        li : Font Menu
+        li : Frame Menu
+        li : Color Menu
+        li : Render Html File
+        li : quit
+testing On******************************Main Menu******************************
+
+  1) Data Menu
+          File: ../datafiles/default.xml  
+  2) Font Menu
+          Font: ../fonts/FreeSans.ttf
+          Size: 48
+          Color & Alpha (r,g,b,a): (0.00, 0.00, 0.00, 1.00)
+  3) Coordinates Menu
+          Coordinates(x,y,z): (0.00,0.00,0.00)
+          Name <-> data offset Rule (x,y,z): (0.50,0.20,0.00)
+          Index offset Rule (x,y,z):         (0.00,0.00,-0.20)
+          Level offset Rule (x,y,z):        (0.00,0.00,0.00)
+  4) Frame Menu
+          Frame Box:OFF
+          Color & Alpha (r,g,b,a): (0.50,0.50,0.50,0.50)
+          Padding(px) (horizontal, vertical): (0.00,0.00)
+  5) Color Menu
+          Background color&alpha (r,g,b,a): (1.00,1.00,1.00,1.00)
+          Font Color&Alpha (r,g,b,a): (0.00,0.00,0.00,1.00)
+
+  r) Render html file
+  t) Display In Terminal and testing mode: ON
+  x) Display In Terminal as Xml
+  p) Display in Page mode for GL display
+  g) Display in Gl mode
+
+  q) Quit
+
+*********************************************************************
+Your choice:
+******************************Main Menu******************************
+
+  1) Data Menu
+          File: ../datafiles/default.xml  
+  2) Font Menu
+          Font: ../fonts/FreeSans.ttf
+          Size: 48
+          Color & Alpha (r,g,b,a): (0.00, 0.00, 0.00, 1.00)
+  3) Coordinates Menu
+          Coordinates(x,y,z): (-3.00,1.80,0.00)
+          Name <-> data offset Rule (x,y,z): (0.50,0.20,0.00)
+          Index offset Rule (x,y,z):         (0.00,0.00,-0.20)
+          Level offset Rule (x,y,z):        (0.00,0.00,0.00)
+  4) Frame Menu
+          Frame Box:OFF
+          Color & Alpha (r,g,b,a): (0.50,0.50,0.50,0.50)
+          Padding(px) (horizontal, vertical): (0.00,0.00)
+  5) Color Menu
+          Background color&alpha (r,g,b,a): (1.00,1.00,1.00,1.00)
+          Font Color&Alpha (r,g,b,a): (0.00,0.00,0.00,1.00)
+
+  r) Render html file
+  t) Display In Terminal and testing mode: ON
+  x) Display In Terminal as Xml
+  p) Display in Page mode for GL display
+  g) Display in Gl mode
+
+  q) Quit
+
+*********************************************************************
+Your choice:
+(level,index): (1,0)
+Found 1 Entities with name window
+<window>
+main window
+  <attributes>
+  3
+    <width>
+    1200
+    </width>
+    <height>
+    900
+    </height>
+    <background-color>
+    #000000
+    </background-color>
+  </attributes>
+  <title>
+  example
+  </title>
+  <content>
+  intern
+    <div>
+    
+      <h3>
+      Data Menu
+      </h3>
+      <ul>
+      
+        <li>
+        File
+          <attributes>
+          2
+            <class>
+            menu-item-sub
+            </class>
+            <onclick>
+            display()
+            </onclick>
+          </attributes>
+          <splan>
+          filename
+          </splan>
+        </li>
+        <li>
+        Font Menu
+          <attributes>
+          2
+            <class>
+            menu-item
+            </class>
+            <onclick>
+            next()
+            </onclick>
+          </attributes>
+        </li>
+        <li>
+        Coordinates Menu
+          <attributes>
+          3
+            <class>
+            menu-item
+            </class>
+            <onclick>
+            next()
+            </onclick>
+            <style>
+            text/css
+              <display>
+              none
+              </display>
+            </style>
+          </attributes>
+        </li>
+        <li>
+        Frame Menu
+          <attributes>
+          2
+            <class>
+            menu-item
+            </class>
+            <onclick>
+            next()
+            </onclick>
+          </attributes>
+        </li>
+        <li>
+        Color Menu
+          <attributes>
+          3
+            <class>
+            menu-item
+            </class>
+            <onclick>
+            next()
+            </onclick>
+            <style>
+            text/css
+              <color>
+              rgba(50,150,0,1.0)
+              </color>
+            </style>
+          </attributes>
+        </li>
+        <li>
+        Render Html File
+          <attributes>
+          2
+            <class>
+            menu-item
+            </class>
+            <onclick>
+            executeStatement()
+            </onclick>
+          </attributes>
+        </li>
+        <li>
+        Display In Terminal and Testing mode:
+          <attributes>
+          3
+            <class>
+            menu-item
+            </class>
+            <onclick>
+            toggleOption()
+            </onclick>
+            <style>
+            text/css
+              <display>
+              none
+              </display>
+            </style>
+          </attributes>
+          <span>
+          On
+            <attributes>
+            1
+              <class>
+              toggle
+              </class>
+            </attributes>
+          </span>
+        </li>
+        <li>
+        Display In Terminal as Xml
+          <attributes>
+          3
+            <class>
+            menu-item
+            </class>
+            <onclick>
+            executeStatement()
+            </onclick>
+            <style>
+            text/css
+              <display>
+              none
+              </display>
+            </style>
+          </attributes>
+        </li>
+        <li>
+        Display in Page mode for GL displayl
+          <attributes>
+          3
+            <class>
+            menu-item
+            </class>
+            <onclick>
+            toggleOption()
+            </onclick>
+            <style>
+            text/css
+              <display>
+              none
+              </display>
+            </style>
+          </attributes>
+        </li>
+        <li>
+        quit
+          <attributes>
+          3
+            <class>
+            menu-item
+            </class>
+            <onclick>
+            executeStatement()
+            </onclick>
+            <style>
+            text/css
+              <color>
+              rgba(250,0,0,0.5)
+              </color>
+            </style>
+          </attributes>
+        </li>
+      </ul>
+    </div>
+  </content>
+  <render>
+  openGL
+    <div>
+    
+      <h3>
+      Data Menu
+      </h3>
+      <li>
+      File
+      </li>
+      <li>
+      Font Menu
+      </li>
+      <li>
+      Frame Menu
+      </li>
+      <li>
+      Color Menu
+      </li>
+      <li>
+      Render Html File
+      </li>
+      <li>
+      quit
+      </li>
+    </div>
+  </render>
+</window>
+Yeah!
+(level,index): (1,0)
+Found 2 Entities with name width
+width: 1200
+(level,index): (1,0)
+Found 3 Entities with name height
+height: 900
+(level,index): (1,0)
+Found 4 Entities with name title
+<window>
+main window
+  <attributes>
+  3
+    <width>
+    1200
+    </width>
+    <height>
+    900
+    </height>
+    <background-color>
+    #000000
+    </background-color>
+  </attributes>
+  <title>
+  example
+  </title>
+  <content>
+  intern
+    <div>
+    
+      <h3>
+      Data Menu
+      </h3>
+      <ul>
+      
+        <li>
+        File
+          <attributes>
+          2
+            <class>
+            menu-item-sub
+            </class>
+            <onclick>
+            display()
+            </onclick>
+          </attributes>
+          <splan>
+          filename
+          </splan>
+        </li>
+        <li>
+        Font Menu
+          <attributes>
+          2
+            <class>
+            menu-item
+            </class>
+            <onclick>
+            next()
+            </onclick>
+          </attributes>
+        </li>
+        <li>
+        Coordinates Menu
+          <attributes>
+          3
+            <class>
+            menu-item
+            </class>
+            <onclick>
+            next()
+            </onclick>
+            <style>
+            text/css
+              <display>
+              none
+              </display>
+            </style>
+          </attributes>
+        </li>
+        <li>
+        Frame Menu
+          <attributes>
+          2
+            <class>
+            menu-item
+            </class>
+            <onclick>
+            next()
+            </onclick>
+          </attributes>
+        </li>
+        <li>
+        Color Menu
+          <attributes>
+          3
+            <class>
+            menu-item
+            </class>
+            <onclick>
+            next()
+            </onclick>
+            <style>
+            text/css
+              <color>
+              rgba(50,150,0,1.0)
+              </color>
+            </style>
+          </attributes>
+        </li>
+        <li>
+        Render Html File
+          <attributes>
+          2
+            <class>
+            menu-item
+            </class>
+            <onclick>
+            executeStatement()
+            </onclick>
+          </attributes>
+        </li>
+        <li>
+        Display In Terminal and Testing mode:
+          <attributes>
+          3
+            <class>
+            menu-item
+            </class>
+            <onclick>
+            toggleOption()
+            </onclick>
+            <style>
+            text/css
+              <display>
+              none
+              </display>
+            </style>
+          </attributes>
+          <span>
+          On
+            <attributes>
+            1
+              <class>
+              toggle
+              </class>
+            </attributes>
+          </span>
+        </li>
+        <li>
+        Display In Terminal as Xml
+          <attributes>
+          3
+            <class>
+            menu-item
+            </class>
+            <onclick>
+            executeStatement()
+            </onclick>
+            <style>
+            text/css
+              <display>
+              none
+              </display>
+            </style>
+          </attributes>
+        </li>
+        <li>
+        Display in Page mode for GL displayl
+          <attributes>
+          3
+            <class>
+            menu-item
+            </class>
+            <onclick>
+            toggleOption()
+            </onclick>
+            <style>
+            text/css
+              <display>
+              none
+              </display>
+            </style>
+          </attributes>
+        </li>
+        <li>
+        quit
+          <attributes>
+          3
+            <class>
+            menu-item
+            </class>
+            <onclick>
+            executeStatement()
+            </onclick>
+            <style>
+            text/css
+              <color>
+              rgba(250,0,0,0.5)
+              </color>
+            </style>
+          </attributes>
+        </li>
+      </ul>
+    </div>
+  </content>
+  <render>
+  openGL
+    <div>
+    
+      <h3>
+      Data Menu
+      </h3>
+      <li>
+      File
+      </li>
+      <li>
+      Font Menu
+      </li>
+      <li>
+      Frame Menu
+      </li>
+      <li>
+      Color Menu
+      </li>
+      <li>
+      Render Html File
+      </li>
+      <li>
+      quit
+      </li>
+    </div>
+  </render>
+</window>
+<width>
+1200
+</width>
+<height>
+900
+</height>
+<title>
+example
+</title>
+data: example
+Done!
+User coordinates: -3, 1.8, 0
+user_color = {0.50,0.50,0.50,0.50}
+user_bg_color = {1.00,1.00,1.00,1.00}
+number of lines:1
+display box:0
+FT_set_Pixel_Sizes:0
+Generated a 1015 x 138 (136 kb) texture atlas
+offset_rule: 
+loop V3D
+| 0, 0, 0 |
+| 0, 0, -0.2 |
+| 0, 0, 0 |
+offset: 
+loop V3D
+| 0, -0.4, 0 |
+| 0, -0.6, 0 |
+| 0, -0.8, 0 |
+| 0, -1, 0 |
+| 0, -1.2, 0 |
+| 0, -1.4, 0 |
+| 0, -1.6, 0 |
+v_origin: 
+loop V3D
+| -3, 1.4, 0 |
+| -3, 1.2, 0 |
+| -3, 1, 0 |
+| -3, 0.8, 0 |
+| -3, 0.6, 0 |
+| -3, 0.4, 0 |
+| -3, 0.2, 0 |
+v_origin_fb: 
+loop V3D
+| -3, 1.4, 0 |
+| -3, 1.2, 0 |
+| -3, 1, 0 |
+| -3, 0.8, 0 |
+| -3, 0.6, 0 |
+| -3, 0.4, 0 |
+| -3, 0.2, 0 |
+size of glyphs box: 336
+ bottom_left_front :
+loop V3D
+| -2.99333, 1.39556, 0 |
+| -2.99333, 1.19556, 0 |
+| -2.99333, 0.995556, 0 |
+| -2.99333, 0.795555, 0 |
+| -2.99667, 0.595555, 0 |
+| -2.99333, 0.395556, 0 |
+| -2.99833, 0.175555, 0 |
+ top_right_back :
+loop V3D
+| -2.61167, 1.47778, 0.0822222 |
+| -2.87333, 1.27778, 0.0822222 |
+| -2.62333, 1.07778, 0.0822222 |
+| -2.55167, 0.877778, 0.0822223 |
+| -2.59167, 0.677778, 0.0822223 |
+| -2.40167, 0.477778, 0.0822222 |
+| -2.87, 0.277778, 0.102222 |
+1) vertex_3D :
+loop V3D
+| -2.99333, 1.39556, 0 |
+| -2.99333, 1.47778, 0 |
+| -2.61167, 1.47778, 0 |
+| -2.61167, 1.39556, 0 |
+| -2.99333, 1.39556, -0.0822222 |
+| -2.99333, 1.47778, -0.0822222 |
+| -2.61167, 1.47778, -0.0822222 |
+| -2.61167, 1.39556, -0.0822222 |
+| -2.99333, 1.19556, 0 |
+| -2.99333, 1.27778, 0 |
+| -2.87333, 1.27778, 0 |
+| -2.87333, 1.19556, 0 |
+| -2.99333, 1.19556, -0.0822222 |
+| -2.99333, 1.27778, -0.0822222 |
+| -2.87333, 1.27778, -0.0822222 |
+| -2.87333, 1.19556, -0.0822222 |
+| -2.99333, 0.995556, 0 |
+| -2.99333, 1.07778, 0 |
+| -2.62333, 1.07778, 0 |
+| -2.62333, 0.995556, 0 |
+| -2.99333, 0.995556, -0.0822222 |
+| -2.99333, 1.07778, -0.0822222 |
+| -2.62333, 1.07778, -0.0822222 |
+| -2.62333, 0.995556, -0.0822222 |
+| -2.99333, 0.795555, 0 |
+| -2.99333, 0.877778, 0 |
+| -2.55167, 0.877778, 0 |
+| -2.55167, 0.795555, 0 |
+| -2.99333, 0.795555, -0.0822223 |
+| -2.99333, 0.877778, -0.0822223 |
+| -2.55167, 0.877778, -0.0822223 |
+| -2.55167, 0.795555, -0.0822223 |
+| -2.99667, 0.595555, 0 |
+| -2.99667, 0.677778, 0 |
+| -2.59167, 0.677778, 0 |
+| -2.59167, 0.595555, 0 |
+| -2.99667, 0.595555, -0.0822223 |
+| -2.99667, 0.677778, -0.0822223 |
+| -2.59167, 0.677778, -0.0822223 |
+| -2.59167, 0.595555, -0.0822223 |
+| -2.99333, 0.395556, 0 |
+| -2.99333, 0.477778, 0 |
+| -2.40167, 0.477778, 0 |
+| -2.40167, 0.395556, 0 |
+| -2.99333, 0.395556, -0.0822222 |
+| -2.99333, 0.477778, -0.0822222 |
+| -2.40167, 0.477778, -0.0822222 |
+| -2.40167, 0.395556, -0.0822222 |
+| -2.99833, 0.175555, 0 |
+| -2.99833, 0.277778, 0 |
+| -2.87, 0.277778, 0 |
+| -2.87, 0.175555, 0 |
+| -2.99833, 0.175555, -0.102222 |
+| -2.99833, 0.277778, -0.102222 |
+| -2.87, 0.277778, -0.102222 |
+| -2.87, 0.175555, -0.102222 |
+######init vectors######
+max_loop(vectors_boxes.size): 56
+loop V3D
+| -2.99333, 1.39556, 0 |
+| -2.99333, 1.47778, 0 |
+| -2.61167, 1.47778, 0 |
+| -2.61167, 1.39556, 0 |
+| -2.99333, 1.39556, -0.0822222 |
+| -2.99333, 1.47778, -0.0822222 |
+| -2.61167, 1.47778, -0.0822222 |
+| -2.61167, 1.39556, -0.0822222 |
+| -2.99333, 1.19556, 0 |
+| -2.99333, 1.27778, 0 |
+| -2.87333, 1.27778, 0 |
+| -2.87333, 1.19556, 0 |
+| -2.99333, 1.19556, -0.0822222 |
+| -2.99333, 1.27778, -0.0822222 |
+| -2.87333, 1.27778, -0.0822222 |
+| -2.87333, 1.19556, -0.0822222 |
+| -2.99333, 0.995556, 0 |
+| -2.99333, 1.07778, 0 |
+| -2.62333, 1.07778, 0 |
+| -2.62333, 0.995556, 0 |
+| -2.99333, 0.995556, -0.0822222 |
+| -2.99333, 1.07778, -0.0822222 |
+| -2.62333, 1.07778, -0.0822222 |
+| -2.62333, 0.995556, -0.0822222 |
+| -2.99333, 0.795555, 0 |
+| -2.99333, 0.877778, 0 |
+| -2.55167, 0.877778, 0 |
+| -2.55167, 0.795555, 0 |
+| -2.99333, 0.795555, -0.0822223 |
+| -2.99333, 0.877778, -0.0822223 |
+| -2.55167, 0.877778, -0.0822223 |
+| -2.55167, 0.795555, -0.0822223 |
+| -2.99667, 0.595555, 0 |
+| -2.99667, 0.677778, 0 |
+| -2.59167, 0.677778, 0 |
+| -2.59167, 0.595555, 0 |
+| -2.99667, 0.595555, -0.0822223 |
+| -2.99667, 0.677778, -0.0822223 |
+| -2.59167, 0.677778, -0.0822223 |
+| -2.59167, 0.595555, -0.0822223 |
+| -2.99333, 0.395556, 0 |
+| -2.99333, 0.477778, 0 |
+| -2.40167, 0.477778, 0 |
+| -2.40167, 0.395556, 0 |
+| -2.99333, 0.395556, -0.0822222 |
+| -2.99333, 0.477778, -0.0822222 |
+| -2.40167, 0.477778, -0.0822222 |
+| -2.40167, 0.395556, -0.0822222 |
+| -2.99833, 0.175555, 0 |
+| -2.99833, 0.277778, 0 |
+| -2.87, 0.277778, 0 |
+| -2.87, 0.175555, 0 |
+| -2.99833, 0.175555, -0.102222 |
+| -2.99833, 0.277778, -0.102222 |
+| -2.87, 0.277778, -0.102222 |
+| -2.87, 0.175555, -0.102222 |
+vect_index size: 0
+check_coord3d_b:
+vec3(-2.993333, 1.395555, 0.000000)
+######End init vectors######
+2) vertex_3D :
+loop V3D
+| -2.99333, 1.39556, 0 |
+| -2.99333, 1.47778, 0 |
+| -2.61167, 1.47778, 0 |
+| -2.61167, 1.39556, 0 |
+| -2.99333, 1.39556, -0.0822222 |
+| -2.99333, 1.47778, -0.0822222 |
+| -2.61167, 1.47778, -0.0822222 |
+| -2.61167, 1.39556, -0.0822222 |
+| -2.99333, 1.19556, 0 |
+| -2.99333, 1.27778, 0 |
+| -2.87333, 1.27778, 0 |
+| -2.87333, 1.19556, 0 |
+| -2.99333, 1.19556, -0.0822222 |
+| -2.99333, 1.27778, -0.0822222 |
+| -2.87333, 1.27778, -0.0822222 |
+| -2.87333, 1.19556, -0.0822222 |
+| -2.99333, 0.995556, 0 |
+| -2.99333, 1.07778, 0 |
+| -2.62333, 1.07778, 0 |
+| -2.62333, 0.995556, 0 |
+| -2.99333, 0.995556, -0.0822222 |
+| -2.99333, 1.07778, -0.0822222 |
+| -2.62333, 1.07778, -0.0822222 |
+| -2.62333, 0.995556, -0.0822222 |
+| -2.99333, 0.795555, 0 |
+| -2.99333, 0.877778, 0 |
+| -2.55167, 0.877778, 0 |
+| -2.55167, 0.795555, 0 |
+| -2.99333, 0.795555, -0.0822223 |
+| -2.99333, 0.877778, -0.0822223 |
+| -2.55167, 0.877778, -0.0822223 |
+| -2.55167, 0.795555, -0.0822223 |
+| -2.99667, 0.595555, 0 |
+| -2.99667, 0.677778, 0 |
+| -2.59167, 0.677778, 0 |
+| -2.59167, 0.595555, 0 |
+| -2.99667, 0.595555, -0.0822223 |
+| -2.99667, 0.677778, -0.0822223 |
+| -2.59167, 0.677778, -0.0822223 |
+| -2.59167, 0.595555, -0.0822223 |
+| -2.99333, 0.395556, 0 |
+| -2.99333, 0.477778, 0 |
+| -2.40167, 0.477778, 0 |
+| -2.40167, 0.395556, 0 |
+| -2.99333, 0.395556, -0.0822222 |
+| -2.99333, 0.477778, -0.0822222 |
+| -2.40167, 0.477778, -0.0822222 |
+| -2.40167, 0.395556, -0.0822222 |
+| -2.99833, 0.175555, 0 |
+| -2.99833, 0.277778, 0 |
+| -2.87, 0.277778, 0 |
+| -2.87, 0.175555, 0 |
+| -2.99833, 0.175555, -0.102222 |
+| -2.99833, 0.277778, -0.102222 |
+| -2.87, 0.277778, -0.102222 |
+| -2.87, 0.175555, -0.102222 |
+######## init box #########
+loop V3D
+| -2.99333, 1.39556, 0 |
+| -2.99333, 1.47778, 0 |
+| -2.61167, 1.47778, 0 |
+| -2.61167, 1.39556, 0 |
+| -2.99333, 1.39556, -0.0822222 |
+| -2.99333, 1.47778, -0.0822222 |
+| -2.61167, 1.47778, -0.0822222 |
+| -2.61167, 1.39556, -0.0822222 |
+| -2.99333, 1.19556, 0 |
+| -2.99333, 1.27778, 0 |
+| -2.87333, 1.27778, 0 |
+| -2.87333, 1.19556, 0 |
+| -2.99333, 1.19556, -0.0822222 |
+| -2.99333, 1.27778, -0.0822222 |
+| -2.87333, 1.27778, -0.0822222 |
+| -2.87333, 1.19556, -0.0822222 |
+| -2.99333, 0.995556, 0 |
+| -2.99333, 1.07778, 0 |
+| -2.62333, 1.07778, 0 |
+| -2.62333, 0.995556, 0 |
+| -2.99333, 0.995556, -0.0822222 |
+| -2.99333, 1.07778, -0.0822222 |
+| -2.62333, 1.07778, -0.0822222 |
+| -2.62333, 0.995556, -0.0822222 |
+| -2.99333, 0.795555, 0 |
+| -2.99333, 0.877778, 0 |
+| -2.55167, 0.877778, 0 |
+| -2.55167, 0.795555, 0 |
+| -2.99333, 0.795555, -0.0822223 |
+| -2.99333, 0.877778, -0.0822223 |
+| -2.55167, 0.877778, -0.0822223 |
+| -2.55167, 0.795555, -0.0822223 |
+| -2.99667, 0.595555, 0 |
+| -2.99667, 0.677778, 0 |
+| -2.59167, 0.677778, 0 |
+| -2.59167, 0.595555, 0 |
+| -2.99667, 0.595555, -0.0822223 |
+| -2.99667, 0.677778, -0.0822223 |
+| -2.59167, 0.677778, -0.0822223 |
+| -2.59167, 0.595555, -0.0822223 |
+| -2.99333, 0.395556, 0 |
+| -2.99333, 0.477778, 0 |
+| -2.40167, 0.477778, 0 |
+| -2.40167, 0.395556, 0 |
+| -2.99333, 0.395556, -0.0822222 |
+| -2.99333, 0.477778, -0.0822222 |
+| -2.40167, 0.477778, -0.0822222 |
+| -2.40167, 0.395556, -0.0822222 |
+| -2.99833, 0.175555, 0 |
+| -2.99833, 0.277778, 0 |
+| -2.87, 0.277778, 0 |
+| -2.87, 0.175555, 0 |
+| -2.99833, 0.175555, -0.102222 |
+| -2.99833, 0.277778, -0.102222 |
+| -2.87, 0.277778, -0.102222 |
+| -2.87, 0.175555, -0.102222 |
+######init vectors######
+max_loop(vectors_boxes.size): 56
+loop V3D
+| -2.99333, 1.39556, 0 |
+| -2.99333, 1.47778, 0 |
+| -2.61167, 1.47778, 0 |
+| -2.61167, 1.39556, 0 |
+| -2.99333, 1.39556, -0.0822222 |
+| -2.99333, 1.47778, -0.0822222 |
+| -2.61167, 1.47778, -0.0822222 |
+| -2.61167, 1.39556, -0.0822222 |
+| -2.99333, 1.19556, 0 |
+| -2.99333, 1.27778, 0 |
+| -2.87333, 1.27778, 0 |
+| -2.87333, 1.19556, 0 |
+| -2.99333, 1.19556, -0.0822222 |
+| -2.99333, 1.27778, -0.0822222 |
+| -2.87333, 1.27778, -0.0822222 |
+| -2.87333, 1.19556, -0.0822222 |
+| -2.99333, 0.995556, 0 |
+| -2.99333, 1.07778, 0 |
+| -2.62333, 1.07778, 0 |
+| -2.62333, 0.995556, 0 |
+| -2.99333, 0.995556, -0.0822222 |
+| -2.99333, 1.07778, -0.0822222 |
+| -2.62333, 1.07778, -0.0822222 |
+| -2.62333, 0.995556, -0.0822222 |
+| -2.99333, 0.795555, 0 |
+| -2.99333, 0.877778, 0 |
+| -2.55167, 0.877778, 0 |
+| -2.55167, 0.795555, 0 |
+| -2.99333, 0.795555, -0.0822223 |
+| -2.99333, 0.877778, -0.0822223 |
+| -2.55167, 0.877778, -0.0822223 |
+| -2.55167, 0.795555, -0.0822223 |
+| -2.99667, 0.595555, 0 |
+| -2.99667, 0.677778, 0 |
+| -2.59167, 0.677778, 0 |
+| -2.59167, 0.595555, 0 |
+| -2.99667, 0.595555, -0.0822223 |
+| -2.99667, 0.677778, -0.0822223 |
+| -2.59167, 0.677778, -0.0822223 |
+| -2.59167, 0.595555, -0.0822223 |
+| -2.99333, 0.395556, 0 |
+| -2.99333, 0.477778, 0 |
+| -2.40167, 0.477778, 0 |
+| -2.40167, 0.395556, 0 |
+| -2.99333, 0.395556, -0.0822222 |
+| -2.99333, 0.477778, -0.0822222 |
+| -2.40167, 0.477778, -0.0822222 |
+| -2.40167, 0.395556, -0.0822222 |
+| -2.99833, 0.175555, 0 |
+| -2.99833, 0.277778, 0 |
+| -2.87, 0.277778, 0 |
+| -2.87, 0.175555, 0 |
+| -2.99833, 0.175555, -0.102222 |
+| -2.99833, 0.277778, -0.102222 |
+| -2.87, 0.277778, -0.102222 |
+| -2.87, 0.175555, -0.102222 |
+vect_index size: 2016
+######End init vectors######
+######## End init box #########
+3) vertex_3D :
+loop V3D
+| -2.99333, 1.39556, 0 |
+| -2.99333, 1.47778, 0 |
+| -2.61167, 1.47778, 0 |
+| -2.61167, 1.39556, 0 |
+| -2.99333, 1.39556, -0.0822222 |
+| -2.99333, 1.47778, -0.0822222 |
+| -2.61167, 1.47778, -0.0822222 |
+| -2.61167, 1.39556, -0.0822222 |
+| -2.99333, 1.19556, 0 |
+| -2.99333, 1.27778, 0 |
+| -2.87333, 1.27778, 0 |
+| -2.87333, 1.19556, 0 |
+| -2.99333, 1.19556, -0.0822222 |
+| -2.99333, 1.27778, -0.0822222 |
+| -2.87333, 1.27778, -0.0822222 |
+| -2.87333, 1.19556, -0.0822222 |
+| -2.99333, 0.995556, 0 |
+| -2.99333, 1.07778, 0 |
+| -2.62333, 1.07778, 0 |
+| -2.62333, 0.995556, 0 |
+| -2.99333, 0.995556, -0.0822222 |
+| -2.99333, 1.07778, -0.0822222 |
+| -2.62333, 1.07778, -0.0822222 |
+| -2.62333, 0.995556, -0.0822222 |
+| -2.99333, 0.795555, 0 |
+| -2.99333, 0.877778, 0 |
+| -2.55167, 0.877778, 0 |
+| -2.55167, 0.795555, 0 |
+| -2.99333, 0.795555, -0.0822223 |
+| -2.99333, 0.877778, -0.0822223 |
+| -2.55167, 0.877778, -0.0822223 |
+| -2.55167, 0.795555, -0.0822223 |
+| -2.99667, 0.595555, 0 |
+| -2.99667, 0.677778, 0 |
+| -2.59167, 0.677778, 0 |
+| -2.59167, 0.595555, 0 |
+| -2.99667, 0.595555, -0.0822223 |
+| -2.99667, 0.677778, -0.0822223 |
+| -2.59167, 0.677778, -0.0822223 |
+| -2.59167, 0.595555, -0.0822223 |
+| -2.99333, 0.395556, 0 |
+| -2.99333, 0.477778, 0 |
+| -2.40167, 0.477778, 0 |
+| -2.40167, 0.395556, 0 |
+| -2.99333, 0.395556, -0.0822222 |
+| -2.99333, 0.477778, -0.0822222 |
+| -2.40167, 0.477778, -0.0822222 |
+| -2.40167, 0.395556, -0.0822222 |
+| -2.99833, 0.175555, 0 |
+| -2.99833, 0.277778, 0 |
+| -2.87, 0.277778, 0 |
+| -2.87, 0.175555, 0 |
+| -2.99833, 0.175555, -0.102222 |
+| -2.99833, 0.277778, -0.102222 |
+| -2.87, 0.277778, -0.102222 |
+| -2.87, 0.175555, -0.102222 |
+number of lines in init_text_MDE:7
+####### init_v_font_color ########
+loop V3Dalpha
+| 0, 0, 0, 1 |
+| 0, 0, 0, 1 |
+| 0, 0, 0, 1 |
+| 0.196078, 0.588235, 0, 1 |
+| 0, 0, 0, 1 |
+| 0.980392, 0, 0, 0.5 |
+| 0, 0, 0, 1 |
+| 0, 0, 0, 1 |
+| 0, 0, 0, 1 |
+| 0.196078, 0.588235, 0, 1 |
+| 0, 0, 0, 1 |
+| 0.980392, 0, 0, 0.5 |
+| 0, 0, 0, 1 |
+| 0, 0, 0, 1 |
+| 0, 0, 0, 1 |
+| 0.196078, 0.588235, 0, 1 |
+| 0, 0, 0, 1 |
+| 0.980392, 0, 0, 0.5 |
+| 0, 0, 0, 1 |
+| 0, 0, 0, 1 |
+| 0, 0, 0, 1 |
+| 0.196078, 0.588235, 0, 1 |
+| 0, 0, 0, 1 |
+| 0.980392, 0, 0, 0.5 |
+| 0, 0, 0, 1 |
+| 0, 0, 0, 1 |
+| 0, 0, 0, 1 |
+| 0.196078, 0.588235, 0, 1 |
+| 0, 0, 0, 1 |
+| 0.980392, 0, 0, 0.5 |
+| 0, 0, 0, 1 |
+| 0, 0, 0, 1 |
+| 0, 0, 0, 1 |
+| 0.196078, 0.588235, 0, 1 |
+| 0, 0, 0, 1 |
+| 0.980392, 0, 0, 0.5 |
+| 0, 0, 0, 1 |
+| 0, 0, 0, 1 |
+| 0, 0, 0, 1 |
+| 0.196078, 0.588235, 0, 1 |
+| 0, 0, 0, 1 |
+| 0.980392, 0, 0, 0.5 |
+####### End init_v_font_color #######
+whd.size: 7
+########init font color########
+######## Init Matrices ########
+m_model:
+mat4x4((1.000000, 0.000000, 0.000000, 0.000000), (0.000000, 1.000000, 0.000000, 0.000000), (0.000000, 0.000000, 1.000000, 0.000000), (1.000000, 0.000000, -1.000000, 1.000000))
+m_model_b:
+mat4x4((1.000000, 0.000000, 0.000000, 0.000000), (0.000000, 1.000000, 0.000000, 0.000000), (0.000000, 0.000000, 1.000000, 0.000000), (1.000000, 0.000000, -1.000000, 1.000000))
+m_projection:
+mat4x4((1.810660, 0.000000, 0.000000, 0.000000), (0.000000, 2.414213, 0.000000, 0.000000), (0.000000, 0.000000, -1.020202, -1.000000), (0.000000, 0.000000, -0.202020, 0.000000))
+screen: 800 , 600
+End init Matrices
+bye bye!

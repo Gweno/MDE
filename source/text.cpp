@@ -425,7 +425,7 @@ void create_coord_vector_text(const char *text, atlas * a, vertex3D &origin, ver
 
     }
     
-    //~ displayV3D(glyphs_box);
+    displayV3D(a_glyphs_box);
     nb_glyphs_per_text.push_back(c);
     nb_indices+=c;
     std::clog << "nb_glyphs_per_text" << std::endl;
@@ -1328,7 +1328,7 @@ void text_display() {
     glUseProgram(program_text);
     glUniform4fv(uniform_bgcolor_text, 1, bg_rgb);
     render_text(a96, vector_font_color, glyphs_box2, glyphs_vertex2);
-    //~ render_text(a_any_size, vector_font_color2, glyphs_box, glyphs_vertex);
+    render_text(a_any_size, vector_font_color2, glyphs_box, glyphs_vertex);
     
 }
 
