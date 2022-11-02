@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['gldata_59',['GLdata',['../structGLdata.html',1,'']]]
+  ['colorrgba_65',['colorRGBA',['../structcolorRGBA.html',1,'']]]
 ];

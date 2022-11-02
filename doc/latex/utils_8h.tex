@@ -1,0 +1,120 @@
+\hypertarget{utils_8h}{}\doxysection{/home/gweno/\+Documents/\+Projects/\+Cpp/\+M\+D\+E/source/utils.h File Reference}
+\label{utils_8h}\index{/home/gweno/Documents/Projects/Cpp/MDE/source/utils.h@{/home/gweno/Documents/Projects/Cpp/MDE/source/utils.h}}
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include \char`\"{}M\+D\+E.\+h\char`\"{}}\newline
+Include dependency graph for utils.\+h\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structGLdata}{G\+Ldata}}
+\begin{DoxyCompactList}\small\item\em This is public structure \textquotesingle{}\mbox{\hyperlink{structGLdata}{G\+Ldata}}\textquotesingle{}. It is used for transferring information to GL functions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{group__group__utils_gaba1bb76120cd8f14987e635e63e7d0db}{check\+Token}} (const std\+::string \&token, std\+::string \&element)
+\begin{DoxyCompactList}\small\item\em This member function is to process a token extracted from a file as a tag and checks if it is an \textquotesingle{}opening\+\_\+tag\textquotesingle{} or a \textquotesingle{}closing\+\_\+tag\textquotesingle{}. It changes the parameter element accordingly. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__group__utils_gaf98bdbbd73032fd57b977a116c0a32b6}{str\+Token\+Tag}} (std\+::string \&buffer\+\_\+\+Input, std\+::string \&output\+\_\+\+Tag, std\+::string \&buffer\+\_\+\+Output, char delimiter1, char delimiter2)
+\begin{DoxyCompactList}\small\item\em This member function is to read an X\+ML file and store it into an instance of class \mbox{\hyperlink{classMDE}{M\+DE}}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__group__utils_ga62fbfa9829d0a2584921d108478edc09}{trim\+Leading\+Space}} (std\+::string \&io\+\_\+string)
+\begin{DoxyCompactList}\small\item\em This member function is to trim the leading space (space charaters at the start) of the io\+\_\+string parameter passed as argument for this member function. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{group__group__utils_ga446038c741f58e6719c14db850ee722e}{extract\+File\+To\+Flat\+M\+DE}} (\mbox{\hyperlink{classMDE}{M\+DE}} \&M\+D\+E\+\_\+source, std\+::string \&full\+\_\+filename)
+\begin{DoxyCompactList}\small\item\em This member function is to extract data from an xml file and store it in an Entity with all sub-\/entities at the same level and the \textquotesingle{}name\textquotesingle{} member sets to \textquotesingle{}name\textquotesingle{} or \textquotesingle{}data\textquotesingle{} accordingly to wether it\textquotesingle{}s a \textquotesingle{}name\textquotesingle{} or \textquotesingle{}data\textquotesingle{} member. (space charaters at the start) of the io\+\_\+string parameter. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classMDE}{M\+DE}} $\ast$ \mbox{\hyperlink{group__group__utils_ga50247340f34dc1e6ec74fc3c0164f773}{process\+Flat\+M\+D\+E\+To\+M\+DE}} (\mbox{\hyperlink{classMDE}{M\+DE}} \&M\+D\+E\+\_\+source, \mbox{\hyperlink{classMDE}{M\+DE}} \&M\+D\+E\+\_\+target, std\+::vector$<$ \mbox{\hyperlink{classMDE}{M\+DE}} $\ast$ $>$\+::iterator \&it, std\+::stack$<$ \mbox{\hyperlink{classMDE}{M\+DE}} $\ast$$\ast$ $>$ \&stack\+\_\+\+M\+D\+E\+\_\+pt)
+\begin{DoxyCompactList}\small\item\em This member function is to process an instance of a \textquotesingle{}flat\textquotesingle{} Entity and return a pointer to a new instance of \mbox{\hyperlink{classMDE}{M\+DE}} that has nested sub-\/entities. The algorithm checks what is the data, if it is a structural data like an opening tag or closing tag it creates or ends the sub-\/entities accordingly. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classMDE}{M\+DE}} $\ast$ {\bfseries process\+Flat\+M\+D\+E\+To\+M\+D\+E\+\_\+old} (\mbox{\hyperlink{classMDE}{M\+DE}} \&M\+D\+E\+\_\+source, \mbox{\hyperlink{classMDE}{M\+DE}} \&M\+D\+E\+\_\+target, std\+::vector$<$ \mbox{\hyperlink{classMDE}{M\+DE}} $\ast$ $>$\+::iterator \&it, std\+::stack$<$ \mbox{\hyperlink{classMDE}{M\+DE}} $\ast$$\ast$ $>$ \&stack\+\_\+\+M\+D\+E\+\_\+pt)
+\item 
+bool \mbox{\hyperlink{group__group__utils_ga5b0926b8281516b1639284daaf33f41f}{load\+X\+M\+L\+File\+Tov\+M\+DE}} (\mbox{\hyperlink{classMDE}{M\+DE}} \&M\+D\+E\+\_\+source, int \&index, const std\+::string \&full\+\_\+filename)
+\begin{DoxyCompactList}\small\item\em This member function is to read an X\+ML file using the reference to the string full\+\_\+filename and to store the data from the file into an element at a given index of the private member v\+M\+DE of the instance of a class of \mbox{\hyperlink{classMDE}{M\+DE}}. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{group__group__utils_gaa9e264dadf6e6ccd1187bd8229b4ebea}{load\+X\+M\+L\+File\+To\+M\+DE}} (\mbox{\hyperlink{classMDE}{M\+DE}} \&M\+D\+E\+\_\+source, const std\+::string \&full\+\_\+filename)
+\begin{DoxyCompactList}\small\item\em This member function is to read an X\+ML file using the reference to the string full\+\_\+filename and to store the data from the file into an instance of class \mbox{\hyperlink{classMDE}{M\+DE}}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classMDE}{M\+DE}} $\ast$ {\bfseries load\+X\+M\+L\+File\+To\+Pt\+M\+DE} (\mbox{\hyperlink{classMDE}{M\+DE}} \&xml\+M\+DE, const std\+::string \&full\+\_\+filename, bool destruct\+All=true)
+\item 
+void {\bfseries load\+X\+ML} (\mbox{\hyperlink{classMDE}{M\+DE}} \&source\+M\+DE, \mbox{\hyperlink{classMDE}{M\+DE}} \&xml\+M\+DE, std\+::vector$<$ int $>$ \&vect\+Index, const std\+::string \&filename)
+\item 
+void \mbox{\hyperlink{group__group__utils_gad8f7ca1f04faf6a3699a198fda05dce5}{format\+Display}} (\mbox{\hyperlink{classMDE}{M\+DE}} \&M\+D\+E\+\_\+source, int n\+\_\+indent, const int \&n\+\_\+space, std\+::string start\+\_\+opening\+\_\+tag, std\+::string end\+\_\+opening\+\_\+tag, std\+::string start\+\_\+closing\+\_\+tag, std\+::string end\+\_\+closing\+\_\+tag)
+\begin{DoxyCompactList}\small\item\em This member function is to display the instance of a class object \mbox{\hyperlink{classMDE}{M\+DE}} with a defined format using opening and closing tags (for example like an X\+ML file). \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__group__utils_gac9a36f7a073a9523e241ab07d6929834}{extract\+M\+D\+Edata\+For\+Voffset}} (\mbox{\hyperlink{classMDE}{M\+DE}} \&M\+D\+E\+\_\+source, std\+::vector$<$ \mbox{\hyperlink{structGLdata}{G\+Ldata}} $>$ \&v\+\_\+\+M\+D\+E\+\_\+data, int \&level, int \&index=0, bool display\+Data\+Only=false, bool hide\+Parent=false)
+\begin{DoxyCompactList}\small\item\em This member function is to recursively fill-\/in a standard vector of struct \mbox{\hyperlink{structGLdata}{G\+Ldata}} by extracting data from public member \textquotesingle{}name\textquotesingle{} and public member \textquotesingle{}data\textquotesingle{}, and setting the level and index of each Entities and sub-\/entities of an instance of object class \mbox{\hyperlink{classMDE}{M\+DE}}. The vector of \mbox{\hyperlink{structGLdata}{G\+Ldata}} is used in the standard vector of \mbox{\hyperlink{structGLdata}{G\+Ldata}} to set offset coordinates. This function has a wrapper \mbox{\hyperlink{group__group__init_ga3b42d3bd68c5200393c1f0809ed1facf}{init\+\_\+data()}}, called from main.\+cpp without any arguments. The two booleans variables display\+Data\+Only and hideparents are used as their names clearly state, for an end display of only data, and without the parent \mbox{\hyperlink{classMDE}{M\+DE}}. This is typically for H\+T\+ML rendering. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__group__utils_ga9452896a5e14c435556a6af0b9da1a09}{search\+For}} (\mbox{\hyperlink{classMDE}{M\+DE}} \&M\+D\+E\+\_\+source, int \&index, int \&level, std\+::string search\+Name, std\+::vector$<$ \mbox{\hyperlink{classMDE}{M\+DE}} $\ast$$\ast$ $>$ \&search\+\_\+result)
+\begin{DoxyCompactList}\small\item\em This member function is to search an entire Entity recursively all instances that has their name equal to the standard string search\+Name in parameter. It stores all the results in the static (class) member search\+\_\+result which is a standard vector of pointers to pointers of \mbox{\hyperlink{classMDE}{M\+DE}}. The results of the search can be displayed with method fetch\+\_\+search\+\_\+result. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__group__utils_ga874012995833d90a578771c83ebf7d4a}{simple\+Loop\+V\+M\+DE}} (\mbox{\hyperlink{classMDE}{M\+DE}} \&M\+D\+E\+\_\+source, std\+::string search\+Name, std\+::vector$<$ \mbox{\hyperlink{classMDE}{M\+DE}} $\ast$$\ast$ $>$ \&search\+\_\+result)
+\begin{DoxyCompactList}\small\item\em This member function is to part of the recursive algorithm in the search\+\_\+for method. It recursively stores pointers to pointer to \mbox{\hyperlink{classMDE}{M\+DE}} in the static (class) member search\+\_\+result when the search is successful. It calls a similar methods called simple\+\_\+loop\+\_\+\+V\+M\+D\+E\+\_\+next\+\_\+level in its recursive process to separate scopes of the different sub-\/entities of an entity. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__group__utils_ga5c5c1a1553762cfd4cdbd6f51d0bc715}{simple\+Loop\+V\+M\+D\+Enext\+Level}} (\mbox{\hyperlink{classMDE}{M\+DE}} \&M\+D\+E\+\_\+source, std\+::string search\+Name, std\+::vector$<$ \mbox{\hyperlink{classMDE}{M\+DE}} $\ast$$\ast$ $>$ \&search\+\_\+result)
+\begin{DoxyCompactList}\small\item\em This member function is to part of the recursive algorithm in the search\+\_\+for method. It is used to separate scopes of the different sub-\/entities of an entity to perform the search. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__group__utils_ga2be8fc00486d267f1073ef904a33210b}{display\+V\+M\+D\+Edata}} (std\+::vector$<$ \mbox{\hyperlink{structGLdata}{G\+Ldata}} $>$ \&v\+\_\+offset)
+\begin{DoxyCompactList}\small\item\em This function member is to display all elements of a standard vector of struct \mbox{\hyperlink{structGLdata}{G\+Ldata}}. For example it can displays a vector of offset values for coordinates. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{utils_8h_a9b56741ab13429eec17d01844884bfbb}\label{utils_8h_a9b56741ab13429eec17d01844884bfbb}} 
+void {\bfseries split\+String} (const std\+::string \&tag, std\+::vector$<$ std\+::string $>$ \&list\+\_\+elements)
+\item 
+\mbox{\Hypertarget{utils_8h_af8f3d9b0c5f4bd750684366777ed2e35}\label{utils_8h_af8f3d9b0c5f4bd750684366777ed2e35}} 
+void {\bfseries fetch\+Search\+Result} (std\+::vector$<$ \mbox{\hyperlink{classMDE}{M\+DE}} $\ast$$\ast$ $>$ \&search\+\_\+result)
+\item 
+\mbox{\Hypertarget{utils_8h_a9a7b0953dced8ee5e70a9345a3f26aaf}\label{utils_8h_a9a7b0953dced8ee5e70a9345a3f26aaf}} 
+void {\bfseries extract\+Xml\+Element} (std\+::string \&buffer\+Line, std\+::string \&buffer\+\_\+\+Tag, std\+::string \&element, std\+::vector$<$ std\+::string $>$ \&list\+\_\+elements)
+\item 
+\mbox{\Hypertarget{utils_8h_ada8006356d59b97de0d5de559044c600}\label{utils_8h_ada8006356d59b97de0d5de559044c600}} 
+void {\bfseries Xprocess\+Xml\+Element} (\mbox{\hyperlink{classMDE}{M\+DE}} \&M\+D\+E\+\_\+source, std\+::string \&buffer\+\_\+\+Tag, std\+::string \&element, std\+::vector$<$ std\+::string $>$ \&list\+\_\+elements)
+\item 
+\mbox{\Hypertarget{utils_8h_ab5b04a09f00ac8d080625f797144bb31}\label{utils_8h_ab5b04a09f00ac8d080625f797144bb31}} 
+\mbox{\hyperlink{classMDE}{M\+DE}} $\ast$ {\bfseries replace\+V\+M\+D\+Ewith\+X\+ML} (\mbox{\hyperlink{classMDE}{M\+DE}} \&M\+D\+E\+\_\+source, std\+::vector$<$ int $>$ \&vect\+\_\+index\+\_\+file, std\+::string \&full\+\_\+filename)
+\item 
+\mbox{\Hypertarget{utils_8h_a360e33042bcd7506476c98a2b3e9b574}\label{utils_8h_a360e33042bcd7506476c98a2b3e9b574}} 
+bool {\bfseries replace\+V\+M\+D\+Ewith\+X\+M\+L\+\_\+old} (\mbox{\hyperlink{classMDE}{M\+DE}} \&M\+D\+E\+\_\+source, std\+::vector$<$ int $>$ \&vect\+\_\+index\+\_\+file, std\+::string \&full\+\_\+filename)
+\item 
+\mbox{\Hypertarget{utils_8h_a5619a9222dd2c0b64165b84866fd4562}\label{utils_8h_a5619a9222dd2c0b64165b84866fd4562}} 
+\mbox{\hyperlink{classMDE}{M\+DE}} $\ast$ {\bfseries process\+X\+M\+L\+Attributes} (\mbox{\hyperlink{classMDE}{M\+DE}} \&M\+D\+E\+\_\+source, \mbox{\hyperlink{classMDE}{M\+DE}} \&M\+D\+E\+\_\+target, std\+::vector$<$ \mbox{\hyperlink{classMDE}{M\+DE}} $\ast$ $>$\+::iterator \&it)
+\item 
+\mbox{\Hypertarget{utils_8h_a47c42ea3783bc3da720d35321b7827af}\label{utils_8h_a47c42ea3783bc3da720d35321b7827af}} 
+void {\bfseries key\+Value\+Pair\+Parser} (std\+::string expression, std\+::string \&key, std\+::string \&value, const char op=\textquotesingle{}=\textquotesingle{}, bool has\+Dle\+Quotes=true)
+\item 
+\mbox{\Hypertarget{utils_8h_a5ca2467a933458fc56aedecc588a89ad}\label{utils_8h_a5ca2467a933458fc56aedecc588a89ad}} 
+\mbox{\hyperlink{classMDE}{M\+DE}} $\ast$ {\bfseries html\+Parser\+\_\+attributes} (\mbox{\hyperlink{classMDE}{M\+DE}} \&M\+D\+E\+\_\+source)
+\item 
+\mbox{\Hypertarget{utils_8h_a578ec24712f37a4f03865b911b0297a0}\label{utils_8h_a578ec24712f37a4f03865b911b0297a0}} 
+bool {\bfseries check\+Attribute} (\mbox{\hyperlink{classMDE}{M\+DE}} \&M\+D\+E\+\_\+source, std\+::string attribute)
+\item 
+\mbox{\Hypertarget{utils_8h_ac2ea2affcbbc4c31268259daffd7dbdc}\label{utils_8h_ac2ea2affcbbc4c31268259daffd7dbdc}} 
+\mbox{\hyperlink{classMDE}{M\+DE}} $\ast$ {\bfseries html\+Parser} (\mbox{\hyperlink{classMDE}{M\+DE}} \&M\+D\+E\+\_\+source, std\+::vector$<$ std\+::vector$<$ float $>$$>$ \&vect\+\_\+color)
+\item 
+\mbox{\Hypertarget{utils_8h_af62ec26b1524fa4dd8994729e91880c6}\label{utils_8h_af62ec26b1524fa4dd8994729e91880c6}} 
+bool {\bfseries check\+Html\+Tag} (\mbox{\hyperlink{classMDE}{M\+DE}} \&M\+D\+E\+\_\+source, std\+::string tag)
+\item 
+\mbox{\Hypertarget{utils_8h_ac39ccb65f547d2217a43a937ee0fcdee}\label{utils_8h_ac39ccb65f547d2217a43a937ee0fcdee}} 
+bool {\bfseries html\+Tag\+Has\+Attributes} (\mbox{\hyperlink{classMDE}{M\+DE}} \&M\+D\+E\+\_\+source)
+\item 
+\mbox{\Hypertarget{utils_8h_a0291d0460c0c64506a691aed0cf5a5a9}\label{utils_8h_a0291d0460c0c64506a691aed0cf5a5a9}} 
+bool {\bfseries raw\+Display\+Content} (\mbox{\hyperlink{classMDE}{M\+DE}} \&M\+D\+E\+\_\+source)
+\item 
+\mbox{\Hypertarget{utils_8h_a451874af8a5f78f7c0077d2670b4957a}\label{utils_8h_a451874af8a5f78f7c0077d2670b4957a}} 
+bool {\bfseries check\+Html\+Attribute} (\mbox{\hyperlink{classMDE}{M\+DE}} \&M\+D\+E\+\_\+source, std\+::string attribute)
+\item 
+\mbox{\Hypertarget{utils_8h_a7550040b2867a1d24b163f310628e071}\label{utils_8h_a7550040b2867a1d24b163f310628e071}} 
+int {\bfseries hex\+To\+Int} (int x)
+\item 
+\mbox{\Hypertarget{utils_8h_a810b7578d4c98510e3563fbf91d05c36}\label{utils_8h_a810b7578d4c98510e3563fbf91d05c36}} 
+bool {\bfseries has\+Css\+Style} (\mbox{\hyperlink{classMDE}{M\+DE}} \&M\+D\+E\+\_\+source, bool is\+Inline)
+\item 
+\mbox{\Hypertarget{utils_8h_a20dce8d45f8be248ae1c472451f26a7d}\label{utils_8h_a20dce8d45f8be248ae1c472451f26a7d}} 
+\mbox{\hyperlink{classMDE}{M\+DE}} $\ast$ {\bfseries get\+Css\+Style} (\mbox{\hyperlink{classMDE}{M\+DE}} \&M\+D\+E\+\_\+source, bool is\+Inline)
+\item 
+\mbox{\Hypertarget{utils_8h_a28eb4eb6b7eac8a96289b4d7ea7a9200}\label{utils_8h_a28eb4eb6b7eac8a96289b4d7ea7a9200}} 
+void {\bfseries Xcss\+Style\+Attribute} (std\+::string \&buffer\+\_\+\+Input, std\+::string \&output\+\_\+\+Tag, std\+::string \&buffer\+\_\+\+Output)
+\item 
+\mbox{\Hypertarget{utils_8h_aef11f3543724e73a861f5ffcc4e79da7}\label{utils_8h_aef11f3543724e73a861f5ffcc4e79da7}} 
+void {\bfseries extract\+Key\+Value\+Pairs} (std\+::string \&buffer\+Line, std\+::vector$<$ std\+::string $>$ \&v\+Key\+Value\+Pairs)
+\item 
+\mbox{\Hypertarget{utils_8h_a669315c8858b62fd7261dc738cc0c159}\label{utils_8h_a669315c8858b62fd7261dc738cc0c159}} 
+void {\bfseries split\+Css\+Key\+Value\+Pairs} (std\+::string \&buffer\+Line, std\+::vector$<$ std\+::string $>$ \&v\+Key\+Value\+Pairs)
+\item 
+\mbox{\Hypertarget{utils_8h_a66c96bbc936b8c5f6fc130e89e546bb3}\label{utils_8h_a66c96bbc936b8c5f6fc130e89e546bb3}} 
+void {\bfseries process\+Css\+Color} (std\+::string \&css\+Color, std\+::vector$<$ std\+::vector$<$ float $>$$>$ \&vect\+\_\+color)
+\item 
+\mbox{\Hypertarget{utils_8h_aa220e15cb3ad00f3cd6fa68fbb225cfd}\label{utils_8h_aa220e15cb3ad00f3cd6fa68fbb225cfd}} 
+std\+::vector$<$ float $>$ {\bfseries process\+Css\+Color\+\_\+\+R\+G\+BA} (std\+::string \&css\+Color)
+\item 
+\mbox{\Hypertarget{utils_8h_a7baef415785a6e80dccfa5e2746de0db}\label{utils_8h_a7baef415785a6e80dccfa5e2746de0db}} 
+void {\bfseries split\+String\+Sep} (std\+::string \&str\+Source, std\+::vector$<$ std\+::string $>$ \&v\+Target, std\+::string sep)
+\end{DoxyCompactItemize}

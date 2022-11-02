@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['loadxmlfiletomde_83',['loadXMLFileToMDE',['../group__group__utils.html#gaa9e264dadf6e6ccd1187bd8229b4ebea',1,'loadXMLFileToMDE(MDE &amp;MDE_source, const std::string &amp;full_filename):&#160;utils.cpp'],['../group__group__utils.html#gaa9e264dadf6e6ccd1187bd8229b4ebea',1,'loadXMLFileToMDE(MDE &amp;MDE_source, const std::string &amp;full_filename):&#160;utils.cpp']]],
-  ['loadxmlfiletovmde_84',['loadXMLFileTovMDE',['../group__group__utils.html#ga5b0926b8281516b1639284daaf33f41f',1,'loadXMLFileTovMDE(MDE &amp;MDE_source, int &amp;index, const std::string &amp;full_filename):&#160;utils.cpp'],['../group__group__utils.html#ga5b0926b8281516b1639284daaf33f41f',1,'loadXMLFileTovMDE(MDE &amp;MDE_source, int &amp;index, const std::string &amp;full_filename):&#160;utils.cpp']]]
+  ['get_5fdata_5fvmde_5fby_5findex_87',['get_data_vMDE_by_index',['../group__group__get.html#ga4ceb5c957197f9a85998d111d2308452',1,'MDE']]],
+  ['get_5fname_5fvmde_5fby_5findex_88',['get_name_vMDE_by_index',['../group__group__get.html#ga8bb6595c805411ef0c044763a1a3310a',1,'MDE']]],
+  ['get_5fvmde_5ftest2_89',['get_vMDE_test2',['../group__group__search.html#ga0c8f522a601514bd8927e08a50c91487',1,'MDE']]]
 ];

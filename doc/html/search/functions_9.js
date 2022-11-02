@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['replace_5fvmde_5fwith_5fxml_88',['replace_vMDE_with_XML',['../group__group__io.html#gaa51327a2747fbef6e85da046e7661a2e',1,'MDE']]]
+  ['new_5fvmde_5felement_98',['new_vMDE_element',['../classMDE.html#a704d8e22220381ade306f9f6f471cdf7',1,'MDE']]]
 ];

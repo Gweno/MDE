@@ -1,4 +1,10 @@
 var searchData=
 [
-  ['i_2fo_20methods_23',['I/O methods',['../group__group__io.html',1,'']]]
+  ['initialisation_20methods_26',['Initialisation methods',['../group__group__init.html',1,'']]],
+  ['i_2fo_20methods_27',['I/O methods',['../group__group__io.html',1,'']]],
+  ['init_5fdata_28',['init_data',['../group__group__init.html#ga3b42d3bd68c5200393c1f0809ed1facf',1,'init_data():&#160;text.cpp'],['../group__group__init.html#ga3b42d3bd68c5200393c1f0809ed1facf',1,'init_data():&#160;text.cpp']]],
+  ['init_5ffont_29',['init_font',['../group__group__init.html#gacc5cb552c9bdce751c7f5d6211df92d5',1,'init_font(uint uFontSize, const char *uFontFilename):&#160;text.cpp'],['../group__group__init.html#gacc5cb552c9bdce751c7f5d6211df92d5',1,'init_font(uint uFontSize, const char *uFontFilename):&#160;text.cpp']]],
+  ['init_5foptions_30',['init_options',['../text_8h.html#aba1e8f09cdfe0a25e401039570824588',1,'text.cpp']]],
+  ['init_5fprogram_31',['init_program',['../group__group__init.html#gadf0de4ba85c0914e6ea9f059f1bc1448',1,'init_program():&#160;text.cpp'],['../group__group__init.html#gadf0de4ba85c0914e6ea9f059f1bc1448',1,'init_program():&#160;text.cpp']]],
+  ['init_5fuser_5finput_32',['init_user_input',['../group__group__init.html#ga65f41c60dffd206c693051084bc6e8a5',1,'init_user_input(MDE &amp;user_input_MDE, vertex3D &amp;user_input_origin, std::vector&lt; vertex3D &gt; &amp;user_input_offset, std::vector&lt; vertex3D &gt; &amp;user_input_offset_rule, vertex2D &amp;user_input_padding, colorRGBA &amp;user_input_color_alpha, colorRGBA &amp;user_input_bg_color_alpha, std::vector&lt; colorRGBA &gt; &amp;user_input_font_color, bool _displayDataOnly, bool _hideParent):&#160;text.cpp'],['../group__group__init.html#ga65f41c60dffd206c693051084bc6e8a5',1,'init_user_input(MDE &amp;user_input_MDE, vertex3D &amp;origin, std::vector&lt; vertex3D &gt; &amp;offset, std::vector&lt; vertex3D &gt; &amp;offset_rule, vertex2D &amp;padding, colorRGBA &amp;color_alpha, colorRGBA &amp;bg_color_alpha, std::vector&lt; colorRGBA &gt; &amp;font_color, bool displayDataOnly, bool hideParent):&#160;text.cpp']]]
 ];

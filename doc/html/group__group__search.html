@@ -73,11 +73,8 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga7ecc9f5b399fe83927c4fd8027732f15"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__search.html#ga7ecc9f5b399fe83927c4fd8027732f15">MDE::fetch_search_result</a> (std::vector&lt; <a class="el" href="classMDE.html">MDE</a> ** &gt; &amp;search_result=MDE::search_result)</td></tr>
-<tr class="memdesc:ga7ecc9f5b399fe83927c4fd8027732f15"><td class="mdescLeft">&#160;</td><td class="mdescRight">This member function is to fetch the searching results store a vector of pointers to pointer of <a class="el" href="classMDE.html">MDE</a>, typically in the static (class) member search_result after running method search_for() to search for all Entities with a given member 'name'.  <a href="group__group__search.html#ga7ecc9f5b399fe83927c4fd8027732f15">More...</a><br /></td></tr>
-<tr class="separator:ga7ecc9f5b399fe83927c4fd8027732f15"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0c8f522a601514bd8927e08a50c91487"><td class="memItemLeft" align="right" valign="top"><a id="ga0c8f522a601514bd8927e08a50c91487"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>MDE::get_vMDE_test2</b> (int index, std::vector&lt; <a class="el" href="classMDE.html">MDE</a> ** &gt; &amp;pt_vMDE=MDE::search_result)</td></tr>
+<tr class="memitem:ga0c8f522a601514bd8927e08a50c91487"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__search.html#ga0c8f522a601514bd8927e08a50c91487">MDE::get_vMDE_test2</a> (int index, std::vector&lt; <a class="el" href="classMDE.html">MDE</a> ** &gt; &amp;pt_vMDE=MDE::search_result)</td></tr>
+<tr class="memdesc:ga0c8f522a601514bd8927e08a50c91487"><td class="mdescLeft">&#160;</td><td class="mdescRight">This member function is to search an entire Entity recursively all instances that has their name equal to the standard string searchName in parameter. It stores all the results in the static (class) member search_result which is a standard vector of pointers to pointers of <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a>. The results of the search can be displayed with method fetch_search_result.  <a href="group__group__search.html#ga0c8f522a601514bd8927e08a50c91487">More...</a><br /></td></tr>
 <tr class="separator:ga0c8f522a601514bd8927e08a50c91487"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaca6d0787d009452258351b782365484f"><td class="memItemLeft" align="right" valign="top"><a id="gaca6d0787d009452258351b782365484f"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>MDE::loop_test2</b> (std::vector&lt; int &gt; &amp;vect_index, int &amp;index, std::vector&lt; <a class="el" href="classMDE.html">MDE</a> ** &gt; &amp;pt_vMDE=MDE::search_result)</td></tr>
@@ -89,28 +86,99 @@ std::vector&lt; <a class="el" href="classMDE.html">MDE</a> * &gt;&#160;</td><td 
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Searching methods and associated tools that are used to search for members or instances using different process. </p>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ga7ecc9f5b399fe83927c4fd8027732f15"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga7ecc9f5b399fe83927c4fd8027732f15">&#9670;&nbsp;</a></span>fetch_search_result()</h2>
+<a id="ga0c8f522a601514bd8927e08a50c91487"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0c8f522a601514bd8927e08a50c91487">&#9670;&nbsp;</a></span>get_vMDE_test2()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void MDE::fetch_search_result </td>
+          <td class="memname">void MDE::get_vMDE_test2 </td>
           <td>(</td>
-          <td class="paramtype">std::vector&lt; <a class="el" href="classMDE.html">MDE</a> ** &gt; &amp;&#160;</td>
-          <td class="paramname"><em>search_result</em> = <code>MDE::search_result</code></td><td>)</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="classMDE.html">MDE</a> ** &gt; &amp;&#160;</td>
+          <td class="paramname"><em>pt_vMDE</em> = <code>MDE::search_result</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>This member function is to fetch the searching results store a vector of pointers to pointer of <a class="el" href="classMDE.html">MDE</a>, typically in the static (class) member search_result after running method search_for() to search for all Entities with a given member 'name'. </p>
-<h2><a class="anchor" id="autotoc_md35"></a>
+<p>This member function is to search an entire Entity recursively all instances that has their name equal to the standard string searchName in parameter. It stores all the results in the static (class) member search_result which is a standard vector of pointers to pointers of <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a>. The results of the search can be displayed with method fetch_search_result. </p>
+<h2><a class="anchor" id="autotoc_md47"></a>
+name: search_For(int &amp; index, int &amp; level,</h2>
+<p>std::string searchName) </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">&amp;</td><td>index is a reference to an integer. </td></tr>
+    <tr><td class="paramname">&amp;</td><td>level is a reference to an integer. </td></tr>
+    <tr><td class="paramname">searchName</td><td>is a standard string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Nothing is returned (void) </dd></dl>
+<dl class="section see"><dt>See also</dt><dd>simple_loop_VMDE() </dd>
+<dd>
+simple_loop_VMDE_next_level() </dd>
+<dd>
+fetch_search_result() </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">No</td><td>exception handling. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>The process can be optimised and simplified. </dd></dl>
+<h2><a class="anchor" id="autotoc_md48"></a>
+name: simple_loop_VMDE(std::string searchName)</h2>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">searchName</td><td>is a standard string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Nothing is returned (void) </dd></dl>
+<dl class="section see"><dt>See also</dt><dd>search_For() </dd>
+<dd>
+simple_loop_VMDE_next_level() </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">No</td><td>exception handling.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This member function is to part of the recursive algorhythm in the search_for method. It recursively stores pointers to pointer to <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a> in the static (class) member search_result when the search is successful. It calls a similar methods called simple_loop_VMDE_next_level in its recursive process to separate scopes of the different sub-entities of an entity. </p>
+<h2><a class="anchor" id="autotoc_md49"></a>
+name: simple_loop_VMDE_next_level(std::string searchName)</h2>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">searchName</td><td>is a standard string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Nothing is returned (void) </dd></dl>
+<dl class="section see"><dt>See also</dt><dd>search_For() </dd>
+<dd>
+simple_loop_VMDE() </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">No</td><td>exception handling.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This member function is to part of the recursive algorhythm in the search_for method. It is used to separate scopes of the different sub-entities of an entity to perform the search. </p>
+<h2><a class="anchor" id="autotoc_md50"></a>
 name: fetch_search_result(std::vector&lt;MDE**&gt; &amp;search_result)</h2>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">&amp;search_result</td><td>is a reference to a standard vector of pointers to pointer of <a class="el" href="classMDE.html">MDE</a>. </td></tr>
+    <tr><td class="paramname">&amp;search_result</td><td>is a reference to a standard vector of pointers to pointer of <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -118,10 +186,11 @@ name: fetch_search_result(std::vector&lt;MDE**&gt; &amp;search_result)</h2>
 <dl class="section see"><dt>See also</dt><dd>search_For() </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">No</td><td>exception handling. </td></tr>
+    <tr><td class="paramname">No</td><td>exception handling.</td></tr>
   </table>
   </dd>
 </dl>
+<p>This member function is to fetch the searching results store a vector of pointers to pointer of <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a>, typically in the static (class) member search_result after running method search_for() to search for all Entities with a given member 'name'. </p>
 
 </div>
 </div>

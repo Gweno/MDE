@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['multidimensional_20data_20entity_26',['Multidimensional Data Entity',['../index.html',1,'']]],
-  ['mde_27',['MDE',['../classMDE.html',1,'MDE'],['../classMDE.html#a149c182b2578cc172f7bb1fc6f228a70',1,'MDE::MDE()'],['../classMDE.html#ab89dcf89d8714959c36ebb32bcf6280a',1,'MDE::MDE(std::string init_name, std::string init_data, std::vector&lt; MDE * &gt; init_vMDE)']]],
-  ['mdeutils_28',['mdeUtils',['../classmdeUtils.html',1,'']]]
+  ['multidimensional_20data_20entity_35',['Multidimensional Data Entity',['../index.html',1,'']]],
+  ['mde_36',['MDE',['../classMDE.html',1,'MDE'],['../classMDE.html#a149c182b2578cc172f7bb1fc6f228a70',1,'MDE::MDE()'],['../classMDE.html#ac3555da40cf708004ebf675878c72a53',1,'MDE::MDE(std::string init_name, std::string init_data)']]]
 ];

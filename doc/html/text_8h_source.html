@@ -69,7 +69,7 @@ $(function() {
 <div class="title">text.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//-----------text.h-------------</span></div>
+<a href="text_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">//-----------text.h-------------</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#ifndef TEXT_H</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#define TEXT_H</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
@@ -78,74 +78,166 @@ $(function() {
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;MDE.h&quot;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;utils.h&quot;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="utils_8h.html">utils.h</a>&quot;</span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">extern</span> GLfloat r,g,b;</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
-<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="structvertex3D.html">   14</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structvertex3D.html">vertex3D</a> {</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    GLfloat x;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    GLfloat y;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    GLfloat z;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;};</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="structvertex3Dalpha.html">   20</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structvertex3Dalpha.html">vertex3Dalpha</a> {</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    GLfloat x;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    GLfloat y;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    GLfloat z;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    GLfloat a;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;};</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="structvertex2D.html">   27</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structvertex2D.html">vertex2D</a> {</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    GLfloat x;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    GLfloat y;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;};</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">struct </span><a class="code" href="structatlas.html">atlas</a>;</div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="structvertex2D.html">   29</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structvertex2D.html">vertex2D</a> {</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    GLfloat x;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    GLfloat y;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;};</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="keywordtype">bool</span> init_font(uint uFontSize,<span class="keyword">const</span> <span class="keywordtype">char</span> *uFontFilename);</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="keywordtype">bool</span> init_program();</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keywordtype">void</span> init_color(<a class="code" href="structvertex3Dalpha.html">vertex3Dalpha</a> color_alpha, <a class="code" href="structvertex3Dalpha.html">vertex3Dalpha</a> bg_color_alpha, std::vector&lt;vertex3D&gt; &amp;whd);</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="keywordtype">void</span> init_vectors(std::vector&lt;vertex3D&gt; &amp;vectors_boxes);</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="keywordtype">void</span> init_text_MDE(<a class="code" href="classMDE.html">MDE</a> &amp;my_entity,<a class="code" href="structvertex3D.html">vertex3D</a> &amp;origin, std::vector&lt;vertex3D&gt; &amp;offset, std::vector&lt;vertex3D&gt; &amp;offset_rule, <a class="code" href="structvertex2D.html">vertex2D</a> &amp;padding, <a class="code" href="structvertex3Dalpha.html">vertex3Dalpha</a> &amp;color_alpha, <a class="code" href="structvertex3Dalpha.html">vertex3Dalpha</a> &amp;bg_color_alpha);</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="keywordtype">void</span> init_text_coordinates(GLfloat x, GLfloat y, GLfloat z);</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="keywordtype">void</span> displayV3D(std::vector&lt;vertex3D&gt; &amp;vector_3D);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="keywordtype">void</span> text_display();</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="keywordtype">void</span> draw_box();</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="keywordtype">void</span> text_frame(std::vector&lt;vertex3D&gt; &amp;vector_input, std::vector&lt;uint&gt; &amp;nb_glyphs, <a class="code" href="structvertex3D.html">vertex3D</a> &amp;offset, <a class="code" href="structvertex2D.html">vertex2D</a> &amp;padding);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="keywordtype">void</span> render_text(<a class="code" href="structatlas.html">atlas</a> * a) ;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="keywordtype">void</span> create_vector(std::vector&lt;vertex3D&gt; &amp;vector3D,std::vector&lt;vertex3D&gt; &amp;v_origin, std::vector&lt;vertex3D&gt; &amp;vector_blf, std::vector&lt;vertex3D&gt; &amp;vector_trb);</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="keywordtype">void</span> create_coord_vector_text(<span class="keyword">const</span> <span class="keywordtype">char</span> *text, <a class="code" href="structatlas.html">atlas</a> * a, <a class="code" href="structvertex3D.html">vertex3D</a> origin, <a class="code" href="structvertex2D.html">vertex2D</a> &amp;window_coord_scale);</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="keywordtype">void</span> onIdle();</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="keywordtype">void</span> camera();</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="keywordtype">void</span> display();</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="keywordtype">void</span> init_matrices();</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="keywordtype">void</span> free_resources();</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="keywordtype">void</span> process_v_MDE_data(std::vector&lt;GLdata&gt; &amp; v_MDE_data,std::vector&lt;vertex3D&gt; &amp; v_offset, std::vector&lt;vertex3D&gt; &amp; v_offset_rule);</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="keywordtype">void</span> keyboard(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> key, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="keywordtype">void</span> special_key(<span class="keywordtype">int</span> key, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="keywordtype">void</span> mouse_wheel(<span class="keywordtype">int</span> button, <span class="keywordtype">int</span> state, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="keywordtype">void</span> mouse_movement(<span class="keywordtype">int</span> xpos, <span class="keywordtype">int</span> ypos);</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="keywordtype">void</span> add_padding(std::vector&lt;vertex3D&gt; &amp; v_origin,std::vector&lt;vertex3D&gt; &amp; v_origin_fb, <a class="code" href="structvertex2D.html">vertex2D</a> &amp; padding);</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="keywordtype">void</span> init_font_color(std::vector&lt;GLfloat&gt; &amp;color);</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="keywordtype">void</span> set_options(<span class="keywordtype">bool</span> move_it, <span class="keywordtype">bool</span> display_box);</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160; </div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/*text.h*/</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="structvertex3D.html">   44</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structvertex3D.html">vertex3D</a> {</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    GLfloat x;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    GLfloat y;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    GLfloat z;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;};</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="structcolorRGBA.html">   62</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structcolorRGBA.html">colorRGBA</a> {</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    GLfloat r;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    GLfloat g;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    GLfloat b;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    GLfloat a;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;};</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="keyword">struct </span><a class="code" href="structatlas.html">atlas</a>;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="comment">//~ /**</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="comment">//~ ##name point</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; <span class="comment">//~ * @param r a GLfloat for the value of red color between 0 and 1.</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; <span class="comment">//~ * @param g a GLfloat for the value of green color between 0 and 1.</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; <span class="comment">//~ * @param b a GLfloat for the value of blue color between 0 and 1.</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; <span class="comment">//~ * @param a a GLfloat for the value of alpha transparency a.</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; <span class="comment">//~ * @brief Define a structure of an object with coordinate in 4 dimensions: x,y,z,a.</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; <span class="comment">//~ * Used for an object of 3 dimesnions with an </span></div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; <span class="comment">//~ * @see vertex2D </span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; <span class="comment">//~ */</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="comment">//~ struct point {</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="comment">//~ GLfloat x;</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="comment">//~ GLfloat y;</span></div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="comment">//~ GLfloat s;</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="comment">//~ GLfloat t;</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="comment">//~ };</span></div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="comment">//~ struct point3D {</span></div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="comment">//~ GLfloat x;</span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <span class="comment">//~ GLfloat y;</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="comment">//~ GLfloat z;</span></div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="comment">//~ GLfloat s;</span></div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="comment">//~ GLfloat t;</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="comment">//~ };</span></div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; </div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="keywordtype">void</span> <a class="code" href="group__group__init.html#ga3b42d3bd68c5200393c1f0809ed1facf">init_data</a>();</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160; </div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160; </div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="group__group__init.html#gacc5cb552c9bdce751c7f5d6211df92d5">init_font</a>(uint uFontSize,<span class="keyword">const</span> <span class="keywordtype">char</span> *uFontFilename);</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160; </div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="group__group__init.html#gadf0de4ba85c0914e6ea9f059f1bc1448">init_program</a>();</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160; </div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;<span class="comment">//~ void init_color(vertex3Dalpha &amp;color_alpha, vertex3Dalpha &amp;bg_color_alpha,</span></div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;                 <span class="comment">//~ std::vector&lt;vertex3Dalpha&gt; &amp;font_color_alpha, std::vector&lt;vertex3D&gt; &amp;whd,</span></div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;                 <span class="comment">//~ std::vector&lt;unsigned int&gt; &amp;nb_glyphs_per_text, std::vector&lt;vertex3Dalpha&gt; &amp;output_font_color);</span></div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;<span class="keywordtype">void</span> init_color(<a class="code" href="structcolorRGBA.html">colorRGBA</a> &amp;color_alpha, <a class="code" href="structcolorRGBA.html">colorRGBA</a> &amp;bg_color_alpha,</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;                 std::vector&lt;colorRGBA&gt; &amp;font_color_alpha, std::vector&lt;vertex3D&gt; &amp;whd,</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;                 std::vector&lt;unsigned int&gt; &amp;nb_glyphs_per_text, std::vector&lt;colorRGBA&gt; &amp;output_font_color);</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160; </div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;<span class="comment">//~ void init_color_old(vertex3Dalpha &amp;color_alpha, vertex3Dalpha &amp;bg_color_alpha, std::vector&lt;vertex3Dalpha&gt; &amp;font_color_alpha, std::vector&lt;vertex3D&gt; &amp;whd, std::vector&lt;unsigned int&gt; &amp;nb_glyphs_per_text);</span></div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;<span class="keywordtype">void</span> init_vectors(std::vector&lt;vertex3D&gt; &amp;vectors_boxes);</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160; </div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;<span class="comment">//~ void init_user_input(MDE &amp;user_input_MDE, vertex3D &amp;origin, std::vector&lt;vertex3D&gt; &amp;offset,</span></div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;                    <span class="comment">//~ std::vector&lt;vertex3D&gt; &amp;offset_rule, vertex2D &amp;padding, vertex3Dalpha &amp;color_alpha,</span></div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;                    <span class="comment">//~ vertex3Dalpha &amp;bg_color_alpha, std::vector&lt;vertex3Dalpha&gt; &amp;font_color,</span></div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;                    <span class="comment">//~ bool displayDataOnly, bool hideParent);</span></div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;<span class="comment"></span><span class="keywordtype">void</span> <a class="code" href="group__group__init.html#ga65f41c60dffd206c693051084bc6e8a5">init_user_input</a>(<a class="code" href="classMDE.html">MDE</a> &amp;user_input_MDE, <a class="code" href="structvertex3D.html">vertex3D</a> &amp;origin, std::vector&lt;vertex3D&gt; &amp;offset,</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;                    std::vector&lt;vertex3D&gt; &amp;offset_rule, <a class="code" href="structvertex2D.html">vertex2D</a> &amp;padding, <a class="code" href="structcolorRGBA.html">colorRGBA</a> &amp;color_alpha,</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;                    <a class="code" href="structcolorRGBA.html">colorRGBA</a> &amp;bg_color_alpha, std::vector&lt;colorRGBA&gt; &amp;font_color,</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;                    <span class="keywordtype">bool</span> displayDataOnly, <span class="keywordtype">bool</span> hideParent);</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160; <span class="comment">// end of group_init</span></div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160; </div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160; </div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160; </div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;<span class="keywordtype">void</span> displayV2D(std::vector&lt;vertex2D&gt; &amp;vector_2D);</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;<span class="keywordtype">void</span> displayV3D(std::vector&lt;vertex3D&gt; &amp;vector_3D);</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;<span class="comment">//~ void displayV3Dalpha(std::vector&lt;vertex3Dalpha&gt; &amp;vector_3Dalpha);</span></div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;<span class="keywordtype">void</span> displayColorRGBA(std::vector&lt;colorRGBA&gt; &amp;vector_rgba);</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;<span class="keywordtype">void</span> displayVuint(std::vector&lt;unsigned int&gt; &amp;vector_uint);</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;<span class="keywordtype">void</span> displayVGLfloat(std::vector&lt;GLfloat&gt; &amp;vector_glf);</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;<span class="keywordtype">void</span> text_display();</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;<span class="keywordtype">void</span> draw_box();</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;<span class="keywordtype">void</span> text_frame(std::vector&lt;vertex3D&gt; &amp;vector_input, std::vector&lt;uint&gt; &amp;nb_glyphs, <a class="code" href="structvertex3D.html">vertex3D</a> &amp;offset, <a class="code" href="structvertex2D.html">vertex2D</a> &amp;padding);</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160; </div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;<span class="keywordtype">void</span> create_vector(std::vector&lt;vertex3D&gt; &amp;vector3D,std::vector&lt;vertex3D&gt; &amp;v_origin, std::vector&lt;vertex3D&gt; &amp;vector_blf, std::vector&lt;vertex3D&gt; &amp;vector_trb);</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;<span class="keywordtype">void</span> create_coord_vector_text(<span class="keyword">const</span> <span class="keywordtype">char</span> *text, <a class="code" href="structatlas.html">atlas</a> * a, <a class="code" href="structvertex3D.html">vertex3D</a> &amp;origin, <a class="code" href="structvertex2D.html">vertex2D</a> &amp;window_coord_scale,</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;                                std::vector&lt;vertex3D&gt; &amp;a_glyphs_box, std::vector&lt;vertex2D&gt; &amp;a_glyphs_vertex);</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;<span class="keywordtype">void</span> create_coord_vector_text_old(<span class="keyword">const</span> <span class="keywordtype">char</span> *text, <a class="code" href="structatlas.html">atlas</a> * a, <a class="code" href="structvertex3D.html">vertex3D</a> &amp;origin, <a class="code" href="structvertex2D.html">vertex2D</a> &amp;window_coord_scale);</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;<span class="keywordtype">void</span> onIdle();</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;<span class="keywordtype">void</span> camera();</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;<span class="keywordtype">void</span> display();</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;<span class="keywordtype">void</span> init_matrices();</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160; </div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;<span class="keywordtype">void</span> free_resources();</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160; </div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;<span class="keywordtype">void</span> process_v_MDE_data(std::vector&lt;GLdata&gt; &amp; v_MDE_data,std::vector&lt;vertex3D&gt; &amp; v_offset, std::vector&lt;vertex3D&gt; &amp; v_offset_rule);</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160; </div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;<span class="keywordtype">void</span> keyboard(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> key, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;<span class="keywordtype">void</span> special_key(<span class="keywordtype">int</span> key, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;<span class="keywordtype">void</span> mouse_wheel(<span class="keywordtype">int</span> button, <span class="keywordtype">int</span> state, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;<span class="keywordtype">void</span> mouse_movement(<span class="keywordtype">int</span> xpos, <span class="keywordtype">int</span> ypos);</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160; </div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;<span class="keywordtype">void</span> <a class="code" href="text_8h.html#a0c9a7e0157a60e576167dec194ff436f">add_padding</a>(std::vector&lt;vertex3D&gt; &amp; v_origin,std::vector&lt;vertex3D&gt; &amp; v_origin_fb, <a class="code" href="structvertex2D.html">vertex2D</a> &amp; padding);</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160; </div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160; </div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;<span class="keywordtype">void</span> init_font_color(std::vector&lt;GLfloat&gt; &amp;color);</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160; </div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;<span class="keywordtype">void</span> <a class="code" href="text_8h.html#aba1e8f09cdfe0a25e401039570824588">init_options</a>(<span class="keywordtype">bool</span> move_it, <span class="keywordtype">bool</span> display_box, <span class="keywordtype">bool</span> display2d=<span class="keyword">false</span>, <span class="keywordtype">bool</span> singleColor=<span class="keyword">true</span>, uint nlines=1);</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160; </div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;<span class="comment">//~ void init_v_font_color_old(std::vector&lt;vertex3Dalpha&gt; &amp;font_color, uint &amp;nlines, bool singleColor=true, bool displayDataOnly=false);</span></div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;<span class="comment">//~ void init_v_font_color(std::vector&lt;vertex3Dalpha&gt; &amp;font_color,std::vector&lt;vertex3Dalpha&gt; &amp;v_font_color, uint &amp;nlines, bool singleColor, bool displayDataOnly);</span></div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;<span class="keywordtype">void</span> init_v_font_color(std::vector&lt;colorRGBA&gt; &amp;font_color,std::vector&lt;colorRGBA&gt; &amp;v_font_color, uint &amp;nlines, <span class="keywordtype">bool</span> singleColor, <span class="keywordtype">bool</span> displayDataOnly);</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160; </div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;<span class="comment">//~ template &lt;typename T&gt;</span></div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;<span class="comment">//~ void displayVec(std::vector&lt;T&gt; &amp;vect)</span></div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160; </div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;<span class="keywordtype">void</span> onReshape(<span class="keywordtype">int</span> width, <span class="keywordtype">int</span> height);</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;<span class="keywordtype">int</span> init_resources();</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;<span class="comment">//~ void init_color_box(vertex3Dalpha &amp;color_alpha);</span></div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;<span class="keywordtype">void</span> init_color_box(<a class="code" href="structcolorRGBA.html">colorRGBA</a> &amp;color_alpha);</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;<span class="keywordtype">void</span> onDisplay();</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;<span class="keywordtype">void</span> init_vbo_box(std::vector&lt;vertex3D&gt; &amp;vectors_boxes);</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;<span class="keywordtype">void</span> init_ibo_elements_box(std::vector&lt;vertex3D&gt; &amp;vectors_boxes);</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;<span class="keywordtype">void</span> init_box(std::vector&lt;vertex3D&gt; &amp;vectors_boxes);</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;<span class="keywordtype">void</span> resetCameraMatrices();</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160; </div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160; </div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160; </div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;<span class="keywordtype">void</span> init_offset_rules();</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;<span class="keywordtype">void</span> init_origin();</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;<span class="keywordtype">void</span> init_padding();</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;<span class="keywordtype">void</span> init_glyphs();</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;<span class="keywordtype">void</span> init_frame();</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;<span class="keywordtype">void</span> init_color_scheme();</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;<span class="comment">//~ void render_text(atlas * a, const void * pointer);</span></div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;<span class="comment">//~ void render_text(atlas * a, std::vector&lt;vertex3Dalpha&gt; &amp;vector_font_color_part,</span></div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;             <span class="comment">//~ std::vector&lt;vertex3D&gt; &amp;glyphs_box_part, std::vector&lt;vertex2D&gt; &amp;glyphs_vertex_part );</span></div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;<span class="keywordtype">void</span> render_text(<a class="code" href="structatlas.html">atlas</a> * a, std::vector&lt;colorRGBA&gt; &amp;vector_font_color_part,</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;             std::vector&lt;vertex3D&gt; &amp;glyphs_box_part, std::vector&lt;vertex2D&gt; &amp;glyphs_vertex_part );</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;<span class="keywordtype">void</span> render_text_old(<a class="code" href="structatlas.html">atlas</a> * a);</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160; </div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/*text.h*/</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="astructvertex3Dalpha_html"><div class="ttname"><a href="structvertex3Dalpha.html">vertex3Dalpha</a></div><div class="ttdef"><b>Definition:</b> text.h:20</div></div>
-<div class="ttc" id="astructvertex3D_html"><div class="ttname"><a href="structvertex3D.html">vertex3D</a></div><div class="ttdef"><b>Definition:</b> text.h:14</div></div>
-<div class="ttc" id="astructvertex2D_html"><div class="ttname"><a href="structvertex2D.html">vertex2D</a></div><div class="ttdef"><b>Definition:</b> text.h:27</div></div>
-<div class="ttc" id="aclassMDE_html"><div class="ttname"><a href="classMDE.html">MDE</a></div><div class="ttdef"><b>Definition:</b> MDE.h:17</div></div>
-<div class="ttc" id="astructatlas_html"><div class="ttname"><a href="structatlas.html">atlas</a></div><div class="ttdef"><b>Definition:</b> text.cpp:148</div></div>
+<div class="ttc" id="astructvertex3D_html"><div class="ttname"><a href="structvertex3D.html">vertex3D</a></div><div class="ttdoc">Define a structure of an object with coordinate in 3 dimensions: x,y,z.</div><div class="ttdef"><b>Definition:</b> text.h:44</div></div>
+<div class="ttc" id="autils_8h_html"><div class="ttname"><a href="utils_8h.html">utils.h</a></div></div>
+<div class="ttc" id="atext_8h_html_a0c9a7e0157a60e576167dec194ff436f"><div class="ttname"><a href="text_8h.html#a0c9a7e0157a60e576167dec194ff436f">add_padding</a></div><div class="ttdeci">void add_padding(std::vector&lt; vertex3D &gt; &amp;v_origin, std::vector&lt; vertex3D &gt; &amp;v_origin_fb, vertex2D &amp;padding)</div><div class="ttdoc">read the vector of VerteX3D v_origin and for each x and y, the associated padding....</div><div class="ttdef"><b>Definition:</b> text.cpp:1368</div></div>
+<div class="ttc" id="agroup__group__init_html_ga65f41c60dffd206c693051084bc6e8a5"><div class="ttname"><a href="group__group__init.html#ga65f41c60dffd206c693051084bc6e8a5">init_user_input</a></div><div class="ttdeci">void init_user_input(MDE &amp;user_input_MDE, vertex3D &amp;origin, std::vector&lt; vertex3D &gt; &amp;offset, std::vector&lt; vertex3D &gt; &amp;offset_rule, vertex2D &amp;padding, colorRGBA &amp;color_alpha, colorRGBA &amp;bg_color_alpha, std::vector&lt; colorRGBA &gt; &amp;font_color, bool displayDataOnly, bool hideParent)</div><div class="ttdoc">Set all relevant variables in the text.cpp global scope, from   user input done within main....</div><div class="ttdef"><b>Definition:</b> text.cpp:1218</div></div>
+<div class="ttc" id="agroup__group__init_html_ga3b42d3bd68c5200393c1f0809ed1facf"><div class="ttname"><a href="group__group__init.html#ga3b42d3bd68c5200393c1f0809ed1facf">init_data</a></div><div class="ttdeci">void init_data()</div><div class="ttdoc">This method is a wrapper, and is used to call extractMDEdataForVoffset without any arguments passed f...</div><div class="ttdef"><b>Definition:</b> text.cpp:1245</div></div>
+<div class="ttc" id="astructvertex2D_html"><div class="ttname"><a href="structvertex2D.html">vertex2D</a></div><div class="ttdoc">Define a structure of an object with coordinate in 2 dimensions: x,y.</div><div class="ttdef"><b>Definition:</b> text.h:29</div></div>
+<div class="ttc" id="agroup__group__init_html_gadf0de4ba85c0914e6ea9f059f1bc1448"><div class="ttname"><a href="group__group__init.html#gadf0de4ba85c0914e6ea9f059f1bc1448">init_program</a></div><div class="ttdeci">bool init_program()</div><div class="ttdoc">Initialize and create the GLSL shader programs and their parameters.</div><div class="ttdef"><b>Definition:</b> text.cpp:663</div></div>
+<div class="ttc" id="aclassMDE_html"><div class="ttname"><a href="classMDE.html">MDE</a></div><div class="ttdoc">This is public structure 'GLdata'. It is used for transferring information to GL functions.</div><div class="ttdef"><b>Definition:</b> MDE.h:41</div></div>
+<div class="ttc" id="agroup__group__init_html_gacc5cb552c9bdce751c7f5d6211df92d5"><div class="ttname"><a href="group__group__init.html#gacc5cb552c9bdce751c7f5d6211df92d5">init_font</a></div><div class="ttdeci">bool init_font(uint uFontSize, const char *uFontFilename)</div><div class="ttdoc">Create an instance of class MDE and sets its public member 'name' to standard string init_name,...</div><div class="ttdef"><b>Definition:</b> text.cpp:633</div></div>
+<div class="ttc" id="atext_8h_html_aba1e8f09cdfe0a25e401039570824588"><div class="ttname"><a href="text_8h.html#aba1e8f09cdfe0a25e401039570824588">init_options</a></div><div class="ttdeci">void init_options(bool move_it, bool display_box, bool display2d=false, bool singleColor=true, uint nlines=1)</div><div class="ttdoc">set options entered by user through runtime arguments.</div><div class="ttdef"><b>Definition:</b> text.cpp:1405</div></div>
+<div class="ttc" id="astructatlas_html"><div class="ttname"><a href="structatlas.html">atlas</a></div><div class="ttdef"><b>Definition:</b> text.cpp:217</div></div>
+<div class="ttc" id="astructcolorRGBA_html"><div class="ttname"><a href="structcolorRGBA.html">colorRGBA</a></div><div class="ttdoc">Define a structure of an object with coordinate in 4 dimensions: x,y,z,a. Used for an object of 3 dim...</div><div class="ttdef"><b>Definition:</b> text.h:62</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

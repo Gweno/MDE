@@ -129,13 +129,13 @@ int main (int argc, char **argv){
     vertex3D off_rule_name_data = {0.5,0.2,0.0};
     vertex3D off_rule_index = {0.0,0.0,-0.2};
     vertex3D off_rule_level = {0.0,0.0,0.0};
-    std::vector<vertex3Dalpha> user_v_font_color;
+    std::vector<colorRGBA> user_v_font_color;
 
     // initialize vector of indexes and iterator for vMDE
     std::vector<int> vect_index_file = {1};
     std::vector<int>::const_iterator it_file;
 
-    std::clog << "Current path: " << fs::current_path() << std::endl;
+    //~ std::clog << "Current path: " << fs::current_path() << std::endl;
     
     // display terminal window number of rows and columns
     struct winsize w;
@@ -145,13 +145,13 @@ int main (int argc, char **argv){
     fprintf (stderr,"columns %d\n", w.ws_col);
 
     // display runtime arguments
-    std::clog << "Have " << argc << " arguments:" << std::endl;
+    //~ std::clog << "Have " << argc << " arguments:" << std::endl;
     for (int i = 0; i < argc; ++i)
     {
-        std::clog << i << ", " << argv[i] << std::endl;
+        //~ std::clog << i << ", " << argv[i] << std::endl;
         choice[i]=std::string(argv[i]);
     }
-    std::clog << VERSION_INFO << std::endl;
+    //~ std::clog << VERSION_INFO << std::endl;
     
     // Check all arguments provided
     // 'Turn on' Relevant boolean variables and
@@ -187,9 +187,9 @@ int main (int argc, char **argv){
     
     // store process identification number
     newMDE.new_vMDE_element("pid",to_string(pid));
-    std::clog << "main #0" << std::endl;
+    //~ std::clog << "main #0" << std::endl;
     //~ newMDE.display_all(2,1);
-    std::clog << "main #0.1" << std::endl;
+    //~ std::clog << "main #0.1" << std::endl;
 
     // load all runtime arguments into vMDE "arguments"
     newMDE.new_vMDE_element("arguments",to_string(argc));
@@ -199,7 +199,7 @@ int main (int argc, char **argv){
     for (int i = 0; i < argc; ++i)
     {
         //~ std::cout << "arguments " << i << ": " << choice[i] << std::endl;
-        std::clog << "arguments " << i << ": " << choice[i] << std::endl;
+        //~ std::clog << "arguments " << i << ": " << choice[i] << std::endl;
         std::vector<int> c_v_index = {1};
         int c_index = 0;
         std::vector<MDE *> v_choice = newMDE.loop_test3(c_v_index,c_index);
@@ -244,7 +244,7 @@ int main (int argc, char **argv){
                 if (i<argc-1){
                     clog << v_choice[i+1]->data<< endl;
                     full_filename=v_choice[i+1]->data;
-                    std::clog << "set file to load" << std::endl;
+                    //~ std::clog << "set file to load" << std::endl;
                 }
                 else {
                     printf("Missing File name\n");
@@ -266,7 +266,7 @@ int main (int argc, char **argv){
                     blue_user = std::stof(part);
                     getline(is, part, ',');
                     alpha_user = std::stof(part);
-                    std::clog << "r,g,b: " << red_user << " , " << green_user << " , " << blue_user << " , " << alpha_user << std::endl;
+                    //~ std::clog << "r,g,b: " << red_user << " , " << green_user << " , " << blue_user << " , " << alpha_user << std::endl;
                 }
                 else {
                     printf("Missing Color value\n");
@@ -282,7 +282,7 @@ int main (int argc, char **argv){
                     getline(is, part, ',');
                     font_name = "../fonts/"+part+".ttf";
                     user_font = font_name.c_str();       //convert the string to const char*
-                    std::clog << "font: " << user_font << std::endl;
+                    //~ std::clog << "font: " << user_font << std::endl;
                 }
                 else {
                     printf("Missing Font Name\n");
@@ -297,7 +297,7 @@ int main (int argc, char **argv){
                     std::string part;
                     getline(is, part, ',');
                     user_font_size = std::stof(part);
-                    std::clog << "font size: " << user_font_size << std::endl;
+                    //~ std::clog << "font size: " << user_font_size << std::endl;
                 }
                 else {
                     printf("Missing Font Size\n");
@@ -318,7 +318,7 @@ int main (int argc, char **argv){
                     blue_font_user = std::stof(part);
                     getline(is, part, ',');
                     alpha_font_user = std::stof(part);
-                    std::clog << "r,g,b,a: " << red_font_user << " , " << green_font_user << " , " << blue_font_user << " , " << alpha_font_user << std::endl;
+                    //~ std::clog << "r,g,b,a: " << red_font_user << " , " << green_font_user << " , " << blue_font_user << " , " << alpha_font_user << std::endl;
                 }
                 else {
                     printf("Missing Font Color and Alpha values\n");
@@ -339,7 +339,7 @@ int main (int argc, char **argv){
                     blue_bg_user = std::stof(part);
                     getline(is, part, ',');
                     alpha_bg_user = std::stof(part);
-                    std::clog << "background: r,g,b,a: " << red_bg_user << " , " << green_bg_user << " , " << blue_bg_user << " , " << alpha_bg_user << std::endl;
+                    //~ std::clog << "background: r,g,b,a: " << red_bg_user << " , " << green_bg_user << " , " << blue_bg_user << " , " << alpha_bg_user << std::endl;
                 }
                 else {
                     printf("Missing Font Color and Alpha values\n");
@@ -357,7 +357,7 @@ int main (int argc, char **argv){
                     Y_user = std::stof(part);
                     getline(is, part, ',');
                     Z_user = std::stof(part);
-                    std::clog << "x,y,z: " << X_user << " , " << Y_user << " , " << Z_user << std::endl;
+                    //~ std::clog << "x,y,z: " << X_user << " , " << Y_user << " , " << Z_user << std::endl;
                 }
                 else {
                     printf("Missing Coordinates of origin values\n");
@@ -374,7 +374,7 @@ int main (int argc, char **argv){
                     V_padding_user = std::stof(part);
                     getline(is, part, ',');
                     H_padding_user = std::stof(part);
-                    std::clog << "padding set" << std::endl;
+                    //~ std::clog << "padding set" << std::endl;
                  }
                 else {
                     printf("Missing Padding values\n");
@@ -387,7 +387,7 @@ int main (int argc, char **argv){
                     // offset rule.x is the name-data offset
                     // offset rule.y is the index offset
                     // offset rule.z is the level offset
-                    std::clog<<"found some rules"<<std::endl;
+                    //~ std::clog<<"found some rules"<<std::endl;
                     vertex3D off_rul;
                     std::string part;
                     istringstream is(v_choice[i+1]->data);
@@ -432,7 +432,7 @@ int main (int argc, char **argv){
                     std::string part;
                     getline(is, part, ',');
                     nlines = (uint)std::stoi(part);
-                    std::clog << "nb of lines: " << nlines << std::endl;
+                    //~ std::clog << "nb of lines: " << nlines << std::endl;
                 }
                 else {
                     printf("Missing Font Size\n");
@@ -486,7 +486,7 @@ int main (int argc, char **argv){
     // add content from existing sub-Entity
     MDE * ptMDE;
     ptMDE = (newMDE.vMDE.back());
-    std::clog << "ptMDE: " << ptMDE << std::endl;
+    //~ std::clog << "ptMDE: " << ptMDE << std::endl;
     ptMDE->new_vMDE_element("content","intern");
     ptMDE = (ptMDE->vMDE.back());
     ptMDE->new_vMDE_element(ptMenu);
@@ -639,6 +639,7 @@ int main (int argc, char **argv){
                                 break;
                             }
                         case '2':
+                        {
                             newMDE.destructor_MDE();
                             newMDE.testing();
                             std::cout << std::endl;
@@ -648,7 +649,9 @@ int main (int argc, char **argv){
                             std::cin >> key_input;
                             if (key_input=="y") newMDE.user_save_to_XML_file();
                             break;
+                        }
                         case '3':
+                        {
                             newMDE.destructor_MDE();
                             std:: cout << "Enter name:" << std::endl;
                             std:: cout << "(Or type 'q' anytime to quit )" << std::endl;
@@ -676,8 +679,7 @@ int main (int argc, char **argv){
                             if (key_input=="y") newMDE.user_save_to_XML_file();
                             // TODO fix bug if no vMDE -> ! when vMDE is private -> need a 'is_empty' function?    
                             break;
-                            
-                        
+                        }
                         case 'b':
                             break;
                             
@@ -1198,7 +1200,7 @@ int main (int argc, char **argv){
                             if (my_search_result2.size()>0){
                                 fetchSearchResult(my_search_result2);
                                 if ((**my_search_result2[0]).data == "main window"){
-                                    printf("Yeah!\n");
+                                    //~ printf("Yeah!\n");
                                     
                                     // search for 'width'
                                     s_index = 0;
@@ -1233,6 +1235,10 @@ int main (int argc, char **argv){
                                     off_rule_name_data.x = 0;
                                     off_rule_name_data.z = 0;
                                     off_rule_name_data.y = 0;
+                                    // and offset rule for index as 0,-0.2,0
+                                    off_rule_index.x = 0;
+                                    off_rule_index.y = -0.2;
+                                    off_rule_index.z = 0;
                                     displayDataOnly = true;
                                     
                                     //~ hideParent = true;
@@ -1262,16 +1268,16 @@ int main (int argc, char **argv){
                         ptParser = htmlParser(*ptMenu, vect_colors);
                         int i=0;
                         for(auto it:vect_colors){
-                            std::clog << "i: " << i << " vect[0]" << it[0] << std::endl;
+                            //~ std::clog << "i: " << i << " vect[0]" << it[0] << std::endl;
                             user_v_font_color.push_back({});
-                            user_v_font_color[i].x=it[0];
-                            user_v_font_color[i].y=it[1];
-                            user_v_font_color[i].z=it[2];
+                            user_v_font_color[i].r=it[0];
+                            user_v_font_color[i].g=it[1];
+                            user_v_font_color[i].b=it[2];
                             user_v_font_color[i].a=it[3];
                             i++;
                         }
                         if (ptParser){
-                            std::clog << "Check ptParser: " << ptParser->name << " , " << ptParser->data << std::endl;
+                            //~ std::clog << "Check ptParser: " << ptParser->name << " , " << ptParser->data << std::endl;
                             fprintf(stderr,"\n");
                             fprintf(stderr,"\n");
                             fprintf(stderr,"\n");
@@ -1279,7 +1285,7 @@ int main (int argc, char **argv){
                             
                         }
                         else{
-                            std::clog << "Nothing to parse" << std::endl;
+                            //~ std::clog << "Nothing to parse" << std::endl;
                         }
                         ptRender = ptParser;
                         hideParent = true;                                          
@@ -1341,7 +1347,7 @@ int main (int argc, char **argv){
                     return 1;
                 }
 
-                std::clog << "User coordinates: " << X_user << ", "<< Y_user << ", "<< Z_user << std::endl;
+                //~ std::clog << "User coordinates: " << X_user << ", "<< Y_user << ", "<< Z_user << std::endl;
                 vertex3D user_origin={X_user,Y_user, Z_user};
                 
                 // declare the offset vector of vertex3D for later calculation of offset from offset rules, text coordinates and padding.
@@ -1355,13 +1361,14 @@ int main (int argc, char **argv){
                         off_rule_level
                     };
                 }
-                //~ displayV3D(offset_rule);
+                std::clog<<"Starting offset rules: "<<std::endl;
+                displayV3D(offset_rule);
 
                 vertex2D user_padding = {H_padding_user,V_padding_user};
-                vertex3Dalpha user_color = {red_user,green_user,blue_user,alpha_user};
-                vertex3Dalpha user_bg_color = {red_bg_user,green_bg_user,blue_bg_user,alpha_bg_user};
-                fprintf(stderr,"user_color = {%.2f,%.2f,%.2f,%.2f}\n",red_user,green_user,blue_user,alpha_user);
-                fprintf(stderr,"user_bg_color = {%.2f,%.2f,%.2f,%.2f}\n",red_bg_user,green_bg_user,blue_bg_user,alpha_bg_user);
+                colorRGBA user_color = {red_user,green_user,blue_user,alpha_user};
+                colorRGBA user_bg_color = {red_bg_user,green_bg_user,blue_bg_user,alpha_bg_user};
+                //~ fprintf(stderr,"user_color = {%.2f,%.2f,%.2f,%.2f}\n",red_user,green_user,blue_user,alpha_user);
+                //~ fprintf(stderr,"user_bg_color = {%.2f,%.2f,%.2f,%.2f}\n",red_bg_user,green_bg_user,blue_bg_user,alpha_bg_user);
                 
                 std::vector<GLfloat> user_font_color = {
                     red_font_user,
@@ -1378,18 +1385,18 @@ int main (int argc, char **argv){
                     };
                 }
                 
-                displayV3Dalpha(user_v_font_color);
+                //~ displayColorRGBA(user_v_font_color);
                 
                 // initialize options, text parameters and matrices
                 fprintf(stderr,"number of lines:%u\n",nlines);
-                set_options(move_it,display_box, ortho_mode,singleColor,nlines);
+                init_options(move_it,display_box, ortho_mode,singleColor,nlines);
                 if(tempTest)
                 {
-                    user_input_bridge(*ptRender, user_origin, offset, offset_rule, user_padding, user_color,user_bg_color, user_v_font_color, displayDataOnly, hideParent);
+                    init_user_input(*ptRender, user_origin, offset, offset_rule, user_padding, user_color,user_bg_color, user_v_font_color, displayDataOnly, hideParent);
                 }
                 else
                 {
-                    user_input_bridge(newMDE, user_origin, offset, offset_rule, user_padding, user_color,user_bg_color, user_v_font_color, displayDataOnly, hideParent);
+                    init_user_input(newMDE, user_origin, offset, offset_rule, user_padding, user_color,user_bg_color, user_v_font_color, displayDataOnly, hideParent);
                 }
                 init_data();
                 init_offset_rules();
@@ -1458,7 +1465,7 @@ int main (int argc, char **argv){
                 //~ newMDE.destructor_MDE();
                 delete ptParser;
                 fprintf(stderr,"Clearing Done!");
-                std::clog <<"key_input: " << key_input << std::endl; 
+                //~ std::clog <<"key_input: " << key_input << std::endl; 
                 return 0;                    
             }
             

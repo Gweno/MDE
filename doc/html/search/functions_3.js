@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['fetch_5fsearch_5fresult_79',['fetch_search_result',['../group__group__search.html#ga7ecc9f5b399fe83927c4fd8027732f15',1,'MDE']]],
-  ['formatdisplay_80',['formatDisplay',['../group__group__utils.html#gad8f7ca1f04faf6a3699a198fda05dce5',1,'formatDisplay(MDE &amp;MDE_source, int n_indent, const int &amp;n_space, std::string start_opening_tag, std::string end_opening_tag, std::string start_closing_tag, std::string end_closing_tag):&#160;utils.cpp'],['../group__group__utils.html#gad8f7ca1f04faf6a3699a198fda05dce5',1,'formatDisplay(MDE &amp;MDE_source, int n_indent, const int &amp;n_space, std::string start_opening_tag, std::string end_opening_tag, std::string start_closing_tag, std::string end_closing_tag):&#160;utils.cpp']]]
+  ['extractfiletoflatmde_84',['extractFileToFlatMDE',['../group__group__utils.html#ga446038c741f58e6719c14db850ee722e',1,'utils.h']]],
+  ['extractmdedataforvoffset_85',['extractMDEdataForVoffset',['../group__group__utils.html#gac9a36f7a073a9523e241ab07d6929834',1,'extractMDEdataForVoffset(MDE &amp;MDE_source, std::vector&lt; GLdata &gt; &amp;v_MDE_data, int &amp;level, int &amp;index, bool displayDataOnly, bool hideParent):&#160;utils.cpp'],['../group__group__utils.html#gac9a36f7a073a9523e241ab07d6929834',1,'extractMDEdataForVoffset(MDE &amp;MDE_source, std::vector&lt; GLdata &gt; &amp;v_MDE_data, int &amp;level, int &amp;index=0, bool displayDataOnly=false, bool hideParent=false):&#160;utils.cpp']]]
 ];

@@ -19,7 +19,7 @@ void \mbox{\hyperlink{group__group__display_ga5ce5603ab12845a6f1bdb2f909b5ef16}{
 void \mbox{\hyperlink{group__group__display_ga209fa87837f6b30256bbcdf8f33e1752}{M\+D\+E\+::display\+\_\+all}} (int n\+\_\+indent, const int \&n\+\_\+space)
 \begin{DoxyCompactList}\small\item\em This member function is to display all members \textquotesingle{}name\textquotesingle{}(private) and \textquotesingle{}data\textquotesingle{}(public) of all private members v\+M\+DE vectors of pointers to instances of object of class \mbox{\hyperlink{classMDE}{M\+DE}}, using a standard cout recursively, and with indentation. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{group__group__display_gaeee364777c1584d310bd698c9e9b40f4}{M\+D\+E\+::display\+\_\+vector\+\_\+int}} (std\+::vector$<$ int $>$ \&vect\+\_\+index)
-\begin{DoxyCompactList}\small\item\em This member function is to display all members \textquotesingle{}name\textquotesingle{}(private) and \textquotesingle{}data\textquotesingle{}(public) of all private members v\+M\+DE vectors of pointers to instances of object of class \mbox{\hyperlink{classMDE}{M\+DE}}, using a standard cout recursively, and with indentation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em This member function is to display the instance of a class object \mbox{\hyperlink{classMDE}{M\+DE}} with a defined format using opening and closing tags (for example like an X\+ML file). \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
@@ -38,7 +38,7 @@ Methods to display Instances, part of instances or anything else, in the termina
 
 This member function is to display all members \textquotesingle{}name\textquotesingle{}(private) and \textquotesingle{}data\textquotesingle{}(public) of all private members v\+M\+DE vectors of pointers to instances of object of class \mbox{\hyperlink{classMDE}{M\+DE}}, using a standard cout recursively, and with indentation. 
 
-\hypertarget{group__group__display_autotoc_md25}{}\doxysubsubsection{name\+: display\+\_\+all(int n\+\_\+indent, const int \& n\+\_\+space)}\label{group__group__display_autotoc_md25}
+\hypertarget{group__group__display_autotoc_md26}{}\doxysubsubsection{name\+: display\+\_\+all(int n\+\_\+indent, const int \& n\+\_\+space)}\label{group__group__display_autotoc_md26}
 
 \begin{DoxyParams}{Parameters}
 {\em n\+\_\+indent} & is an integer passed to initialised the position of the first line to display, then to be incremented locally recursively. \\
@@ -73,7 +73,7 @@ Nothing is returned (void).
 
 This member function is to display the public member \textquotesingle{}data\textquotesingle{} of an instance of a class \mbox{\hyperlink{classMDE}{M\+DE}} object, using a standard cout. 
 
-\hypertarget{group__group__display_autotoc_md22}{}\doxysubsubsection{name\+: display\+\_\+data()}\label{group__group__display_autotoc_md22}
+\hypertarget{group__group__display_autotoc_md23}{}\doxysubsubsection{name\+: display\+\_\+data()}\label{group__group__display_autotoc_md23}
 
 \begin{DoxyParams}{Parameters}
 {\em No} & arguments. \\
@@ -104,7 +104,7 @@ Nothing is returned (void).
 
 This member function is to display the private member \textquotesingle{}name\textquotesingle{} of an instance of a class \mbox{\hyperlink{classMDE}{M\+DE}} object, using a standard cout. 
 
-\hypertarget{group__group__display_autotoc_md21}{}\doxysubsubsection{name\+: display\+\_\+name()}\label{group__group__display_autotoc_md21}
+\hypertarget{group__group__display_autotoc_md22}{}\doxysubsubsection{name\+: display\+\_\+name()}\label{group__group__display_autotoc_md22}
 
 \begin{DoxyParams}{Parameters}
 {\em No} & arguments. \\
@@ -133,9 +133,38 @@ Nothing is returned (void).
 
 
 
-This member function is to display all members \textquotesingle{}name\textquotesingle{}(private) and \textquotesingle{}data\textquotesingle{}(public) of all private members v\+M\+DE vectors of pointers to instances of object of class \mbox{\hyperlink{classMDE}{M\+DE}}, using a standard cout recursively, and with indentation. 
+This member function is to display the instance of a class object \mbox{\hyperlink{classMDE}{M\+DE}} with a defined format using opening and closing tags (for example like an X\+ML file). 
 
-\hypertarget{group__group__display_autotoc_md26}{}\doxysubsubsection{name\+: display\+\_\+vector\+\_\+int(std\+::vector$<$int$>$\& vect\+\_\+index)}\label{group__group__display_autotoc_md26}
+\hypertarget{group__group__display_autotoc_md27}{}\doxysubsubsection{name\+: format\+\_\+display(int n\+\_\+indent, const int \& n\+\_\+space,}\label{group__group__display_autotoc_md27}
+std\+::string start\+\_\+opening\+\_\+tag, std\+::string end\+\_\+opening\+\_\+tag, std\+::string start\+\_\+closing\+\_\+tag, std\+::string end\+\_\+closing\+\_\+tag) 
+\begin{DoxyParams}{Parameters}
+{\em n\+\_\+indent} & is an integer passed to initialised the position of the first line to display, then to be incremented locally recursively. \\
+\hline
+{\em n\+\_\+space} & is an address of a constant integer used to indent each lines to separates elements of intances of object of class \mbox{\hyperlink{classMDE}{M\+DE}} from their own sub-\/elements recursively. \\
+\hline
+{\em start\+\_\+opening\+\_\+tag} & is a standard string corresponding to the start of the opening tag (\char`\"{}$<$\char`\"{} for xml). \\
+\hline
+{\em end\+\_\+opening\+\_\+tag} & is a standard string corresponding to the end of the opening tag (\char`\"{}$>$\char`\"{} for xml). \\
+\hline
+{\em start\+\_\+closing\+\_\+tag} & is a standard string corresponding to the start of the closing tag (\char`\"{}$<$\textbackslash{}\char`\"{} for xml). \\
+\hline
+{\em end\+\_\+closing\+\_\+tag} & is a standard string corresponding to the end of the closing tag (\char`\"{}$>$\char`\"{} for xml). \\
+\hline
+{\em \&file} & (address of a file) is an ostream corresponding to the name of the file . \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Nothing is returned (void). 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{group__group__io_gab0bb5af067d456163cd8d672945acc20}{user\+\_\+save\+\_\+to\+\_\+\+X\+M\+L\+\_\+file()}} 
+\end{DoxySeeAlso}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em No} & exception handling. \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{group__group__display_autotoc_md28}{}\doxysubsubsection{name\+: display\+\_\+vector\+\_\+int(std\+::vector$<$int$>$\& vect\+\_\+index)}\label{group__group__display_autotoc_md28}
 
 \begin{DoxyParams}{Parameters}
 {\em \&} & vect\+\_\+index is a reference to a vector of integer holding the set of indexes for an Entity. The display is in the format (i0,i1,..,in) with each i being the consecutive indexes of instance member v\+M\+DE. \\
@@ -146,10 +175,10 @@ Nothing is returned (void).
 \end{DoxyReturn}
 
 \begin{DoxyExceptions}{Exceptions}
-{\em No} & exception handling. \\
+{\em No} & exception handling.\\
 \hline
 \end{DoxyExceptions}
-\mbox{\Hypertarget{group__group__display_ga5ce5603ab12845a6f1bdb2f909b5ef16}\label{group__group__display_ga5ce5603ab12845a6f1bdb2f909b5ef16}} 
+This member function is to display all members \textquotesingle{}name\textquotesingle{}(private) and \textquotesingle{}data\textquotesingle{}(public) of all private members v\+M\+DE vectors of pointers to instances of object of class \mbox{\hyperlink{classMDE}{M\+DE}}, using a standard cout recursively, and with indentation. \mbox{\Hypertarget{group__group__display_ga5ce5603ab12845a6f1bdb2f909b5ef16}\label{group__group__display_ga5ce5603ab12845a6f1bdb2f909b5ef16}} 
 \index{Display methods@{Display methods}!display\_vMDE\_data@{display\_vMDE\_data}}
 \index{display\_vMDE\_data@{display\_vMDE\_data}!Display methods@{Display methods}}
 \doxysubsubsection{\texorpdfstring{display\_vMDE\_data()}{display\_vMDE\_data()}}
@@ -159,7 +188,7 @@ Nothing is returned (void).
 
 This member function is to display public member \textquotesingle{}data\textquotesingle{} of all elements of the private member v\+M\+DE, vector of pointers to instances of object of class \mbox{\hyperlink{classMDE}{M\+DE}} using a standard cout recursively. 
 
-\hypertarget{group__group__display_autotoc_md24}{}\doxysubsubsection{name\+: display\+\_\+v\+M\+D\+E\+\_\+data()}\label{group__group__display_autotoc_md24}
+\hypertarget{group__group__display_autotoc_md25}{}\doxysubsubsection{name\+: display\+\_\+v\+M\+D\+E\+\_\+data()}\label{group__group__display_autotoc_md25}
 
 \begin{DoxyParams}{Parameters}
 {\em No} & arguments. \\
@@ -190,7 +219,7 @@ vdisplay\+\_\+all().
 
 This member function is to display private member \textquotesingle{}name\textquotesingle{} of all elements of the private member v\+M\+DE, vector of pointers to instances of object of class \mbox{\hyperlink{classMDE}{M\+DE}} using a standard cout recursively. 
 
-\hypertarget{group__group__display_autotoc_md23}{}\doxysubsubsection{name\+: display\+\_\+v\+M\+D\+E\+\_\+names()}\label{group__group__display_autotoc_md23}
+\hypertarget{group__group__display_autotoc_md24}{}\doxysubsubsection{name\+: display\+\_\+v\+M\+D\+E\+\_\+names()}\label{group__group__display_autotoc_md24}
 
 \begin{DoxyParams}{Parameters}
 {\em No} & arguments. \\

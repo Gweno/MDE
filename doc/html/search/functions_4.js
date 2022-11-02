@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['get_5fdata_5fvmde_5fby_5findex_81',['get_data_vMDE_by_index',['../group__group__get.html#ga4ceb5c957197f9a85998d111d2308452',1,'MDE']]],
-  ['get_5fname_5fvmde_5fby_5findex_82',['get_name_vMDE_by_index',['../group__group__get.html#ga8bb6595c805411ef0c044763a1a3310a',1,'MDE']]]
+  ['formatdisplay_86',['formatDisplay',['../group__group__utils.html#gad8f7ca1f04faf6a3699a198fda05dce5',1,'formatDisplay(MDE &amp;MDE_source, int n_indent, const int &amp;n_space, std::string start_opening_tag, std::string end_opening_tag, std::string start_closing_tag, std::string end_closing_tag):&#160;utils.cpp'],['../group__group__utils.html#gad8f7ca1f04faf6a3699a198fda05dce5',1,'formatDisplay(MDE &amp;MDE_source, int n_indent, const int &amp;n_space, std::string start_opening_tag, std::string end_opening_tag, std::string start_closing_tag, std::string end_closing_tag):&#160;utils.cpp']]]
 ];

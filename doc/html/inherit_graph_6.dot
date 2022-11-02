@@ -4,5 +4,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="vertex2D",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structvertex2D.html",tooltip=" "];
+  Node0 [label="vertex3D",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structvertex3D.html",tooltip="Define a structure of an object with coordinate in 3 dimensions: x,y,z."];
 }

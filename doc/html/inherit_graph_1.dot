@@ -4,5 +4,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="GLdata",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structGLdata.html",tooltip="This is public structure 'GLdata'. It is used for transferring information to GL functions."];
+  Node0 [label="colorRGBA",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structcolorRGBA.html",tooltip="Define a structure of an object with coordinate in 4 dimensions: x,y,z,a. Used for an object of 3 dim..."];
 }

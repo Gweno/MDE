@@ -1,0 +1,147 @@
+\hypertarget{group__group__init}{}\doxysection{Initialisation methods}
+\label{group__group__init}\index{Initialisation methods@{Initialisation methods}}
+
+
+Methods to initialise various relevant variables, vectors and containers before them being processed within text.\+cpp.  
+
+
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{group__group__init_ga3b42d3bd68c5200393c1f0809ed1facf}{init\+\_\+data}} ()
+\begin{DoxyCompactList}\small\item\em This method is a wrapper, and is used to call extract\+M\+D\+Edata\+For\+Voffset without any arguments passed from the main.\+cpp scope, to avoid \textquotesingle{}out of scope\textquotesingle{} issues. It initialise and declare 2 local integer variables\+: level and index, that are arguments in extract\+M\+D\+Edata\+For\+Voffset. All other arguments passed to extract\+M\+D\+Edata\+For\+Voffset are in the utils.\+cpp global scope. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{group__group__init_gacc5cb552c9bdce751c7f5d6211df92d5}{init\+\_\+font}} (uint u\+Font\+Size, const char $\ast$u\+Font\+Filename)
+\begin{DoxyCompactList}\small\item\em Create an instance of class \mbox{\hyperlink{classMDE}{M\+DE}} and sets its public member \textquotesingle{}name\textquotesingle{} to standard string init\+\_\+name, its public member \textquotesingle{}data\textquotesingle{} to standard string init\+\_\+data and its private member v\+M\+DE, vector of pointers to instance of \mbox{\hyperlink{classMDE}{M\+DE}}, to the vector init\+\_\+v\+M\+DE, standard vector of pointer to instance of \mbox{\hyperlink{classMDE}{M\+DE}}. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{group__group__init_gadf0de4ba85c0914e6ea9f059f1bc1448}{init\+\_\+program}} ()
+\begin{DoxyCompactList}\small\item\em Initialize and create the G\+L\+SL shader programs and their parameters. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{group__group__init_gad62d10b0582ab40cd99b547cf863f405}\label{group__group__init_gad62d10b0582ab40cd99b547cf863f405}} 
+void {\bfseries init\+\_\+color} (\mbox{\hyperlink{structcolorRGBA}{color\+R\+G\+BA}} \&color\+\_\+alpha, \mbox{\hyperlink{structcolorRGBA}{color\+R\+G\+BA}} \&bg\+\_\+color\+\_\+alpha, std\+::vector$<$ \mbox{\hyperlink{structcolorRGBA}{color\+R\+G\+BA}} $>$ \&font\+\_\+color\+\_\+alpha, std\+::vector$<$ \mbox{\hyperlink{structvertex3D}{vertex3D}} $>$ \&whd, std\+::vector$<$ unsigned int $>$ \&nb\+\_\+glyphs\+\_\+per\+\_\+text, std\+::vector$<$ \mbox{\hyperlink{structcolorRGBA}{color\+R\+G\+BA}} $>$ \&output\+\_\+font\+\_\+color)
+\item 
+\mbox{\Hypertarget{group__group__init_ga320b11f210dfa65acb38acc9b86bbb74}\label{group__group__init_ga320b11f210dfa65acb38acc9b86bbb74}} 
+void {\bfseries init\+\_\+vectors} (std\+::vector$<$ \mbox{\hyperlink{structvertex3D}{vertex3D}} $>$ \&vectors\+\_\+boxes)
+\item 
+void \mbox{\hyperlink{group__group__init_ga65f41c60dffd206c693051084bc6e8a5}{init\+\_\+user\+\_\+input}} (\mbox{\hyperlink{classMDE}{M\+DE}} \&user\+\_\+input\+\_\+\+M\+DE, \mbox{\hyperlink{structvertex3D}{vertex3D}} \&origin, std\+::vector$<$ \mbox{\hyperlink{structvertex3D}{vertex3D}} $>$ \&offset, std\+::vector$<$ \mbox{\hyperlink{structvertex3D}{vertex3D}} $>$ \&offset\+\_\+rule, \mbox{\hyperlink{structvertex2D}{vertex2D}} \&padding, \mbox{\hyperlink{structcolorRGBA}{color\+R\+G\+BA}} \&color\+\_\+alpha, \mbox{\hyperlink{structcolorRGBA}{color\+R\+G\+BA}} \&bg\+\_\+color\+\_\+alpha, std\+::vector$<$ \mbox{\hyperlink{structcolorRGBA}{color\+R\+G\+BA}} $>$ \&font\+\_\+color, bool display\+Data\+Only, bool hide\+Parent)
+\begin{DoxyCompactList}\small\item\em Set all relevant variables in the text.\+cpp global scope, from ~\newline
+ user input done within main.\+cpp. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Methods to initialise various relevant variables, vectors and containers before them being processed within text.\+cpp. 
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{group__group__init_ga3b42d3bd68c5200393c1f0809ed1facf}\label{group__group__init_ga3b42d3bd68c5200393c1f0809ed1facf}} 
+\index{Initialisation methods@{Initialisation methods}!init\_data@{init\_data}}
+\index{init\_data@{init\_data}!Initialisation methods@{Initialisation methods}}
+\doxysubsubsection{\texorpdfstring{init\_data()}{init\_data()}}
+{\footnotesize\ttfamily void init\+\_\+data (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+This method is a wrapper, and is used to call extract\+M\+D\+Edata\+For\+Voffset without any arguments passed from the main.\+cpp scope, to avoid \textquotesingle{}out of scope\textquotesingle{} issues. It initialise and declare 2 local integer variables\+: level and index, that are arguments in extract\+M\+D\+Edata\+For\+Voffset. All other arguments passed to extract\+M\+D\+Edata\+For\+Voffset are in the utils.\+cpp global scope. 
+
+\hypertarget{group__group__init_autotoc_md54}{}\doxysubsubsection{name\+: init\+\_\+data()}\label{group__group__init_autotoc_md54}
+\begin{DoxyReturn}{Returns}
+Nothing is returned (void). 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em No} & exception handling. \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{group__group__utils_gac9a36f7a073a9523e241ab07d6929834}{extract\+M\+D\+Edata\+For\+Voffset()}}. 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{group__group__init_gacc5cb552c9bdce751c7f5d6211df92d5}\label{group__group__init_gacc5cb552c9bdce751c7f5d6211df92d5}} 
+\index{Initialisation methods@{Initialisation methods}!init\_font@{init\_font}}
+\index{init\_font@{init\_font}!Initialisation methods@{Initialisation methods}}
+\doxysubsubsection{\texorpdfstring{init\_font()}{init\_font()}}
+{\footnotesize\ttfamily bool init\+\_\+font (\begin{DoxyParamCaption}\item[{uint}]{u\+Font\+Size,  }\item[{const char $\ast$}]{u\+Font\+Filename }\end{DoxyParamCaption})}
+
+
+
+Create an instance of class \mbox{\hyperlink{classMDE}{M\+DE}} and sets its public member \textquotesingle{}name\textquotesingle{} to standard string init\+\_\+name, its public member \textquotesingle{}data\textquotesingle{} to standard string init\+\_\+data and its private member v\+M\+DE, vector of pointers to instance of \mbox{\hyperlink{classMDE}{M\+DE}}, to the vector init\+\_\+v\+M\+DE, standard vector of pointer to instance of \mbox{\hyperlink{classMDE}{M\+DE}}. 
+
+\hypertarget{group__group__init_autotoc_md55}{}\doxysubsubsection{name\+: init\+\_\+font(uint u\+Font\+Size,const char $\ast$u\+Font\+Filename)}\label{group__group__init_autotoc_md55}
+
+\begin{DoxyParams}{Parameters}
+{\em init\+\_\+name} & is a standard string \\
+\hline
+{\em init\+\_\+data} & is a standard string \\
+\hline
+{\em init\+\_\+v\+M\+DE} & is a standard vector of pointers to instances of object of class \mbox{\hyperlink{classMDE}{M\+DE}}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Nothing is returned (void). 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classMDE}{M\+D\+E()}}. 
+
+$\sim$\+M\+D\+E(). 
+\end{DoxySeeAlso}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em No} & exception handling. \\
+\hline
+\end{DoxyExceptions}
+\mbox{\Hypertarget{group__group__init_gadf0de4ba85c0914e6ea9f059f1bc1448}\label{group__group__init_gadf0de4ba85c0914e6ea9f059f1bc1448}} 
+\index{Initialisation methods@{Initialisation methods}!init\_program@{init\_program}}
+\index{init\_program@{init\_program}!Initialisation methods@{Initialisation methods}}
+\doxysubsubsection{\texorpdfstring{init\_program()}{init\_program()}}
+{\footnotesize\ttfamily bool init\+\_\+program (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Initialize and create the G\+L\+SL shader programs and their parameters. 
+
+\hypertarget{group__group__init_autotoc_md56}{}\doxysubsubsection{name\+: init\+\_\+program()}\label{group__group__init_autotoc_md56}
+\begin{DoxyReturn}{Returns}
+Nothing is returned (void). 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classMDE}{M\+D\+E()}}. 
+
+$\sim$\+M\+D\+E(). 
+\end{DoxySeeAlso}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em No} & exception handling. \\
+\hline
+\end{DoxyExceptions}
+\mbox{\Hypertarget{group__group__init_ga65f41c60dffd206c693051084bc6e8a5}\label{group__group__init_ga65f41c60dffd206c693051084bc6e8a5}} 
+\index{Initialisation methods@{Initialisation methods}!init\_user\_input@{init\_user\_input}}
+\index{init\_user\_input@{init\_user\_input}!Initialisation methods@{Initialisation methods}}
+\doxysubsubsection{\texorpdfstring{init\_user\_input()}{init\_user\_input()}}
+{\footnotesize\ttfamily void init\+\_\+user\+\_\+input (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classMDE}{M\+DE}} \&}]{user\+\_\+input\+\_\+\+M\+DE,  }\item[{\mbox{\hyperlink{structvertex3D}{vertex3D}} \&}]{origin,  }\item[{std\+::vector$<$ \mbox{\hyperlink{structvertex3D}{vertex3D}} $>$ \&}]{offset,  }\item[{std\+::vector$<$ \mbox{\hyperlink{structvertex3D}{vertex3D}} $>$ \&}]{offset\+\_\+rule,  }\item[{\mbox{\hyperlink{structvertex2D}{vertex2D}} \&}]{padding,  }\item[{\mbox{\hyperlink{structcolorRGBA}{color\+R\+G\+BA}} \&}]{color\+\_\+alpha,  }\item[{\mbox{\hyperlink{structcolorRGBA}{color\+R\+G\+BA}} \&}]{bg\+\_\+color\+\_\+alpha,  }\item[{std\+::vector$<$ \mbox{\hyperlink{structcolorRGBA}{color\+R\+G\+BA}} $>$ \&}]{font\+\_\+color,  }\item[{bool}]{display\+Data\+Only,  }\item[{bool}]{hide\+Parent }\end{DoxyParamCaption})}
+
+
+
+Set all relevant variables in the text.\+cpp global scope, from ~\newline
+ user input done within main.\+cpp. 
+
+\hypertarget{group__group__init_autotoc_md57}{}\doxysubsubsection{name\+: init\+\_\+user\+\_\+input(\+M\+D\+E \&user\+\_\+input\+\_\+\+M\+D\+E, vertex3\+D \&origin, std\+::vector$<$vertex3\+D$>$ \&offset,}\label{group__group__init_autotoc_md57}
+std\+::vector$<$vertex3\+D$>$ \&offset\+\_\+rule, \mbox{\hyperlink{structvertex2D}{vertex2D}} \&padding, \mbox{\hyperlink{structcolorRGBA}{color\+R\+G\+BA}} \&color\+\_\+alpha, \mbox{\hyperlink{structcolorRGBA}{color\+R\+G\+BA}} \&bg\+\_\+color\+\_\+alpha, std\+::vector$<$color\+R\+G\+B\+A$>$ \&font\+\_\+color, bool display\+Data\+Only, bool hide\+Parent); \begin{DoxyReturn}{Returns}
+Nothing is returned (void). 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em \&} & user\+\_\+input\+\_\+\+M\+DE is a reference to a \mbox{\hyperlink{classMDE}{M\+DE}} object \\
+\hline
+{\em \&} & origin is a reference to a \mbox{\hyperlink{structvertex3D}{vertex3D}} object \\
+\hline
+{\em \&} & offset is a reference to a vector of \mbox{\hyperlink{structvertex3D}{vertex3D}} object \\
+\hline
+{\em \&} & offset\+\_\+rule is a reference to a vector of \mbox{\hyperlink{structvertex3D}{vertex3D}} object \\
+\hline
+{\em \&} & origin is a reference to a \mbox{\hyperlink{structvertex3D}{vertex3D}} object \\
+\hline
+{\em \&} & origin is a reference to a \mbox{\hyperlink{structvertex3D}{vertex3D}} object \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em No} & exception handling. \\
+\hline
+\end{DoxyExceptions}

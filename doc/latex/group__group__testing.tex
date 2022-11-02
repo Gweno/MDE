@@ -2,7 +2,7 @@
 \label{group__group__testing}\index{Testing methods@{Testing methods}}
 
 
-Testing methods currently in test or to help with testing. For example methods to create testing sets. Some methods are listed but not documented.  
+This member function is to fill-\/in a standard vector of struct \mbox{\hyperlink{structGLdata}{G\+Ldata}} by extracting data from private member \textquotesingle{}name\textquotesingle{} and public member \textquotesingle{}data\textquotesingle{}, and setting the level and index of each Entities and sub-\/entities of an instance of object class \mbox{\hyperlink{classMDE}{M\+DE}}. The vector of \mbox{\hyperlink{structGLdata}{G\+Ldata}} is used in the standard vector of \mbox{\hyperlink{structGLdata}{G\+Ldata}} to set offset coordinates.  
 
 
 \doxysubsection*{Functions}
@@ -13,9 +13,35 @@ void \mbox{\hyperlink{group__group__testing_ga06c00f993c0b3069376b762aeb731d9b}{
 
 
 \doxysubsection{Detailed Description}
+This member function is to fill-\/in a standard vector of struct \mbox{\hyperlink{structGLdata}{G\+Ldata}} by extracting data from private member \textquotesingle{}name\textquotesingle{} and public member \textquotesingle{}data\textquotesingle{}, and setting the level and index of each Entities and sub-\/entities of an instance of object class \mbox{\hyperlink{classMDE}{M\+DE}}. The vector of \mbox{\hyperlink{structGLdata}{G\+Ldata}} is used in the standard vector of \mbox{\hyperlink{structGLdata}{G\+Ldata}} to set offset coordinates. 
+
+\hypertarget{group__group__testing_autotoc_md45}{}\doxysubsubsection{name\+: extract\+\_\+\+M\+D\+E\+\_\+data\+\_\+for\+\_\+v\+\_\+offset(}\label{group__group__testing_autotoc_md45}
+std\+::vector$<$\+G\+Ldata$>$ \& v\+\_\+\+M\+D\+E\+\_\+data, int \& level, int index = 0) 
+\begin{DoxyParams}{Parameters}
+{\em \&} & v\+\_\+\+M\+D\+E\+\_\+data is a reference to a standard vector of struct \mbox{\hyperlink{structGLdata}{G\+Ldata}}. \\
+\hline
+{\em \&} & level is a reference to an int. \\
+\hline
+{\em \&} & index is a reference to an int. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Nothing is returned (void) 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+search\+\_\+results\+\_\+to\+\_\+vector\+\_\+float() 
+
+search\+\_\+for() 
+\end{DoxySeeAlso}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em No} & exception handling. \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyNote}{Note}
+This method can be optimised and may be able to use other existing methods.
+\end{DoxyNote}
 Testing methods currently in test or to help with testing. For example methods to create testing sets. Some methods are listed but not documented. 
-
-
 
 \doxysubsection{Function Documentation}
 \mbox{\Hypertarget{group__group__testing_ga06c00f993c0b3069376b762aeb731d9b}\label{group__group__testing_ga06c00f993c0b3069376b762aeb731d9b}} 
@@ -28,7 +54,7 @@ Testing methods currently in test or to help with testing. For example methods t
 
 This member function is to create at runtime a new Entity with sub-\/entities for testing purposes. 
 
-\hypertarget{group__group__testing_autotoc_md34}{}\doxysubsubsection{name\+: testing()}\label{group__group__testing_autotoc_md34}
+\hypertarget{group__group__testing_autotoc_md46}{}\doxysubsubsection{name\+: testing()}\label{group__group__testing_autotoc_md46}
 \begin{DoxyReturn}{Returns}
 Nothing is returned (void) 
 \end{DoxyReturn}

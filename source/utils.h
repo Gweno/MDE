@@ -5,6 +5,13 @@
 #include<string>
 #include "MDE.h"
 
+
+/**
+ * 
+ * @file utils.h
+ * 
+*/
+
 //~ enum MDE_member {name,data};
 
         // all utilitary functions
@@ -137,7 +144,7 @@ bool extractFileToFlatMDE(MDE & MDE_source, std::string & full_filename);
          * @see load_XML_File_to_MDE()
          * @see proc_it()
          * @exception No exception handling.
-         * @brief This member function is to process an instnace of a
+         * @brief This member function is to process an instance of a
          * 'flat' Entity and return a pointer to a new instance of MDE
          * that has nested sub-entities.
          * The algorithm checks what is the data, if it is a structural
@@ -238,27 +245,39 @@ void formatDisplay(MDE & MDE_source, int n_indent, const int & n_space, std::str
             
         /**
          * 
-         * ##name: extractMDEdataForVoffset(MDE & MDE_source,
-         * std::vector<GLdata> & v_MDE_data, int & level, int index = 0)
-         * @param & MDE_source is a reference to a MDE instance 
-         * @param  & v_MDE_data is a reference to a standard vector of
+         * ##name: void extractMDEdataForVoffset(MDE & MDE_source,
+         * std::vector<GLdata> & v_MDE_data, int & level,
+         * int & index = 0, bool displayDataOnly = false,
+         * bool hideParent = false);
+         * @param &MDE_source is a reference to a MDE instance 
+         * @param &v_MDE_data is a reference to a standard vector of
          * struct GLdata.
-         * @param  & level is a reference to an int.
-         * @param  & index is a reference to an int.
+         * @param &level is a reference to an int.
+         * @param &index is a reference to an int.
+         * @param displayDataOnly is a boolean, set to false by default.
+         * @param hideParent is a boolean, set to false by default.
          * @return Nothing is returned (void)
-         * @see search_results_to_vector_float()
-         * @see search_for()
+         * @see init_data()
          * @exception No exception handling.
-         * @brief This member function is to fill-in a standard vector
-         * of struct GLdata by extracting data from private member
-         * 'name' and public member 'data', and setting the level
-         * and index of each Entities and sub-entities of an instance of
-         * object class MDE. The vector of GLdata is used in the standard
-         * vector of GLdata to set offset coordinates.
+         * @brief This member function is to recursively fill-in
+         * a standard vector of struct GLdata by extracting
+         * data from public member 'name' and public member 'data',
+         * and setting the level and index of each Entities and 
+         * sub-entities of an instance of object class MDE.
+         * The vector of GLdata my_v_MDE_data is used to set offset
+         * coordinates for displaying MDE and further up in the pipeline
+         * to process other coordinates input like rules and padding.
+         * This function has a wrapper init_data(), called from main.cpp
+         * without any arguments.
+         * The two booleans variables displayDataOnly and hideparents
+         * are used as their names clearly state, for an end display
+         * of only data, and without the parent MDE. This is typically
+         * for HTML rendering.
          * @note This method can be optimised and may be able to use
          * other existing methods.
          */
-void extractMDEdataForVoffset(MDE & MDE_source, std::vector<GLdata> & v_MDE_data, int & level, int index = 0, bool displayDataOnly = false, bool hideParent = false);
+void extractMDEdataForVoffset(MDE & MDE_source, std::vector<GLdata> & v_MDE_data, int & level,
+                             int & index, bool displayDataOnly = false, bool hideParent = false);
 
         /**
          * 
