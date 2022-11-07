@@ -82,20 +82,193 @@ Functions</h2></td></tr>
 <tr class="memitem:gadf0de4ba85c0914e6ea9f059f1bc1448"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__init.html#gadf0de4ba85c0914e6ea9f059f1bc1448">init_program</a> ()</td></tr>
 <tr class="memdesc:gadf0de4ba85c0914e6ea9f059f1bc1448"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize and create the GLSL shader programs and their parameters.  <a href="group__group__init.html#gadf0de4ba85c0914e6ea9f059f1bc1448">More...</a><br /></td></tr>
 <tr class="separator:gadf0de4ba85c0914e6ea9f059f1bc1448"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad62d10b0582ab40cd99b547cf863f405"><td class="memItemLeft" align="right" valign="top"><a id="gad62d10b0582ab40cd99b547cf863f405"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>init_color</b> (<a class="el" href="structcolorRGBA.html">colorRGBA</a> &amp;color_alpha, <a class="el" href="structcolorRGBA.html">colorRGBA</a> &amp;bg_color_alpha, std::vector&lt; <a class="el" href="structcolorRGBA.html">colorRGBA</a> &gt; &amp;font_color_alpha, std::vector&lt; <a class="el" href="structvertex3D.html">vertex3D</a> &gt; &amp;whd, std::vector&lt; unsigned int &gt; &amp;nb_glyphs_per_text, std::vector&lt; <a class="el" href="structcolorRGBA.html">colorRGBA</a> &gt; &amp;output_font_color)</td></tr>
+<tr class="memitem:gabde5ff272ceb5c53880ed068a10b265c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__init.html#gabde5ff272ceb5c53880ed068a10b265c">init_vectors</a> ()</td></tr>
+<tr class="memdesc:gabde5ff272ceb5c53880ed068a10b265c"><td class="mdescLeft">&#160;</td><td class="mdescRight">This Method generates the index buffer for the boxes to be displayed as background or frame of each text.  <a href="group__group__init.html#gabde5ff272ceb5c53880ed068a10b265c">More...</a><br /></td></tr>
+<tr class="separator:gabde5ff272ceb5c53880ed068a10b265c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad62d10b0582ab40cd99b547cf863f405"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__init.html#gad62d10b0582ab40cd99b547cf863f405">init_color</a> (<a class="el" href="structcolorRGBA.html">colorRGBA</a> &amp;color_alpha, <a class="el" href="structcolorRGBA.html">colorRGBA</a> &amp;bg_color_alpha, std::vector&lt; <a class="el" href="structcolorRGBA.html">colorRGBA</a> &gt; &amp;font_color_alpha, std::vector&lt; <a class="el" href="structvertex3D.html">vertex3D</a> &gt; &amp;whd, std::vector&lt; unsigned int &gt; &amp;nb_glyphs_per_text, std::vector&lt; <a class="el" href="structcolorRGBA.html">colorRGBA</a> &gt; &amp;output_font_color)</td></tr>
+<tr class="memdesc:gad62d10b0582ab40cd99b547cf863f405"><td class="mdescLeft">&#160;</td><td class="mdescRight">This Method sets color values for the openGL window background color. It also calculates values generates the vertex buffer object vbo_color_box for the color box. Finally it sets the font color for each glyphs into output_font_color that will be used to generate the vbo (.  <a href="group__group__init.html#gad62d10b0582ab40cd99b547cf863f405">More...</a><br /></td></tr>
 <tr class="separator:gad62d10b0582ab40cd99b547cf863f405"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga320b11f210dfa65acb38acc9b86bbb74"><td class="memItemLeft" align="right" valign="top"><a id="ga320b11f210dfa65acb38acc9b86bbb74"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>init_vectors</b> (std::vector&lt; <a class="el" href="structvertex3D.html">vertex3D</a> &gt; &amp;vectors_boxes)</td></tr>
-<tr class="separator:ga320b11f210dfa65acb38acc9b86bbb74"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga65f41c60dffd206c693051084bc6e8a5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__init.html#ga65f41c60dffd206c693051084bc6e8a5">init_user_input</a> (<a class="el" href="classMDE.html">MDE</a> &amp;user_input_MDE, <a class="el" href="structvertex3D.html">vertex3D</a> &amp;origin, std::vector&lt; <a class="el" href="structvertex3D.html">vertex3D</a> &gt; &amp;offset, std::vector&lt; <a class="el" href="structvertex3D.html">vertex3D</a> &gt; &amp;offset_rule, <a class="el" href="structvertex2D.html">vertex2D</a> &amp;padding, <a class="el" href="structcolorRGBA.html">colorRGBA</a> &amp;color_alpha, <a class="el" href="structcolorRGBA.html">colorRGBA</a> &amp;bg_color_alpha, std::vector&lt; <a class="el" href="structcolorRGBA.html">colorRGBA</a> &gt; &amp;font_color, bool displayDataOnly, bool hideParent)</td></tr>
 <tr class="memdesc:ga65f41c60dffd206c693051084bc6e8a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set all relevant variables in the text.cpp global scope, from <br  />
  user input done within main.cpp.  <a href="group__group__init.html#ga65f41c60dffd206c693051084bc6e8a5">More...</a><br /></td></tr>
 <tr class="separator:ga65f41c60dffd206c693051084bc6e8a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga037c42eee967f59317d46de0accd96c5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__init.html#ga037c42eee967f59317d46de0accd96c5">init_offset_rules</a> ()</td></tr>
+<tr class="memdesc:ga037c42eee967f59317d46de0accd96c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method is a wrapper without any argument, called from main.cpp, for method process_v_MDE_data.  <a href="group__group__init.html#ga037c42eee967f59317d46de0accd96c5">More...</a><br /></td></tr>
+<tr class="separator:ga037c42eee967f59317d46de0accd96c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0dd7f346565a4c592b4ca8522646cd69"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__init.html#ga0dd7f346565a4c592b4ca8522646cd69">init_origin</a> ()</td></tr>
+<tr class="memdesc:ga0dd7f346565a4c592b4ca8522646cd69"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method loops through the offset vector and add in the single coordinates of origin (x,y,z) of the Main <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a>, storing the result in v_origin, a vector of <a class="el" href="structvertex3D.html" title="Define a structure of an object with coordinate in 3 dimensions: x,y,z.">vertex3D</a> that holds the coordinates of <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a> elements (to be displayed).  <a href="group__group__init.html#ga0dd7f346565a4c592b4ca8522646cd69">More...</a><br /></td></tr>
+<tr class="separator:ga0dd7f346565a4c592b4ca8522646cd69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2c114c145a07a185f098381a5ba28fc6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__init.html#ga2c114c145a07a185f098381a5ba28fc6">init_padding</a> ()</td></tr>
+<tr class="memdesc:ga2c114c145a07a185f098381a5ba28fc6"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method is a wrapper without any argument, called from main.cpp, for method add_padding.  <a href="group__group__init.html#ga2c114c145a07a185f098381a5ba28fc6">More...</a><br /></td></tr>
+<tr class="separator:ga2c114c145a07a185f098381a5ba28fc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga08f229f59f2d41a06332ff9cd5d0ade1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__init.html#ga08f229f59f2d41a06332ff9cd5d0ade1">init_glyphs</a> ()</td></tr>
+<tr class="memdesc:ga08f229f59f2d41a06332ff9cd5d0ade1"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method firstly initiates a map of all characters for the font and fontsize to be used, secondly this method loops through vector my_v_MDE_data calling method <a class="el" href="text_8h.html#a3bc9b1e41c158e284028b2808693e898" title="This method is called in a loop on std::vector&lt;GLdata&gt; my_v_MDE_data within init_glyph()....">create_coord_vector_text()</a> to initialise two vectors: glyphs_box and glyphs_vertex which are inputs for opengl and gpu processing.  <a href="group__group__init.html#ga08f229f59f2d41a06332ff9cd5d0ade1">More...</a><br /></td></tr>
+<tr class="separator:ga08f229f59f2d41a06332ff9cd5d0ade1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf2b07be229d47069d8dca899918e0964"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__init.html#gaf2b07be229d47069d8dca899918e0964">init_frame</a> ()</td></tr>
+<tr class="memdesc:gaf2b07be229d47069d8dca899918e0964"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method is a wrapper without any argument, called from main.cpp, for method text_frame.  <a href="group__group__init.html#gaf2b07be229d47069d8dca899918e0964">More...</a><br /></td></tr>
+<tr class="separator:gaf2b07be229d47069d8dca899918e0964"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga11a2aa40ef1cca9e941f47ceec84d95d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__init.html#ga11a2aa40ef1cca9e941f47ceec84d95d">init_box</a> (std::vector&lt; <a class="el" href="structvertex3D.html">vertex3D</a> &gt; &amp;vectors_boxes)</td></tr>
+<tr class="memdesc:ga11a2aa40ef1cca9e941f47ceec84d95d"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method is to initialise the vertex and index buffers for the frame boxes to be displayed in background of every text to be displayed.  <a href="group__group__init.html#ga11a2aa40ef1cca9e941f47ceec84d95d">More...</a><br /></td></tr>
+<tr class="separator:ga11a2aa40ef1cca9e941f47ceec84d95d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga74aaf6c4d0aafd062df5a588bffc4377"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__init.html#ga74aaf6c4d0aafd062df5a588bffc4377">init_vbo_box</a> (std::vector&lt; <a class="el" href="structvertex3D.html">vertex3D</a> &gt; &amp;vectors_boxes)</td></tr>
+<tr class="memdesc:ga74aaf6c4d0aafd062df5a588bffc4377"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method is to initialise the vertex buffer object using the vector of <a class="el" href="structvertex3D.html" title="Define a structure of an object with coordinate in 3 dimensions: x,y,z.">vertex3D</a> vector_boxes that holds all the coordinates for boxes to be displayed behind the <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a> text elements to be displayed in the openGL context.  <a href="group__group__init.html#ga74aaf6c4d0aafd062df5a588bffc4377">More...</a><br /></td></tr>
+<tr class="separator:ga74aaf6c4d0aafd062df5a588bffc4377"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0a6e7769b6a34994f7e317a56e106100"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__init.html#ga0a6e7769b6a34994f7e317a56e106100">init_ibo_elements_box</a> (int size_of_vectors_boxes)</td></tr>
+<tr class="memdesc:ga0a6e7769b6a34994f7e317a56e106100"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method is to initialise the index buffer object using the size of the vector of <a class="el" href="structvertex3D.html" title="Define a structure of an object with coordinate in 3 dimensions: x,y,z.">vertex3D</a> vector_boxes that holds all the coordinates for boxes to be displayed behind the <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a> text elements to be displayed in the openGL context.  <a href="group__group__init.html#ga0a6e7769b6a34994f7e317a56e106100">More...</a><br /></td></tr>
+<tr class="separator:ga0a6e7769b6a34994f7e317a56e106100"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaad0eec67cceaab864b94fd8178ceff52"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__init.html#gaad0eec67cceaab864b94fd8178ceff52">init_color_scheme</a> ()</td></tr>
+<tr class="memdesc:gaad0eec67cceaab864b94fd8178ceff52"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method is to initialise the index buffer object using the size of the vector of <a class="el" href="structvertex3D.html" title="Define a structure of an object with coordinate in 3 dimensions: x,y,z.">vertex3D</a> vector_boxes that holds all the coordinates for boxes to be displayed behind the <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a> text elements to be displayed in the openGL context.  <a href="group__group__init.html#gaad0eec67cceaab864b94fd8178ceff52">More...</a><br /></td></tr>
+<tr class="separator:gaad0eec67cceaab864b94fd8178ceff52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae214a25fb7a9a6b9ac8e5355c473e84a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__init.html#gae214a25fb7a9a6b9ac8e5355c473e84a">init_matrices</a> ()</td></tr>
+<tr class="memdesc:gae214a25fb7a9a6b9ac8e5355c473e84a"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method is to initialise the uniform matrices for the text to be displayed and for the corresponding background boxes.  <a href="group__group__init.html#gae214a25fb7a9a6b9ac8e5355c473e84a">More...</a><br /></td></tr>
+<tr class="separator:gae214a25fb7a9a6b9ac8e5355c473e84a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Methods to initialise various relevant variables, vectors and containers before them being processed within text.cpp. </p>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="ga11a2aa40ef1cca9e941f47ceec84d95d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga11a2aa40ef1cca9e941f47ceec84d95d">&#9670;&nbsp;</a></span>init_box()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void init_box </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="structvertex3D.html">vertex3D</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>vectors_boxes</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This method is to initialise the vertex and index buffers for the frame boxes to be displayed in background of every text to be displayed. </p>
+<h2><a class="anchor" id="autotoc_md65"></a>
+name: init_box(std::vector&lt;vertex3D&gt; &amp;vectors_boxes)</h2>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">std::vector&lt;vertex3D&gt;</td><td>&amp;vectors_boxes, </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Nothing is returned (void). </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__group__init.html#ga74aaf6c4d0aafd062df5a588bffc4377" title="This method is to initialise the vertex buffer object using the vector of vertex3D vector_boxes that ...">init_vbo_box()</a>; </dd>
+<dd>
+<a class="el" href="group__group__init.html#ga0a6e7769b6a34994f7e317a56e106100" title="This method is to initialise the index buffer object using the size of the vector of vertex3D vector_...">init_ibo_elements_box()</a>; </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">No</td><td>exception handling. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gad62d10b0582ab40cd99b547cf863f405"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad62d10b0582ab40cd99b547cf863f405">&#9670;&nbsp;</a></span>init_color()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void init_color </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structcolorRGBA.html">colorRGBA</a> &amp;&#160;</td>
+          <td class="paramname"><em>color_alpha</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structcolorRGBA.html">colorRGBA</a> &amp;&#160;</td>
+          <td class="paramname"><em>bg_color_alpha</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="structcolorRGBA.html">colorRGBA</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>font_color_alpha</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="structvertex3D.html">vertex3D</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>whd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; unsigned int &gt; &amp;&#160;</td>
+          <td class="paramname"><em>nb_glyphs_per_text</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="structcolorRGBA.html">colorRGBA</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>output_font_color</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This Method sets color values for the openGL window background color. It also calculates values generates the vertex buffer object vbo_color_box for the color box. Finally it sets the font color for each glyphs into output_font_color that will be used to generate the vbo (. </p>
+<h2><a class="anchor" id="autotoc_md58"></a>
+name: init_color(colorRGBA &amp;color_alpha,</h2>
+<p><a class="el" href="structcolorRGBA.html" title="Define a structure of an object with coordinate in 4 dimensions: x,y,z,a. Used for an object of 3 dim...">colorRGBA</a> &amp;bg_color_alpha, std::vector&lt;colorRGBA&gt; &amp;font_color_alpha, std::vector&lt;vertex3D&gt; &amp;whd, std::vector&lt;unsigned int&gt; &amp;nb_glyphs_per_text, std::vector&lt;colorRGBA&gt; &amp;output_font_color) </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname"><a class="el" href="structcolorRGBA.html" title="Define a structure of an object with coordinate in 4 dimensions: x,y,z,a. Used for an object of 3 dim...">colorRGBA</a></td><td>&amp;color_alpha, </td></tr>
+    <tr><td class="paramname"><a class="el" href="structcolorRGBA.html" title="Define a structure of an object with coordinate in 4 dimensions: x,y,z,a. Used for an object of 3 dim...">colorRGBA</a></td><td>&amp;bg_color_alpha, </td></tr>
+    <tr><td class="paramname">std::vector&lt;colorRGBA&gt;</td><td>&amp;font_color_alpha, </td></tr>
+    <tr><td class="paramname">std::vector&lt;vertex3D&gt;</td><td>&amp;whd, </td></tr>
+    <tr><td class="paramname">std::vector&lt;unsigned</td><td>int&gt; &amp;nb_glyphs_per_text, </td></tr>
+    <tr><td class="paramname">std::vector&lt;colorRGBA&gt;</td><td>&amp;output_font_color) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Nothing is returned (void). </dd></dl>
+<dl class="section see"><dt>See also</dt><dd>render_text() </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">No</td><td>exception handling. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd>render_text() ). </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This method should be split in smaller steps each steps being a specific method (e.g. font color, background color, box color, generating vbo...). </dd></dl>
+
+</div>
+</div>
+<a id="gaad0eec67cceaab864b94fd8178ceff52"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaad0eec67cceaab864b94fd8178ceff52">&#9670;&nbsp;</a></span>init_color_scheme()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void init_color_scheme </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This method is to initialise the index buffer object using the size of the vector of <a class="el" href="structvertex3D.html" title="Define a structure of an object with coordinate in 3 dimensions: x,y,z.">vertex3D</a> vector_boxes that holds all the coordinates for boxes to be displayed behind the <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a> text elements to be displayed in the openGL context. </p>
+<h2><a class="anchor" id="autotoc_md68"></a>
+name: init_color_scheme()</h2>
+<dl class="section return"><dt>Returns</dt><dd>Nothing is returned (void). </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">No</td><td>exception handling. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ga3b42d3bd68c5200393c1f0809ed1facf"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga3b42d3bd68c5200393c1f0809ed1facf">&#9670;&nbsp;</a></span>init_data()</h2>
 
@@ -121,7 +294,7 @@ name: init_data()</h2>
   </table>
   </dd>
 </dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__group__utils.html#gac9a36f7a073a9523e241ab07d6929834" title="This member function is to recursively fill-in a standard vector of struct GLdata by extracting data ...">extractMDEdataForVoffset()</a>. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__group__utils.html#ga2ef005513f02b4c036e5158e84823ca5" title="This member function is to recursively fill-in a standard vector of struct GLdata by extracting data ...">extractMDEdataForVoffset()</a>. </dd></dl>
 
 </div>
 </div>
@@ -172,6 +345,186 @@ name: init_font(uint uFontSize,const char *uFontFilename)</h2>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="gaf2b07be229d47069d8dca899918e0964"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf2b07be229d47069d8dca899918e0964">&#9670;&nbsp;</a></span>init_frame()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void init_frame </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This method is a wrapper without any argument, called from main.cpp, for method text_frame. </p>
+<h2><a class="anchor" id="autotoc_md64"></a>
+name: init_frame();</h2>
+<dl class="section return"><dt>Returns</dt><dd>Nothing is returned (void). </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="text_8h.html#a6427550fc33633c19a2984ff7be1fd74" title="This method is to calculate the coordinates of each glyphs to be displayed in vertex_3D a vector of v...">text_frame()</a>. </dd></dl>
+
+</div>
+</div>
+<a id="ga08f229f59f2d41a06332ff9cd5d0ade1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga08f229f59f2d41a06332ff9cd5d0ade1">&#9670;&nbsp;</a></span>init_glyphs()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void init_glyphs </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This method firstly initiates a map of all characters for the font and fontsize to be used, secondly this method loops through vector my_v_MDE_data calling method <a class="el" href="text_8h.html#a3bc9b1e41c158e284028b2808693e898" title="This method is called in a loop on std::vector&lt;GLdata&gt; my_v_MDE_data within init_glyph()....">create_coord_vector_text()</a> to initialise two vectors: glyphs_box and glyphs_vertex which are inputs for opengl and gpu processing. </p>
+<h2><a class="anchor" id="autotoc_md63"></a>
+name: init_glyphs();</h2>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="text_8h.html#a3bc9b1e41c158e284028b2808693e898" title="This method is called in a loop on std::vector&lt;GLdata&gt; my_v_MDE_data within init_glyph()....">create_coord_vector_text()</a>. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Nothing is returned (void). </dd></dl>
+
+</div>
+</div>
+<a id="ga0a6e7769b6a34994f7e317a56e106100"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0a6e7769b6a34994f7e317a56e106100">&#9670;&nbsp;</a></span>init_ibo_elements_box()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void init_ibo_elements_box </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>size_of_vectors_boxes</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This method is to initialise the index buffer object using the size of the vector of <a class="el" href="structvertex3D.html" title="Define a structure of an object with coordinate in 3 dimensions: x,y,z.">vertex3D</a> vector_boxes that holds all the coordinates for boxes to be displayed behind the <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a> text elements to be displayed in the openGL context. </p>
+<h2><a class="anchor" id="autotoc_md67"></a>
+name: init_ibo_elements_box(int size_of_vectors_boxes)</h2>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">int</td><td>size_of_vectors_boxes, </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Nothing is returned (void). </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__group__init.html#ga11a2aa40ef1cca9e941f47ceec84d95d" title="This method is to initialise the vertex and index buffers for the frame boxes to be displayed in back...">init_box()</a>; </dd>
+<dd>
+<a class="el" href="group__group__init.html#ga74aaf6c4d0aafd062df5a588bffc4377" title="This method is to initialise the vertex buffer object using the vector of vertex3D vector_boxes that ...">init_vbo_box()</a>; </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">No</td><td>exception handling. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gae214a25fb7a9a6b9ac8e5355c473e84a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae214a25fb7a9a6b9ac8e5355c473e84a">&#9670;&nbsp;</a></span>init_matrices()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void init_matrices </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This method is to initialise the uniform matrices for the text to be displayed and for the corresponding background boxes. </p>
+<h2><a class="anchor" id="autotoc_md69"></a>
+name: init_matrices()</h2>
+<dl class="section return"><dt>Returns</dt><dd>Nothing is returned (void). </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">No</td><td>exception handling. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga037c42eee967f59317d46de0accd96c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga037c42eee967f59317d46de0accd96c5">&#9670;&nbsp;</a></span>init_offset_rules()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void init_offset_rules </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This method is a wrapper without any argument, called from main.cpp, for method process_v_MDE_data. </p>
+<h2><a class="anchor" id="autotoc_md60"></a>
+name: init_offset_rules();</h2>
+<dl class="section return"><dt>Returns</dt><dd>Nothing is returned (void). </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="text_8h.html#aaec78bed14af81c56d21519be22abb48" title="This method is calculating each text coordinate offset by adding the offse rules for members separati...">process_v_MDE_data()</a>. </dd></dl>
+
+</div>
+</div>
+<a id="ga0dd7f346565a4c592b4ca8522646cd69"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0dd7f346565a4c592b4ca8522646cd69">&#9670;&nbsp;</a></span>init_origin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void init_origin </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This method loops through the offset vector and add in the single coordinates of origin (x,y,z) of the Main <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a>, storing the result in v_origin, a vector of <a class="el" href="structvertex3D.html" title="Define a structure of an object with coordinate in 3 dimensions: x,y,z.">vertex3D</a> that holds the coordinates of <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a> elements (to be displayed). </p>
+<h2><a class="anchor" id="autotoc_md61"></a>
+name: init_origin();</h2>
+<dl class="section return"><dt>Returns</dt><dd>Nothing is returned (void). </dd></dl>
+
+</div>
+</div>
+<a id="ga2c114c145a07a185f098381a5ba28fc6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2c114c145a07a185f098381a5ba28fc6">&#9670;&nbsp;</a></span>init_padding()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void init_padding </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This method is a wrapper without any argument, called from main.cpp, for method add_padding. </p>
+<h2><a class="anchor" id="autotoc_md62"></a>
+name: init_padding();</h2>
+<dl class="section return"><dt>Returns</dt><dd>Nothing is returned (void). </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="text_8h.html#a0c9a7e0157a60e576167dec194ff436f" title="This method reads the vector of VerteX3D v_origin and for each x and y, the associated padding....">add_padding()</a>. </dd></dl>
 
 </div>
 </div>
@@ -282,10 +635,9 @@ name: init_program()</h2>
 
 <p>Set all relevant variables in the text.cpp global scope, from <br  />
  user input done within main.cpp. </p>
-<h2><a class="anchor" id="autotoc_md57"></a>
+<h2><a class="anchor" id="autotoc_md59"></a>
 name: init_user_input(MDE &amp;user_input_MDE, vertex3D &amp;origin, std::vector&lt;vertex3D&gt; &amp;offset,</h2>
-<p>std::vector&lt;vertex3D&gt; &amp;offset_rule, <a class="el" href="structvertex2D.html" title="Define a structure of an object with coordinate in 2 dimensions: x,y.">vertex2D</a> &amp;padding, <a class="el" href="structcolorRGBA.html" title="Define a structure of an object with coordinate in 4 dimensions: x,y,z,a. Used for an object of 3 dim...">colorRGBA</a> &amp;color_alpha, <a class="el" href="structcolorRGBA.html" title="Define a structure of an object with coordinate in 4 dimensions: x,y,z,a. Used for an object of 3 dim...">colorRGBA</a> &amp;bg_color_alpha, std::vector&lt;colorRGBA&gt; &amp;font_color, bool displayDataOnly, bool hideParent); </p><dl class="section return"><dt>Returns</dt><dd>Nothing is returned (void). </dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>std::vector&lt;vertex3D&gt; &amp;offset_rule, <a class="el" href="structvertex2D.html" title="Define a structure of an object with coordinate in 2 dimensions: x,y.">vertex2D</a> &amp;padding, <a class="el" href="structcolorRGBA.html" title="Define a structure of an object with coordinate in 4 dimensions: x,y,z,a. Used for an object of 3 dim...">colorRGBA</a> &amp;color_alpha, <a class="el" href="structcolorRGBA.html" title="Define a structure of an object with coordinate in 4 dimensions: x,y,z,a. Used for an object of 3 dim...">colorRGBA</a> &amp;bg_color_alpha, std::vector&lt;colorRGBA&gt; &amp;font_color, bool displayDataOnly, bool hideParent); </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">&amp;</td><td>user_input_MDE is a reference to a <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a> object </td></tr>
     <tr><td class="paramname">&amp;</td><td>origin is a reference to a <a class="el" href="structvertex3D.html" title="Define a structure of an object with coordinate in 3 dimensions: x,y,z.">vertex3D</a> object </td></tr>
@@ -296,12 +648,86 @@ name: init_user_input(MDE &amp;user_input_MDE, vertex3D &amp;origin, std::vector
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>Nothing is returned (void). </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
     <tr><td class="paramname">No</td><td>exception handling. </td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="ga74aaf6c4d0aafd062df5a588bffc4377"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga74aaf6c4d0aafd062df5a588bffc4377">&#9670;&nbsp;</a></span>init_vbo_box()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void init_vbo_box </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="structvertex3D.html">vertex3D</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>vectors_boxes</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This method is to initialise the vertex buffer object using the vector of <a class="el" href="structvertex3D.html" title="Define a structure of an object with coordinate in 3 dimensions: x,y,z.">vertex3D</a> vector_boxes that holds all the coordinates for boxes to be displayed behind the <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a> text elements to be displayed in the openGL context. </p>
+<h2><a class="anchor" id="autotoc_md66"></a>
+name: init_vbo_box(std::vector&lt;vertex3D&gt; &amp;vectors_boxes)</h2>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">std::vector&lt;vertex3D&gt;</td><td>&amp;vectors_boxes, </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Nothing is returned (void). </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__group__init.html#ga11a2aa40ef1cca9e941f47ceec84d95d" title="This method is to initialise the vertex and index buffers for the frame boxes to be displayed in back...">init_box()</a>; </dd>
+<dd>
+<a class="el" href="group__group__init.html#ga0a6e7769b6a34994f7e317a56e106100" title="This method is to initialise the index buffer object using the size of the vector of vertex3D vector_...">init_ibo_elements_box()</a>; </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">No</td><td>exception handling. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gabde5ff272ceb5c53880ed068a10b265c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabde5ff272ceb5c53880ed068a10b265c">&#9670;&nbsp;</a></span>init_vectors()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void init_vectors </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This Method generates the index buffer for the boxes to be displayed as background or frame of each text. </p>
+<h2><a class="anchor" id="autotoc_md57"></a>
+name: init_vectors(std::vector&lt;vertex3D&gt; &amp;vectors_boxes)</h2>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">std::vector&lt;vertex3D&gt;</td><td>&amp;vectors_boxes, the vector that holds </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Nothing is returned (void). </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">No</td><td>exception handling. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>The name of this method is not good and should be replaced by a better suited one, indeed there is no vectors initialised in this method. </dd></dl>
 
 </div>
 </div>

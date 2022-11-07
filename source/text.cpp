@@ -107,7 +107,7 @@ GLuint vbo_font_color2d;
 // ibo
 GLuint ibo_box_elements;
 
-const char *inputText;
+const char *inputText  = nullptr;
 //~ uint fontSize=48;
 uint fontSize=16;
 GLfloat r,g,b,a;
@@ -127,7 +127,7 @@ vertex2D padding ={0.0,0.0};
 FT_Library ft;
 FT_Face face;
 
-const char *fontfilename;
+const char *fontfilename  = nullptr;
 
 // Maximum texture width
 #define MAXWIDTH 1024
@@ -136,20 +136,20 @@ const char *fontfilename;
 
 // global variable for glyphs and their coordinates, to be used in the bridge method 
 
-MDE *my_entity;
-vertex3D *origin;
-std::vector<vertex3D> *offset;
-std::vector<vertex3D> *offset_rule;
-colorRGBA *color_alpha;
-colorRGBA *bg_color_alpha;
-std::vector<colorRGBA> *font_color;
+MDE *my_entity = nullptr;
+vertex3D *origin = nullptr;
+std::vector<vertex3D> *offset = nullptr;
+std::vector<vertex3D> *offset_rule = nullptr;
+colorRGBA *color_alpha = nullptr;
+colorRGBA *bg_color_alpha = nullptr;
+std::vector<colorRGBA> *font_color  = nullptr;
 //~ std::vector<colorRGBA> *font_color2;
-bool *displayDataOnly;
-bool *hideParent;
+bool *displayDataOnly  = nullptr;
+bool *hideParent = nullptr;
 //
 std::vector<GLdata> my_v_MDE_data;
 
-std::vector<vertex3D> v_origin;      // coordinates of origin for the glyphs/text
+std::vector<vertex3D> v_origin;      // coordinates of origin for the group of glyphs, text
 std::vector<vertex3D> v_origin_fb;   // coordinates of origin for the frame box to include padding
 
 
@@ -352,7 +352,7 @@ std::vector<vertex3D> glyphs_box2;
 std::vector<vertex2D> glyphs_vertex2;
 
 std::vector<colorRGBA> v_font_color;
-std::vector<colorRGBA> vector_font_color;
+std::vector<colorRGBA> vector_font_color ={};
 std::vector<colorRGBA> v_font_color2;
 std::vector<colorRGBA> vector_font_color2;
 
@@ -484,8 +484,10 @@ void create_coord_vector_text_old(const char *text, atlas * a, vertex3D &origin,
     
 }
 
-void text_frame(std::vector<vertex3D> &vector_input, std::vector<uint> &nb_glyphs, std::vector<vertex3D> &v_origin, vertex2D &padding){
+void text_frame(std::vector<vertex3D> &vector_input, std::vector<uint> &nb_glyphs, std::vector<vertex3D> &vector_origin, vertex2D &padding){
     
+    
+    std::clog << "##### text_frame #####" << std::endl;
     std::vector<vertex3D> vertex_3D;
     std::vector<vertex3D>::iterator it=vector_input.begin();
     std::vector<uint>::iterator it2=nb_glyphs.begin();
@@ -512,7 +514,6 @@ void text_frame(std::vector<vertex3D> &vector_input, std::vector<uint> &nb_glyph
         //~ std::clog << std::endl;
         h = std::abs(hmax - hmin);
         // for now depth is the same as the width of the text
-        //~ std::clog << "h: " << h << " hmax: " << hmax << " hmin: " << hmin << std::endl;
         d=h;
         
         bottom_left_front.push_back({wmin,hmin,0});
@@ -521,21 +522,11 @@ void text_frame(std::vector<vertex3D> &vector_input, std::vector<uint> &nb_glyph
         std::advance(it,(*it2));
         std::advance(it2,1);
     }
-    std::clog << " bottom_left_front :" << std::endl;
-    //~ displayV3D(bottom_left_front);
-    std::clog << " top_right_back :" << std::endl;
-    //~ displayV3D(top_right_back);
 
-    create_vector(vertex_3D, v_origin, bottom_left_front, top_right_back);
-    // !!!!!! commented below for testing box display bug
-    //~ std::clog << "1) vertex_3D :" << std::endl;
-    //~ displayV3D(vertex_3D);
-    //~ init_vectors(vertex_3D);
-    //~ std::clog << "2) vertex_3D :" << std::endl;
-    //~ displayV3D(vertex_3D);
-    //~ init_box(vertex_3D);
-    //~ std::clog << "3) vertex_3D :" << std::endl;
-    //~ displayV3D(vertex_3D);
+    create_vector(vertex_3D, vector_origin, bottom_left_front, top_right_back, padding);
+    
+    init_box(vertex_3D);
+    std::clog << "###### End text_frame ######" << std::endl;
     
 }
 
@@ -750,18 +741,22 @@ void init_color_box(colorRGBA &color_alpha)
 }
 
 void init_color(colorRGBA &color_alpha, colorRGBA &bg_color_alpha,
-                 std::vector<colorRGBA> &font_color_alpha, std::vector<vertex3D> &whd,
-                 std::vector<unsigned int> &nb_glyphs_per_text, std::vector<colorRGBA> &output_font_color){
-    r=color_alpha.r;
-    g=color_alpha.g;
-    b=color_alpha.b;
-    a=color_alpha.a;
-    
+                std::vector<colorRGBA> &font_color_alpha,
+                std::vector<vertex3D> &whd,
+                std::vector<unsigned int> &nb_glyphs_per_text,
+                std::vector<colorRGBA> &output_font_color){
+    // window background color
     bg_r=bg_color_alpha.r;
     bg_g=bg_color_alpha.g;
     bg_b=bg_color_alpha.b;
     bg_a=bg_color_alpha.a;
     
+    // frame box color
+    r=color_alpha.r;
+    g=color_alpha.g;
+    b=color_alpha.b;
+    a=color_alpha.a;
+        
     GLfloat box_vertices_color3[]={
         r,g,b,a,
         r,g,b,a,
@@ -774,59 +769,53 @@ void init_color(colorRGBA &color_alpha, colorRGBA &bg_color_alpha,
     };
     
     std::vector<GLfloat> vect_color3;
+    std::clog << "########init font color########" << std::endl;
+    std::clog << "(before) Size of output_font_color" << output_font_color.size() << std::endl;
+    std::clog << "output_font_color: " << std::endl;
+    displayColorRGBA(output_font_color);
 
     fprintf(stderr,"whd.size: %u\n",whd.size());
     fprintf(stderr,"font_color_alpha.size: %u\n",font_color_alpha.size());
-    int max_loop = whd.size();
-    //~ int max_loop = font_color_alpha.size();
+    //~ int max_loop = whd.size();
+    int max_loop = font_color_alpha.size();
     //~ int max_loop = 6;
     for(int i=0;i<max_loop;i++){
         vect_color3.insert (vect_color3.end(), box_vertices_color3, box_vertices_color3+32);
         }
 
-  GLfloat cube_colors[] = {
-
-    // front colors
-    0.5,0.5,0.5,0.5,
-    0.5,0.5,0.5,0.5,
-    0.5,0.5,0.5,0.5,
-    0.5,0.5,0.5,0.5,
-    // back colors
-    0.5,0.5,0.5,0.5,
-    0.5,0.5,0.5,0.5,
-    0.5,0.5,0.5,0.5,
-    0.5,0.5,0.5,0.5
-  };
-
     glGenBuffers(1,&vbo_color_box);
     glBindBuffer(GL_ARRAY_BUFFER,vbo_color_box);
     glBufferData(GL_ARRAY_BUFFER,vect_color3.size() * sizeof(GLfloat),&vect_color3.front(),GL_STATIC_DRAW);
     
+    std::clog << "(middle) Size of output_font_color" << output_font_color.size() << std::endl;
+    std::clog << "output_font_color: " << std::endl;
+    displayColorRGBA(output_font_color);
+    
     // font colors
-    std::clog << "########init font color########" << std::endl;
     int ind = 0;
     for(std::vector<unsigned int>::iterator it=nb_glyphs_per_text.begin(); it!=nb_glyphs_per_text.end();it++){
-        //~ std::clog << "nb glyphs: " << (*it) << std::endl;
         for(unsigned int i=0;i<(*it);i++){
-            
             output_font_color.push_back(font_color_alpha[ind]);
+            std::clog << "(*it):" << (*it) << " i:" << i << " ind:" << ind
+            << " output_font_color: | " <<output_font_color.back().r
+            <<", "  <<output_font_color.back().g
+            << ", " <<output_font_color.back().b
+            << ", " <<output_font_color.back().a << " |"<<std::endl;
         }
         ind++;
     }
-    //~ std::clog << "display vect_color3 size: " << vect_color3.size() << std::endl;
-    //~ displayVGLfloat(vect_color3);
-    //~ std::clog << "display font_color_alpha size: " << font_color_alpha.size() << std::endl;
-    //~ std::clog << "display font_color_alpha:" << std::endl;
-    //~ displayV3Dalpha(font_color_alpha);
-    //~ std::clog << "display nb_glyphs_per_text size: " << nb_glyphs_per_text.size() << std::endl;
-    //~ std::clog << "display vector_font_color size: " << vector_font_color.size() << std::endl;
-    //~ std::clog << "display vector_font_color:" << std::endl;
-    //~ displayColorRGBA(output_font_color);
+    std::clog << "(After) Size of output_font_color" << output_font_color.size() << std::endl;
+    std::clog << "output_font_color: " << std::endl;
+    displayColorRGBA(output_font_color);
     std::clog << "########init font color done########" << std::endl;
     
 }
 
-void init_color_old(colorRGBA &color_alpha, colorRGBA &bg_color_alpha, std::vector<colorRGBA> &font_color_alpha, std::vector<vertex3D> &whd, std::vector<unsigned int> &nb_glyphs_per_text){
+/*
+void init_color_old(colorRGBA &color_alpha, colorRGBA &bg_color_alpha,
+             std::vector<colorRGBA> &font_color_alpha,
+             std::vector<vertex3D> &whd,
+             std::vector<unsigned int> &nb_glyphs_per_text){
     r=color_alpha.r;
     g=color_alpha.g;
     b=color_alpha.b;
@@ -850,9 +839,7 @@ void init_color_old(colorRGBA &color_alpha, colorRGBA &bg_color_alpha, std::vect
     
     std::vector<GLfloat> vect_color3;
 
-    //~ fprintf(stderr,"whd.size: %u\n",whd.size());
     fprintf(stderr,"font_color_alpha.size: %u\n",font_color_alpha.size());
-    //~ int max_loop = whd.size();
     int max_loop = font_color_alpha.size();
     for(int i=0;i<max_loop;i++){
         vect_color3.insert (vect_color3.end(), box_vertices_color3, box_vertices_color3+32);
@@ -904,11 +891,20 @@ void init_color_old(colorRGBA &color_alpha, colorRGBA &bg_color_alpha, std::vect
 
 // bypassing singlecolor for testing
 //~ void init_v_font_color(std::vector<vertex3Dalpha> &font_color, uint &nlines, bool singleColor, bool displayDataOnly){
-void init_v_font_color(std::vector<colorRGBA> &font_color,std::vector<colorRGBA> &v_font_color, uint &nlines, bool singleColor, bool displayDataOnly){
+void init_v_font_color(std::vector<colorRGBA> &font_color,
+                    std::vector<colorRGBA> &v_font_color, uint &nlines,
+                    bool singleColor, bool displayDataOnly){
     
     std::clog<<"####### init_v_font_color ########" << std::endl;
     std::clog<<"Size of  font_color: " << (font_color).size() << std::endl;
-    //~ displayColorRGBA(font_color);
+    std::clog<<"Font_color: " << (font_color).size() << std::endl;
+    displayColorRGBA(font_color);
+    std::clog<<"Size of  v_font_color: " << (v_font_color).size() << std::endl;
+    std::clog<<"v_font_color: " << (v_font_color).size() << std::endl;
+    displayColorRGBA(v_font_color);
+    std::clog<<"Size of  vector_font_color: " << (vector_font_color).size() << std::endl;
+    std::clog<<"v_font_color: " << (vector_font_color).size() << std::endl;
+    displayColorRGBA(vector_font_color);    
     std::clog << "single color: " << ((singleColor)?"True":"False") << std::endl;
     if(singleColor)
     {
@@ -917,7 +913,7 @@ void init_v_font_color(std::vector<colorRGBA> &font_color,std::vector<colorRGBA>
         for(uint i=0;i<nlines;i++)
         {
             for(std::vector<colorRGBA>::iterator it=font_color.begin();it!=font_color.end();++it){
-                std::clog << "Step " << i <<std::endl;
+                //~ std::clog << "Step " << i <<std::endl;
                 v_font_color.push_back((*it));
                 //~ std::clog<<"Size of  font_color: " << font_color.size() << " at loop step " << i << std::endl;
                 //~ v_font_color.push_back((*it).x,(*it).y,(*it).z,(*it).a);
@@ -931,14 +927,30 @@ void init_v_font_color(std::vector<colorRGBA> &font_color,std::vector<colorRGBA>
     }
     //~ font_color = v_font_color2;
     //~ displayV3Dalpha(font_color);
-    font_color = v_font_color;
+    //~ font_color = v_font_color;
     //~ displayColorRGBA(font_color);
+    std::clog<<"Size of  font_color: " << (font_color).size() << std::endl;
+    std::clog<<"Font_color: " << (font_color).size() << std::endl;
+    displayColorRGBA(font_color);
+    std::clog<<"Size of  v_font_color: " << (v_font_color).size() << std::endl;
+    std::clog<<"v_font_color: " << (v_font_color).size() << std::endl;
+    displayColorRGBA(v_font_color);    
     std::clog << "####### End init_v_font_color #######" << std::endl;
     
 }
+*/
+
+/*
 void init_v_font_color_old(std::vector<colorRGBA> &font_color, uint &nlines, bool singleColor, bool displayDataOnly){
     
     std::clog<<"####### init_v_font_color ########" << std::endl;
+    std::clog<<"Size of  font_color: " << (font_color).size() << std::endl;
+    std::clog<<"Font_color: " << (font_color).size() << std::endl;
+    displayColorRGBA(font_color);
+    std::clog<<"Size of  v_font_color: " << (v_font_color).size() << std::endl;
+    std::clog<<"v_font_color: " << (v_font_color).size() << std::endl;
+    displayColorRGBA(v_font_color);
+    std::clog << "single color: " << ((singleColor)?"True":"False") << std::endl;    
     if(singleColor)
     {
         // add same color for each glyph
@@ -956,6 +968,12 @@ void init_v_font_color_old(std::vector<colorRGBA> &font_color, uint &nlines, boo
         }
     }
     font_color = v_font_color;
+    std::clog<<"(After) Size of  font_color: " << (font_color).size() << std::endl;
+    std::clog<<"Font_color: " << (font_color).size() << std::endl;
+    displayColorRGBA(font_color);
+    std::clog<<"(After) Size of  v_font_color: " << (v_font_color).size() << std::endl;
+    std::clog<<"v_font_color: " << (v_font_color).size() << std::endl;
+    displayColorRGBA(v_font_color);
     //~ displayColorRGBA(font_color);
     std::clog << "####### End init_v_font_color #######" << std::endl;
     
@@ -970,6 +988,7 @@ void displayVGLfloat(std::vector<GLfloat> &vector_glf){
     std::clog<<" |"<<std::endl;
     
 }
+*/
 
 void displayVuint(std::vector<unsigned int> &vector_uint){
     std::clog<<"loop Vint"<<std::endl;
@@ -983,6 +1002,7 @@ void displayVuint(std::vector<unsigned int> &vector_uint){
 
 void displayV3D(std::vector<vertex3D> &vector_3D){
     std::clog<<"loop V3D"<<std::endl;
+    std::clog<<"Size: " << vector_3D.size() << std::endl;
     for(std::vector<vertex3D>::iterator it=vector_3D.begin();it!=vector_3D.end();++it){
         
         std::clog<<"| ";
@@ -1021,44 +1041,78 @@ void displayColorRGBA(std::vector<colorRGBA> &vector_rgba){
 }
 
  // blf: bottom-left-front, trb: top-right-back
-void create_vector(std::vector<vertex3D> &vector3D,std::vector<vertex3D> &v_origin, std::vector<vertex3D> &vector_blf, std::vector<vertex3D> &vector_trb)
+void create_vector(std::vector<vertex3D> &vector3D,std::vector<vertex3D> &vector_origin, std::vector<vertex3D> &vector_blf, std::vector<vertex3D> &vector_trb, vertex2D &padding)
 {
+    std::clog<<"######## create_vector #######"<<std::endl;
     
-    std::vector<vertex3D>::iterator v_origin_it;
+    //~ std::clog<<"vector_origin:"<<std::endl;
+    //~ displayV3D(vector_origin);
+    //~ std::clog<<"vector_blf:"<<std::endl;
+    //~ displayV3D(vector_blf);
+    //~ std::clog<<"vector_trb:"<<std::endl;
+    //~ displayV3D(vector_trb);
+    
+    std::vector<vertex3D>::iterator vector_origin_it;
     std::vector<vertex3D>::iterator v_blf_it;   // bottom left front
     std::vector<vertex3D>::iterator v_trb_it;   // top right back 
 
-    for(v_origin_it=v_origin.begin(), v_blf_it=vector_blf.begin(), v_trb_it=vector_trb.begin(); v_origin_it!=v_origin.end() && v_blf_it!=vector_blf.end() && v_trb_it!=vector_trb.end();++v_origin_it, ++v_blf_it, ++v_trb_it){
+    for(vector_origin_it=vector_origin.begin(), v_blf_it=vector_blf.begin(),
+     v_trb_it=vector_trb.begin(); vector_origin_it!=vector_origin.end() &&
+      v_blf_it!=vector_blf.end() && v_trb_it!=vector_trb.end();
+      ++vector_origin_it, ++v_blf_it, ++v_trb_it){
         // 1st vertex is bottom left corner, front face
-        vector3D.push_back({(*v_blf_it).x,(*v_blf_it).y,(*v_origin_it).z});
+        vector3D.push_back({(*v_blf_it).x - padding.x,
+            (*v_blf_it).y - padding.y,
+            (*vector_origin_it).z});
         // 2nd vertex, keep 1st vertex x and z, add y from vector2D, to get upper left corner, front face
-        vector3D.push_back({vector3D.back().x,(*v_trb_it).y,vector3D.back().z});
+        vector3D.push_back({vector3D.back().x,
+            (*v_trb_it).y + padding.y,
+            vector3D.back().z});
         // 3rd vertex, back is now 2nd vertex, so just add y, add x from, to get upper right corner, front face
-        vector3D.push_back({(*v_trb_it).x,vector3D.back().y,vector3D.back().z});
+        vector3D.push_back({(*v_trb_it).x + padding.x,
+            vector3D.back().y,
+            vector3D.back().z});
         // 4th vertex, back is now 3rd vertex, so deduct y, keeping x, to get bottom right corner, front face
-        vector3D.push_back({vector3D.back().x,(*v_blf_it).y,vector3D.back().z});
+        vector3D.push_back({vector3D.back().x,
+            (*v_blf_it).y - padding.y,
+            vector3D.back().z});
         // 5th vertex deduct x to come back to bottom left corner, and deduct a depth for z to get back face
-        vector3D.push_back({(*v_blf_it).x,vector3D.back().y,vector3D.back().z-(*v_trb_it).z});
+        vector3D.push_back({(*v_blf_it).x - padding.x,
+            vector3D.back().y,
+            vector3D.back().z-(*v_trb_it).z});
         // 6nd vertex, keep 1st vertex x and z, add y from vector2D, to get upper left corner, back face
-        vector3D.push_back({vector3D.back().x,(*v_trb_it).y,vector3D.back().z});
+        vector3D.push_back({vector3D.back().x,
+            (*v_trb_it).y + padding.y,
+            vector3D.back().z});
         // 7th vertex, back is now 2nd vertex, so just add y, add x from, to get upper right corner, back face
-        vector3D.push_back({(*v_trb_it).x,vector3D.back().y,vector3D.back().z});
+        vector3D.push_back({(*v_trb_it).x + padding.x,
+            vector3D.back().y,
+            vector3D.back().z});
         // 8th vertex, back is now 3rd vertex, so deduct y, keeping x, to get bottom right corner, back face
-        vector3D.push_back({vector3D.back().x,(*v_blf_it).y,vector3D.back().z});
+        vector3D.push_back({vector3D.back().x,
+            (*v_blf_it).y - padding.y,
+            vector3D.back().z});
 
             }
+        //~ std::clog << "Vector 3D: " << std::endl;
+        //~ displayV3D(vector3D);
+        std::clog<<"######## End create_vector #######"<<std::endl;
 }
 
 void init_vbo_box(std::vector<vertex3D> &vectors_boxes)
 {
+    std::clog << "###### init_vbo_box ######" << std::endl;
     glGenBuffers(1,&vbo_vertices_box);
     glBindBuffer(GL_ARRAY_BUFFER,vbo_vertices_box);
     glBufferData(GL_ARRAY_BUFFER,vectors_boxes.size() * sizeof(vertex3D),&vectors_boxes.front(),GL_STATIC_DRAW);
+    std::clog << "###### End init_vbo_box ######" << std::endl;
 
 }
 
-void init_ibo_elements_box(std::vector<vertex3D> &vectors_boxes)
+//~ void init_ibo_elements_box(std::vector<vertex3D> &vectors_boxes)
+void init_ibo_elements_box(int size_of_vectors_boxes)
 {
+    std::clog<< "###### init_ibo_elements_box ######"<<std::endl;
     // set the array of indexes for a rectangle
     std::array<GLushort,36> box_elements3 = {
     //~ GLushort box_elements3[] = {
@@ -1084,42 +1138,42 @@ void init_ibo_elements_box(std::vector<vertex3D> &vectors_boxes)
 
     std::vector<GLushort> vect_index;
 
-    int max_loop = vectors_boxes.size();
-    std::clog<< "######init vectors######"<<std::endl;
-    std::clog<< "max_loop(vectors_boxes.size): "<< max_loop << std::endl;
+    //~ int max_loop = vectors_boxes.size();
+    //~ std::clog<< "max_loop(vectors_boxes.size): "<< max_loop << std::endl;
+    //~ std::clog << "vectors_boxes:" << std::endl;
     //~ displayV3D(vectors_boxes);
-    for(GLushort i=0;i<max_loop;i++){
+    //~ for(GLushort i=0;i<max_loop;i++){
+    for(GLushort i=0;i<size_of_vectors_boxes;i++){
         for ( auto it = box_elements3.begin(); it != box_elements3.end(); ++it ){
             vect_index.push_back((*it)+8*i);
         }
     }
     std::clog<< "vect_index size: "<< vect_index.size() << std::endl;
-    std::clog<< "######End init vectors######"<<std::endl;
 
     glGenBuffers(1, &ibo_box_elements);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_box_elements);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, vect_index.size() * sizeof(GLushort), &vect_index.front(), GL_STATIC_DRAW);
+    std::clog<< "###### End init_ibo_elements_box ######"<<std::endl;
     
 }
 
 //~ void init_box(std::vector<vertex3D> &vectors_boxes, vertex3Dalpha &color_alpha)
 void init_box(std::vector<vertex3D> &vectors_boxes)
 {
-    //~ std::vector<vertex3D> vectors_boxes;
-    
     std::clog << "######## init box #########" << std::endl;
-    //~ displayV3D(vectors_boxes);
     init_vbo_box(vectors_boxes);
     //~ init_color_box(vertex3Dalpha color_alpha);
-    init_ibo_elements_box(vectors_boxes);
+    
+    init_ibo_elements_box(vectors_boxes.size());
     std::clog << "######## End init box #########" << std::endl;
 }
 
-void init_vectors(std::vector<vertex3D> &vectors_boxes)
+//~ void init_vectors(std::vector<vertex3D> &vectors_boxes)
+void init_vectors()
 {
+    //~ std::clog<< "######init vectors######"<<std::endl;
 
     // set the array of indexes for a rectangle
-    //~ std::array<GLushort,36> box_elements3 = {
     GLushort box_elements3[] = {
         // front
         0, 1, 2,
@@ -1141,39 +1195,39 @@ void init_vectors(std::vector<vertex3D> &vectors_boxes)
         6, 7, 3,
         };
 
-    std::vector<GLushort> vect_index;
+    //~ std::vector<GLushort> vect_index;
 
     // Creating a vec3 from the first element of vectors_boxes for debugging bad misaligment
-    check_coord3d_b = glm::vec3(vectors_boxes[0].x,vectors_boxes[0].y,vectors_boxes[0].z);
+    //~ check_coord3d_b = glm::vec3(vectors_boxes[0].x,vectors_boxes[0].y,vectors_boxes[0].z);
     
 
-    int max_loop = vectors_boxes.size();
-    std::clog<< "######init vectors######"<<std::endl;
-    std::clog<< "max_loop(vectors_boxes.size): "<< max_loop << std::endl;
+    //~ int max_loop = vectors_boxes.size();
+    //~ std::clog<< "max_loop(vectors_boxes.size): "<< max_loop << std::endl;
     //~ displayV3D(vectors_boxes);
     //~ for(GLushort i=0;i<max_loop;i++){
         //~ for ( auto it = box_elements3.begin(); it != box_elements3.end(); ++it ){
             //~ vect_index.push_back((*it)+8*i);
         //~ }
     //~ }
-    std::clog<< "vect_index size: "<< vect_index.size() << std::endl;
+    //~ std::clog<< "vect_index size: "<< vect_index.size() << std::endl;
     
 
-    std::clog<<"check_coord3d_b:"<< std::endl;
-    std::clog<<glm::to_string(check_coord3d_b)<<std::endl;
+    //~ std::clog<<"check_coord3d_b:"<< std::endl;
+    //~ std::clog<<glm::to_string(check_coord3d_b)<<std::endl;
     
-    std::clog<< "######End init vectors######"<<std::endl;
 
 
 
     //~ glGenBuffers(1, &ibo_box_elements);
     //~ glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_box_elements);
     //~ glBufferData(GL_ELEMENT_ARRAY_BUFFER, vect_index.size() * sizeof(GLushort), &vect_index.front(), GL_STATIC_DRAW);
+    //~ glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLushort), box_elements3, GL_STATIC_DRAW);
+    
     glGenBuffers(1, &ibo_box_elements);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_box_elements);
-    //~ glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLushort), box_elements3, GL_STATIC_DRAW);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(box_elements3), box_elements3, GL_STATIC_DRAW);
     
+    //~ std::clog<< "######End init vectors######"<<std::endl;
     //~ return 1;
     
     }
@@ -1234,6 +1288,7 @@ void init_user_input(MDE &user_input_MDE, vertex3D &user_input_origin, std::vect
     // for testing
     //~ font_color2 = &user_input_font_color;
     
+    // boolean for html rendering
     displayDataOnly = &_displayDataOnly;
     hideParent = &_hideParent;
 
@@ -1251,12 +1306,12 @@ void init_data(){
 
 void init_offset_rules(){
     process_v_MDE_data(my_v_MDE_data,*offset, *offset_rule);
-    std::clog << "my_v_MDE_data: " << std::endl;
-    displayVMDEdata(my_v_MDE_data);
-    std::clog<<"offset_rule: "<<std::endl;
-    displayV3D(*offset_rule);
-    std::clog<<"offset: "<<std::endl;
-    displayV3D(*offset);
+    //~ std::clog << "my_v_MDE_data: " << std::endl;
+    //~ displayVMDEdata(my_v_MDE_data);
+    //~ std::clog<<"offset_rule: "<<std::endl;
+    //~ displayV3D(*offset_rule);
+    //~ std::clog<<"offset: "<<std::endl;
+    //~ displayV3D(*offset);
 }
 
 void init_origin(){
@@ -1264,22 +1319,28 @@ void init_origin(){
     for (std::vector<vertex3D>::iterator it_offset=offset->begin(); it_offset!=offset->end();++it_offset){
         v_origin.push_back({origin->x+(*it_offset).x,origin->y+(*it_offset).y,origin->z+(*it_offset).z});
     }
+    //~ std::clog << "v_origin: " << std::endl;
+    //~ displayV3D(v_origin);    
         
 }
 
 void init_padding(){
     
+    std::clog<<"###### init_padding #######" << std::endl;
     // Adding padding at first and last elements of v_origin
-    //~ add_padding(v_origin, v_origin_fb, padding);
-    //~ std::clog<<"padding: " << padding.x << ", " << padding.y <<std::endl;
-    //~ std::clog<<"v_origin: "<<std::endl;
-    //~ displayV3D(v_origin);
-    //~ std::clog<<"v_origin_fb: "<<std::endl;
-    //~ displayV3D(v_origin_fb);
+    add_padding(v_origin, v_origin_fb, padding);
+    std::clog<<"padding: " << padding.x << ", " << padding.y <<std::endl;
+    std::clog<<"v_origin: "<<std::endl;
+    displayV3D(v_origin);
+    std::clog<<"v_origin_fb: "<<std::endl;
+    displayV3D(v_origin_fb);
+    std::clog<<"###### End init_padding #######" << std::endl;
     
 }
 
 void init_glyphs(){
+    
+    std::clog << "###### init glyphs ######"<< std::endl;
     
     vertex2D window_scale;
     window_scale.x = 2.0 / glutGet(GLUT_WINDOW_WIDTH);
@@ -1303,13 +1364,21 @@ void init_glyphs(){
         //~ else create_coord_vector_text(((*it_v_MDE_data).MDE_data).c_str(), a_any_size, v_origin[index_v_origin], window_scale, glyphs_box, glyphs_vertex );
         index_v_origin++;
     }
+    std::clog << "v_origin:"<< std::endl;
+    displayV3D(v_origin);
+    
     std::clog << "size of glyphs box: " << glyphs_box.size() << std::endl;     
+    std::clog << "###### End init glyphs ######"<< std::endl;
 }
 
 
 void init_frame(){
-        text_frame(glyphs_box, nb_glyphs_per_text, v_origin_fb, padding);
+    
+    std::cout << "###### init frame ######" << std::endl;
+    
+    text_frame(glyphs_box, nb_glyphs_per_text, v_origin_fb, padding);
 
+    std::cout << "###### End init frame ######" << std::endl;
 }
 
 void init_color_scheme(){
@@ -1328,21 +1397,16 @@ void init_color_scheme(){
     fprintf(stderr,"number of lines in init_text_MDE:%u\n",nlines);
     uint nl0 = 1;
     uint nl1 = nlines-1;
-    //~ init_v_font_color(*font_color2,vector_font_color2, nl0 , true, true);
-    init_v_font_color_old(*font_color,nlines , true, true);
-    //~ init_v_font_color(*font_color,nlines , true, true);
-    //~ init_v_font_color(*font_color, vector_font_color,nl1 , true, true);
+    
+    // init_v_font_color is not needed
+    //~ init_v_font_color_old(*font_color,nlines , true, true);
+    //~ init_v_font_color(*font_color, vector_font_color,nlines , true, true);    
     
     
     
     //~ init_color(*color_alpha,*bg_color_alpha,*font_color2,v_origin,nb_glyphs_per_text);
-    init_color_old(*color_alpha,*bg_color_alpha,*font_color,v_origin,nb_glyphs_per_text);
-    
-    //~ init_color(*color_alpha,*bg_color_alpha,*font_color2,v_origin,nglyphs0);
-    //~ init_color(*color_alpha,*bg_color_alpha,*font_color,v_origin,nglyphs1);
-    
-    //~ init_color(*color_alpha,*bg_color_alpha,*font_color2,v_origin,nglyphs0, v_font_color2);
-    //~ init_color(*color_alpha,*bg_color_alpha,*font_color,v_origin,nglyphs1, v_font_color);
+    //~ init_color_old(*color_alpha,*bg_color_alpha,*font_color,v_origin,nb_glyphs_per_text);
+    init_color(*color_alpha,*bg_color_alpha,*font_color,v_origin,nb_glyphs_per_text, vector_font_color);
 }
 
 //~ void init_text_MDE(){
@@ -1370,10 +1434,15 @@ void process_v_MDE_data(std::vector<GLdata> & v_MDE_data,std::vector<vertex3D> &
 
 void add_padding(std::vector<vertex3D> & v_origin, std::vector<vertex3D> & v_origin_fb, vertex2D & padding){
     
+    std::clog << "###### add-padding ######" << std::endl;
+    
+    std::clog << "padding: h " << padding.x << " ,v " << padding.y << std::endl;
+    
     for (std::vector<vertex3D>::iterator it=v_origin.begin();it!=v_origin.end(); ++it){
         v_origin_fb.push_back({(*it).x-padding.x,(*it).y-padding.y,(*it).z});
     }
 
+    std::clog << "###### End add-padding ######" << std::endl;
 }
 
 void text_display() {
@@ -1537,7 +1606,7 @@ void camera(){
 
 void init_matrices(){
     
-    std::clog << "######## Init Matrices ########" << std::endl;
+    std::clog << "###### Init Matrices ######" << std::endl;
      
     glm::mat4 m_model = glm::translate(glm::mat4(1.0f), glm::vec3(1.0, 0.0, -1.0));
     glm::mat4 m_projection = glm::perspective(glm::radians(fov), 1.0f*screen_width/screen_height, 0.1f, 10.0f);    
@@ -1558,11 +1627,6 @@ void init_matrices(){
     glUniformMatrix4fv(uniform_m_projection, 1, GL_FALSE, glm::value_ptr(m_projection));
     glUniformMatrix4fv(uniform_m_view, 1, GL_FALSE, glm::value_ptr(m_view));
     
-    //~ glUseProgram(program_text2d);
-    //~ glUniformMatrix4fv(uniform_m_model, 1, GL_FALSE, glm::value_ptr(m_model));
-    //~ glUniformMatrix4fv(uniform_m_projection2d, 1, GL_FALSE, glm::value_ptr(m_projection2d));
-    //~ glUniformMatrix4fv(uniform_m_view, 1, GL_FALSE, glm::value_ptr(m_view));
-    
     glUseProgram(program_box);
     glUniformMatrix4fv(uniform_m_model_b, 1, GL_FALSE, glm::value_ptr(m_model_b));
     glUniformMatrix4fv(uniform_m_projection_b, 1, GL_FALSE, glm::value_ptr(m_projection_b));
@@ -1571,7 +1635,7 @@ void init_matrices(){
     std::clog<<"m_projection:"<< std::endl;
     std::clog<<glm::to_string(m_projection)<<std::endl;
     std::clog<<"screen: " << screen_width << " , " << screen_height << std::endl;
-    std::clog << "End init Matrices" << std::endl;
+    std::clog << "###### End init Matrices ######" << std::endl;
 }
 
 /*

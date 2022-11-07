@@ -14,15 +14,33 @@ bool \mbox{\hyperlink{group__group__init_gacc5cb552c9bdce751c7f5d6211df92d5}{ini
 \begin{DoxyCompactList}\small\item\em Create an instance of class \mbox{\hyperlink{classMDE}{M\+DE}} and sets its public member \textquotesingle{}name\textquotesingle{} to standard string init\+\_\+name, its public member \textquotesingle{}data\textquotesingle{} to standard string init\+\_\+data and its private member v\+M\+DE, vector of pointers to instance of \mbox{\hyperlink{classMDE}{M\+DE}}, to the vector init\+\_\+v\+M\+DE, standard vector of pointer to instance of \mbox{\hyperlink{classMDE}{M\+DE}}. \end{DoxyCompactList}\item 
 bool \mbox{\hyperlink{group__group__init_gadf0de4ba85c0914e6ea9f059f1bc1448}{init\+\_\+program}} ()
 \begin{DoxyCompactList}\small\item\em Initialize and create the G\+L\+SL shader programs and their parameters. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{group__group__init_gad62d10b0582ab40cd99b547cf863f405}\label{group__group__init_gad62d10b0582ab40cd99b547cf863f405}} 
-void {\bfseries init\+\_\+color} (\mbox{\hyperlink{structcolorRGBA}{color\+R\+G\+BA}} \&color\+\_\+alpha, \mbox{\hyperlink{structcolorRGBA}{color\+R\+G\+BA}} \&bg\+\_\+color\+\_\+alpha, std\+::vector$<$ \mbox{\hyperlink{structcolorRGBA}{color\+R\+G\+BA}} $>$ \&font\+\_\+color\+\_\+alpha, std\+::vector$<$ \mbox{\hyperlink{structvertex3D}{vertex3D}} $>$ \&whd, std\+::vector$<$ unsigned int $>$ \&nb\+\_\+glyphs\+\_\+per\+\_\+text, std\+::vector$<$ \mbox{\hyperlink{structcolorRGBA}{color\+R\+G\+BA}} $>$ \&output\+\_\+font\+\_\+color)
-\item 
-\mbox{\Hypertarget{group__group__init_ga320b11f210dfa65acb38acc9b86bbb74}\label{group__group__init_ga320b11f210dfa65acb38acc9b86bbb74}} 
-void {\bfseries init\+\_\+vectors} (std\+::vector$<$ \mbox{\hyperlink{structvertex3D}{vertex3D}} $>$ \&vectors\+\_\+boxes)
-\item 
+void \mbox{\hyperlink{group__group__init_gabde5ff272ceb5c53880ed068a10b265c}{init\+\_\+vectors}} ()
+\begin{DoxyCompactList}\small\item\em This Method generates the index buffer for the boxes to be displayed as background or frame of each text. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__group__init_gad62d10b0582ab40cd99b547cf863f405}{init\+\_\+color}} (\mbox{\hyperlink{structcolorRGBA}{color\+R\+G\+BA}} \&color\+\_\+alpha, \mbox{\hyperlink{structcolorRGBA}{color\+R\+G\+BA}} \&bg\+\_\+color\+\_\+alpha, std\+::vector$<$ \mbox{\hyperlink{structcolorRGBA}{color\+R\+G\+BA}} $>$ \&font\+\_\+color\+\_\+alpha, std\+::vector$<$ \mbox{\hyperlink{structvertex3D}{vertex3D}} $>$ \&whd, std\+::vector$<$ unsigned int $>$ \&nb\+\_\+glyphs\+\_\+per\+\_\+text, std\+::vector$<$ \mbox{\hyperlink{structcolorRGBA}{color\+R\+G\+BA}} $>$ \&output\+\_\+font\+\_\+color)
+\begin{DoxyCompactList}\small\item\em This Method sets color values for the open\+GL window background color. It also calculates values generates the vertex buffer object vbo\+\_\+color\+\_\+box for the color box. Finally it sets the font color for each glyphs into output\+\_\+font\+\_\+color that will be used to generate the vbo (. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{group__group__init_ga65f41c60dffd206c693051084bc6e8a5}{init\+\_\+user\+\_\+input}} (\mbox{\hyperlink{classMDE}{M\+DE}} \&user\+\_\+input\+\_\+\+M\+DE, \mbox{\hyperlink{structvertex3D}{vertex3D}} \&origin, std\+::vector$<$ \mbox{\hyperlink{structvertex3D}{vertex3D}} $>$ \&offset, std\+::vector$<$ \mbox{\hyperlink{structvertex3D}{vertex3D}} $>$ \&offset\+\_\+rule, \mbox{\hyperlink{structvertex2D}{vertex2D}} \&padding, \mbox{\hyperlink{structcolorRGBA}{color\+R\+G\+BA}} \&color\+\_\+alpha, \mbox{\hyperlink{structcolorRGBA}{color\+R\+G\+BA}} \&bg\+\_\+color\+\_\+alpha, std\+::vector$<$ \mbox{\hyperlink{structcolorRGBA}{color\+R\+G\+BA}} $>$ \&font\+\_\+color, bool display\+Data\+Only, bool hide\+Parent)
 \begin{DoxyCompactList}\small\item\em Set all relevant variables in the text.\+cpp global scope, from ~\newline
- user input done within main.\+cpp. \end{DoxyCompactList}\end{DoxyCompactItemize}
+ user input done within main.\+cpp. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__group__init_ga037c42eee967f59317d46de0accd96c5}{init\+\_\+offset\+\_\+rules}} ()
+\begin{DoxyCompactList}\small\item\em This method is a wrapper without any argument, called from main.\+cpp, for method process\+\_\+v\+\_\+\+M\+D\+E\+\_\+data. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__group__init_ga0dd7f346565a4c592b4ca8522646cd69}{init\+\_\+origin}} ()
+\begin{DoxyCompactList}\small\item\em This method loops through the offset vector and add in the single coordinates of origin (x,y,z) of the Main \mbox{\hyperlink{classMDE}{M\+DE}}, storing the result in v\+\_\+origin, a vector of \mbox{\hyperlink{structvertex3D}{vertex3D}} that holds the coordinates of \mbox{\hyperlink{classMDE}{M\+DE}} elements (to be displayed). \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__group__init_ga2c114c145a07a185f098381a5ba28fc6}{init\+\_\+padding}} ()
+\begin{DoxyCompactList}\small\item\em This method is a wrapper without any argument, called from main.\+cpp, for method add\+\_\+padding. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__group__init_ga08f229f59f2d41a06332ff9cd5d0ade1}{init\+\_\+glyphs}} ()
+\begin{DoxyCompactList}\small\item\em This method firstly initiates a map of all characters for the font and fontsize to be used, secondly this method loops through vector my\+\_\+v\+\_\+\+M\+D\+E\+\_\+data calling method \mbox{\hyperlink{text_8h_a3bc9b1e41c158e284028b2808693e898}{create\+\_\+coord\+\_\+vector\+\_\+text()}} to initialise two vectors\+: glyphs\+\_\+box and glyphs\+\_\+vertex which are inputs for opengl and gpu processing. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__group__init_gaf2b07be229d47069d8dca899918e0964}{init\+\_\+frame}} ()
+\begin{DoxyCompactList}\small\item\em This method is a wrapper without any argument, called from main.\+cpp, for method text\+\_\+frame. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__group__init_ga11a2aa40ef1cca9e941f47ceec84d95d}{init\+\_\+box}} (std\+::vector$<$ \mbox{\hyperlink{structvertex3D}{vertex3D}} $>$ \&vectors\+\_\+boxes)
+\begin{DoxyCompactList}\small\item\em This method is to initialise the vertex and index buffers for the frame boxes to be displayed in background of every text to be displayed. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__group__init_ga74aaf6c4d0aafd062df5a588bffc4377}{init\+\_\+vbo\+\_\+box}} (std\+::vector$<$ \mbox{\hyperlink{structvertex3D}{vertex3D}} $>$ \&vectors\+\_\+boxes)
+\begin{DoxyCompactList}\small\item\em This method is to initialise the vertex buffer object using the vector of \mbox{\hyperlink{structvertex3D}{vertex3D}} vector\+\_\+boxes that holds all the coordinates for boxes to be displayed behind the \mbox{\hyperlink{classMDE}{M\+DE}} text elements to be displayed in the open\+GL context. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__group__init_ga0a6e7769b6a34994f7e317a56e106100}{init\+\_\+ibo\+\_\+elements\+\_\+box}} (int size\+\_\+of\+\_\+vectors\+\_\+boxes)
+\begin{DoxyCompactList}\small\item\em This method is to initialise the index buffer object using the size of the vector of \mbox{\hyperlink{structvertex3D}{vertex3D}} vector\+\_\+boxes that holds all the coordinates for boxes to be displayed behind the \mbox{\hyperlink{classMDE}{M\+DE}} text elements to be displayed in the open\+GL context. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__group__init_gaad0eec67cceaab864b94fd8178ceff52}{init\+\_\+color\+\_\+scheme}} ()
+\begin{DoxyCompactList}\small\item\em This method is to initialise the index buffer object using the size of the vector of \mbox{\hyperlink{structvertex3D}{vertex3D}} vector\+\_\+boxes that holds all the coordinates for boxes to be displayed behind the \mbox{\hyperlink{classMDE}{M\+DE}} text elements to be displayed in the open\+GL context. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__group__init_gae214a25fb7a9a6b9ac8e5355c473e84a}{init\+\_\+matrices}} ()
+\begin{DoxyCompactList}\small\item\em This method is to initialise the uniform matrices for the text to be displayed and for the corresponding background boxes. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
@@ -31,6 +49,97 @@ Methods to initialise various relevant variables, vectors and containers before 
 
 
 \doxysubsection{Function Documentation}
+\mbox{\Hypertarget{group__group__init_ga11a2aa40ef1cca9e941f47ceec84d95d}\label{group__group__init_ga11a2aa40ef1cca9e941f47ceec84d95d}} 
+\index{Initialisation methods@{Initialisation methods}!init\_box@{init\_box}}
+\index{init\_box@{init\_box}!Initialisation methods@{Initialisation methods}}
+\doxysubsubsection{\texorpdfstring{init\_box()}{init\_box()}}
+{\footnotesize\ttfamily void init\+\_\+box (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{structvertex3D}{vertex3D}} $>$ \&}]{vectors\+\_\+boxes }\end{DoxyParamCaption})}
+
+
+
+This method is to initialise the vertex and index buffers for the frame boxes to be displayed in background of every text to be displayed. 
+
+\hypertarget{group__group__init_autotoc_md65}{}\doxysubsubsection{name\+: init\+\_\+box(std\+::vector$<$vertex3\+D$>$ \&vectors\+\_\+boxes)}\label{group__group__init_autotoc_md65}
+
+\begin{DoxyParams}{Parameters}
+{\em std\+::vector$<$vertex3\+D$>$} & \&vectors\+\_\+boxes, \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Nothing is returned (void). 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{group__group__init_ga74aaf6c4d0aafd062df5a588bffc4377}{init\+\_\+vbo\+\_\+box()}}; 
+
+\mbox{\hyperlink{group__group__init_ga0a6e7769b6a34994f7e317a56e106100}{init\+\_\+ibo\+\_\+elements\+\_\+box()}}; 
+\end{DoxySeeAlso}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em No} & exception handling. \\
+\hline
+\end{DoxyExceptions}
+\mbox{\Hypertarget{group__group__init_gad62d10b0582ab40cd99b547cf863f405}\label{group__group__init_gad62d10b0582ab40cd99b547cf863f405}} 
+\index{Initialisation methods@{Initialisation methods}!init\_color@{init\_color}}
+\index{init\_color@{init\_color}!Initialisation methods@{Initialisation methods}}
+\doxysubsubsection{\texorpdfstring{init\_color()}{init\_color()}}
+{\footnotesize\ttfamily void init\+\_\+color (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structcolorRGBA}{color\+R\+G\+BA}} \&}]{color\+\_\+alpha,  }\item[{\mbox{\hyperlink{structcolorRGBA}{color\+R\+G\+BA}} \&}]{bg\+\_\+color\+\_\+alpha,  }\item[{std\+::vector$<$ \mbox{\hyperlink{structcolorRGBA}{color\+R\+G\+BA}} $>$ \&}]{font\+\_\+color\+\_\+alpha,  }\item[{std\+::vector$<$ \mbox{\hyperlink{structvertex3D}{vertex3D}} $>$ \&}]{whd,  }\item[{std\+::vector$<$ unsigned int $>$ \&}]{nb\+\_\+glyphs\+\_\+per\+\_\+text,  }\item[{std\+::vector$<$ \mbox{\hyperlink{structcolorRGBA}{color\+R\+G\+BA}} $>$ \&}]{output\+\_\+font\+\_\+color }\end{DoxyParamCaption})}
+
+
+
+This Method sets color values for the open\+GL window background color. It also calculates values generates the vertex buffer object vbo\+\_\+color\+\_\+box for the color box. Finally it sets the font color for each glyphs into output\+\_\+font\+\_\+color that will be used to generate the vbo (. 
+
+\hypertarget{group__group__init_autotoc_md58}{}\doxysubsubsection{name\+: init\+\_\+color(color\+R\+G\+B\+A \&color\+\_\+alpha,}\label{group__group__init_autotoc_md58}
+\mbox{\hyperlink{structcolorRGBA}{color\+R\+G\+BA}} \&bg\+\_\+color\+\_\+alpha, std\+::vector$<$color\+R\+G\+B\+A$>$ \&font\+\_\+color\+\_\+alpha, std\+::vector$<$vertex3\+D$>$ \&whd, std\+::vector$<$unsigned int$>$ \&nb\+\_\+glyphs\+\_\+per\+\_\+text, std\+::vector$<$color\+R\+G\+B\+A$>$ \&output\+\_\+font\+\_\+color) 
+\begin{DoxyParams}{Parameters}
+{\em \mbox{\hyperlink{structcolorRGBA}{color\+R\+G\+BA}}} & \&color\+\_\+alpha, \\
+\hline
+{\em \mbox{\hyperlink{structcolorRGBA}{color\+R\+G\+BA}}} & \&bg\+\_\+color\+\_\+alpha, \\
+\hline
+{\em std\+::vector$<$color\+R\+G\+B\+A$>$} & \&font\+\_\+color\+\_\+alpha, \\
+\hline
+{\em std\+::vector$<$vertex3\+D$>$} & \&whd, \\
+\hline
+{\em std\+::vector$<$unsigned} & int$>$ \&nb\+\_\+glyphs\+\_\+per\+\_\+text, \\
+\hline
+{\em std\+::vector$<$color\+R\+G\+B\+A$>$} & \&output\+\_\+font\+\_\+color) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Nothing is returned (void). 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+render\+\_\+text() 
+\end{DoxySeeAlso}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em No} & exception handling. \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxySeeAlso}{See also}
+render\+\_\+text() ). 
+\end{DoxySeeAlso}
+\begin{DoxyNote}{Note}
+This method should be split in smaller steps each steps being a specific method (e.\+g. font color, background color, box color, generating vbo...). 
+\end{DoxyNote}
+\mbox{\Hypertarget{group__group__init_gaad0eec67cceaab864b94fd8178ceff52}\label{group__group__init_gaad0eec67cceaab864b94fd8178ceff52}} 
+\index{Initialisation methods@{Initialisation methods}!init\_color\_scheme@{init\_color\_scheme}}
+\index{init\_color\_scheme@{init\_color\_scheme}!Initialisation methods@{Initialisation methods}}
+\doxysubsubsection{\texorpdfstring{init\_color\_scheme()}{init\_color\_scheme()}}
+{\footnotesize\ttfamily void init\+\_\+color\+\_\+scheme (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+This method is to initialise the index buffer object using the size of the vector of \mbox{\hyperlink{structvertex3D}{vertex3D}} vector\+\_\+boxes that holds all the coordinates for boxes to be displayed behind the \mbox{\hyperlink{classMDE}{M\+DE}} text elements to be displayed in the open\+GL context. 
+
+\hypertarget{group__group__init_autotoc_md68}{}\doxysubsubsection{name\+: init\+\_\+color\+\_\+scheme()}\label{group__group__init_autotoc_md68}
+\begin{DoxyReturn}{Returns}
+Nothing is returned (void). 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em No} & exception handling. \\
+\hline
+\end{DoxyExceptions}
 \mbox{\Hypertarget{group__group__init_ga3b42d3bd68c5200393c1f0809ed1facf}\label{group__group__init_ga3b42d3bd68c5200393c1f0809ed1facf}} 
 \index{Initialisation methods@{Initialisation methods}!init\_data@{init\_data}}
 \index{init\_data@{init\_data}!Initialisation methods@{Initialisation methods}}
@@ -51,7 +160,7 @@ Nothing is returned (void).
 \hline
 \end{DoxyExceptions}
 \begin{DoxySeeAlso}{See also}
-\mbox{\hyperlink{group__group__utils_gac9a36f7a073a9523e241ab07d6929834}{extract\+M\+D\+Edata\+For\+Voffset()}}. 
+\mbox{\hyperlink{group__group__utils_ga2ef005513f02b4c036e5158e84823ca5}{extract\+M\+D\+Edata\+For\+Voffset()}}. 
 \end{DoxySeeAlso}
 \mbox{\Hypertarget{group__group__init_gacc5cb552c9bdce751c7f5d6211df92d5}\label{group__group__init_gacc5cb552c9bdce751c7f5d6211df92d5}} 
 \index{Initialisation methods@{Initialisation methods}!init\_font@{init\_font}}
@@ -86,6 +195,136 @@ $\sim$\+M\+D\+E().
 {\em No} & exception handling. \\
 \hline
 \end{DoxyExceptions}
+\mbox{\Hypertarget{group__group__init_gaf2b07be229d47069d8dca899918e0964}\label{group__group__init_gaf2b07be229d47069d8dca899918e0964}} 
+\index{Initialisation methods@{Initialisation methods}!init\_frame@{init\_frame}}
+\index{init\_frame@{init\_frame}!Initialisation methods@{Initialisation methods}}
+\doxysubsubsection{\texorpdfstring{init\_frame()}{init\_frame()}}
+{\footnotesize\ttfamily void init\+\_\+frame (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+This method is a wrapper without any argument, called from main.\+cpp, for method text\+\_\+frame. 
+
+\hypertarget{group__group__init_autotoc_md64}{}\doxysubsubsection{name\+: init\+\_\+frame();}\label{group__group__init_autotoc_md64}
+\begin{DoxyReturn}{Returns}
+Nothing is returned (void). 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{text_8h_a6427550fc33633c19a2984ff7be1fd74}{text\+\_\+frame()}}. 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{group__group__init_ga08f229f59f2d41a06332ff9cd5d0ade1}\label{group__group__init_ga08f229f59f2d41a06332ff9cd5d0ade1}} 
+\index{Initialisation methods@{Initialisation methods}!init\_glyphs@{init\_glyphs}}
+\index{init\_glyphs@{init\_glyphs}!Initialisation methods@{Initialisation methods}}
+\doxysubsubsection{\texorpdfstring{init\_glyphs()}{init\_glyphs()}}
+{\footnotesize\ttfamily void init\+\_\+glyphs (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+This method firstly initiates a map of all characters for the font and fontsize to be used, secondly this method loops through vector my\+\_\+v\+\_\+\+M\+D\+E\+\_\+data calling method \mbox{\hyperlink{text_8h_a3bc9b1e41c158e284028b2808693e898}{create\+\_\+coord\+\_\+vector\+\_\+text()}} to initialise two vectors\+: glyphs\+\_\+box and glyphs\+\_\+vertex which are inputs for opengl and gpu processing. 
+
+\hypertarget{group__group__init_autotoc_md63}{}\doxysubsubsection{name\+: init\+\_\+glyphs();}\label{group__group__init_autotoc_md63}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{text_8h_a3bc9b1e41c158e284028b2808693e898}{create\+\_\+coord\+\_\+vector\+\_\+text()}}. 
+\end{DoxySeeAlso}
+\begin{DoxyReturn}{Returns}
+Nothing is returned (void). 
+\end{DoxyReturn}
+\mbox{\Hypertarget{group__group__init_ga0a6e7769b6a34994f7e317a56e106100}\label{group__group__init_ga0a6e7769b6a34994f7e317a56e106100}} 
+\index{Initialisation methods@{Initialisation methods}!init\_ibo\_elements\_box@{init\_ibo\_elements\_box}}
+\index{init\_ibo\_elements\_box@{init\_ibo\_elements\_box}!Initialisation methods@{Initialisation methods}}
+\doxysubsubsection{\texorpdfstring{init\_ibo\_elements\_box()}{init\_ibo\_elements\_box()}}
+{\footnotesize\ttfamily void init\+\_\+ibo\+\_\+elements\+\_\+box (\begin{DoxyParamCaption}\item[{int}]{size\+\_\+of\+\_\+vectors\+\_\+boxes }\end{DoxyParamCaption})}
+
+
+
+This method is to initialise the index buffer object using the size of the vector of \mbox{\hyperlink{structvertex3D}{vertex3D}} vector\+\_\+boxes that holds all the coordinates for boxes to be displayed behind the \mbox{\hyperlink{classMDE}{M\+DE}} text elements to be displayed in the open\+GL context. 
+
+\hypertarget{group__group__init_autotoc_md67}{}\doxysubsubsection{name\+: init\+\_\+ibo\+\_\+elements\+\_\+box(int size\+\_\+of\+\_\+vectors\+\_\+boxes)}\label{group__group__init_autotoc_md67}
+
+\begin{DoxyParams}{Parameters}
+{\em int} & size\+\_\+of\+\_\+vectors\+\_\+boxes, \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Nothing is returned (void). 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{group__group__init_ga11a2aa40ef1cca9e941f47ceec84d95d}{init\+\_\+box()}}; 
+
+\mbox{\hyperlink{group__group__init_ga74aaf6c4d0aafd062df5a588bffc4377}{init\+\_\+vbo\+\_\+box()}}; 
+\end{DoxySeeAlso}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em No} & exception handling. \\
+\hline
+\end{DoxyExceptions}
+\mbox{\Hypertarget{group__group__init_gae214a25fb7a9a6b9ac8e5355c473e84a}\label{group__group__init_gae214a25fb7a9a6b9ac8e5355c473e84a}} 
+\index{Initialisation methods@{Initialisation methods}!init\_matrices@{init\_matrices}}
+\index{init\_matrices@{init\_matrices}!Initialisation methods@{Initialisation methods}}
+\doxysubsubsection{\texorpdfstring{init\_matrices()}{init\_matrices()}}
+{\footnotesize\ttfamily void init\+\_\+matrices (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+This method is to initialise the uniform matrices for the text to be displayed and for the corresponding background boxes. 
+
+\hypertarget{group__group__init_autotoc_md69}{}\doxysubsubsection{name\+: init\+\_\+matrices()}\label{group__group__init_autotoc_md69}
+\begin{DoxyReturn}{Returns}
+Nothing is returned (void). 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em No} & exception handling. \\
+\hline
+\end{DoxyExceptions}
+\mbox{\Hypertarget{group__group__init_ga037c42eee967f59317d46de0accd96c5}\label{group__group__init_ga037c42eee967f59317d46de0accd96c5}} 
+\index{Initialisation methods@{Initialisation methods}!init\_offset\_rules@{init\_offset\_rules}}
+\index{init\_offset\_rules@{init\_offset\_rules}!Initialisation methods@{Initialisation methods}}
+\doxysubsubsection{\texorpdfstring{init\_offset\_rules()}{init\_offset\_rules()}}
+{\footnotesize\ttfamily void init\+\_\+offset\+\_\+rules (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+This method is a wrapper without any argument, called from main.\+cpp, for method process\+\_\+v\+\_\+\+M\+D\+E\+\_\+data. 
+
+\hypertarget{group__group__init_autotoc_md60}{}\doxysubsubsection{name\+: init\+\_\+offset\+\_\+rules();}\label{group__group__init_autotoc_md60}
+\begin{DoxyReturn}{Returns}
+Nothing is returned (void). 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{text_8h_aaec78bed14af81c56d21519be22abb48}{process\+\_\+v\+\_\+\+M\+D\+E\+\_\+data()}}. 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{group__group__init_ga0dd7f346565a4c592b4ca8522646cd69}\label{group__group__init_ga0dd7f346565a4c592b4ca8522646cd69}} 
+\index{Initialisation methods@{Initialisation methods}!init\_origin@{init\_origin}}
+\index{init\_origin@{init\_origin}!Initialisation methods@{Initialisation methods}}
+\doxysubsubsection{\texorpdfstring{init\_origin()}{init\_origin()}}
+{\footnotesize\ttfamily void init\+\_\+origin (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+This method loops through the offset vector and add in the single coordinates of origin (x,y,z) of the Main \mbox{\hyperlink{classMDE}{M\+DE}}, storing the result in v\+\_\+origin, a vector of \mbox{\hyperlink{structvertex3D}{vertex3D}} that holds the coordinates of \mbox{\hyperlink{classMDE}{M\+DE}} elements (to be displayed). 
+
+\hypertarget{group__group__init_autotoc_md61}{}\doxysubsubsection{name\+: init\+\_\+origin();}\label{group__group__init_autotoc_md61}
+\begin{DoxyReturn}{Returns}
+Nothing is returned (void). 
+\end{DoxyReturn}
+\mbox{\Hypertarget{group__group__init_ga2c114c145a07a185f098381a5ba28fc6}\label{group__group__init_ga2c114c145a07a185f098381a5ba28fc6}} 
+\index{Initialisation methods@{Initialisation methods}!init\_padding@{init\_padding}}
+\index{init\_padding@{init\_padding}!Initialisation methods@{Initialisation methods}}
+\doxysubsubsection{\texorpdfstring{init\_padding()}{init\_padding()}}
+{\footnotesize\ttfamily void init\+\_\+padding (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+This method is a wrapper without any argument, called from main.\+cpp, for method add\+\_\+padding. 
+
+\hypertarget{group__group__init_autotoc_md62}{}\doxysubsubsection{name\+: init\+\_\+padding();}\label{group__group__init_autotoc_md62}
+\begin{DoxyReturn}{Returns}
+Nothing is returned (void). 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{text_8h_a0c9a7e0157a60e576167dec194ff436f}{add\+\_\+padding()}}. 
+\end{DoxySeeAlso}
 \mbox{\Hypertarget{group__group__init_gadf0de4ba85c0914e6ea9f059f1bc1448}\label{group__group__init_gadf0de4ba85c0914e6ea9f059f1bc1448}} 
 \index{Initialisation methods@{Initialisation methods}!init\_program@{init\_program}}
 \index{init\_program@{init\_program}!Initialisation methods@{Initialisation methods}}
@@ -121,11 +360,8 @@ $\sim$\+M\+D\+E().
 Set all relevant variables in the text.\+cpp global scope, from ~\newline
  user input done within main.\+cpp. 
 
-\hypertarget{group__group__init_autotoc_md57}{}\doxysubsubsection{name\+: init\+\_\+user\+\_\+input(\+M\+D\+E \&user\+\_\+input\+\_\+\+M\+D\+E, vertex3\+D \&origin, std\+::vector$<$vertex3\+D$>$ \&offset,}\label{group__group__init_autotoc_md57}
-std\+::vector$<$vertex3\+D$>$ \&offset\+\_\+rule, \mbox{\hyperlink{structvertex2D}{vertex2D}} \&padding, \mbox{\hyperlink{structcolorRGBA}{color\+R\+G\+BA}} \&color\+\_\+alpha, \mbox{\hyperlink{structcolorRGBA}{color\+R\+G\+BA}} \&bg\+\_\+color\+\_\+alpha, std\+::vector$<$color\+R\+G\+B\+A$>$ \&font\+\_\+color, bool display\+Data\+Only, bool hide\+Parent); \begin{DoxyReturn}{Returns}
-Nothing is returned (void). 
-\end{DoxyReturn}
-
+\hypertarget{group__group__init_autotoc_md59}{}\doxysubsubsection{name\+: init\+\_\+user\+\_\+input(\+M\+D\+E \&user\+\_\+input\+\_\+\+M\+D\+E, vertex3\+D \&origin, std\+::vector$<$vertex3\+D$>$ \&offset,}\label{group__group__init_autotoc_md59}
+std\+::vector$<$vertex3\+D$>$ \&offset\+\_\+rule, \mbox{\hyperlink{structvertex2D}{vertex2D}} \&padding, \mbox{\hyperlink{structcolorRGBA}{color\+R\+G\+BA}} \&color\+\_\+alpha, \mbox{\hyperlink{structcolorRGBA}{color\+R\+G\+BA}} \&bg\+\_\+color\+\_\+alpha, std\+::vector$<$color\+R\+G\+B\+A$>$ \&font\+\_\+color, bool display\+Data\+Only, bool hide\+Parent); 
 \begin{DoxyParams}{Parameters}
 {\em \&} & user\+\_\+input\+\_\+\+M\+DE is a reference to a \mbox{\hyperlink{classMDE}{M\+DE}} object \\
 \hline
@@ -140,8 +376,67 @@ Nothing is returned (void).
 {\em \&} & origin is a reference to a \mbox{\hyperlink{structvertex3D}{vertex3D}} object \\
 \hline
 \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Nothing is returned (void). 
+\end{DoxyReturn}
 
 \begin{DoxyExceptions}{Exceptions}
 {\em No} & exception handling. \\
 \hline
 \end{DoxyExceptions}
+\mbox{\Hypertarget{group__group__init_ga74aaf6c4d0aafd062df5a588bffc4377}\label{group__group__init_ga74aaf6c4d0aafd062df5a588bffc4377}} 
+\index{Initialisation methods@{Initialisation methods}!init\_vbo\_box@{init\_vbo\_box}}
+\index{init\_vbo\_box@{init\_vbo\_box}!Initialisation methods@{Initialisation methods}}
+\doxysubsubsection{\texorpdfstring{init\_vbo\_box()}{init\_vbo\_box()}}
+{\footnotesize\ttfamily void init\+\_\+vbo\+\_\+box (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{structvertex3D}{vertex3D}} $>$ \&}]{vectors\+\_\+boxes }\end{DoxyParamCaption})}
+
+
+
+This method is to initialise the vertex buffer object using the vector of \mbox{\hyperlink{structvertex3D}{vertex3D}} vector\+\_\+boxes that holds all the coordinates for boxes to be displayed behind the \mbox{\hyperlink{classMDE}{M\+DE}} text elements to be displayed in the open\+GL context. 
+
+\hypertarget{group__group__init_autotoc_md66}{}\doxysubsubsection{name\+: init\+\_\+vbo\+\_\+box(std\+::vector$<$vertex3\+D$>$ \&vectors\+\_\+boxes)}\label{group__group__init_autotoc_md66}
+
+\begin{DoxyParams}{Parameters}
+{\em std\+::vector$<$vertex3\+D$>$} & \&vectors\+\_\+boxes, \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Nothing is returned (void). 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{group__group__init_ga11a2aa40ef1cca9e941f47ceec84d95d}{init\+\_\+box()}}; 
+
+\mbox{\hyperlink{group__group__init_ga0a6e7769b6a34994f7e317a56e106100}{init\+\_\+ibo\+\_\+elements\+\_\+box()}}; 
+\end{DoxySeeAlso}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em No} & exception handling. \\
+\hline
+\end{DoxyExceptions}
+\mbox{\Hypertarget{group__group__init_gabde5ff272ceb5c53880ed068a10b265c}\label{group__group__init_gabde5ff272ceb5c53880ed068a10b265c}} 
+\index{Initialisation methods@{Initialisation methods}!init\_vectors@{init\_vectors}}
+\index{init\_vectors@{init\_vectors}!Initialisation methods@{Initialisation methods}}
+\doxysubsubsection{\texorpdfstring{init\_vectors()}{init\_vectors()}}
+{\footnotesize\ttfamily void init\+\_\+vectors (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+This Method generates the index buffer for the boxes to be displayed as background or frame of each text. 
+
+\hypertarget{group__group__init_autotoc_md57}{}\doxysubsubsection{name\+: init\+\_\+vectors(std\+::vector$<$vertex3\+D$>$ \&vectors\+\_\+boxes)}\label{group__group__init_autotoc_md57}
+
+\begin{DoxyParams}{Parameters}
+{\em std\+::vector$<$vertex3\+D$>$} & \&vectors\+\_\+boxes, the vector that holds \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Nothing is returned (void). 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em No} & exception handling. \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyNote}{Note}
+The name of this method is not good and should be replaced by a better suited one, indeed there is no vectors initialised in this method. 
+\end{DoxyNote}

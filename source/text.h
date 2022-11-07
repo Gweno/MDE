@@ -112,9 +112,7 @@ struct atlas;
  * to extractMDEdataForVoffset are in the utils.cpp global scope.
  * 
 */
-
 void init_data();
-
 
  /**
  * 
@@ -147,32 +145,67 @@ bool init_font(uint uFontSize,const char *uFontFilename);
  */
 bool init_program();
 
-//~ void init_color(vertex3Dalpha &color_alpha, vertex3Dalpha &bg_color_alpha,
-                 //~ std::vector<vertex3Dalpha> &font_color_alpha, std::vector<vertex3D> &whd,
-                 //~ std::vector<unsigned int> &nb_glyphs_per_text, std::vector<vertex3Dalpha> &output_font_color);
+
+ /**
+ * 
+ * ##name: init_vectors(std::vector<vertex3D> &vectors_boxes)
+ * @param std::vector<vertex3D> &vectors_boxes, the vector that holds
+ * @return Nothing is returned (void).
+ * @exception No exception handling.
+ * @brief This Method generates the index buffer for the boxes to be
+ * displayed as background or frame of each text.
+ * @note The name of this method is not good and should be replaced by
+ * a better suited one, indeed there is no vectors initialised in this
+ * method.
+ */
+void init_vectors();
+
+
+ /**
+ * 
+ * ##name: init_color(colorRGBA &color_alpha,
+                     colorRGBA &bg_color_alpha,
+                     std::vector<colorRGBA> &font_color_alpha,
+                     std::vector<vertex3D> &whd,
+                     std::vector<unsigned int> &nb_glyphs_per_text,
+                     std::vector<colorRGBA> &output_font_color)
+ * @param colorRGBA &color_alpha,
+ * @param colorRGBA &bg_color_alpha,
+ * @param std::vector<colorRGBA> &font_color_alpha,
+ * @param std::vector<vertex3D> &whd,
+ * @param std::vector<unsigned int> &nb_glyphs_per_text,
+ * @param std::vector<colorRGBA> &output_font_color)
+ * @return Nothing is returned (void).
+ * @see render_text()
+ * @exception No exception handling.
+ * @brief This Method sets color values for the openGL window background
+ * color. It also calculates values 
+ * generates the vertex buffer object vbo_color_box for the color box.
+ * Finally it sets the font color for each glyphs into output_font_color
+ * that will be used to generate the vbo ( @see render_text() ).
+ * @note This method should be split in smaller steps each steps being
+ * a specific method (e.g. font color, background color, box color,
+ * generating vbo...).
+ */
 void init_color(colorRGBA &color_alpha, colorRGBA &bg_color_alpha,
                  std::vector<colorRGBA> &font_color_alpha, std::vector<vertex3D> &whd,
                  std::vector<unsigned int> &nb_glyphs_per_text, std::vector<colorRGBA> &output_font_color);
 
-void init_color_old(colorRGBA &color_alpha, colorRGBA &bg_color_alpha, std::vector<colorRGBA> &font_color_alpha, std::vector<vertex3D> &whd, std::vector<unsigned int> &nb_glyphs_per_text);
-void init_vectors(std::vector<vertex3D> &vectors_boxes);
+//~ void init_color_old(colorRGBA &color_alpha, colorRGBA &bg_color_alpha, std::vector<colorRGBA> &font_color_alpha, std::vector<vertex3D> &whd, std::vector<unsigned int> &nb_glyphs_per_text);
 
-//~ void init_user_input(MDE &user_input_MDE, vertex3D &origin, std::vector<vertex3D> &offset,
-                    //~ std::vector<vertex3D> &offset_rule, vertex2D &padding, vertex3Dalpha &color_alpha,
-                    //~ vertex3Dalpha &bg_color_alpha, std::vector<vertex3Dalpha> &font_color,
-                    //~ bool displayDataOnly, bool hideParent);
+
 /**
  *##name: init_user_input(MDE &user_input_MDE, vertex3D &origin, std::vector<vertex3D> &offset,
  *                  std::vector<vertex3D> &offset_rule, vertex2D &padding, colorRGBA &color_alpha,
  *                  colorRGBA &bg_color_alpha, std::vector<colorRGBA> &font_color,
  *                  bool displayDataOnly, bool hideParent);
- * @return Nothing is returned (void).
  * @param & user_input_MDE is a reference to a MDE object
  * @param & origin is a reference to a vertex3D object
  * @param & offset is a reference to a vector of vertex3D object
  * @param & offset_rule is a reference to a vector of vertex3D object
  * @param & origin is a reference to a vertex3D object
  * @param & origin is a reference to a vertex3D object
+ * @return Nothing is returned (void).
  * @exception No exception handling.
  * @brief Set all relevant variables in the text.cpp global scope, from  
  * user input done within main.cpp.
@@ -183,8 +216,6 @@ void init_user_input(MDE &user_input_MDE, vertex3D &origin, std::vector<vertex3D
                     colorRGBA &bg_color_alpha, std::vector<colorRGBA> &font_color,
                     bool displayDataOnly, bool hideParent);
 
-
-
 /**
  *##name: init_offset_rules();
  * @return Nothing is returned (void).
@@ -193,8 +224,195 @@ void init_user_input(MDE &user_input_MDE, vertex3D &origin, std::vector<vertex3D
  * main.cpp, for method process_v_MDE_data.
  */
 void init_offset_rules();
+
+
+/**
+ *##name: init_origin();
+ * @return Nothing is returned (void).
+ * @brief This method loops through the offset vector and add in the
+ * single coordinates of origin (x,y,z) of the Main MDE, storing
+ * the result in v_origin, a vector of vertex3D that holds
+ * the coordinates of MDE elements (to be displayed).
+ */
+void init_origin();
+
+/**
+ *##name: init_padding();
+ * @return Nothing is returned (void).
+ * @see add_padding().
+ * @brief This method is a wrapper without any argument, called from
+ * main.cpp, for method add_padding.
+ */
+void init_padding();
+
+/**
+ *##name: init_glyphs();
+ * @see create_coord_vector_text().
+ * @return Nothing is returned (void).
+ * @brief This method firstly initiates a map of all characters for the
+ * font and fontsize to be used, 
+ * secondly this method loops through vector my_v_MDE_data calling method
+ * create_coord_vector_text() to initialise two vectors:
+ * glyphs_box and glyphs_vertex which are inputs for opengl and
+ * gpu processing.
+ */
+void init_glyphs();
+
+/**
+ *##name: init_frame();
+ * @return Nothing is returned (void).
+ * @see text_frame().
+ * @brief This method is a wrapper without any argument, called from
+ * main.cpp, for method text_frame.
+ */
+void init_frame();
+
+ /**
+ * 
+ * ##name: init_box(std::vector<vertex3D> &vectors_boxes)
+ * @param  std::vector<vertex3D> &vectors_boxes,
+ * @return Nothing is returned (void).
+ * @see init_vbo_box();
+ * @see init_ibo_elements_box();
+ * @exception No exception handling.
+ * @brief This method is to initialise the vertex and index buffers for
+ * the frame boxes to be displayed in background of every text to be
+ * displayed.
+ */
+void init_box(std::vector<vertex3D> &vectors_boxes);
+
+
+ /**
+ * 
+ * ##name: init_vbo_box(std::vector<vertex3D> &vectors_boxes)
+ * @param  std::vector<vertex3D> &vectors_boxes,
+ * @return Nothing is returned (void).
+ * @see init_box();
+ * @see init_ibo_elements_box();
+ * @exception No exception handling.
+ * @brief This method is to initialise the vertex buffer object using 
+ * the vector of vertex3D vector_boxes that holds all the coordinates
+ * for boxes to be displayed behind the MDE text elements to be
+ * displayed in the openGL context.
+ */
+void init_vbo_box(std::vector<vertex3D> &vectors_boxes);
+
+ /**
+ * 
+ * ##name: init_ibo_elements_box(int size_of_vectors_boxes)
+ * @param  int size_of_vectors_boxes,
+ * @return Nothing is returned (void).
+ * @see init_box();
+ * @see init_vbo_box();
+ * @exception No exception handling.
+ * @brief This method is to initialise the index buffer object using the
+ * size of the vector of vertex3D vector_boxes that holds all the
+ * coordinates for boxes to be displayed behind the MDE text elements
+ * to be displayed in the openGL context.
+ */
+void init_ibo_elements_box(int size_of_vectors_boxes);
+
+
+
+ /**
+ * 
+ * ##name: init_color_scheme()
+ * @return Nothing is returned (void).
+ * @exception No exception handling.
+ * @brief This method is to initialise the index buffer object using the
+ * size of the vector of vertex3D vector_boxes that holds all the
+ * coordinates for boxes to be displayed behind the MDE text elements
+ * to be displayed in the openGL context.
+ */
+void init_color_scheme();
+
+ /**
+ * 
+ * ##name: init_matrices()
+ * @return Nothing is returned (void).
+ * @exception No exception handling.
+ * @brief This method is to initialise the uniform matrices for the text
+ * to be displayed and for the corresponding background boxes.
+ */
+void init_matrices();
+
 /** @} */ // end of group_init
 
+/**
+ *##name: create_coord_vector_text(const char *text, atlas * a, vertex3D &origin, vertex2D &window_coord_scale,
+                                std::vector<vertex3D> &a_glyphs_box, std::vector<vertex2D> &a_glyphs_vertex);
+ * @param const char *text, is the pointer to the text to be displayed
+ * @param atlas * a, is a pointer to a structure atlas
+ * @param vertex3D & origin, is a reference to a vector of Vertex3D vectors
+ * @param vertex2D & window_coord_scale, ??
+ * @param std::vector<vertex3D> & a_glyphs_box,
+ * @param std::vector<vertex2D> &a_glyphs_vertex,
+ * @return Nothing is returned (void).         
+ * @see init_glyph()
+ * @exception No exception handling.
+ * @brief This method is called in a loop on 
+ * std::vector<GLdata> my_v_MDE_data within init_glyph().
+ * At each iteration a mde_member name or data of class std::string
+ * is processed. During each of these iteration create_coord_vector_text
+ * loops through each character of the string from first to last.
+ * calculating vertices and texture coordinates respectively pushing
+ * back in vectors glyphs_vertex and glyphs_box. It also pushes back
+ * the number of glyphs per text in vector nb_glyphs_per_text.
+ */
+void create_coord_vector_text(const char *text, atlas * a, vertex3D &origin, vertex2D &window_coord_scale,
+                                std::vector<vertex3D> &a_glyphs_box, std::vector<vertex2D> &a_glyphs_vertex);
+
+/**
+ *##name: text_frame(std::vector<vertex3D> &vector_input,
+ *  std::vector<uint> &nb_glyphs, vertex3D &offset, vertex2D &padding);
+ * @param std::vector<vertex3D> &vector_input,
+ * @param std::vector<uint> &nb_glyphs,
+ * @param vertex3D &offset,
+ * @param vertex2D &padding,
+ * @see init_frame().
+ * @see create_vector().
+ * @see init_vectors().
+ * @see init_box().
+ * @exception No exception handling.
+ * @brief This method is to calculate the coordinates of each glyphs
+ * to be displayed in vertex_3D a vector of vertex3D.
+ * It first gets the min and max
+ * values for each text element of the MDE to be displayed and stores
+ * them in 2 vectors bottom_left_front and top_right_back.
+ * It then uses these two vectors and calls create_vector()
+ * to fill-in vector_input. Next in the process
+ * it calls init_vectors() and then init_box() to initialise
+ * GPU buffers for display of the text's backgound 3d box.
+ */
+void text_frame(std::vector<vertex3D> &vector_input,
+     std::vector<uint> &nb_glyphs, vertex3D &offset, vertex2D &padding);
+
+
+/**
+ *##name: create_vector(std::vector<vertex3D> &vector3D,
+    std::vector<vertex3D> &v_origin, std::vector<vertex3D> &vector_blf,
+    std::vector<vertex3D> &vector_trb, vertex2D &padding;
+ * @param std::vector<vertex3D> &vector3D, the vector where glyphs
+ * coordinates are calculated.
+ * @param std::vector<vertex3D> &vector_blf, the vector for bottom
+ * left front corner of the box without padding,
+ * @param std::vector<vertex3D> &vector_trb, the vector for the top
+ * right back corner of the box without padding,
+ * @param vertex2D &padding, the horizontal and vertical padding (x,y).
+ * (! user padding is enter first vertical, second is horizontal,
+ * to follow css order (top, right, bottom, left))
+ * (! for now it's only symmetrical padding:
+ * same padding value for left and right sides,
+ * same padding value top and bottom sides)
+ * @exception No exception handling.
+ * @brief This method calculates the coordinates for the 3d boxes used
+ * as background or frame for the MDE texts to be displayed.
+ * It includes the padding values to create larger boxes to surround
+ * texts.
+ */
+void create_vector(std::vector<vertex3D> &vector3D,
+    std::vector<vertex3D> &v_origin, std::vector<vertex3D> &vector_blf,
+    std::vector<vertex3D> &vector_trb, vertex2D &padding);
 
 
 void displayV2D(std::vector<vertex2D> &vector_2D);
@@ -205,16 +423,14 @@ void displayVuint(std::vector<unsigned int> &vector_uint);
 void displayVGLfloat(std::vector<GLfloat> &vector_glf);
 void text_display();
 void draw_box();
-void text_frame(std::vector<vertex3D> &vector_input, std::vector<uint> &nb_glyphs, vertex3D &offset, vertex2D &padding);
 
-void create_vector(std::vector<vertex3D> &vector3D,std::vector<vertex3D> &v_origin, std::vector<vertex3D> &vector_blf, std::vector<vertex3D> &vector_trb);
-void create_coord_vector_text(const char *text, atlas * a, vertex3D &origin, vertex2D &window_coord_scale,
-                                std::vector<vertex3D> &a_glyphs_box, std::vector<vertex2D> &a_glyphs_vertex);
+
+
+
 void create_coord_vector_text_old(const char *text, atlas * a, vertex3D &origin, vertex2D &window_coord_scale);
 void onIdle();
 void camera();
 void display();
-void init_matrices();
 
 void free_resources();
 
@@ -230,8 +446,10 @@ void free_resources();
  * vertex3D.
  * @return Nothing is returned (void).
  * @exception No exception handling.
- * @brief This method continue to build my_v_MDE_data vector og GLdata,
- * and also calculating each text coordinate by adding the offset rule....
+ * @brief This method is calculating each text coordinate offset by 
+ * adding the offse rules for members separation
+ * (between name and data members), for distance between levels, and 
+ * distance indexes of the same level of vMDE;
  */
 void process_v_MDE_data(std::vector<GLdata> & v_MDE_data,std::vector<vertex3D> & v_offset, std::vector<vertex3D> & v_offset_rule);
 
@@ -242,18 +460,21 @@ void mouse_movement(int xpos, int ypos);
 
  /**
  * 
- * ##name: add_padding(std::vector<vertex3D> & v_origin,std::vector<vertex3D> & v_origin_fb, vertex2D & padding)
+ * ##name: add_padding(std::vector<vertex3D> & v_origin,
+ * std::vector<vertex3D> & v_origin_fb, vertex2D & padding)
  * @param  & v_origin is a reference to a standard vector of vertex3D.
  * @param  & v_origin_fb,std is a reference to standard vector of vertex3D.
  * @param  & padding is a reference to a vertex2D.
  * @return Nothing is returned (void).
  * @exception No exception handling.
- * @briefThis method reads the vector of VerteX3D v_origin and for each x and y, the associated padding.
- * Then stores it in vector of Vertex3D v_origin_fb (fb for Frame Box) so that the frame box
- * coordinates include padding but not the text coordinates themselves.
- * parameters. 
+ * @brief This method reads the vector of VerteX3D v_origin and
+ * for each x and y, the associated padding.
+ * Then stores it in vector of Vertex3D v_origin_fb (fb for Frame Box)
+ * so that the frame box coordinates include padding but not the text
+ * coordinates parameters themselves.
  */
-void add_padding(std::vector<vertex3D> & v_origin,std::vector<vertex3D> & v_origin_fb, vertex2D & padding);
+void add_padding(std::vector<vertex3D> & v_origin,
+            std::vector<vertex3D> & v_origin_fb, vertex2D & padding);
 
 
 void init_font_color(std::vector<GLfloat> &color);
@@ -282,23 +503,18 @@ void init_v_font_color(std::vector<colorRGBA> &font_color,std::vector<colorRGBA>
 
 ////
 void onReshape(int width, int height);
-int init_resources();
+//~ int init_resources();
 //~ void init_color_box(vertex3Dalpha &color_alpha);
 void init_color_box(colorRGBA &color_alpha);
 void onDisplay();
-void init_vbo_box(std::vector<vertex3D> &vectors_boxes);
-void init_ibo_elements_box(std::vector<vertex3D> &vectors_boxes);
-void init_box(std::vector<vertex3D> &vectors_boxes);
+//~ void init_ibo_elements_box(std::vector<vertex3D> &vectors_boxes);
 void resetCameraMatrices();
 
 
 
 
-void init_origin();
-void init_padding();
-void init_glyphs();
-void init_frame();
-void init_color_scheme();
+
+
 //~ void render_text(atlas * a, const void * pointer);
 //~ void render_text(atlas * a, std::vector<vertex3Dalpha> &vector_font_color_part,
              //~ std::vector<vertex3D> &glyphs_box_part, std::vector<vertex2D> &glyphs_vertex_part );
