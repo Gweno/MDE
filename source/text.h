@@ -518,8 +518,15 @@ void resetCameraMatrices();
 //~ void render_text(atlas * a, const void * pointer);
 //~ void render_text(atlas * a, std::vector<vertex3Dalpha> &vector_font_color_part,
              //~ std::vector<vertex3D> &glyphs_box_part, std::vector<vertex2D> &glyphs_vertex_part );
+
 void render_text(atlas * a, std::vector<colorRGBA> &vector_font_color_part,
+            std::vector<vertex3D> &glyphs_box_part,
+            std::vector<vertex2D> &glyphs_vertex_part,
+            int nbChars,
+            int startIndex
+            );
+void render_text_old(atlas * a, std::vector<colorRGBA> &vector_font_color_part,
              std::vector<vertex3D> &glyphs_box_part, std::vector<vertex2D> &glyphs_vertex_part );
-void render_text_old(atlas * a);
+void render_text_very_old(atlas * a);
 
 #endif /*text.h*/

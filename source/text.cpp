@@ -126,6 +126,7 @@ vertex2D padding ={0.0,0.0};
 
 FT_Library ft;
 FT_Face face;
+FT_Face face2;
 
 const char *fontfilename  = nullptr;
 
@@ -418,7 +419,8 @@ void create_coord_vector_text(const char *text, atlas * a, vertex3D &origin, ver
     //~ std::clog << "nb_glyphs_per_text" << std::endl;
     //~ displayVuint(nb_glyphs_per_text);
     //~ std::clog << " nb_indices " << nb_indices << std::endl;
-    //~ std::clog << " size of glyphs_vertex " << glyphs_vertex.size() << std::endl;
+    std::clog << " size of glyphs_vertex " << glyphs_vertex.size() << std::endl;
+    displayV2D(glyphs_vertex);
     
 }
 
@@ -531,6 +533,62 @@ void text_frame(std::vector<vertex3D> &vector_input, std::vector<uint> &nb_glyph
 }
 
 void render_text(atlas * a, std::vector<colorRGBA> &vector_font_color_part,
+            std::vector<vertex3D> &glyphs_box_part,
+            std::vector<vertex2D> &glyphs_vertex_part,
+            int nbChars,
+            int startChar
+            ) {
+    
+    //~ std::clog<<"######## In render_text ###########"<<std::endl;
+    //~ std::clog<<"1"<<std::endl;
+    //~ displayV3Dalpha(vector_font_color);
+    /* test color per block*/
+    glEnableVertexAttribArray(attribute_font_color);
+    glGenBuffers(1,&vbo_font_color);
+    glBindBuffer(GL_ARRAY_BUFFER,vbo_font_color);
+    glVertexAttribPointer(attribute_font_color, 4, GL_FLOAT, GL_FALSE, 0, 0);
+    //~ glBufferData(GL_ARRAY_BUFFER, nFontColorIndex * 6 * sizeof(colorRGBA),&vector_font_color_part.front(),GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, nbChars * 6 * sizeof(colorRGBA),&vector_font_color_part[startChar * 6],GL_STATIC_DRAW);
+    //~ glBufferData(GL_ARRAY_BUFFER,(nFontColorIndex + 1) * sizeof(colorRGBA),&vector_font_color_part,GL_STATIC_DRAW);
+    //~ std::clog<<"2"<<std::endl;
+ 
+    //~ /* Use the texture containing the atlas */
+    glBindTexture(GL_TEXTURE_2D, a->tex);
+    
+    /* Set up the VBO for our vertex data */
+    glEnableVertexAttribArray(attribute_coord);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo_coord);
+    glVertexAttribPointer(attribute_coord, 3, GL_FLOAT, GL_FALSE, 0, 0);
+    /* Draw the character on the screen */
+    //~ glBufferData(GL_ARRAY_BUFFER, glyphs_box_part.size() * sizeof(vertex3D), &glyphs_box_part.front(), GL_STATIC_DRAW);
+    //~ glBufferData(GL_ARRAY_BUFFER, nGlyphBoxIndex * 6 * sizeof(vertex3D), &glyphs_box_part.front(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, nbChars * 6 * sizeof(vertex3D), &glyphs_box_part[startChar * 6], GL_STATIC_DRAW);
+    //~ displayV3D(glyphs_box);
+    //~ std::clog<<"3"<<std::endl;
+    
+    /* Set up the VBO for our vertex data */
+    glEnableVertexAttribArray(attribute_tex_coord);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo_tex_coord);
+    glVertexAttribPointer(attribute_tex_coord, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    
+    //~ std::clog<<"4"<<std::endl;
+    //~ std::clog<<"nb_indices: "<<nb_indices<<std::endl;
+    //~ displayV2D(glyphs_vertex);
+    /* Draw all the character on the screen in one go */
+    //~ glBufferData(GL_ARRAY_BUFFER,glyphs_vertex_part.size() * sizeof(vertex2D),&glyphs_vertex_part.front(),GL_STATIC_DRAW);
+    //~ glBufferData(GL_ARRAY_BUFFER,nGlyphVertexIndex * 6 * sizeof(vertex2D),&glyphs_vertex_part.front(),GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER,nbChars * 6 * sizeof(vertex2D),&glyphs_vertex_part[startChar * 6],GL_STATIC_DRAW);
+    glDrawArrays(GL_TRIANGLES, 0, nb_indices);
+
+    //~ std::clog<<"5"<<std::endl;
+    
+    glDisableVertexAttribArray(attribute_font_color);
+    glDisableVertexAttribArray(attribute_coord);
+    glDisableVertexAttribArray(attribute_tex_coord);
+    //~ std::clog<<"######## End render_text ###########"<<std::endl;
+}
+
+void render_text_old(atlas * a, std::vector<colorRGBA> &vector_font_color_part,
              std::vector<vertex3D> &glyphs_box_part, std::vector<vertex2D> &glyphs_vertex_part ) {
     
     //~ std::clog<<"######## In render_text ###########"<<std::endl;
@@ -576,7 +634,7 @@ void render_text(atlas * a, std::vector<colorRGBA> &vector_font_color_part,
     //~ std::clog<<"######## End render_text ###########"<<std::endl;
 }
 
-void render_text_old(atlas * a) {
+void render_text_very_old(atlas * a) {
     
     //~ std::clog<<"######## In render_text ###########"<<std::endl;
     //~ std::clog<<"1"<<std::endl;
@@ -1347,7 +1405,7 @@ void init_glyphs(){
     window_scale.y = 2.0 / glutGet(GLUT_WINDOW_HEIGHT);
     /* Create texture atlasses for a given font size */
     a_any_size = new atlas(face,(int)fontSize);
-    //~ a96 = new atlas(face,96);
+    a96 = new atlas(face,96);
     //~ a48 = new atlas(face,48);
     //~ a40;
     //~ a24;
@@ -1359,15 +1417,16 @@ void init_glyphs(){
     for (std::vector<GLdata>::iterator it_v_MDE_data=my_v_MDE_data.begin(); it_v_MDE_data!=my_v_MDE_data.end();++it_v_MDE_data)
     {
         //~ create_coord_vector_text(((*it_v_MDE_data).MDE_data).c_str(), a_any_size, v_origin[index_v_origin], window_scale );
-        create_coord_vector_text(((*it_v_MDE_data).MDE_data).c_str(), a_any_size, v_origin[index_v_origin], window_scale, glyphs_box, glyphs_vertex );
-        //~ if(index_v_origin==0)create_coord_vector_text(((*it_v_MDE_data).MDE_data).c_str(), a96, v_origin[index_v_origin], window_scale, glyphs_box2, glyphs_vertex2 );
-        //~ else create_coord_vector_text(((*it_v_MDE_data).MDE_data).c_str(), a_any_size, v_origin[index_v_origin], window_scale, glyphs_box, glyphs_vertex );
+        //~ create_coord_vector_text(((*it_v_MDE_data).MDE_data).c_str(), a_any_size, v_origin[index_v_origin], window_scale, glyphs_box, glyphs_vertex );
+        if(index_v_origin==0)create_coord_vector_text(((*it_v_MDE_data).MDE_data).c_str(), a96, v_origin[index_v_origin], window_scale, glyphs_box, glyphs_vertex );
+        else create_coord_vector_text(((*it_v_MDE_data).MDE_data).c_str(), a_any_size, v_origin[index_v_origin], window_scale, glyphs_box, glyphs_vertex );
         index_v_origin++;
     }
     std::clog << "v_origin:"<< std::endl;
     displayV3D(v_origin);
     
-    std::clog << "size of glyphs box: " << glyphs_box.size() << std::endl;     
+    std::clog << "size of glyphs box: " << glyphs_box.size() << std::endl;
+    displayV3D(glyphs_box);
     std::clog << "###### End init glyphs ######"<< std::endl;
 }
 
@@ -1470,7 +1529,9 @@ void text_display() {
     glUniform4fv(uniform_bgcolor_text, 1, bg_rgb);
     //~ render_text(a96, vector_font_color, glyphs_box2, glyphs_vertex2);
     //~ render_text(a_any_size, vector_font_color2, glyphs_box, glyphs_vertex);
-    render_text(a_any_size, vector_font_color, glyphs_box, glyphs_vertex);
+    
+    render_text(a96, vector_font_color, glyphs_box, glyphs_vertex, 8 ,0 );
+    render_text(a_any_size, vector_font_color, glyphs_box, glyphs_vertex, 48 ,8 );
     
 }
 
