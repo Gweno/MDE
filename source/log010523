@@ -1,0 +1,778 @@
+(1)
+
+**********************************
+*                                *
+*     MDE Version v0.3.2       *
+*                                *
+*********************************
+*                                *
+*        Welcome!                *
+*                                *
+*                                *
+*  This is session 1             *
+*                                *
+**********************************
+
+******************************Main Menu******************************
+
+  1) Data Menu
+          File: ../datafiles/default.xml  
+  2) Font Menu
+          Font: ../fonts/FreeSans.ttf
+          Size: 48
+          Color & Alpha (r,g,b,a): (0.00, 0.00, 0.00, 1.00)
+  3) Coordinates Menu
+          Coordinates(x,y,z): (0.00,0.00,0.00)
+          Name <-> data offset Rule (x,y,z): (0.50,0.20,0.00)
+          Index offset Rule (x,y,z):         (0.00,0.00,-0.20)
+          Level offset Rule (x,y,z):        (0.00,0.00,0.00)
+  4) Frame Menu
+          Frame Box:OFF
+          Color & Alpha (r,g,b,a): (0.50,0.50,0.50,0.50)
+          Padding(px) (horizontal, vertical): (0.00,0.00)
+  5) Color Menu
+          Background color&alpha (r,g,b,a): (1.00,1.00,1.00,1.00)
+          Font Color&Alpha (r,g,b,a): (0.00,0.00,0.00,1.00)
+
+  r) Render html file
+  t) Display In Terminal and testing mode: OFF
+  x) Display In Terminal as Xml
+  p) Display in Page mode for GL display
+  g) Display in Gl mode
+
+  q) Quit
+
+*********************************************************************
+Your choice:
+******************************Main Menu******************************
+
+  1) Data Menu
+          File: ../datafiles/default.xml  
+  2) Font Menu
+          Font: ../fonts/FreeSans.ttf
+          Size: 48
+          Color & Alpha (r,g,b,a): (0.00, 0.00, 0.00, 1.00)
+  3) Coordinates Menu
+          Coordinates(x,y,z): (0.00,0.00,0.00)
+          Name <-> data offset Rule (x,y,z): (0.50,0.20,0.00)
+          Index offset Rule (x,y,z):         (0.00,0.00,-0.20)
+          Level offset Rule (x,y,z):        (0.00,0.00,0.00)
+  4) Frame Menu
+          Frame Box:OFF
+          Color & Alpha (r,g,b,a): (0.50,0.50,0.50,0.50)
+          Padding(px) (horizontal, vertical): (0.00,0.00)
+  5) Color Menu
+          Background color&alpha (r,g,b,a): (1.00,1.00,1.00,1.00)
+          Font Color&Alpha (r,g,b,a): (0.00,0.00,0.00,1.00)
+
+  r) Render html file
+  t) Display In Terminal and testing mode: OFF
+  x) Display In Terminal as Xml
+  p) Display in Page mode for GL display
+  g) Display in Gl mode
+
+  q) Quit
+
+*********************************************************************
+Your choice:
+MDE : master
+  pid : 10839
+  arguments : 1
+    0 : ../bin/mde_debug
+  parameters : 1
+    version : v0.3.2
+    move : false
+    box : false
+    glmode : false
+    nomenu : false
+    file : ../datafiles/default.xml
+    box-color : 0.500000, 0.500000, 0.500000, 0.500000
+    font : ../fonts/FreeSans.ttf
+    font-size : 48
+  file : ../datafiles/default.xml
+    master : 123
+      tata : 1
+        toto : 11
+          truc : 999
+        lili : 12
+      titi : 2
+        toto : 21
+        lolo : 22
+  div : 
+    h3 : Data Menu
+    ul : 
+      li : File
+        attributes : 2
+          class : menu-item-sub
+          onclick : display()
+        span : filename
+      li : Font Menu
+        attributes : 3
+          class : menu-item
+          onclick : next()
+          style : text/css
+            color : rgba(150,50,200,1.0)
+      li : Test Menu
+        attributes : 3
+          class : menu-item
+          onclick : next()
+          style : text/css
+            color : rgba(50,50,200,1.0)
+      li : Coordinates Menu
+        attributes : 3
+          class : menu-item
+          onclick : next()
+          style : text/css
+            display : none
+      li : Frame Menu
+        attributes : 2
+          class : menu-item
+          onclick : next()
+      li : Color Menu
+        attributes : 3
+          class : menu-item
+          onclick : next()
+          style : text/css
+            color : rgba(50,150,0,1.0)
+      li : Render Html File
+        attributes : 2
+          class : menu-item
+          onclick : executeStatement()
+      li : Display In Terminal and Testing mode:
+        attributes : 3
+          class : menu-item
+          onclick : toggleOption()
+          style : text/css
+            display : none
+        span : On
+          attributes : 1
+            class : toggle
+      li : Display In Terminal as Xml
+        attributes : 3
+          class : menu-item
+          onclick : executeStatement()
+          style : text/css
+            display : none
+      li : Display in Page mode for GL displayl
+        attributes : 3
+          class : menu-item
+          onclick : toggleOption()
+          style : text/css
+            display : none
+      li : quit
+        attributes : 3
+          class : menu-item
+          onclick : executeStatement()
+          style : text/css
+            color : rgba(250,0,0,0.5)
+  window : main window
+    attributes : 3
+      width : 1200
+      height : 900
+      background-color : #000000
+    title : example
+    content : intern
+      div : 
+        h3 : Data Menu
+        ul : 
+          li : File
+            attributes : 2
+              class : menu-item-sub
+              onclick : display()
+            span : filename
+          li : Font Menu
+            attributes : 3
+              class : menu-item
+              onclick : next()
+              style : text/css
+                color : rgba(150,50,200,1.0)
+          li : Test Menu
+            attributes : 3
+              class : menu-item
+              onclick : next()
+              style : text/css
+                color : rgba(50,50,200,1.0)
+          li : Coordinates Menu
+            attributes : 3
+              class : menu-item
+              onclick : next()
+              style : text/css
+                display : none
+          li : Frame Menu
+            attributes : 2
+              class : menu-item
+              onclick : next()
+          li : Color Menu
+            attributes : 3
+              class : menu-item
+              onclick : next()
+              style : text/css
+                color : rgba(50,150,0,1.0)
+          li : Render Html File
+            attributes : 2
+              class : menu-item
+              onclick : executeStatement()
+          li : Display In Terminal and Testing mode:
+            attributes : 3
+              class : menu-item
+              onclick : toggleOption()
+              style : text/css
+                display : none
+            span : On
+              attributes : 1
+                class : toggle
+          li : Display In Terminal as Xml
+            attributes : 3
+              class : menu-item
+              onclick : executeStatement()
+              style : text/css
+                display : none
+          li : Display in Page mode for GL displayl
+            attributes : 3
+              class : menu-item
+              onclick : toggleOption()
+              style : text/css
+                display : none
+          li : quit
+            attributes : 3
+              class : menu-item
+              onclick : executeStatement()
+              style : text/css
+                color : rgba(250,0,0,0.5)
+    render : openGL
+      div : 
+        h3 : Data Menu
+        li : File
+        li : Font Menu
+        li : Test Menu
+testing On******************************Main Menu******************************
+
+  1) Data Menu
+          File: ../datafiles/default.xml  
+  2) Font Menu
+          Font: ../fonts/FreeSans.ttf
+          Size: 48
+          Color & Alpha (r,g,b,a): (0.00, 0.00, 0.00, 1.00)
+  3) Coordinates Menu
+          Coordinates(x,y,z): (0.00,0.00,0.00)
+          Name <-> data offset Rule (x,y,z): (0.50,0.20,0.00)
+          Index offset Rule (x,y,z):         (0.00,0.00,-0.20)
+          Level offset Rule (x,y,z):        (0.00,0.00,0.00)
+  4) Frame Menu
+          Frame Box:OFF
+          Color & Alpha (r,g,b,a): (0.50,0.50,0.50,0.50)
+          Padding(px) (horizontal, vertical): (0.00,0.00)
+  5) Color Menu
+          Background color&alpha (r,g,b,a): (1.00,1.00,1.00,1.00)
+          Font Color&Alpha (r,g,b,a): (0.00,0.00,0.00,1.00)
+
+  r) Render html file
+  t) Display In Terminal and testing mode: ON
+  x) Display In Terminal as Xml
+  p) Display in Page mode for GL display
+  g) Display in Gl mode
+
+  q) Quit
+
+*********************************************************************
+Your choice:
+(level,index): (1,0)
+Found 1 Entities with name window
+<window>
+main window
+  <attributes>
+  3
+    <width>
+    1200
+    </width>
+    <height>
+    900
+    </height>
+    <background-color>
+    #000000
+    </background-color>
+  </attributes>
+  <title>
+  example
+  </title>
+  <content>
+  intern
+    <div>
+    
+      <h3>
+      Data Menu
+      </h3>
+      <ul>
+      
+        <li>
+        File
+          <attributes>
+          2
+            <class>
+            menu-item-sub
+            </class>
+            <onclick>
+            display()
+            </onclick>
+          </attributes>
+          <span>
+          filename
+          </span>
+        </li>
+        <li>
+        Font Menu
+          <attributes>
+          3
+            <class>
+            menu-item
+            </class>
+            <onclick>
+            next()
+            </onclick>
+            <style>
+            text/css
+              <color>
+              rgba(150,50,200,1.0)
+              </color>
+            </style>
+          </attributes>
+        </li>
+        <li>
+        Test Menu
+          <attributes>
+          3
+            <class>
+            menu-item
+            </class>
+            <onclick>
+            next()
+            </onclick>
+            <style>
+            text/css
+              <color>
+              rgba(50,50,200,1.0)
+              </color>
+            </style>
+          </attributes>
+        </li>
+        <li>
+        Coordinates Menu
+          <attributes>
+          3
+            <class>
+            menu-item
+            </class>
+            <onclick>
+            next()
+            </onclick>
+            <style>
+            text/css
+              <display>
+              none
+              </display>
+            </style>
+          </attributes>
+        </li>
+        <li>
+        Frame Menu
+          <attributes>
+          2
+            <class>
+            menu-item
+            </class>
+            <onclick>
+            next()
+            </onclick>
+          </attributes>
+        </li>
+        <li>
+        Color Menu
+          <attributes>
+          3
+            <class>
+            menu-item
+            </class>
+            <onclick>
+            next()
+            </onclick>
+            <style>
+            text/css
+              <color>
+              rgba(50,150,0,1.0)
+              </color>
+            </style>
+          </attributes>
+        </li>
+        <li>
+        Render Html File
+          <attributes>
+          2
+            <class>
+            menu-item
+            </class>
+            <onclick>
+            executeStatement()
+            </onclick>
+          </attributes>
+        </li>
+        <li>
+        Display In Terminal and Testing mode:
+          <attributes>
+          3
+            <class>
+            menu-item
+            </class>
+            <onclick>
+            toggleOption()
+            </onclick>
+            <style>
+            text/css
+              <display>
+              none
+              </display>
+            </style>
+          </attributes>
+          <span>
+          On
+            <attributes>
+            1
+              <class>
+              toggle
+              </class>
+            </attributes>
+          </span>
+        </li>
+        <li>
+        Display In Terminal as Xml
+          <attributes>
+          3
+            <class>
+            menu-item
+            </class>
+            <onclick>
+            executeStatement()
+            </onclick>
+            <style>
+            text/css
+              <display>
+              none
+              </display>
+            </style>
+          </attributes>
+        </li>
+        <li>
+        Display in Page mode for GL displayl
+          <attributes>
+          3
+            <class>
+            menu-item
+            </class>
+            <onclick>
+            toggleOption()
+            </onclick>
+            <style>
+            text/css
+              <display>
+              none
+              </display>
+            </style>
+          </attributes>
+        </li>
+        <li>
+        quit
+          <attributes>
+          3
+            <class>
+            menu-item
+            </class>
+            <onclick>
+            executeStatement()
+            </onclick>
+            <style>
+            text/css
+              <color>
+              rgba(250,0,0,0.5)
+              </color>
+            </style>
+          </attributes>
+        </li>
+      </ul>
+    </div>
+  </content>
+  <render>
+  openGL
+    <div>
+    
+      <h3>
+      Data Menu
+      </h3>
+      <li>
+      File
+      </li>
+      <li>
+      Font Menu
+      </li>
+      <li>
+      Test Menu
+      </li>
+    </div>
+  </render>
+</window>
+(level,index): (1,0)
+Found 2 Entities with name width
+(level,index): (1,0)
+Found 3 Entities with name height
+(level,index): (1,0)
+Found 4 Entities with name title
+<window>
+main window
+  <attributes>
+  3
+    <width>
+    1200
+    </width>
+    <height>
+    900
+    </height>
+    <background-color>
+    #000000
+    </background-color>
+  </attributes>
+  <title>
+  example
+  </title>
+  <content>
+  intern
+    <div>
+    
+      <h3>
+      Data Menu
+      </h3>
+      <ul>
+      
+        <li>
+        File
+          <attributes>
+          2
+            <class>
+            menu-item-sub
+            </class>
+            <onclick>
+            display()
+            </onclick>
+          </attributes>
+          <span>
+          filename
+          </span>
+        </li>
+        <li>
+        Font Menu
+          <attributes>
+          3
+            <class>
+            menu-item
+            </class>
+            <onclick>
+            next()
+            </onclick>
+            <style>
+            text/css
+              <color>
+              rgba(150,50,200,1.0)
+              </color>
+            </style>
+          </attributes>
+        </li>
+        <li>
+        Test Menu
+          <attributes>
+          3
+            <class>
+            menu-item
+            </class>
+            <onclick>
+            next()
+            </onclick>
+            <style>
+            text/css
+              <color>
+              rgba(50,50,200,1.0)
+              </color>
+            </style>
+          </attributes>
+        </li>
+        <li>
+        Coordinates Menu
+          <attributes>
+          3
+            <class>
+            menu-item
+            </class>
+            <onclick>
+            next()
+            </onclick>
+            <style>
+            text/css
+              <display>
+              none
+              </display>
+            </style>
+          </attributes>
+        </li>
+        <li>
+        Frame Menu
+          <attributes>
+          2
+            <class>
+            menu-item
+            </class>
+            <onclick>
+            next()
+            </onclick>
+          </attributes>
+        </li>
+        <li>
+        Color Menu
+          <attributes>
+          3
+            <class>
+            menu-item
+            </class>
+            <onclick>
+            next()
+            </onclick>
+            <style>
+            text/css
+              <color>
+              rgba(50,150,0,1.0)
+              </color>
+            </style>
+          </attributes>
+        </li>
+        <li>
+        Render Html File
+          <attributes>
+          2
+            <class>
+            menu-item
+            </class>
+            <onclick>
+            executeStatement()
+            </onclick>
+          </attributes>
+        </li>
+        <li>
+        Display In Terminal and Testing mode:
+          <attributes>
+          3
+            <class>
+            menu-item
+            </class>
+            <onclick>
+            toggleOption()
+            </onclick>
+            <style>
+            text/css
+              <display>
+              none
+              </display>
+            </style>
+          </attributes>
+          <span>
+          On
+            <attributes>
+            1
+              <class>
+              toggle
+              </class>
+            </attributes>
+          </span>
+        </li>
+        <li>
+        Display In Terminal as Xml
+          <attributes>
+          3
+            <class>
+            menu-item
+            </class>
+            <onclick>
+            executeStatement()
+            </onclick>
+            <style>
+            text/css
+              <display>
+              none
+              </display>
+            </style>
+          </attributes>
+        </li>
+        <li>
+        Display in Page mode for GL displayl
+          <attributes>
+          3
+            <class>
+            menu-item
+            </class>
+            <onclick>
+            toggleOption()
+            </onclick>
+            <style>
+            text/css
+              <display>
+              none
+              </display>
+            </style>
+          </attributes>
+        </li>
+        <li>
+        quit
+          <attributes>
+          3
+            <class>
+            menu-item
+            </class>
+            <onclick>
+            executeStatement()
+            </onclick>
+            <style>
+            text/css
+              <color>
+              rgba(250,0,0,0.5)
+              </color>
+            </style>
+          </attributes>
+        </li>
+      </ul>
+    </div>
+  </content>
+  <render>
+  openGL
+    <div>
+    
+      <h3>
+      Data Menu
+      </h3>
+      <li>
+      File
+      </li>
+      <li>
+      Font Menu
+      </li>
+      <li>
+      Test Menu
+      </li>
+    </div>
+  </render>
+</window>
+<width>
+1200
+</width>
+<height>
+900
+</height>
+<title>
+example
+</title>
+###### init frame ######
+###### End init frame ######
+bye bye!

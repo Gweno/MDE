@@ -134,6 +134,12 @@ int main (int argc, char **argv){
     // initialize vector of indexes and iterator for vMDE
     std::vector<int> vect_index_file = {1};
     std::vector<int>::const_iterator it_file;
+    
+    // initialize the vector of font size for html parser
+    std::vector<int> vect_sizes;
+    
+    // initialize the vector of number of char / Not Needed
+    //~ std::vector<uint> vect_nbChars;
 
     //~ std::clog << "Current path: " << fs::current_path() << std::endl;
     
@@ -1265,10 +1271,21 @@ int main (int argc, char **argv){
                         // for now only searching in Menu,
                         // because we already have a pointer to it
                         std::vector<std::vector<float>> vect_colors;
-                        ptParser = htmlParser(*ptMenu, vect_colors);
+                        
+                        // parsing html file
+                        ptParser = htmlParser(*ptMenu, vect_colors, vect_sizes);
+                        // checking sizes
+                        std::clog<<"Checking vector of sizes"<<std::endl;
+                        for(auto s:vect_sizes){
+                            std::clog<<s<<std::endl;
+                        }
+                        
+                        
                         int i=0;
+                        std::clog<<"Checking color from html parser"<<std::endl;
                         for(auto it:vect_colors){
                             //~ std::clog << "i: " << i << " vect[0]" << it[0] << std::endl;
+                            std::clog<<it[0]<<","<<it[1]<<","<<it[2]<<","<<it[3]<<std::endl;
                             user_v_font_color.push_back({});
                             user_v_font_color[i].r=it[0];
                             user_v_font_color[i].g=it[1];
@@ -1334,8 +1351,10 @@ int main (int argc, char **argv){
                     //~ fprintf(stderr, "Problem with loading fonts, or program\n");
                     //~ return 1;
                 //~ }
+                // init font size.
                 
-                if (!init_font(user_font_size, user_font)) {
+                init_size(user_font_size, vect_sizes);
+                if (!init_font(user_font)) {
                     
                     fprintf(stderr, "Problem with loading fonts\n");
                     return 1;

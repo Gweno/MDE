@@ -129,6 +129,7 @@ FT_Face face;
 FT_Face face2;
 
 const char *fontfilename  = nullptr;
+const char *fontfilename2 = "../fonts/FreeSansBold.ttf";
 
 // Maximum texture width
 #define MAXWIDTH 1024
@@ -143,8 +144,14 @@ std::vector<vertex3D> *offset = nullptr;
 std::vector<vertex3D> *offset_rule = nullptr;
 colorRGBA *color_alpha = nullptr;
 colorRGBA *bg_color_alpha = nullptr;
+
+// Vectors color, font size and nb chars
 std::vector<colorRGBA> *font_color  = nullptr;
+std::vector<int> *font_size  = nullptr;
 //~ std::vector<colorRGBA> *font_color2;
+std::vector<uint> nb_chars;
+
+
 bool *displayDataOnly  = nullptr;
 bool *hideParent = nullptr;
 //
@@ -206,6 +213,10 @@ uint nlines = 1;
 
 // For debugging misaligned box
 glm::vec3 check_coord3d_b;
+
+// 
+int test_log=0;
+
 
 /**
  * The atlas struct holds a texture that contains the visible US-ASCII characters
@@ -412,6 +423,7 @@ void create_coord_vector_text(const char *text, atlas * a, vertex3D &origin, ver
         a->c[*p].tx + a->c[*p].bw / a->w, a->c[*p].ty + a->c[*p].bh / a->h});
 
     }
+    nb_chars.push_back(c/6);
     
     //~ displayV3D(a_glyphs_box);
     nb_glyphs_per_text.push_back(c);
@@ -420,6 +432,7 @@ void create_coord_vector_text(const char *text, atlas * a, vertex3D &origin, ver
     //~ displayVuint(nb_glyphs_per_text);
     //~ std::clog << " nb_indices " << nb_indices << std::endl;
     std::clog << " size of glyphs_vertex " << glyphs_vertex.size() << std::endl;
+    std::clog << " size of nb_chars " << nb_chars.size() << std::endl;
     displayV2D(glyphs_vertex);
     
 }
@@ -540,6 +553,8 @@ void render_text(atlas * a, std::vector<colorRGBA> &vector_font_color_part,
             ) {
     
     //~ std::clog<<"######## In render_text ###########"<<std::endl;
+    
+    //~ std::clog<<"Total nb of characters: " <<  glyphs_vertex_part.size()/6 << std::endl;
     //~ std::clog<<"1"<<std::endl;
     //~ displayV3Dalpha(vector_font_color);
     /* test color per block*/
@@ -679,10 +694,16 @@ void render_text_very_old(atlas * a) {
     //~ std::clog<<"######## End render_text ###########"<<std::endl;
 }
 
-bool init_font(uint uFontSize,const char *uFontFilename) {
+bool init_size(uint uFontSize, std::vector<int> &sizes){
+    /*Set the font size from argument */
+    fontSize = uFontSize;
+    font_size = &sizes;
+}
+
+bool init_font(const char *uFontFilename) {
     
     /*Set the font size from argument */
-    fontSize=uFontSize;
+    //~ fontSize=uFontSize;
     
     /*Set the font Filename from argument*/
     fontfilename = uFontFilename;
@@ -696,6 +717,12 @@ bool init_font(uint uFontSize,const char *uFontFilename) {
     /* Load a font */
     if (FT_New_Face(ft, fontfilename, 0, &face)) {
         fprintf(stderr, "Could not open font %s\n", fontfilename);
+        return 0;
+    }
+    
+    /* TEST Load another font */
+    if (FT_New_Face(ft, fontfilename2, 0, &face2)) {
+        fprintf(stderr, "Could not open font %s\n", fontfilename2);
         return 0;
     }
     
@@ -1405,7 +1432,7 @@ void init_glyphs(){
     window_scale.y = 2.0 / glutGet(GLUT_WINDOW_HEIGHT);
     /* Create texture atlasses for a given font size */
     a_any_size = new atlas(face,(int)fontSize);
-    a96 = new atlas(face,96);
+    a96 = new atlas(face2,96);
     //~ a48 = new atlas(face,48);
     //~ a40;
     //~ a24;
@@ -1416,11 +1443,23 @@ void init_glyphs(){
     
     for (std::vector<GLdata>::iterator it_v_MDE_data=my_v_MDE_data.begin(); it_v_MDE_data!=my_v_MDE_data.end();++it_v_MDE_data)
     {
+        // old version
         //~ create_coord_vector_text(((*it_v_MDE_data).MDE_data).c_str(), a_any_size, v_origin[index_v_origin], window_scale );
+        // new version
         //~ create_coord_vector_text(((*it_v_MDE_data).MDE_data).c_str(), a_any_size, v_origin[index_v_origin], window_scale, glyphs_box, glyphs_vertex );
-        if(index_v_origin==0)create_coord_vector_text(((*it_v_MDE_data).MDE_data).c_str(), a96, v_origin[index_v_origin], window_scale, glyphs_box, glyphs_vertex );
-        else create_coord_vector_text(((*it_v_MDE_data).MDE_data).c_str(), a_any_size, v_origin[index_v_origin], window_scale, glyphs_box, glyphs_vertex );
+        create_coord_vector_text(((*it_v_MDE_data).MDE_data).c_str(), ((*font_size)[index_v_origin]==16)?a_any_size:a96, v_origin[index_v_origin], window_scale, glyphs_box, glyphs_vertex );
+        
+        // testing multiple font size, here header with font size 96 px
+        //~ if(index_v_origin==0)create_coord_vector_text(((*it_v_MDE_data).MDE_data).c_str(), a96, v_origin[index_v_origin], window_scale, glyphs_box, glyphs_vertex );
+        //~ else create_coord_vector_text(((*it_v_MDE_data).MDE_data).c_str(), a_any_size, v_origin[index_v_origin], window_scale, glyphs_box, glyphs_vertex );
+        
+        //testing nb of charaters in a line of text
+        //~ if(test_log==0) {std::clog<<"nb_glyphs_per_text: " << nb_glyphs_per_text[index_v_origin]/6 << std::endl;}
+        if(test_log==0) {std::clog<<"nb_char_per_text: " << nb_chars[index_v_origin] << std::endl;}
+        
+        // increment index
         index_v_origin++;
+        
     }
     std::clog << "v_origin:"<< std::endl;
     displayV3D(v_origin);
@@ -1530,9 +1569,28 @@ void text_display() {
     //~ render_text(a96, vector_font_color, glyphs_box2, glyphs_vertex2);
     //~ render_text(a_any_size, vector_font_color2, glyphs_box, glyphs_vertex);
     
-    render_text(a96, vector_font_color, glyphs_box, glyphs_vertex, 8 ,0 );
-    render_text(a_any_size, vector_font_color, glyphs_box, glyphs_vertex, 48 ,8 );
+    // testing with hard codednb of characters.
+    //~ render_text(a96, vector_font_color, glyphs_box, glyphs_vertex, 8 ,0 );
+    //~ render_text(a_any_size, vector_font_color, glyphs_box, glyphs_vertex, 48 ,8 );
     
+    // testing with dynamic number of characters
+    //~ render_text(a_any_size, vector_font_color, glyphs_box, glyphs_vertex, glyphs_vertex.size()/6 ,0 );
+   int it0 = 0;
+   uint previous = 0;
+   for(auto it:nb_chars){
+       if(test_log==0){std::clog<<"it0: " << it0 << " nbchars: " << it << " previous: " << previous << std::endl;}
+       if((*font_size)[it0]==96){
+           if(test_log==0){std::clog<<"Font size:" << (*font_size)[it0] <<" it0: " << it0 << " nbchars: " << it << " previous: " << previous << std::endl;}
+           render_text(a96, vector_font_color, glyphs_box, glyphs_vertex,it, previous );
+       }
+       else{
+           if(test_log==0){std::clog<<"Font size:" << (*font_size)[it0] <<" it0: " << it0 << " nbchars: " << it << " previous: " << previous << std::endl;}
+           render_text(a_any_size, vector_font_color, glyphs_box, glyphs_vertex,it,  previous);
+       }
+       previous+= it;
+       it0++;
+   }
+
 }
 
 void init_options(bool a_move_it, bool a_display_box, bool a_ortho_mode, bool singleColor,uint a_nlines){
@@ -2073,6 +2131,9 @@ void keyboard(unsigned char key, int x, int y)
             break;
         case 'b':
             display_box = !display_box;
+            break;
+        case 'm':
+            move_it = !move_it;
             break;
         case '2':
             ortho_mode = !ortho_mode;

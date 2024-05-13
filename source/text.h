@@ -116,7 +116,23 @@ void init_data();
 
  /**
  * 
- * ##name: init_font(uint uFontSize,const char *uFontFilename)
+ * ##name: init_size(uint uFontSize)
+ * @param uFontSize is a unsigned integer
+ * @return bool.
+ * @see MDE().
+ * @see ~MDE().
+ * @exception No exception handling.
+ * @brief Create an instance of class MDE and sets its public
+ * member 'name' to standard string init_name, its public member
+ * 'data' to standard string init_data and its private member 
+ * vMDE, vector of pointers to instance of MDE, to the vector
+ * init_vMDE, standard vector of pointer to instance of MDE.
+ */
+bool init_size(uint uFontSize, std::vector<int> &sizes);
+
+ /**
+ * 
+ * ##name: init_font(const char *uFontFilename)
  * @param init_name is a standard string
  * @param init_data is a standard string
  * @param init_vMDE is a standard vector of pointers to instances 
@@ -131,7 +147,7 @@ void init_data();
  * vMDE, vector of pointers to instance of MDE, to the vector
  * init_vMDE, standard vector of pointer to instance of MDE.
  */
-bool init_font(uint uFontSize,const char *uFontFilename);
+bool init_font(const char *uFontFilename);
 
  /**
  * 

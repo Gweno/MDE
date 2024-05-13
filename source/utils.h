@@ -22,6 +22,19 @@
          *  @{
          */
         
+struct singleMember{
+    
+    MDE_member mde_member;
+    std::string MDE_data;
+    
+};
+
+struct pairKeyValue{
+    
+    singleMember key;
+    singleMember value;
+};
+
 
 
 /**
@@ -370,9 +383,14 @@ void keyValuePairParser(std::string expression, std::string &key, std::string &v
 MDE * htmlParser_attributes(MDE & MDE_source);
 
 bool checkAttribute(MDE & MDE_source, std::string attribute);
-MDE * htmlParser(MDE & MDE_source, std::vector<std::vector<float>> &vect_color);
+MDE * htmlParser(MDE & MDE_source, std::vector<std::vector<float>> &vect_color, std::vector<int> &vect_size);
 bool checkHtmlTag(MDE & MDE_source, std::string tag);
 bool  htmlTagHasAttributes(MDE & MDE_source);
+/*
+ * rawDisplayContent checks if display=None or else... and returns false
+ * if the tag should not be displayed, or True if it should.
+ *  
+ * */
 bool rawDisplayContent(MDE & MDE_source);
 bool checkHtmlAttribute(MDE & MDE_source, std::string attribute);
 int hexToInt(int x);
