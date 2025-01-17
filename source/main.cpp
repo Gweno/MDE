@@ -85,6 +85,12 @@ int main (int argc, char **argv){
     
     bool tempTest = false;
     bool singleColor = true;
+    // parse html file is false by default to bypass using
+    // a vector of font size and use the default size
+    // for all xml tags instead
+    bool parse_html_file = false;
+
+    
     // font
     const char * user_font;
     uint user_font_size;
@@ -138,10 +144,9 @@ int main (int argc, char **argv){
     // initialize the vector of font size for html parser
     std::vector<int> vect_sizes;
     
-    // initialize the vector of number of char / Not Needed
-    //~ std::vector<uint> vect_nbChars;
-
+    //TODO create a log system with a log_level integer and if 
     //~ std::clog << "Current path: " << fs::current_path() << std::endl;
+    uint log_level=0;
     
     // display terminal window number of rows and columns
     struct winsize w;
@@ -179,6 +184,8 @@ int main (int argc, char **argv){
     // -d, --background-color r,g,b,a: to set background color with RGBA
     // -2, --2-dimensions set display in 2d instead of 3d
     // -l, --nb-lines: to arbitrarily set the number of lines/entities
+    //TODO log level
+    // -x, --log-level level: set the level of output log 0: no log, 1: checkpoints, 2: Data
 
     // Create the master instance of MDE
     MDE newMDE("MDE","master");
@@ -437,15 +444,36 @@ int main (int argc, char **argv){
                     istringstream is(v_choice[i+1]->data);
                     std::string part;
                     getline(is, part, ',');
-                    nlines = (uint)std::stoi(part);
+                    log_level = (uint)std::stoi(part);
                     //~ std::clog << "nb of lines: " << nlines << std::endl;
                 }
                 else {
-                    printf("Missing Font Size\n");
+                    printf("Missing Numer of Lines\n");
                 }                
-            }            
+            }
+        // set output log level
+        if (std::regex_match (v_choice[i]->data, 
+        std::regex("(-x)|(--log-level)")))
+
+            {
+                
+                if (i<argc-1){
+                    clog << v_choice[i+1]->data<< endl;
+                    istringstream is(v_choice[i+1]->data);
+                    std::string part;
+                    getline(is, part, ',');
+                    log_level = (uint)std::stoi(part);
+                    //~ std::clog << "nb of lines: " << nlines << std::endl;
+                }
+                else {
+                    printf("Missing Log Level\n");
+                }                
+            }
     }
     
+    // set og level in utils.cpp
+    set_utils_log_level(log_level);
+
     // create an sub-entity for all paramenters and their value
     newMDE.new_vMDE_element("parameters",to_string(argc));
     vect_index_file[0] ++;
@@ -1273,19 +1301,22 @@ int main (int argc, char **argv){
                         std::vector<std::vector<float>> vect_colors;
                         
                         // parsing html file
+                        parse_html_file = true;
                         ptParser = htmlParser(*ptMenu, vect_colors, vect_sizes);
                         // checking sizes
-                        std::clog<<"Checking vector of sizes"<<std::endl;
+                        PRINT_LOG("Checking vector of sizes:");
                         for(auto s:vect_sizes){
-                            std::clog<<s<<std::endl;
+                            PRINT_LOG(std::to_string(s));
                         }
                         
                         
                         int i=0;
-                        std::clog<<"Checking color from html parser"<<std::endl;
+                        PRINT_LOG("Checking color from html parser");
                         for(auto it:vect_colors){
-                            //~ std::clog << "i: " << i << " vect[0]" << it[0] << std::endl;
-                            std::clog<<it[0]<<","<<it[1]<<","<<it[2]<<","<<it[3]<<std::endl;
+                            PRINT_LOG(std::to_string(it[0])+"," + 
+                            std::to_string(it[1])+"," + 
+                            std::to_string(it[2]) + "," + 
+                            std::to_string(it[3]));
                             user_v_font_color.push_back({});
                             user_v_font_color[i].r=it[0];
                             user_v_font_color[i].g=it[1];
@@ -1294,10 +1325,6 @@ int main (int argc, char **argv){
                             i++;
                         }
                         if (ptParser){
-                            //~ std::clog << "Check ptParser: " << ptParser->name << " , " << ptParser->data << std::endl;
-                            fprintf(stderr,"\n");
-                            fprintf(stderr,"\n");
-                            fprintf(stderr,"\n");
                             ptMDE->new_vMDE_element(ptParser);
                             
                         }
@@ -1380,14 +1407,15 @@ int main (int argc, char **argv){
                         off_rule_level
                     };
                 }
-                std::clog<<"Starting offset rules: "<<std::endl;
-                displayV3D(offset_rule);
+                PRINT_LOG("Starting offset rules: ", 1);
+                displayV3D(offset_rule, 1);
 
                 vertex2D user_padding = {H_padding_user,V_padding_user};
                 colorRGBA user_color = {red_user,green_user,blue_user,alpha_user};
                 colorRGBA user_bg_color = {red_bg_user,green_bg_user,blue_bg_user,alpha_bg_user};
                 //~ fprintf(stderr,"user_color = {%.2f,%.2f,%.2f,%.2f}\n",red_user,green_user,blue_user,alpha_user);
                 //~ fprintf(stderr,"user_bg_color = {%.2f,%.2f,%.2f,%.2f}\n",red_bg_user,green_bg_user,blue_bg_user,alpha_bg_user);
+                if(log_level==1){std::clog<<"user_bg_color with alpha: " << red_bg_user << ", "  << green_bg_user << ", " << blue_bg_user << ", " << alpha_bg_user << std::endl;};
                 
                 std::vector<GLfloat> user_font_color = {
                     red_font_user,
@@ -1403,19 +1431,24 @@ int main (int argc, char **argv){
                         {red_font_user,green_font_user,blue_font_user,alpha_font_user}
                     };
                 }
-                
-                //~ displayColorRGBA(user_v_font_color);
+                PRINT_LOG("****** In main ******", 5);
+                //~ std::clog<<"****** In main ******" << std::endl;        
+                displayColorRGBA(user_v_font_color, 5);
+                PRINT_LOG("\nParse_html_file: " + parse_html_file, 5);      
+                    
                 
                 // initialize options, text parameters and matrices
                 fprintf(stderr,"number of lines:%u\n",nlines);
-                init_options(move_it,display_box, ortho_mode,singleColor,nlines);
+                init_options(move_it,display_box, 
+                ortho_mode,singleColor,nlines,log_level);
                 if(tempTest)
                 {
-                    init_user_input(*ptRender, user_origin, offset, offset_rule, user_padding, user_color,user_bg_color, user_v_font_color, displayDataOnly, hideParent);
+                    init_user_input(*ptRender, user_origin, offset, offset_rule, user_padding, user_color,user_bg_color, user_v_font_color, displayDataOnly, hideParent, parse_html_file);
+                    PRINT_LOG("Tracking 't' path... In Main()", 2);
                 }
                 else
                 {
-                    init_user_input(newMDE, user_origin, offset, offset_rule, user_padding, user_color,user_bg_color, user_v_font_color, displayDataOnly, hideParent);
+                    init_user_input(newMDE, user_origin, offset, offset_rule, user_padding, user_color,user_bg_color, user_v_font_color, displayDataOnly, hideParent, parse_html_file);
                 }
                 init_data();
                 init_offset_rules();

@@ -230,7 +230,7 @@ void init_color(colorRGBA &color_alpha, colorRGBA &bg_color_alpha,
 void init_user_input(MDE &user_input_MDE, vertex3D &origin, std::vector<vertex3D> &offset,
                     std::vector<vertex3D> &offset_rule, vertex2D &padding, colorRGBA &color_alpha,
                     colorRGBA &bg_color_alpha, std::vector<colorRGBA> &font_color,
-                    bool displayDataOnly, bool hideParent);
+                    bool displayDataOnly, bool hideParent, bool &user_parse_html);
 
 /**
  *##name: init_offset_rules();
@@ -431,10 +431,10 @@ void create_vector(std::vector<vertex3D> &vector3D,
     std::vector<vertex3D> &vector_trb, vertex2D &padding);
 
 
-void displayV2D(std::vector<vertex2D> &vector_2D);
-void displayV3D(std::vector<vertex3D> &vector_3D);
+void displayV2D(std::vector<vertex2D> &vector_2D, uint log_level = 1);
+void displayV3D(std::vector<vertex3D> &vector_3D, uint log_level = 1);
 //~ void displayV3Dalpha(std::vector<vertex3Dalpha> &vector_3Dalpha);
-void displayColorRGBA(std::vector<colorRGBA> &vector_rgba);
+void displayColorRGBA(std::vector<colorRGBA> &vector_rgba, uint log_level = 1);
 void displayVuint(std::vector<unsigned int> &vector_uint);
 void displayVGLfloat(std::vector<GLfloat> &vector_glf);
 void text_display();
@@ -508,7 +508,7 @@ void init_font_color(std::vector<GLfloat> &color);
  * @exception No exception handling.
  * @brief set options entered by user through runtime arguments.
  */
-void init_options(bool move_it, bool display_box, bool display2d=false, bool singleColor=true, uint nlines=1);
+void init_options(bool move_it, bool display_box, bool display2d=false, bool singleColor=true, uint nlines=1, uint log_level=0);
 
 //~ void init_v_font_color_old(std::vector<vertex3Dalpha> &font_color, uint &nlines, bool singleColor=true, bool displayDataOnly=false);
 //~ void init_v_font_color(std::vector<vertex3Dalpha> &font_color,std::vector<vertex3Dalpha> &v_font_color, uint &nlines, bool singleColor, bool displayDataOnly);

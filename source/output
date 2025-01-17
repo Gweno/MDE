@@ -44,41 +44,10 @@
 
 *********************************************************************
 Your choice:
-******************************Main Menu******************************
-
-  1) Data Menu
-          File: ../datafiles/default.xml  
-  2) Font Menu
-          Font: ../fonts/FreeSans.ttf
-          Size: 48
-          Color & Alpha (r,g,b,a): (0.00, 0.00, 0.00, 1.00)
-  3) Coordinates Menu
-          Coordinates(x,y,z): (0.00,0.00,0.00)
-          Name <-> data offset Rule (x,y,z): (0.50,0.20,0.00)
-          Index offset Rule (x,y,z):         (0.00,0.00,-0.20)
-          Level offset Rule (x,y,z):        (0.00,0.00,0.00)
-  4) Frame Menu
-          Frame Box:OFF
-          Color & Alpha (r,g,b,a): (0.50,0.50,0.50,0.50)
-          Padding(px) (horizontal, vertical): (0.00,0.00)
-  5) Color Menu
-          Background color&alpha (r,g,b,a): (1.00,1.00,1.00,1.00)
-          Font Color&Alpha (r,g,b,a): (0.00,0.00,0.00,1.00)
-
-  r) Render html file
-  t) Display In Terminal and testing mode: OFF
-  x) Display In Terminal as Xml
-  p) Display in Page mode for GL display
-  g) Display in Gl mode
-
-  q) Quit
-
-*********************************************************************
-Your choice:
 MDE : master
-  pid : 9377
+  pid : 8772
   arguments : 1
-    0 : ../bin/mde_debug
+    arg0 : ../bin/mde_debug
   parameters : 1
     version : v0.3.2
     move : false
@@ -101,11 +70,10 @@ MDE : master
   div : 
     h3 : Data Menu
     ul : 
-      li : File 
+      li : File
         attributes : 2
           class : menu-item-sub
           onclick : display()
-        span : filename
       li : Font Menu
         attributes : 3
           class : menu-item
@@ -138,15 +106,12 @@ MDE : master
         attributes : 2
           class : menu-item
           onclick : executeStatement()
-      li : Display In Terminal and Testing mode:
+      li : Display In Terminal and Testing mode
         attributes : 3
           class : menu-item
           onclick : toggleOption()
           style : text/css
             display : none
-        span : On
-          attributes : 1
-            class : toggle
       li : Display In Terminal as Xml
         attributes : 3
           class : menu-item
@@ -159,6 +124,12 @@ MDE : master
           onclick : toggleOption()
           style : text/css
             display : none
+      li : Hello World
+        attributes : 3
+          class : menu-item
+          onclick : executeStatement()
+          style : text/css
+            color : rgba(200,150,50,0.5)
       li : quit
         attributes : 3
           class : menu-item
@@ -175,11 +146,10 @@ MDE : master
       div : 
         h3 : Data Menu
         ul : 
-          li : File 
+          li : File
             attributes : 2
               class : menu-item-sub
               onclick : display()
-            span : filename
           li : Font Menu
             attributes : 3
               class : menu-item
@@ -212,15 +182,12 @@ MDE : master
             attributes : 2
               class : menu-item
               onclick : executeStatement()
-          li : Display In Terminal and Testing mode:
+          li : Display In Terminal and Testing mode
             attributes : 3
               class : menu-item
               onclick : toggleOption()
               style : text/css
                 display : none
-            span : On
-              attributes : 1
-                class : toggle
           li : Display In Terminal as Xml
             attributes : 3
               class : menu-item
@@ -233,23 +200,18 @@ MDE : master
               onclick : toggleOption()
               style : text/css
                 display : none
+          li : Hello World
+            attributes : 3
+              class : menu-item
+              onclick : executeStatement()
+              style : text/css
+                color : rgba(200,150,50,0.5)
           li : quit
             attributes : 3
               class : menu-item
               onclick : executeStatement()
               style : text/css
                 color : rgba(250,0,0,0.5)
-    render : openGL
-      div : 
-        h3 : Data Menu
-        li : File 
-        li : Font Menu
-        li : Test Menu
-        li : Frame Menu
-        li : Color Menu
-        li : Render Html File
-        li : Display In Terminal and Testing mode:
-        li : quit
 testing On******************************Main Menu******************************
 
   1) Data Menu
@@ -310,7 +272,7 @@ main window
       <ul>
       
         <li>
-        File 
+        File
           <attributes>
           2
             <class>
@@ -320,9 +282,6 @@ main window
             display()
             </onclick>
           </attributes>
-          <span>
-          filename
-          </span>
         </li>
         <li>
         Font Menu
@@ -421,7 +380,7 @@ main window
           </attributes>
         </li>
         <li>
-        Display In Terminal and Testing mode:
+        Display In Terminal and Testing mode
           <attributes>
           3
             <class>
@@ -437,15 +396,6 @@ main window
               </display>
             </style>
           </attributes>
-          <span>
-          On
-            <attributes>
-            1
-              <class>
-              toggle
-              </class>
-            </attributes>
-          </span>
         </li>
         <li>
         Display In Terminal as Xml
@@ -484,6 +434,24 @@ main window
           </attributes>
         </li>
         <li>
+        Hello World
+          <attributes>
+          3
+            <class>
+            menu-item
+            </class>
+            <onclick>
+            executeStatement()
+            </onclick>
+            <style>
+            text/css
+              <color>
+              rgba(200,150,50,0.5)
+              </color>
+            </style>
+          </attributes>
+        </li>
+        <li>
         quit
           <attributes>
           3
@@ -504,39 +472,6 @@ main window
       </ul>
     </div>
   </content>
-  <render>
-  openGL
-    <div>
-    
-      <h3>
-      Data Menu
-      </h3>
-      <li>
-      File 
-      </li>
-      <li>
-      Font Menu
-      </li>
-      <li>
-      Test Menu
-      </li>
-      <li>
-      Frame Menu
-      </li>
-      <li>
-      Color Menu
-      </li>
-      <li>
-      Render Html File
-      </li>
-      <li>
-      Display In Terminal and Testing mode:
-      </li>
-      <li>
-      quit
-      </li>
-    </div>
-  </render>
 </window>
 (level,index): (1,0)
 Found 2 Entities with name width
@@ -571,7 +506,7 @@ main window
       <ul>
       
         <li>
-        File 
+        File
           <attributes>
           2
             <class>
@@ -581,9 +516,6 @@ main window
             display()
             </onclick>
           </attributes>
-          <span>
-          filename
-          </span>
         </li>
         <li>
         Font Menu
@@ -682,7 +614,7 @@ main window
           </attributes>
         </li>
         <li>
-        Display In Terminal and Testing mode:
+        Display In Terminal and Testing mode
           <attributes>
           3
             <class>
@@ -698,15 +630,6 @@ main window
               </display>
             </style>
           </attributes>
-          <span>
-          On
-            <attributes>
-            1
-              <class>
-              toggle
-              </class>
-            </attributes>
-          </span>
         </li>
         <li>
         Display In Terminal as Xml
@@ -745,6 +668,24 @@ main window
           </attributes>
         </li>
         <li>
+        Hello World
+          <attributes>
+          3
+            <class>
+            menu-item
+            </class>
+            <onclick>
+            executeStatement()
+            </onclick>
+            <style>
+            text/css
+              <color>
+              rgba(200,150,50,0.5)
+              </color>
+            </style>
+          </attributes>
+        </li>
+        <li>
         quit
           <attributes>
           3
@@ -765,39 +706,6 @@ main window
       </ul>
     </div>
   </content>
-  <render>
-  openGL
-    <div>
-    
-      <h3>
-      Data Menu
-      </h3>
-      <li>
-      File 
-      </li>
-      <li>
-      Font Menu
-      </li>
-      <li>
-      Test Menu
-      </li>
-      <li>
-      Frame Menu
-      </li>
-      <li>
-      Color Menu
-      </li>
-      <li>
-      Render Html File
-      </li>
-      <li>
-      Display In Terminal and Testing mode:
-      </li>
-      <li>
-      quit
-      </li>
-    </div>
-  </render>
 </window>
 <width>
 1200
@@ -808,6 +716,3 @@ main window
 <title>
 example
 </title>
-###### init frame ######
-###### End init frame ######
-bye bye!

@@ -14,6 +14,9 @@
 #include "MDE.h"
 //~ #include "utils.h"
 
+// test log
+//~ int test_log=1;
+
 //Constructors:
 MDE::MDE(){};
 
@@ -23,29 +26,6 @@ MDE::MDE(std::string init_name, std::string init_data)
     this->data = init_data;
 }
 
-// Destructors:
-
-//~ MDE::~MDE(){
-    //~ std::cout << "Destructor called for " << this->name << std::endl;
-    //~ this->destructor_MDE();
-    //~ }
-
-//~ {
-    // delete all memory pointed to in vMDE;
-    //~ for (std::vector<MDE*>::iterator it=this->vMDE.begin();it!=this->vMDE.end();++it)
-    //~ for (auto it:vMDE)
-    //~ {
-        //~ delete *it;
-        //~ delete it;
-    //~ }
-//~ };
-
-// member function to create new Entity
-
-//~ void MDE::new_vMDE_element()
-//~ {
-    //~ this->vMDE.push_back(new MDE);
-//~ };
 void MDE::new_vMDE_element(std::string name,std::string data)
 {
     MDE * pt_MDE = new MDE();
@@ -59,12 +39,10 @@ void MDE::new_vMDE_element(std::string name,std::string data)
     {
         this->set_data_vMDE_back(data);
     }
-    //~ delete pt_MDE;
 };
 
 void MDE::new_vMDE_element(MDE * aMDE)
 {
-    //~ std::clog << "New element from Vector" << std::endl;
     this->vMDE.push_back(aMDE);
     aMDE->countRef++;
     aMDE->totRef = std::max(aMDE->countRef,aMDE->totRef);
@@ -135,15 +113,12 @@ void MDE::clear_all_vMDE()
 {
     if (!this->vMDE.empty())
     {
-        //~ for (std::vector<MDE*>::iterator it_all=this->vMDE.begin();it_all!=this->vMDE.end();++it_all)
         for (auto it_all:this->vMDE)
         {
-            //~ (*it_all)->clear_all_vMDE();
             (it_all)->clear_all_vMDE();
         }
         this->vMDE.clear();
     }
-    //~ else delete this;
 }
 
 void MDE::clear_all_vMDE_by_index(std::vector<int>& vect_index)
@@ -152,132 +127,44 @@ void MDE::clear_all_vMDE_by_index(std::vector<int>& vect_index)
     (this->vMDE_get_by_index(vect_index,it))->clear_all_vMDE();
 }
 
-void MDE::delete_all_pt_v_old()
-{
-    for (std::vector<MDE*>::iterator it_all=this->vMDE.begin();it_all!=this->vMDE.end();++it_all)
-    {
-        //~ std::clog << "deleting: " << this->name << std::endl;
-        //~ std::clog << "size: " << this->vMDE.size() << std::endl;
-        
-        delete (*it_all);
-    }
-}
-
-void MDE::delete_all_pt2_old()
-{
-    for (auto it:this->vMDE)
-    {
-        
-        //~ std::clog << "(ref)checking subE " << this->name << std::endl;
-        if(it->vMDE.size()>0){
-            
-            //~ std::clog << "(ref)check there are subE:" << it->name << std::endl;
-            it->delete_all_pt2_old();
-        };
-        //~ std::clog << "(ref)deleting " << it->name << std::endl;
-        delete it;
-    }
-}
-
-void MDE::delete_all_pt()
-{
-    for (auto it:this->vMDE)
-    {
-        if(it->vMDE.size()>0){
-            //~ std::clog << " > - Checking vectors for " << it->name <<  " : " << it->data << std::endl;            
-            it->delete_all_pt();
-        }
-        if(it->countRef>0){
-            //~ std::clog << "Current count for (" << it->name <<  " : " << it->data << ") :" << it->countRef << " reference(s)." << std::endl;
-            it->countRef--;
-            //~ std::clog << "0 - NOT DELETING (" << it->name <<  " : " << it->data << ") still has " << it->countRef << " reference(s)." << std::endl;
-        }
-        //~ else{
-        //~ std::clog << "X - deleting " << it->name <<  " : " << it->data << std::endl;
-        delete it;
-        //~ }
-    }        
-}
 
 void MDE::deleteAllPt(bool manual, int sizeRef)
 {
-    //~ std::clog << "E: " << this->name << std::endl;
-    //~ std::clog << "delete mode is manual? " << manual << std::endl;
     for(auto it=this->vMDE.begin();it!=this->vMDE.end();it++){
-        //~ std::clog << "                 Checkpoint 1 " << std::endl;
-        //~ std::clog << "                 sizeRef: " << sizeRef << std::endl;
-        //~ std::clog << "                 before     sub E: " << (*it)->name << std::endl;
-        //~ std::clog << "                 address: " << *it << std::endl;
         std::advance(it,sizeRef);
         if((*it)->isFirstRef()){
-            //~ std::clog << "                 Has first Ref" << std::endl;
-            //~ std::clog << "                 vMDE.size() " << (*it)->vMDE.size() << std::endl;
-            //~ std::clog << "                 (*it)->refVmdeSize " << (*it)->refVmdeSize << std::endl;
             if((*it)->vMDE.size()>0){
-                //~ std::clog << "                 Has sub Es" << std::endl;
                 (*it)->deleteAllPt(manual);
             }
             (*it)->countRef--;
             if(manual)
             {
-                //~ std::clog << "* Deleting & ?" << (*it) << std::endl;
-                //~ std::clog << "* Deleting ? " << (*it)->name << std::endl;
                 char del=0;
                 std::cin >> del;
                 if(del=='y'){
-                    //~ std::clog << "* Deleting & ?" << (*it) << std::endl;
-                    //~ std::clog << "* Deleting ! " << (*it)->name << std::endl;
                     delete (*it);
                 }
-                //~ else
-                //~ {
-                    //~ std::clog << "* NOT Deleting & " << (*it) << std::endl;
-                    //~ std::clog << "* NOT Deleting " << (*it)->name << std::endl;
-                //~ }          
             }
-            //~ else
-            //~ {
-                //~ std::clog << "* NOT Deleting & " << (*it) << std::endl;
-                //~ std::clog << "* NOT Deleting " << (*it)->name << std::endl;
-            //~ }
-            //~ delete (*it);
         }
         else {
-            //~ std::clog << "                 Checkpoint 2" << std::endl;
             if((*it)->vMDE.size()>0){
-                //~ std::clog << "                 Has sub Es" << std::endl;
                 if((*it)->vMDE.size()>(*it)->refVmdeSize)
                 {
                     (*it)->deleteAllPt(manual,(*it)->refVmdeSize);
-                    //~ std::clog << "                 Has sub Es - Check after" << std::endl;
                 }            
-            //~ (*it)->deleteAllPt();
             }
-            //~ std::clog << "**    Deleting " << (*it)->name << std::endl;
-            //~ delete (*it);
-            // delete only if was not a ref
             if((*it)->countRef==0)
             {
                 if(manual)
                 {
-                    //~ std::clog << "***    Deleting & ?" << (*it) << std::endl;
-                    //~ std::clog << "***    Deleting ?" << (*it)->name << std::endl;
                     char del=0;
                     std::cin >> del;
                     if(del=='y'){
-                        //~ std::clog << "***    Deleting & " << (*it) << std::endl;
-                        //~ std::clog << "***    Deleting ! " << (*it)->name << std::endl;
                         delete (*it);
                     }
-                    //~ else
-                    //~ {
-                        //~ std::clog << "*** NOT   Deleting " << (*it)->name << std::endl;
-                    //~ }
                 }
                 else
                 {
-                    //~ std::clog << "***    Deleting & " << (*it) << std::endl;
-                    //~ std::clog << "***    Deleting " << (*it)->name << std::endl;
                     delete (*it);
                 }
             }
@@ -285,160 +172,33 @@ void MDE::deleteAllPt(bool manual, int sizeRef)
             {
                 if(manual)
                 {
-                    //~ std::clog << "****   On       & " << (*it) << std::endl;
-                    //~ std::clog << "****   Deleting ? " << (*it)->name << std::endl;
                     char del=0;
                     std::cin >> del;
                     if(del=='y'){
-                        //~ std::clog << "****   On       & " << (*it) << std::endl;
-                        //~ std::clog << "****   Deleting !  " << (*it)->name << std::endl;
                         delete (*it);
                     }
-                    //~ else
-                    //~ {
-                        //~ std::clog << "****   On       & " << (*it) << std::endl;
-                        //~ std::clog << "****NOT Deleting " << (*it)->name << std::endl;
-                    //~ }
                 }
-                //~ else
-                //~ {
-                    //~ std::clog << "****   On       & " << (*it) << std::endl;
-                    //~ std::clog << "****NOT Deleting " << (*it)->name << std::endl;
-                //~ }
             }
                 
         }
     }
 }
 
-bool MDE::deleteAllPt_old()
-{
-    for (auto it:this->vMDE)
-    {
-        std::cout << " > - Checking vectors for " << this->name <<  " : " << this->data << std::endl;
-        std::cout << " > - On subentity " << it->name <<  " : " << it->data << std::endl;
-        std::cout << "     Total References     " << it->totRef << std::endl;
-        std::cout << "     References left      " << it->countRef << std::endl;
-        if(it->vMDE.size()>0){
-            
-            std::cout << "     it has subentities" << std::endl;
-            if(it->isFirstRef()){
-                std::cout << "       There's at least one ref" << std::endl;
-                it->countRef--;
-                // display size of master...
-                std::cout << "Size of Master vMDE " << this->vMDE.size() << std::endl;
-                std::cout << "Size of subEntity vMDE " << it->vMDE.size() << std::endl;
-                std::cout << "subEntity vMDE " << it->vMDE.back()->name << std::endl;
-                std::cout << "display it size " << it->refVmdeSize << std::endl;
-                std::cout << "subEntity before increment " << it->name << std::endl;
-                //~ if(it->vMDE.size()>it->refVmdeSize){
-                    //~ std::cout << "next iteration on " << it->vMDE[it->refVmdeSize-1]->name << std::endl;
-                    //~ std::advance(it,it->refVmdeSize);
-                    //~ std::cout << "subEntity after increment " << it->name << std::endl;
-                    //~ it->vMDE[it->refVmdeSize-1]->deleteAllPt(); //move to end of current ref
-                    //~ it->deleteAllPt();
-                //~ }
-                //~ std::cout << "subEntity after increment " << it->name << std::endl;
-                
-                // go to end of refered pointer...
-                
-                
-                
-            }
-            else if(it->totRef==0){
-                std::cout << "       There's no ref" << std::endl;
-                //~ return it->deleteAllPt();
-                it->deleteAllPt();
-            }
-            else{
-                std::cout << "DO NOTHING -> check next" << it->name << std::endl;
-            }
-        }
-        //~ else if (it->isFirstRef() || it->totRef==0){
-        //~ else{
-        std::cout << "X - deleting " << it->name <<  " : " << it->data << std::endl;
-        delete it;
-        //~ }
-        //else do nothing;
-        
-        //~ if(it->countRef>0){
-            //~ std::cout << "Current count for (" << it->name <<  " : " << it->data << ") :" << it->countRef << " reference(s)." << std::endl;
-            //~ it->countRef--;
-            //~ std::cout << "0 - NOT DELETING (" << it->name <<  " : " << it->data << ") still has " << it->countRef << " reference(s)." << std::endl;
-        //~ }
-        //~ else{
-            //~ std::cout << "X - deleting " << it->name <<  " : " << it->data << std::endl;
-            //~ delete it;
-        //~ }
-    }        
-}
 
 bool MDE::isFirstRef(){
     if(this->countRef==this->totRef && this->totRef>0) return true;
     else return false;
 }
 
-/*
- 
-//if it->isFirstRef()
-// delete_all_pt_2... (don't expect any other ref...)
-// else go to next iteration and check again 
- 
- */
-
-
-void MDE::deleteAll()
-{
-    for (auto it:this->vMDE)
-    {
-        //~ std::clog << "> " << it->name << " : " << it->data << std::endl;
-        if(it->isFirstRef()){
-            //~ std::clog << "First ref # " << it->totRef << " / " <<  it->countRef << std::endl;
-            it->delete_all_pt2_old();
-            it->countRef--;
-        }
-        //~ else std::clog << "Ref # " << it->totRef << " / " <<  it->countRef << std::endl;
-        //~ std::clog << "go next " << std::endl;
-    }
-}
-void MDE::delete_all_pt_old()
-{
-    for (auto it:this->vMDE)
-    {
-        if(it->vMDE.size()>0){
-            //~ std::clog << " > - Checking vectors for " << it->name <<  " : " << it->data << std::endl;            
-            it->delete_all_pt();
-        }
-        if(it->countRef>0){
-            //~ std::clog << "Current count for (" << it->name <<  " : " << it->data << ") :" << it->countRef << " reference(s)." << std::endl;
-            it->countRef--;
-            //~ std::clog << "0 - NOT DELETING (" << it->name <<  " : " << it->data << ") still has " << it->countRef << " reference(s)." << std::endl;
-        }
-        else{
-            //~ std::clog << "X - deleting " << it->name <<  " : " << it->data << std::endl;
-            delete it;
-        }
-    }        
-}
-
-
 void MDE::destructor_MDE()
 {
     this->deleteAllPt();
-    //~ this->delete_all_pt();
-    //~ this->delete_all_pt2();
     this->vMDE.clear();
     this->name = "";
     this->data = "";
 }
-
-
-
-        
+       
 // public member functions
-
-
-
 
 // get member functions
 
@@ -456,8 +216,6 @@ void MDE::display_data()
 
 void MDE::display_vMDE_names()
 {
-    //~ for (std::vector<MDE*>::iterator it=this->vMDE.begin();it!=this->vMDE.end();++it){
-        //~ (*it)->display_name();
     for (auto it:this->vMDE){
         it->display_name();
     }
@@ -465,8 +223,6 @@ void MDE::display_vMDE_names()
 
 void MDE::display_vMDE_data()
 {
-    //~ for (std::vector<MDE*>::iterator it=this->vMDE.begin();it!=this->vMDE.end();++it){
-        //~ (*it)->display_data();
     for (auto it:this->vMDE){
         it->display_data();
     }
@@ -485,67 +241,6 @@ void MDE::display_all(int n_indent, const int & n_space)
         }
     return;
 };
-
-//~ GLdata current_GLdata;
-
-/*
-void MDE::extract_MDE_data_for_v_offset(std::vector<GLdata> & v_MDE_data, int & level, int index)
-{
-    level++;
-    current_GLdata.level= level;
-    current_GLdata.index= index;
-    current_GLdata.mde_member=MDE_member::name;
-    current_GLdata.MDE_data=this->name;
-    v_MDE_data.push_back(current_GLdata);
-    current_GLdata.mde_member=MDE_member::data;
-    current_GLdata.MDE_data=this->data;
-    v_MDE_data.push_back(current_GLdata);
-    if (this->vMDE.size()!=0) {index++; };
-    for (std::vector<MDE*>::iterator it_vMDE=this->vMDE.begin();it_vMDE!=this->vMDE.end();++it_vMDE)
-        {
-            (*it_vMDE)->extract_MDE_data_for_v_offset(v_MDE_data, level, index);
-        }
-    return;
-}
-*/
-/*
-void MDE::display_v_MDE_data(std::vector<GLdata> & v_offset){
-    for (std::vector<GLdata>::iterator it=v_offset.begin(); it!=v_offset.end(); ++it){
-        printf("level, index,member,data: %i,%i,%i,%s\n",
-         (*it).level, (*it).index, (*it).mde_member, (*it).MDE_data.c_str());
-    }
-}
-*/
-/*
-void MDE::format_display(int n_indent, const int & n_space, std::string start_opening_tag,
-            std::string end_opening_tag, std::string start_closing_tag,
-            std::string end_closing_tag)
-{
-    
-    std::string N_space(n_indent*n_space,' ');
-    std::cout << N_space ;
-    std::cout<< start_opening_tag;
-    std::cout << this->name;
-    std::cout<< end_opening_tag;
-    std::cout << endl;
-    std::cout << N_space;
-    std::cout << this->data;
-    std::cout << endl;
-
-    if (this->vMDE.size()!=0) n_indent++;
-    for (std::vector<MDE*>::iterator it=this->vMDE.begin();it!=this->vMDE.end();++it)
-        {
-            (*it)->format_display(n_indent, n_space, start_opening_tag,
-            end_opening_tag, start_closing_tag, end_closing_tag);
-            std::cout << endl;
-        }
-    std::cout << N_space ;
-    std::cout<< start_closing_tag;
-    std::cout << this->name;
-    std::cout<< end_closing_tag;
-    return;
-};
-*/
 
 void MDE::user_input_vMDE()
 {
@@ -576,10 +271,6 @@ void MDE::user_input_vMDE()
         }
         else if (key_input=="end")
         {
-            //~ for (std::vector<MDE*>::iterator it=this->vMDE.begin();it!=this->vMDE.end();++it)
-            //~ {
-                //~ (*it)->user_input_vMDE();                           //Where recursivity happen...
-            //~ }
             for (auto it:this->vMDE)
             {
                 it->user_input_vMDE();                           //Where recursivity happen...
@@ -607,13 +298,6 @@ void MDE::save_to_file(int n_indent, const int & n_space,
     file << std::endl;
     
     if (this->vMDE.size()!=0) n_indent++;
-    //~ for (std::vector<MDE*>::iterator it=this->vMDE.begin();it!=this->vMDE.end();++it)
-        //~ {
-            //~ (*it)->save_to_file(n_indent, n_space, start_opening_tag,
-            //~ end_opening_tag, start_closing_tag, end_closing_tag, file);
-            //~ if (it == this->vMDE.end()-1) n_indent--;
-            
-        //~ }
     for (auto it:this->vMDE)
         {
             it->save_to_file(n_indent, n_space, start_opening_tag,
@@ -632,13 +316,8 @@ void MDE::save_to_file(int n_indent, const int & n_space,
 
 void MDE::print_flat_MDE()
 {
-    //~ std::clog << this->name << " : " << this->data << std::endl;
     if (this->vMDE.size()!=0)
     {
-        //~ for (std::vector<MDE*>::iterator it=this->vMDE.begin();it!=this->vMDE.end();++it)
-        //~ {
-            //~ (*it)->print_flat_MDE();
-        //~ }
         for (auto it:this->vMDE)
         {
             it->print_flat_MDE();
@@ -667,273 +346,21 @@ void MDE::user_save_to_XML_file(){
     std::ofstream file(FileNameOut);
     this->save_to_file(n_indent, n_space,"<",">","</",">", file);
     
-    // destroy * char[]
     delete [] FileName;
     delete [] FileNameOut;
     delete [] ExtensionXML;
     delete [] Path;
 }
 
-/*
-void MDE::fetch_search_result(std::vector<MDE**> &search_result)
-{
-    const int n_space = 2;
-    if (search_result.size()!=0)
-    {
-        for (std::vector<MDE**>::iterator it=search_result.begin();it!=search_result.end();++it)
-        {
-            //~ (*(*it))->format_display(0,n_space,"<",">","</",">");
-            formatDisplay((*(*it)),0,n_space,"<",">","</",">");
-            std::cout << endl;
-        }
-    }
-    else std::cout << "Not found" <<std::endl;
-}
-*/
-/*
-void MDE::search_For(int & index, int & level, std::string searchName, std::vector<MDE**> &search_result )
-{
-    if (this->name==searchName)
-    {
-        std::cout << "Found " << searchName << " at (level,index): " << "(" << level  << "," << index << ")" << std::endl;
-        std::cout << std::endl;
-        MDE** ptr_to_ptr_to_MDE = new MDE*(this);
-        //~ MDE::search_result.push_back(ptr_to_ptr_to_MDE);
-        search_result.push_back(ptr_to_ptr_to_MDE);
-    }
-    else
-    {
-        level++;
-        index=0;
-        std::cout << "(level,index): " << "(" << level  << "," << index << ")" << std::endl;
-        //~ (this->simple_loop_VMDE(searchName));
-        (this->simple_loop_VMDE(searchName, search_result));
-    }
-    //~ if (MDE::search_result.size()==0)
-    if (search_result.size()==0)
-    {
-        std::cout << "No results" << std::endl; //not ideal...
-    }
-    //~ std::cout << "Found " << MDE::search_result.size() << " Entities with name " << searchName << std::endl;
-    std::cout << "Found " << search_result.size() << " Entities with name " << searchName << std::endl;
-}
-*/
-/*
-void MDE::simple_loop_VMDE(std::string searchName, std::vector<MDE**> &search_result)
-{
-    for(std::vector<MDE*>::const_iterator it=this->vMDE.begin();it!=this->vMDE.end();++it)
-    {
-        if ((*it)->name==searchName)
-        {
-            MDE** ptr_to_ptr_to_MDE = new MDE*(*it);
-            //~ MDE::search_result.push_back(ptr_to_ptr_to_MDE);
-            search_result.push_back(ptr_to_ptr_to_MDE);
-        }
-    }
-    //~ this->simple_loop_VMDE_next_level(searchName);
-    this->simple_loop_VMDE_next_level(searchName, search_result);
-}
-*/
-/*
-void MDE::simple_loop_VMDE_next_level(std::string searchName,  std::vector<MDE**> &search_result)
-{
-    for(std::vector<MDE*>::const_iterator it=this->vMDE.begin();it!=this->vMDE.end();++it)
-    {
-        //~ (*it)->simple_loop_VMDE(searchName);
-        (*it)->simple_loop_VMDE(searchName, search_result);
-    }
-}
-*/
-/*
-void MDE::str_token_tag(std::string & buffer_Input,
- std::string & output_Tag, std::string & buffer_Output,
-  char delimiter1, char delimiter2)
-{
-    size_t pos1=0;
-    size_t pos2=0;
-    if (delimiter1!=0)
-    {
-        pos1 = buffer_Input.find_first_of(delimiter1);
-        if (pos1!=std::string::npos)
-        {
-            pos2 = buffer_Input.find_first_of(delimiter2,pos1);
-            if (pos2!=std::string::npos)
-            {
-                output_Tag = buffer_Input.substr(pos1+1,pos2-pos1-1);
-                buffer_Output = buffer_Input.substr(pos2+1);
-            }
-            else
-            {
-                output_Tag = buffer_Input.substr(pos1+1,pos2-pos1-1)+"__part__";
-                buffer_Output = buffer_Input.substr(pos2+1);
-            }
-        }
-        else
-        {
-            //~ output_Tag="_part";
-            buffer_Output = buffer_Input;
-        }
-    }
-    // tag/data with one delimiter at the end
-    else
-    {
-        pos1 = buffer_Input.find_first_of(delimiter2);
-        if (pos1!=std::string::npos)
-        {
-        output_Tag = buffer_Input.substr(0,pos1);
-        buffer_Output = buffer_Input.substr(pos1);
-        if (output_Tag.size()>0) this->trim_leading_space(output_Tag);       // trimming leading spaces
-        }
-        else
-        {
-            output_Tag="";
-            buffer_Output = buffer_Input;
-        }
-    }
-}
-
-void MDE::trim_leading_space(std::string & io_string)
-{
-    size_t pos = 0;
-    pos = io_string.find_first_not_of(' ');
-    if (pos)
-    {
-        io_string = io_string.substr(pos);
-    }
-}
-*/
-/*
-bool MDE::load_XML_File_to_MDE(const std::string & full_filename)
-{
-
-    MDE xmlFile;
-    std::stack<MDE**> stack_MDE_pt;
-    
-    //~ if (xmlFile.extract_File_to_Flat_MDE(full_filename)){
-    if (extractFileToFlatMDE(xmlFile, full_filename)){
-        std::vector<MDE*>::iterator it_start = xmlFile.vMDE.begin();
-        this->process_flat_MDE_to_MDE(it_start, xmlFile, stack_MDE_pt);
-        xmlFile.destructor_MDE();
-        return true;
-    }
-    else return false;
-        
-}
-*/
-/*
-bool MDE::load_XML_File_to_vMDE(int & index, const std::string & full_filename)
-{
-
-    MDE xmlFile;
-    std::stack<MDE**> stack_MDE_pt;
-    
-    //~ if (xmlFile.extract_File_to_Flat_MDE(full_filename)){
-    if (extractFileToFlatMDE(xmlFile, full_filename)){
-        this->display_all(0,2);
-        printf("hola\n");
-        std::vector<MDE*>::iterator it_start = xmlFile.vMDE.begin();
-        printf("hola\n");
-        // store 'this' in the stack of pointers to be able to come back
-        // to this element if there is an xml declaration
-        // Need to create a new pointer as using 'this' directly is not possible (temp scope object)
-        MDE ** pt_to_pt_MDE = new MDE*(this);
-        stack_MDE_pt.push(pt_to_pt_MDE);
-        std::cout << "name,data" << this->name << ", " << this->data << std::endl;
-        //~ this->vMDE[index]->process_flat_MDE_to_MDE(it_start, xmlFile, stack_MDE_pt);
-        //~ processFlatMDEToMDE(xmlFile,*this,it_start, stack_MDE_pt);
-        processFlatMDEToMDE(xmlFile,*this->vMDE[index],it_start, stack_MDE_pt);
-
-        printf("hola\n");
-        
-        std::cout << "Here 3" << std::endl;
-        
-        xmlFile.display_all(0,2);
-        
-        std::cout << "Here 4" << std::endl;
-        
-        this->display_all(0,2);
-        xmlFile.destructor_MDE();
-        delete pt_to_pt_MDE;
-        return true;
-    }
-    else return false;
-        
-}
-*/
-
-/*
-bool MDE::load_XML_File_to_vMDE_old(int & index, const std::string & full_filename)
-{
-
-    MDE xmlFile;
-    std::stack<MDE**> stack_MDE_pt;
-    
-    if (xmlFile.extract_File_to_Flat_MDE(full_filename)){
-        this->display_all(0,2);
-        printf("hola\n");
-        std::vector<MDE*>::iterator it_start = xmlFile.vMDE.begin();
-        printf("hola\n");
-        this->vMDE[index]->process_flat_MDE_to_MDE(it_start, xmlFile, stack_MDE_pt);
-        printf("hola\n");
-        
-        std::cout << "Here 3" << std::endl;
-        
-        xmlFile.display_all(0,2);
-        
-        std::cout << "Here 4" << std::endl;
-        
-        this->display_all(0,2);
-        xmlFile.destructor_MDE();
-        return true;
-    }
-    else return false;
-        
-}
-*/
-/*
-bool MDE::replace_vMDE_with_XML(std::vector<int> & vect_index_file, const std::string & full_filename)
-{
-    std::cout << "file to load:" << full_filename << std::endl;
-    //~ newMDE.destructor_MDE();
-    std::vector<int>::const_iterator it_file;
-    bool input_file = false;
-    int index_file;
-    this->display_vector_int(vect_index_file);
-    //~ vect_index_file.push_back(0);
-    //~ newMDE.display_vector_int(vect_index_file);
-    this->clear_all_vMDE_by_index(vect_index_file);
-    std::vector<int> tmp_vect_index= vect_index_file;
-    tmp_vect_index.pop_back();
-    //~ vect_index_file.pop_back();
-    this->display_vector_int(tmp_vect_index);
-    index_file = vect_index_file.back();
-    printf("index file:%i\n", index_file);
-
-
-    std::cout << "here 0" << std::endl;
-
-
-    // get vDME pointer at index just before last of vector of indexes, then load at that last index.
-    input_file = (this->vMDE_get_by_index(tmp_vect_index,it_file))->load_XML_File_to_vMDE(index_file, full_filename);
-    
-    std::cout << "here 1" << std::endl;
-
-    
-    // set the name of the file to the mde pointer at the given index, one level above what has been loaded
-    (this->vMDE_get_by_index(tmp_vect_index,it_file))->set_data(full_filename);
-    
-    std::cout << "here 2" << std::endl;
-
-    return input_file;
-}
-*/
+// this process the runtime arguments and store them in the mde instance
+// it has to add letters before the argument index number in the mde.name
+// because xml elements cannot start with a number
 void MDE::char_array_to_vMDE_data(int n_element, char **array_char, bool create )
 {
     for (int i = 0; i < n_element; ++i)
     {
-        //~ std::clog << i << ", " << array_char[i] << std::endl;
         if (create){
-            this->new_vMDE_element(std::to_string(i),std::string(array_char[i]));
+            this->new_vMDE_element("arg"+std::to_string(i),std::string(array_char[i]));
         }
         else
         {
@@ -950,444 +377,6 @@ void MDE::char_array_to_vMDE_data(int n_element, char **array_char, bool create 
     
     } 
 }
-
-/*
-bool MDE::extract_File_to_Flat_MDE(const std::string & full_filename)
-{
-    std::string bufferString;
-    std::string bufferLine;
-    std::string buffer_Tag;
-    std::string element;
-    std::string buffer_End_of_Line;
-    std::vector<std::string> list_elements;
-    
-    // Processing file
-    ifstream fileEntity;
-    fileEntity.open(full_filename.c_str(), ios::in);
-    
-    if(!fileEntity.is_open())
-    {
-        printf("File not found\n");
-        return false;
-    }
-
-    fileEntity.clear();                   // absolutly needed otherwise the file is flagged at eof, and good=0   
-    fileEntity.seekg(0, ios::beg);        // set cursor at 0 from start of file
-
-    this->name = "File";
-    this->data = full_filename;
-    
-    while ((fileEntity.good()) && (!fileEntity.eof()))     // loop while extraction from file is possible
-    {
-        // get a line from the file
-        std::getline(fileEntity, bufferString);
-
-        // check if element has the flag, it is a partial tag (a tag that has a '\n' in the source file)
-        if (element=="__tag_part__")
-        {
-            // in which case we add the new extracted line at the end of previous line
-            // but triming new loaded line first
-            trimLeadingSpace(bufferString);
-            bufferLine += " " + bufferString;
-            // and delete the flag
-            element = "";
-        }
-        else bufferLine = bufferString;
-        //~ bufferLine = bufferString;
-        
-        while (bufferLine.size()>0 && element!="__tag_part__")
-        {
-            
-            extractXmlElement(bufferLine, buffer_Tag, element, list_elements);
-            
-            //now store into vMDE
-            // only if element is not a partial tag
-            if (element!="__tag_part__")
-            {
-                this->processXmlElement(buffer_Tag, element, list_elements);
-            }
-        }
-    
-    }
-    std::cout << "Done" << std::endl;
-    return true;
-}
-
-bool MDE::extract_File_to_Flat_MDE_old(const std::string & full_filename)
-{
-    std::string bufferString;
-    std::string bufferLine;
-    std::string buffer_Tag;
-    std::string element;
-    std::string buffer_End_of_Line;
-    std::vector<std::string> list_elements;
-    
-    // Processing file
-    ifstream fileEntity;
-    fileEntity.open(full_filename.c_str(), ios::in);
-    
-    if(!fileEntity.is_open()){
-        
-        printf("File not found\n");
-        return false;
-        
-    }
-
-    fileEntity.clear();                   // absolutly needed otherwise the file is flagged at eof, and good=0   
-    fileEntity.seekg(0, ios::beg);        // set cursor at 0 from start of file
-
-    this->name = "File";
-    this->data = full_filename;
-    
-    while ((fileEntity.good()) && (!fileEntity.eof()))     // loop while extraction from file is possible
-    {
-        // get a line from the file
-        std::getline(fileEntity, bufferString);
-
-        // check if element has the flag, it is a partial tag (a tag that has a '\n' in the source file)
-        if (element=="__tag_part__")
-        {
-            // in which case we add the new extracted line at the end of previous line
-            // but triming new loaded line first
-            //~ this->trim_leading_space(bufferString);
-            trimLeadingSpace(bufferString);
-            bufferLine += " " + bufferString;
-            // and delete the flag
-            element = "";
-        }
-        else bufferLine = bufferString;
-        //~ bufferLine = bufferString;
-        
-        while (bufferLine.size()>0 && element!="__tag_part__")
-        {
-            //~ this->trim_leading_space(bufferLine);
-            trimLeadingSpace(bufferLine);
-            if (bufferLine[0]=='<')
-            {
-                //~ this->str_token_tag(bufferLine,buffer_Tag,buffer_End_of_Line,'<','>');
-                strTokenTag(bufferLine,buffer_Tag,buffer_End_of_Line,'<','>');
-                // To check if "__part__" is at the end of the buffer_Tag
-                size_t s_buffer_Tag_len = buffer_Tag.length();
-                if (s_buffer_Tag_len>8 && buffer_Tag.substr(s_buffer_Tag_len-8,8) == "__part__")
-                {
-                    // in which case flag element ad only a tag part
-                    element ="__tag_part__";
-                    // and take off the marker from buffer_Tag as element is flagged now;
-                    buffer_Tag = buffer_Tag.substr(0,s_buffer_Tag_len-8);
-                }
-                else
-                {
-                    element ="tag";
-                    //~ this->check_token(buffer_Tag, element);
-                    checkToken(buffer_Tag, element);
-                    //~ this->split_string(buffer_Tag,list_elements);
-                    splitString(buffer_Tag,list_elements);
-                    
-                    {
-                        //~ std::cout << "first element: " << list_elements[0] << std::endl;
-                        //~ std::cout << "last element: " << list_elements.back() << std::endl;
-                        //~ for (vector<string>::iterator it=list_elements.begin(); it!=list_elements.end(); ++it) 
-                        //~ {
-                            //~ cout<<"before it"<<endl;
-                            //~ cout<<*it<<endl;
-                            //~ cout<<"after it"<<endl;
-                        //~ }
-                        //~ cout<<"after loop"<<endl;
-                    }
-                }
-            }
-            else
-            {
-                //~ this->str_token_tag(bufferLine,buffer_Tag,buffer_End_of_Line,0,'<');
-                strTokenTag(bufferLine,buffer_Tag,buffer_End_of_Line,0,'<');
-                element = "data";
-                if(buffer_Tag.size()==0)
-                {
-                    if ( bufferLine.size() == buffer_End_of_Line.size())
-                    {
-                        buffer_Tag = buffer_End_of_Line;
-                        buffer_End_of_Line = "";                        
-                    }
-                    else
-                    {
-                        buffer_Tag = "";
-                    }
-                }
-
-            }
-
-            bufferLine = buffer_End_of_Line;
-            
-            //now store into vMDE
-            // only if element is not a partial tag
-            if (element!="__tag_part__")
-            {
-                this->processXmlElement(buffer_Tag, element, list_elements);
-            }
-            
-        }
-    
-    }
-    std::cout << "Done" << std::endl;
-    return true;
-}
-*/
-/*
-void MDE::processXmlElement(std::string & buffer_Tag, std::string & element, std::vector<std::string> & list_elements)
-{
-// check if the element is a tag and if the tag has many elements with it
-    if ((element == "opening_tag" || element == "closing_tag") && list_elements.size()>1)
-    {
-        // first element of the list of element is always the tag's name
-        this->new_vMDE_element();
-        // check if last element is a "/" then it's a self-closing tag
-        if (list_elements.back()=="/")
-        {
-            this->vMDE.back()->name = "self_closing_tag";
-            // pop_back that last "/"
-            list_elements.pop_back();
-        }
-        else
-        {
-            this->vMDE.back()->name = element;
-        }
-        this->vMDE.back()->data = list_elements[0];
-        // then stores all other elements as 'attribute'
-        for (vector<string>::iterator it=list_elements.begin()+1; it!=list_elements.end(); ++it) 
-        {
-            this->new_vMDE_element("attribute",*it);
-        }
-    }
-    else if ((element == "xml_declaration")  && list_elements.size()>1)
-    {
-        // rough management of attributes here... need to take away last '?' of the tag
-        this->new_vMDE_element(element,list_elements[0]);
-        
-        for (vector<string>::iterator it=list_elements.begin()+1; it!=list_elements.end(); ++it) 
-        {
-            this->new_vMDE_element("attribute",*it);
-        }
-    }
-    else
-    {
-        this->new_vMDE_element(element,buffer_Tag);
-    }
-}
-*/
-/*
-void MDE::split_string(const std::string & tag, std::vector<std::string> & list_elements)
-{
-    std::stringstream iss(tag);
-    std::vector<std::string> tokens{istream_iterator<std::string>{iss},istream_iterator<std::string> {}};
-    list_elements = tokens;
-}
-
-
-void MDE::check_token(const std::string & token, std::string & element)
-{
-    std::cout << "in MDE" << std::endl;
-    if(token.size()>0)
-    {
-        if(element=="tag")
-        {
-            if(token[0]=='/') element = "closing_tag";
-            else if (token[0]=='?') element = "xml_declaration";
-            else if (token[0]=='!') element = "comment_tag";
-            else element = "opening_tag";
-        }
-    }
-    else
-    {
-        element = "null_" + element;
-    }
-}
-*/
-/*
-MDE * MDE::process_flat_MDE_to_MDE(std::vector<MDE*>::iterator & it, MDE & MDE_source, std::stack<MDE**> & stack_MDE_pt)
-{
-
-    while (it!=MDE_source.vMDE.end())
-    {
-        if ((*it)->name=="xml_declaration")
-        {
-            // name of this element is name of the flat MDE element (e.g. "xml_declaration")
-            this->name = (*it)->name;
-            // set empty data in case writing over existing MDE
-            this->data="";
-            
-            this->new_vMDE_element((*it)->data,"");
-            
-            it++;
-
-            if ((it!=MDE_source.vMDE.end()) && ((*it)->name=="attribute"))
-            {
-                while ((it!=MDE_source.vMDE.end()) && ((*it)->name=="attribute"))
-                {
-                    (this->vMDE.back())->new_vMDE_element((*it)->name,(*it)->data);
-                    ++it;
-                }
-            }
-            
-            (*(stack_MDE_pt.top()))->new_vMDE_element();
-            std::cout << "stack top: " << (*(stack_MDE_pt.top()))->name << ", " << (*(stack_MDE_pt.top()))->data <<std::endl;
-            return (*(stack_MDE_pt.top()))->vMDE.back()->process_flat_MDE_to_MDE(it, MDE_source, stack_MDE_pt);
-        }
-        
-        else if ((*it)->name=="opening_tag")
-        //~ if ((*it)->name=="opening_tag")
-        {
-            // name of this element is in data of the flat MDE
-            this->name=(*it)->data;
-            // set empty data in case writing over existing MDE
-            this->data="";
-            
-            // store tag in stack only if it's an opening tag 
-            // and not if it's a self closing tag
-            MDE** ptr_to_ptr_to_MDE = new MDE*(this);
-            stack_MDE_pt.push(ptr_to_ptr_to_MDE);
-            // go to next element
-            ++it;
-            
-            if ((it!=MDE_source.vMDE.end()) && ((*it)->name=="attribute"))
-            {
-                while ((it!=MDE_source.vMDE.end()) && ((*it)->name=="attribute"))
-                {
-                    this->new_vMDE_element((*it)->name,(*it)->data);
-                    ++it;
-                }
-
-                if (it!=MDE_source.vMDE.end() && (*it)->name=="self_closing_tag")
-                {
-                    (*(stack_MDE_pt.top()))->new_vMDE_element();
-                    std::cout << "stack top: " << (*(stack_MDE_pt.top()))->name << ", " << (*(stack_MDE_pt.top()))->data <<std::endl;
-                    return (*(stack_MDE_pt.top()))->vMDE.back()->process_flat_MDE_to_MDE(it, MDE_source, stack_MDE_pt);
-                    
-                }
-                else if (it!=MDE_source.vMDE.end() && (*it)->name=="data")
-                {
-                    std::cout << "stack top: " << (*(stack_MDE_pt.top()))->name << ", " << (*(stack_MDE_pt.top()))->data <<std::endl;
-                    return (*(stack_MDE_pt.top()))->process_flat_MDE_to_MDE(it, MDE_source, stack_MDE_pt);
-                    
-                }
-                else if (it!=MDE_source.vMDE.end() && (*it)->name!="closing_tag") this->new_vMDE_element();
-                return this->vMDE.back()->process_flat_MDE_to_MDE(it, MDE_source, stack_MDE_pt);
-
-            }
-            else if ((it!=MDE_source.vMDE.end()) && ((*it)->name=="data"))
-            {
-                this->data=(*it)->data;
-                ++it;
-                
-                if ((it!=MDE_source.vMDE.end()) && ((*it)->name=="closing_tag"))
-                {
-                    return this->process_flat_MDE_to_MDE(it, MDE_source, stack_MDE_pt);
-                }
-                else
-                {
-                    this->new_vMDE_element();
-                    return this->vMDE.back()->process_flat_MDE_to_MDE(it, MDE_source, stack_MDE_pt);
-                }
-                
-            }
-            else if ((it!=MDE_source.vMDE.end()) && ((*it)->name=="closing_tag"))
-            {
-                return this->process_flat_MDE_to_MDE(it, MDE_source, stack_MDE_pt);
-            }
-            else
-            {
-                this->data="";
-                this->new_vMDE_element();
-                return this->vMDE.back()->process_flat_MDE_to_MDE(it, MDE_source, stack_MDE_pt);
-            }
-        }
-        else if ((it!=MDE_source.vMDE.end()) && ((*it)->name=="attribute"))
-        {
-            while ((it!=MDE_source.vMDE.end()) && ((*it)->name=="attribute"))
-                {
-                    this->new_vMDE_element((*it)->name,(*it)->data);
-                    ++it;
-                }
-                
-                if (it!=MDE_source.vMDE.end() && (*it)->name=="self_closing_tag")
-                {
-                    (*(stack_MDE_pt.top()))->new_vMDE_element();
-                    std::cout << "stack top: " << (*(stack_MDE_pt.top()))->name << ", " << (*(stack_MDE_pt.top()))->data <<std::endl;
-                    return (*(stack_MDE_pt.top()))->vMDE.back()->process_flat_MDE_to_MDE(it, MDE_source, stack_MDE_pt);
-                    
-                }
-                else if (it!=MDE_source.vMDE.end() && (*it)->name!="closing_tag") this->new_vMDE_element();
-                std::cout << "End of attributes at " << (this->vMDE.back())->data << std::endl;
-                return this->vMDE.back()->process_flat_MDE_to_MDE(it, MDE_source, stack_MDE_pt);
-    
-        }
-        else if(((*it)->name=="closing_tag") && it!=MDE_source.vMDE.begin())
-        {
-            ++it;
-            MDE** ptr_to_ptr_to_MDE = stack_MDE_pt.top();       // not sure why doing this 
-            delete ptr_to_ptr_to_MDE;
-            stack_MDE_pt.pop();
-            // tricky: if next element is opening tag we create
-            // a new vMDE element in the element at the top of the stack 
-            // (which should be the parent element of this current one)
-
-            if (it!=MDE_source.vMDE.end() && ((*it)->name=="opening_tag" || (*it)->name=="self_closing_tag" || (*it)->name=="comment_tag"))
-            {
-                (*(stack_MDE_pt.top()))->new_vMDE_element();
-                return (*(stack_MDE_pt.top()))->vMDE.back()->process_flat_MDE_to_MDE(it, MDE_source, stack_MDE_pt);
-            }
-            else
-            {
-                if (!stack_MDE_pt.empty()) return (*(stack_MDE_pt.top()))->process_flat_MDE_to_MDE(it, MDE_source, stack_MDE_pt);
-                else return this;
-            }
-        }
-        else if ((it!=MDE_source.vMDE.end()) && ((*it)->name=="data"))
-        {
-            this->data=(*it)->data;
-            ++it;
-            
-            if ((it!=MDE_source.vMDE.end()) && ((*it)->name=="closing_tag"))
-            {
-                return this->process_flat_MDE_to_MDE(it, MDE_source, stack_MDE_pt);
-            }
-            else
-            {
-                this->new_vMDE_element();
-                return this->vMDE.back()->process_flat_MDE_to_MDE(it, MDE_source, stack_MDE_pt);
-            }
-            
-        }
-        else if (it!=MDE_source.vMDE.end() && ((*it)->name=="self_closing_tag" || (*it)->name=="comment_tag"))
-        {
-            // name of this element is in data of the flat MDE
-            this->name=(*it)->data;
-            // set empty data in case writing over existing MDE
-            this->data="";
-            
-            if (it!=MDE_source.vMDE.begin())
-            {
-                ++it;
-                if (it!=MDE_source.vMDE.end() && (*it)->name=="attribute")
-                {
-                    return (*(stack_MDE_pt.top()))->vMDE.back()->process_flat_MDE_to_MDE(it, MDE_source, stack_MDE_pt);
-                    
-                }
-                else if (it!=MDE_source.vMDE.end() && (*it)->name!="closing_tag") (*(stack_MDE_pt.top()))->new_vMDE_element();
-                printf("test!");
-                return (*(stack_MDE_pt.top()))->vMDE.back()->process_flat_MDE_to_MDE(it, MDE_source, stack_MDE_pt);
-            }
-            else
-            {
-                it++;
-                this->new_vMDE_element();
-                return this->vMDE.back()->process_flat_MDE_to_MDE(it, MDE_source, stack_MDE_pt);
-            }
-        }
-        else return this;
-    }
-    return this;
-}
-*/
 
 void MDE::testing()
 {
@@ -1459,13 +448,9 @@ void MDE::loop_test2(std::vector<int> & vect_index, int & index, std::vector<MDE
         
         try
         {
-            //~ ((this->vMDE)[(vect_index[index])])->loop_test2(vect_index,++index,pt_vMDE);
             //~ std::cout << "1.3.1 " <<  (this->vMDE)[(vect_index[index])]->data << std::endl;
             MDE * ptr_to_MDE = ((this->vMDE)[(vect_index[index])]);
-            //~ return ((this->vMDE)[(vect_index[index])])->loop_test2(vect_index,++index,pt_vMDE);
-            //~ (ptr_to_ptr_to_MDE)->loop_test2(vect_index,++index,pt_vMDE);
             (ptr_to_MDE)->loop_test2(vect_index,++index,pt_vMDE);
-            //~ return ((this->vMDE)[(vect_index[index])]);
         }
         catch(const std::out_of_range& oor)
         {
@@ -1475,9 +460,6 @@ void MDE::loop_test2(std::vector<int> & vect_index, int & index, std::vector<MDE
     
     else
     {
-        //~ printf("2. %i\n",index);
-        //~ printf("2.1 %i\n",vect_index[index]);
-        //~ std::clog << "2.2 " <<  this->data << std::endl;
         try
         {
             MDE** ptr_to_ptr_to_MDE = new MDE*((this->vMDE)[(vect_index[index])]);
@@ -1494,29 +476,12 @@ void MDE::loop_test2(std::vector<int> & vect_index, int & index, std::vector<MDE
 
 std::vector<MDE*> MDE::loop_test3(std::vector<int> & vect_index, int & index){
     
-    //~ printf("0. %i\n",index);
-    //~ printf("0.1 %i\n",vect_index[index]);
-    //~ std::cout << "0.2 " <<  (index==0)?this->data:this->at(index).size() << std::endl;
     if (index<vect_index.size()-1)
     {
-        //~ printf("1. %i\n",index);
-        //~ printf("1.1 %i\n",vect_index[index]);
-        //~ std::cout << "1.2 " <<  this->data << std::endl;
-        //~ std::cout << "1.2 " <<  (index==0)?this->data:this->at(index).size() << std::endl;
-        //~ std::cout << "1.3 " <<  (this->vMDE)[(vect_index[index])]->data << std::endl;
-        
         try
         {
-            //~ ((this->vMDE)[(vect_index[index])])->loop_test2(vect_index,++index,pt_vMDE);
-            //~ std::cout << "1.3.1 " <<  (this->vMDE)[(vect_index[index])]->data << std::endl;
-            //~ std::vector<MDE *> in_loop_vMDE = ((this->vMDE)[(vect_index[index])])->vMDE;
-            //~ std::vector<MDE *> in_loop_vMDE = (this->vMDE);
             MDE * in_loop_MDE = (this->vMDE)[(vect_index[index])];
-            //~ return ((this->vMDE)[(vect_index[index])])->loop_test2(vect_index,++index,pt_vMDE);
-            //~ (ptr_to_ptr_to_MDE)->loop_test2(vect_index,++index,pt_vMDE);
-            //~ return ((in_loop_vMDE)[(vect_index[index])])->loop_test3(vect_index,++index);
             return (in_loop_MDE)->loop_test3(vect_index,++index);
-            //~ return ((this->vMDE)[(vect_index[index])]);
         }
         catch(const std::out_of_range& oor)
         {
@@ -1526,19 +491,10 @@ std::vector<MDE*> MDE::loop_test3(std::vector<int> & vect_index, int & index){
     
     else
     {
-        //~ printf("2. %i\n",index);
-        //~ printf("2.1 %i\n",vect_index[index]);
-        //~ std::cout << "2.2 " <<  (index==0)?this->data:this->at(index).size() << std::endl;
-        //~ std::cout << "2.2 " <<  this->data << std::endl;
         try
         {
-            //~ std::vector<MDE *> final_vMDE = ((this->vMDE)[(vect_index[index])]);
-            //~ std::vector<MDE *> final_vMDE = (this->at[(vect_index[index])]);
             MDE * in_loop_MDE = (this->vMDE)[(vect_index[index])];
 
-            //~ MDE* ptr_to_vMDE = ((this->vMDE)[(vect_index[index])]);
-            //~ pt_vMDE.push_back(ptr_to_ptr_to_MDE);
-            //~ return final_vMDE;
             return in_loop_MDE->vMDE;
 
         }
@@ -1558,7 +514,6 @@ MDE * MDE::getVmdeBack()
     return this->vMDE.back();
 }
 
-//~ std::vector<MDE*>::const_iterator MDE::getVmdeBegin()
 std::vector<MDE*>::iterator MDE::getVmdeBegin()
 {
     return this->vMDE.begin();
@@ -1578,9 +533,7 @@ std::size_t MDE::getVmdeSize()
 // simplified version of vMDE_get_by_index
 MDE * MDE::get_vMDE(std::vector<int> vect_index)
 {
-    //~ fprintf(stderr,"in get_vMDE");
     std::vector<int>::const_iterator it=vect_index.begin();
-    //~ this->vMDE_get_by_index(vect_index, it);
     this->display_vector_int(vect_index);
     return this->vMDE_get_by_index(vect_index, it);
 }
@@ -1588,33 +541,22 @@ MDE * MDE::get_vMDE(std::vector<int> vect_index)
 MDE * MDE::vMDE_get_by_index(std::vector<int>& vect_index, std::vector<int>::const_iterator it)
 {
     int store_it=0;
-    //~ printf("0. %i", *it);
-    //~ std::clog << "vMDE_get_by_index checkpoint 0" << std::endl;
     if (vect_index.size()==0)
     {
-        //~ printf("1. %i", *it);
-    //~ std::clog << "vMDE_get_by_index checkpoint 1" << std::endl;
         return this;
     }
     else if (vect_index.size()==1)
     {
-    //~ std::clog << "vMDE_get_by_index checkpoint 2" << std::endl;
-        //~ printf("2. %i", *it);
         return (this->vMDE).at(vect_index.front());
     }
     else if ((vect_index.size()>1) && (it!=vect_index.end()-1))
     {
-        //~ std::clog << "vMDE_get_by_index checkpoint 3" << std::endl;
         fprintf(stderr,"3. %i", *it);
         store_it=*it;
-        //~ std::clog << "vMDE_get_by_index checkpoint 3.1" << std::endl;
         return ((this->vMDE).at(store_it))->vMDE_get_by_index(vect_index,++it);
-        //~ std::clog << "vMDE_get_by_index checkpoint 3.2" << std::endl;
     }
     else
     {
-    //~ std::clog << "vMDE_get_by_index checkpoint 4" << std::endl;
-        //~ printf("4. %i", *it);
         return this->vMDE.at(vect_index.back());
     }
 }
@@ -1642,12 +584,10 @@ std::vector<int> MDE::set_vector_of_indexes(std::string list_indexes)
     int num;
     while ((pos = list_indexes.find(delimiter)) != std::string::npos) {
         token = list_indexes.substr(0, pos);
-        //~ std::clog << token;
         if(!(istringstream(token)>>num)) num=0;
         vect_index.push_back(num);
         list_indexes.erase(0, pos + delimiter.length());
     }
-    //~ std::clog << list_indexes << std::endl;
     if(!(istringstream(list_indexes)>>num)) num=0;
     vect_index.push_back(num);    
     return vect_index;

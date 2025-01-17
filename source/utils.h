@@ -290,7 +290,7 @@ void formatDisplay(MDE & MDE_source, int n_indent, const int & n_space, std::str
          * other existing methods.
          */
 void extractMDEdataForVoffset(MDE & MDE_source, std::vector<GLdata> & v_MDE_data, int & level,
-                             int & index, bool displayDataOnly = false, bool hideParent = false);
+                             int & index, bool _displayDataOnly = false, bool _hideParent = false);
 
         /**
          * 
@@ -404,10 +404,26 @@ void splitCssKeyValuePairs(std::string &bufferLine, std::vector<std::string> &vK
 void processCssColor(std::string &cssColor, std::vector<std::vector<float>> &vect_color);
 std::vector<float> processCssColor_RGBA(std::string &cssColor);
 void splitStringSep(std::string &strSource, std::vector<std::string> &vTarget, std::string sep);
-
+void PRINT_LOG(const std::string text, uint target_level=1);
 /*
 bool extractFileToFlatMDE(const std::string & full_filename, MDE & oMDE);
 bool loadXMLFileTovMDE(int & index, const std::string & full_filename, MDE & oMDE);
 MDE * processFlatMdeToMde(std::vector<MDE*>::iterator & it, MDE & MDE_source, std::stack<MDE**> & stack_MDE_pt);
 */
+
+void set_utils_log_level(uint &_log_level);
+
+// Templates
+//~ template <typename T>
+//~ void PRINT_VECTOR(const std::vector<T> &vec, uint target_level){
+    //~ if(log_level == target_level)
+    //~ {
+        //~ for(auto it:vec)
+        //~ {
+            //~ std::clog<<std::to_string(it)<<", ";
+        //~ }
+        
+        //~ std::clog<<std::endl;
+    //~ }
+//~ }
 #endif /*UTILS_CPP*/

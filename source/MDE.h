@@ -13,28 +13,6 @@ enum MDE_member {name,data};
 
 
 /**
- * 
- * ##name: GLdata
- * @param level is an integer. It holds the depth level of an instance
- * of MDE within another instance of MDE. 
- * @param index is an integer. It holds the index of the element within
- * the private member vMDE standard vector of pointer to MDE.
- * @param mde_member is an enum MDE_member{name,data}. It holds the
- * about the nature of the data, name for private member 'name', 'data
- * for public member 'data'.
- * @param MDE_data is  standard string. it holds the data itself.
- * @brief This is public structure 'GLdata'. It is used for transferring
- * information to GL functions.
- */
-//~ struct GLdata{
-    
-    //~ int level;
-    //~ int index;
-    //~ MDE_member mde_member;
-    //~ std::string MDE_data;
-//~ };
-
-/**
  * This is class MDE.
  * 
  */
@@ -48,15 +26,12 @@ class MDE {
         static std::vector<MDE**> search_result;
         
         // non-static members
-        //~ std::vector<MDE *> vMDE;
-        //~ std::string name;
         int totRef = 0;
         int countRef = 0;
         int refVmdeSize = 0;
 
         
     public:
-        //~ static std::vector<MDE**> search_result;
 
         //public members:
         
@@ -67,7 +42,13 @@ class MDE {
          * information that can be displayed for users.
          */
         std::string data;
-        
+
+         /**
+         * 
+         * ##name: name
+         * @brief This is the public member 'name'. It is holding the
+         * information the internal name for the data element.
+         */        
         std::string name;
 
         std::vector<MDE *> vMDE;
@@ -117,19 +98,6 @@ class MDE {
 
          /**
          * 
-         * ##name: ~MDE()
-         * @param No arguments.
-         * @return Nothing is returned (void).
-         * @see MDE().
-         * @exception No exception handling.
-         * @brief This is the destructor member function simply
-         * deleteing each pointers from private member vMDE, vector of
-         * pointers to MDE.
-         */
-        //~ ~MDE();
-
-         /**
-         * 
          * ##name: destructor_MDE()
          * @param No arguments.
          * @return Nothing is returned (void).
@@ -144,26 +112,15 @@ class MDE {
 
          /**
          * 
-         * ##name: delete_all_pt()
+         * ##name: deleteAllPt()
          * @param No arguments.
          * @return Nothing is returned (void).
          * @see destructor_MDE().
          * @exception No exception handling.
-         * @brief This is another destructor member doing exactely the
-         * same as~MDE()
+         * @brief Deletes recursively all pointers in the MDE instance.
          */
-        private: void delete_all_pt_old();
-        private: void delete_all_pt_v_old();
-        
-        public: void delete_all_pt();
-        public: void delete_all_pt2_old();
         void deleteAllPt(bool manual = false, int sizeRef=0);
-        bool deleteAllPt_old();
-        void deleteAll();
         bool isFirstRef();
-//TODO make sure this delete_all_pt() is necessary        
-        
-        
         
          /**
          * 
@@ -234,8 +191,9 @@ class MDE {
 
         // member function to create new instance of Class MDE:
 
+
          /**
-         * 
+         *
          * ##name: new_vMDE_element()
          *  
          * @param No arguments.

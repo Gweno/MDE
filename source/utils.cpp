@@ -13,6 +13,9 @@
 #include "utils.h"
 GLdata current_GLdata;
 
+// test log
+int utils_test_log=1;
+uint utils_log_level = 0;
 
 // declare and define some booleans
 bool container = false;
@@ -22,6 +25,10 @@ bool display = false;
 bool attributes = false;
 bool hasStyle = false; 
 bool hasColor =false;
+
+
+
+// declare strings
 std::string text;
 std::string fontcolor;
 std::string fontname;
@@ -55,7 +62,6 @@ void checkToken(const std::string & token, std::string & element)
 
 void splitString(const std::string & tag, std::vector<std::string> & list_elements)
 {
-    //~ std::clog << "In utils!!!" << std::endl;
     std::stringstream iss(tag);
     std::vector<std::string> tokens{std::istream_iterator<std::string>{iss},std::istream_iterator<std::string> {}};
     list_elements = tokens;
@@ -128,13 +134,10 @@ void XcssStyleAttribute(std::string & buffer_Input,
     
     
     strTokenTag(buffer_Input, output_Tag, buffer_End_of_Line,0,'=');
-    //~ std::clog << "buffer_Input " <<buffer_Input << " ,output_Tag " << output_Tag << " ,buffer_End_of_Line " << buffer_End_of_Line << std::endl;
     std::size_t found = buffer_End_of_Line.find(sep);
     if(found!=std::string::npos){
-        //~ std::clog<<"there are more than one key-value pairs, first is before: " << found << std::endl;
     }
     strTokenTag(buffer_End_of_Line, output2, buffer_End_of_Line2,'"','"');
-    //~ std::clog << "buffer_End_of_Line " <<buffer_End_of_Line << " ,output2 " << output2 << " ,buffer_End_of_Line2 " << buffer_End_of_Line2 << std::endl;
     
 }
 
@@ -405,193 +408,6 @@ bool extractFileToFlatMDE(MDE & MDE_source, const std::string & full_filename)
     //~ std::clog << "Done" << std::endl;
     return true;
 }
-/*
-MDE * processFlatMDEToMDE(MDE & MDE_source,MDE & MDE_target,std::vector<MDE*>::iterator & it, std::stack<MDE**> & stack_MDE_pt)
-{
-
-    while (it!=MDE_source.vMDE.end())
-    {
-        if ((*it)->name=="xml_declaration")
-        {
-            // name of this element is name of the flat MDE element (e.g. "xml_declaration")
-            MDE_target.name = (*it)->name;
-            // set empty data in case writing over existing MDE
-            MDE_target.data="";
-            
-            MDE_target.new_vMDE_element((*it)->data,"");
-            
-            it++;
-
-            if ((it!=MDE_source.vMDE.end()) && ((*it)->name=="attribute"))
-            {
-                while ((it!=MDE_source.vMDE.end()) && ((*it)->name=="attribute"))
-                {
-                    (MDE_target.vMDE.back())->new_vMDE_element((*it)->name,(*it)->data);
-                    ++it;
-                }
-            }
-            
-            (*(stack_MDE_pt.top()))->new_vMDE_element();
-            std::clog << "stack top: " << (*(stack_MDE_pt.top()))->name << ", " << (*(stack_MDE_pt.top()))->data <<std::endl;
-            return processFlatMDEToMDE(MDE_source,*((*(stack_MDE_pt.top()))->vMDE.back()),it, stack_MDE_pt);
-        }
-        
-        else if ((*it)->name=="opening_tag")
-        {
-            // name of this element is in data of the flat MDE
-            MDE_target.name=(*it)->data;
-            // set empty data in case writing over existing MDE
-            MDE_target.data="";
-            
-            // store tag in stack only if it's an opening tag 
-            // and not if it's a self closing tag
-            //~ MDE** ptr_to_ptr_to_MDE = new MDE*(this);
-            MDE** ptr_to_ptr_to_MDE = new MDE*(&MDE_target);
-            stack_MDE_pt.push(ptr_to_ptr_to_MDE);
-            // go to next element
-            ++it;
-            
-            if ((it!=MDE_source.vMDE.end()) && ((*it)->name=="attribute"))
-            {
-                while ((it!=MDE_source.vMDE.end()) && ((*it)->name=="attribute"))
-                {
-                    MDE_target.new_vMDE_element((*it)->name,(*it)->data);
-                    ++it;
-                }
-
-                if (it!=MDE_source.vMDE.end() && (*it)->name=="self_closing_tag")
-                {
-                    (*(stack_MDE_pt.top()))->new_vMDE_element();
-                    std::clog << "stack top: " << (*(stack_MDE_pt.top()))->name << ", " << (*(stack_MDE_pt.top()))->data <<std::endl;
-                    return processFlatMDEToMDE(MDE_source,*((*(stack_MDE_pt.top()))->vMDE.back()),it, stack_MDE_pt);
-
-                }
-                else if (it!=MDE_source.vMDE.end() && (*it)->name=="data")
-                {
-                    std::clog << "stack top: " << (*(stack_MDE_pt.top()))->name << ", " << (*(stack_MDE_pt.top()))->data <<std::endl;
-                   return processFlatMDEToMDE(MDE_source,*(*(stack_MDE_pt.top())),it, stack_MDE_pt);
-
-                    
-                }
-                else if (it!=MDE_source.vMDE.end() && (*it)->name!="closing_tag") MDE_target.new_vMDE_element();
-                return processFlatMDEToMDE(MDE_source,*(MDE_target.vMDE.back()),it, stack_MDE_pt);
-
-            }
-            else if ((it!=MDE_source.vMDE.end()) && ((*it)->name=="data"))
-            {
-                MDE_target.data=(*it)->data;
-                ++it;
-                
-                if ((it!=MDE_source.vMDE.end()) && ((*it)->name=="closing_tag"))
-                {
-                    return processFlatMDEToMDE(MDE_source,MDE_target,it, stack_MDE_pt);
-                }
-                else
-                {
-                    MDE_target.new_vMDE_element();
-                    return processFlatMDEToMDE(MDE_source,*(MDE_target.vMDE.back()),it, stack_MDE_pt);
-                }
-                
-            }
-            else if ((it!=MDE_source.vMDE.end()) && ((*it)->name=="closing_tag"))
-            {
-                return processFlatMDEToMDE(MDE_source,MDE_target,it, stack_MDE_pt);
-            }
-            else
-            {
-                MDE_target.data="";
-                MDE_target.new_vMDE_element();
-                return processFlatMDEToMDE(MDE_source,*(MDE_target.vMDE.back()),it, stack_MDE_pt);
-            }
-        }
-        else if ((it!=MDE_source.vMDE.end()) && ((*it)->name=="attribute"))
-        {
-            while ((it!=MDE_source.vMDE.end()) && ((*it)->name=="attribute"))
-                {
-                    MDE_target.new_vMDE_element((*it)->name,(*it)->data);
-                    ++it;
-                }
-                
-                if (it!=MDE_source.vMDE.end() && (*it)->name=="self_closing_tag")
-                {
-                    (*(stack_MDE_pt.top()))->new_vMDE_element();
-                    std::clog << "stack top: " << (*(stack_MDE_pt.top()))->name << ", " << (*(stack_MDE_pt.top()))->data <<std::endl;
-                    return processFlatMDEToMDE(MDE_source,*((*(stack_MDE_pt.top()))->vMDE.back()),it, stack_MDE_pt);
-                    
-                }
-                else if (it!=MDE_source.vMDE.end() && (*it)->name!="closing_tag") MDE_target.new_vMDE_element();
-                std::clog << "End of attributes at " << (MDE_target.vMDE.back())->data << std::endl;
-                return processFlatMDEToMDE(MDE_source,*(MDE_target.vMDE.back()),it, stack_MDE_pt);
-    
-        }
-        else if(((*it)->name=="closing_tag") && it!=MDE_source.vMDE.begin())
-        {
-            ++it;
-            MDE** ptr_to_ptr_to_MDE = stack_MDE_pt.top();       // not sure why doing this 
-            delete ptr_to_ptr_to_MDE;
-            stack_MDE_pt.pop();
-            // tricky: if next element is opening tag we create
-            // a new vMDE element in the element at the top of the stack 
-            // (which should be the parent element of this current one)
-
-            if (it!=MDE_source.vMDE.end() && ((*it)->name=="opening_tag" || (*it)->name=="self_closing_tag" || (*it)->name=="comment_tag"))
-            {
-                (*(stack_MDE_pt.top()))->new_vMDE_element();
-                return processFlatMDEToMDE(MDE_source,*((*(stack_MDE_pt.top()))->vMDE.back()),it, stack_MDE_pt);
-            }
-            else
-            {
-                if (!stack_MDE_pt.empty()) return processFlatMDEToMDE(MDE_source,*(*(stack_MDE_pt.top())),it, stack_MDE_pt);
-                else return &MDE_target;
-            }
-        }
-        else if ((it!=MDE_source.vMDE.end()) && ((*it)->name=="data"))
-        {
-            MDE_target.data=(*it)->data;
-            ++it;
-            
-            if ((it!=MDE_source.vMDE.end()) && ((*it)->name=="closing_tag"))
-            {
-                return processFlatMDEToMDE(MDE_source,MDE_target,it, stack_MDE_pt);
-            }
-            else
-            {
-                MDE_target.new_vMDE_element();
-                return processFlatMDEToMDE(MDE_source,*(MDE_target.vMDE.back()),it, stack_MDE_pt);
-            }
-            
-        }
-        else if (it!=MDE_source.vMDE.end() && ((*it)->name=="self_closing_tag" || (*it)->name=="comment_tag"))
-        {
-            // name of this element is in data of the flat MDE
-            MDE_target.name=(*it)->data;
-            // set empty data in case writing over existing MDE
-            MDE_target.data="";
-            
-            if (it!=MDE_source.vMDE.begin())
-            {
-                ++it;
-                if (it!=MDE_source.vMDE.end() && (*it)->name=="attribute")
-                {
-                    return processFlatMDEToMDE(MDE_source,*((*(stack_MDE_pt.top()))->vMDE.back()),it, stack_MDE_pt);
-                    
-                }
-                else if (it!=MDE_source.vMDE.end() && (*it)->name!="closing_tag") (*(stack_MDE_pt.top()))->new_vMDE_element();
-                printf("test!");
-                return processFlatMDEToMDE(MDE_source,*((*(stack_MDE_pt.top()))->vMDE.back()),it, stack_MDE_pt);
-            }
-            else
-            {
-                it++;
-                MDE_target.new_vMDE_element();
-                return processFlatMDEToMDE(MDE_source,*(MDE_target.vMDE.back()),it, stack_MDE_pt);
-            }
-        }
-        else return (&MDE_target);
-    }
-    return  (&MDE_target);
-}
-*/
 
 void keyValuePairParser(std::string expression, std::string &key, std::string &value, const char op, bool hasDleQuotes)
 {
@@ -1309,7 +1125,7 @@ MDE * replaceVMDEwithXML(MDE & MDE_source,std::vector<int> & vect_index_file, st
 
 bool replaceVMDEwithXML_old(MDE & MDE_source,std::vector<int> & vect_index_file, std::string & full_filename)
 {
-    std::clog << "file to load:" << full_filename << std::endl;
+    if(utils_test_log>1) std::clog << "file to load:" << full_filename << std::endl;
     //~ newMDE.destructor_MDE();
     std::vector<int>::const_iterator it_file;
     bool input_file = false;
@@ -1330,41 +1146,50 @@ bool replaceVMDEwithXML_old(MDE & MDE_source,std::vector<int> & vect_index_file,
     fprintf(stderr,"index file:%i\n", index_file);
 
 
-    std::clog << "here 0" << std::endl;
+    if(utils_test_log>1) std::clog << "here 0" << std::endl;
 
 
     // get vDME pointer at index just before last of vector of indexes, then load at that last index.
     input_file = loadXMLFileTovMDE(*(MDE_source.get_vMDE(tmp_vect_index)), index_file, full_filename);
     
-    std::clog << "here 1" << std::endl;
+    if(utils_test_log>1) std::clog << "here 1" << std::endl;
 
     
     // set the name of the file to the mde pointer at the given index, one level above what has been loaded
     MDE_source.get_vMDE(tmp_vect_index)->set_data(full_filename);
     
-    std::clog << "here 2" << std::endl;
+    if(utils_test_log>1) std::clog << "here 2" << std::endl;
 
     return input_file;
 }
 
 void extractMDEdataForVoffset(MDE & MDE_source, std::vector<GLdata> & v_MDE_data,
-                             int & level, int & index, bool displayDataOnly, bool hideParent)
+                             int & level, int & index, bool _displayDataOnly, bool _hideParent)
 {
     current_GLdata.level= level;
     current_GLdata.index= index;
+    
+    PRINT_LOG("########## extractMDEdataForVoffset ##########", 5);
+    PRINT_LOG("_displayDataOnly: ", 5);
+    PRINT_LOG(_displayDataOnly?"true":"false", 5);
+    std::clog<<"Check again: " << _displayDataOnly<<std::endl;
+    PRINT_LOG("_hideParent: ", 5);
+    PRINT_LOG(_hideParent?"true":"false", 5);
     //~ level++;
     //~ index++;
     //~ std::clog<<"level: "<<current_GLdata.level<<" index: "<<current_GLdata.index;
-    if (!hideParent){
-        if (!displayDataOnly){
+    if (!_hideParent){
+        if (!_displayDataOnly){
             current_GLdata.mde_member=MDE_member::name;
             current_GLdata.MDE_data=MDE_source.name;
             v_MDE_data.push_back(current_GLdata);
             //~ std::clog << " name: " << current_GLdata.MDE_data;
+            PRINT_LOG(" name: " +  current_GLdata.MDE_data, 5);
             }
         current_GLdata.mde_member=MDE_member::data;
         current_GLdata.MDE_data=MDE_source.data;
         v_MDE_data.push_back(current_GLdata);
+        PRINT_LOG(" data: " +  current_GLdata.MDE_data, 5);
         //~ std::clog << " data: " << current_GLdata.MDE_data <<std::endl;
         }
     //~ if (MDE_source.vMDE.size()!=0) {index++;}
@@ -1379,12 +1204,13 @@ void extractMDEdataForVoffset(MDE & MDE_source, std::vector<GLdata> & v_MDE_data
         for (int it=0; it<MDE_source.vMDE.size();++it)
             {
                 index = it;
-                extractMDEdataForVoffset(*MDE_source.vMDE[it], v_MDE_data, level, index, displayDataOnly);
+                extractMDEdataForVoffset(*MDE_source.vMDE[it], v_MDE_data, level, index, _displayDataOnly);
             }
         level--;
         index=0;
    }
     //~ index=0;
+    PRINT_LOG("########## End extractMDEdataForVoffset ##########", 5);
     return;
 }
 
@@ -1500,7 +1326,7 @@ void simpleLoopVMDEnextLevel(MDE & MDE_source, std::string searchName,  std::vec
 
 void checkHtmlTag2(MDE & MDE_source){
 
-    std::clog<<"(in checkHtmlTag2) MDE_source.name: "<<MDE_source.name<< "  MDE_source.data: "<<MDE_source.data<<std::endl;
+    if(utils_test_log>1) std::clog<<"(in checkHtmlTag2) MDE_source.name: "<<MDE_source.name<< "  MDE_source.data: "<<MDE_source.data<<std::endl;
 /*
                                     if (checkHtmlTag(*it2,"attributes")){
                                         attributes = true;
@@ -1533,7 +1359,7 @@ void checkHtmlTag2(MDE & MDE_source){
     hasStyle = false;
     displayTag = false;
     if(MDE_source.name=="attributes"){
-        std::clog<<"Found atributes" << std::endl;
+        if(utils_test_log>1) std::clog<<"Found atributes" << std::endl;
         attributes = true;
         for(auto it:MDE_source.vMDE){
             checkHtmlTag2(*it);
@@ -1541,20 +1367,20 @@ void checkHtmlTag2(MDE & MDE_source){
         if (display) return;
     }
     else if(MDE_source.name=="style"){
-        std::clog<<"Found style" << std::endl;
+        if(utils_test_log>1) std::clog<<"Found style" << std::endl;
         hasStyle=true;
         for(auto it:MDE_source.vMDE){
             checkHtmlTag2(*it);
         }
     }
     else if (MDE_source.name == "display"){
-        std::clog<<"Found display" << std::endl;
+        if(utils_test_log>1) std::clog<<"Found display" << std::endl;
         displayTag = true;
         display = rawDisplayContent(MDE_source);
         std::clog<<"display is set to "<< (display?"true":"false") << std::endl;
     }
     else if (MDE_source.name == "color"){
-            std::clog<<"Found color" << std::endl;
+            if(utils_test_log>1) std::clog<<"Found color" << std::endl;
             hasColor = true;
             fontcolor = MDE_source.data;
     }
@@ -1582,8 +1408,9 @@ if (checkHtmlTag(*it3,"style")){
 
 */
  MDE * htmlParser(MDE & MDE_source, std::vector<std::vector<float>> &vect_color, std::vector<int> &vect_size){
-    std::clog<<"In html Parser"<<std::endl;
-    fprintf(stderr,"MDE_source name %s, data %s: \n", (MDE_source.name).c_str(),MDE_source.data.c_str());
+    PRINT_LOG("In html Parser",5);
+    //~ fprintf(stderr,"MDE_source name %s, data %s: \n", (MDE_source.name).c_str(),MDE_source.data.c_str());
+    PRINT_LOG("MDE_source name: "+MDE_source.name+ ", data: " + MDE_source.data, 5);
     if (MDE_source.vMDE.size()==0){
         //~ std::clog<<"No tag to parse" <<std::endl;
         return nullptr;
@@ -1603,11 +1430,7 @@ if (checkHtmlTag(*it3,"style")){
     newMDE->name = MDE_source.name;
     newMDE->data = MDE_source.data;
     
-    //~ std::string color;
-
     // a vector for the colors
-    //~ std::vector<std::vector<float>> vect_color;
-    // default (font) color
     std::vector<float> defaultColor = {0.0,0.0,0.0,1.0};
     
     // font size
@@ -1617,14 +1440,12 @@ if (checkHtmlTag(*it3,"style")){
     // Checking if MDE name is a Div -> later will add further MDE above , like <HTML>, <body>...
     container = false;
     if (checkHtmlTag(MDE_source,"div")){
-        // check if it's a div...
-        //~ std::clog<<"It's a Div!\n"<<std::endl;
         container = true;
         for(auto it:MDE_source.vMDE){
-            std::clog<<"Name/Data: "<< (*it).name <<" / " << (*it).data <<std::endl;
-            //~ std::clog <<"Checking if it's a h3 or ul\n"<<std::endl;
+            PRINT_LOG("Name/Data: " + (*it).name + " / " + (*it).data, 5);
             if (checkHtmlTag(*it,"h3")){
-                std::clog <<"It's a h3\n"<<std::endl;
+                if(utils_test_log>1) std::clog <<"It's a h3\n"<<std::endl;
+                PRINT_LOG("It's a h3\n", 5);
                 newMDE->new_vMDE_element(it->name,it->data);
                 vect_color.push_back(defaultColor);
                 vect_size.push_back(96);
@@ -1632,11 +1453,9 @@ if (checkHtmlTag(*it3,"style")){
             else if (checkHtmlTag(*it,"ul"))
             {
                 container = true;
-                //~ std::clog <<"It's a ul\n"<<std::endl;
                 // check all tags for a 'p' or ul or li 
                     for(auto it1:it->vMDE){
-                        //
-                        std::clog<<"Name/Data: "<< (*it1).name <<" / " << (*it1).data <<std::endl;
+                        PRINT_LOG("Name/Data: " + (*it1).name + " / " + (*it1).data, 5);
                         if (checkHtmlTag(*it1,"p") || checkHtmlTag(*it1,"li")){
                             container = false;
                             //~ subtags = false;
@@ -1651,14 +1470,14 @@ if (checkHtmlTag(*it3,"style")){
                             if (it1->vMDE.size()>0){
                                 subtags = true;
                                 for(auto it2:it1->vMDE){
-                                    std::clog<<"Name/Data: "<< (*it2).name <<" / " << (*it2).data <<std::endl;
+                                    PRINT_LOG("Name/Data: " + (*it2).name + " / " + (*it2).data, 5);;
                                     checkHtmlTag2(*it2);
                                     //~ if(checkHtmlTag(*it2,"display")){
                                         //~ std::clog<<"Display Tag"<<std::endl;
                                     //~ }
                                 }
                             }
-                            std::clog<<"(In htmplParser) Checking hasStyle, displayTag, display , hasColor, fontcolor: " << 
+                            if(utils_test_log==5) std::clog<<"(In htmplParser) Checking hasStyle, displayTag, display , hasColor, fontcolor: " << 
                             hasStyle << ", "  << displayTag << ", " << display << ", " << hasColor << ", " << fontcolor << std::endl;
                             if (!subtags || !attributes || !displayTag || display){
                                 //~ newMDE->new_vMDE_element(it1->name,it1->data);
@@ -1767,7 +1586,7 @@ if (checkHtmlTag(*it3,"style")){
                                     //~ }
                                 }
                             }
-                            std::clog<<"(In htmplParser) Checking hasStyle, displayTag, display , hasColor, fontcolor: " << 
+                            if(utils_test_log>1) std::clog<<"(In htmplParser) Checking hasStyle, displayTag, display , hasColor, fontcolor: " << 
                             hasStyle << ", "  << displayTag << ", " << display << ", " << hasColor << ", " << fontcolor << std::endl;
                             if (!subtags || !attributes || !displayTag || display){
                                 //~ newMDE->new_vMDE_element(it1->name,it1->data);
@@ -1799,304 +1618,6 @@ if (checkHtmlTag(*it3,"style")){
     else{
         //~ std::clog << "Not a div\n"<<std::endl;
     }
-    return newMDE;
-}
-
- MDE * htmlParser_very_old(MDE & MDE_source, std::vector<std::vector<float>> &vect_color){
-    fprintf(stderr,"MDE_source name %s, data %s: \n", (MDE_source.name).c_str(),MDE_source.data.c_str());
-    if (MDE_source.vMDE.size()==0){
-        //~ std::clog<<"No tag to parse" <<std::endl;
-        return nullptr;
-    }
-    bool container;
-    bool subtags;
-    bool displayTag;
-    bool display;
-    bool attributes;
-    bool hasStyle;
-    bool hasColor;
-    
-    MDE * newMDE = new MDE();
-    newMDE->name=MDE_source.name;
-    newMDE->data = MDE_source.data;
-    
-    std::string color;
-
-    // a vector for the colors
-    //~ std::vector<std::vector<float>> vect_color;
-    // default (font) color
-    std::vector<float> defaultColor = {0.0,0.0,0.0,1.0};
-    
-    // Checking if MDE name is a Div -> later will add further MDE above , like <HTML>, <body>...
-    container = false;
-    if (checkHtmlTag(MDE_source,"div")){
-        // check if it's a div...
-        //~ std::clog<<"It's a Div!\n"<<std::endl;
-        container = true;
-        for(auto it:MDE_source.vMDE){
-            //~ std::clog <<"Checking if it's a h3 or ul\n"<<std::endl;
-            if (checkHtmlTag(*it,"h3")){
-                //~ std::clog <<"It's a h3\n"<<std::endl;
-                newMDE->new_vMDE_element(it->name,it->data);
-                vect_color.push_back(defaultColor);
-            }
-            else if (checkHtmlTag(*it,"ul")){
-                container = true;
-                //~ std::clog <<"It's a ul\n"<<std::endl;
-                // check all tags for a 'p' or ul or li 
-                    for(auto it1:it->vMDE){
-                        //
-                        if (checkHtmlTag(*it1,"p") || checkHtmlTag(*it1,"li")){
-                            container = false;
-                            subtags = false;
-                            displayTag = false;
-                            display = false;
-                            attributes = false;
-                            hasStyle = false; 
-                            hasColor =false;            
-                            //~ std::clog << "Checking:" << it1->name << std::endl;
-                            //~ std::clog << "Does it have a style?: " << hasCssStyle(*it1,true)<< std::endl ;
-                            if (it1->vMDE.size()>0){
-                                subtags = true;
-                                for(auto it2:it1->vMDE){
-                                    //~ std::clog << "Now Checking:" << it2->name << std::endl;
-                                    if (checkHtmlTag(*it2,"attributes")){
-                                        attributes = true;
-                                        for(auto it3:it2->vMDE){
-                                            //~ std::clog << "And now Checking:" << (it3)->name << std::endl;
-                                            if (checkHtmlTag(*it3,"style")){
-                                                hasStyle = true;
-                                                for(auto it4:it3->vMDE){
-                                                    //~ std::clog << "And further Checking:" << it4->name << std::endl;
-                                                    if (checkHtmlTag(*it4,"display")){
-                                                        displayTag = true;
-                                                        display = rawDisplayContent(*it4);
-                                                        //~ break;
-                                                    }
-                                                    else if (checkHtmlTag(*it4,"color")){
-                                                        //~ std::clog << "Found some font color style! " << std::endl;
-                                                        hasColor = true;
-                                                        color = it4->data;
-                                                        //~ std::clog << "color: " << color << std::endl;
-                
-                                                    }
-                                                }
-                                            }
-                                            
-                                        }
-                                        if (display)break;
-                                    }
-                                }
-                            }
-                            if (!subtags || !attributes || !displayTag || display){
-                                newMDE->new_vMDE_element(it1->name,it1->data);
-                                //~ std::clog << "Tag is to be displayed: " << it->name << std::endl;
-                                if(hasColor){
-                                    //~ std::clog << "has color: " << color << std::endl;
-                                    processCssColor(color, vect_color);
-                                }
-                                else{
-                                    // use default color for font
-                                    vect_color.push_back(defaultColor);
-                                }
-                            }
-                        }
-                        
-                        
-                        //
-                                                
-                    }
-                    }
-                    else{
-                        //~ std::clog << "Not a ul\n"<<std::endl;
-                    }
-                }
-            }
-    else{
-        //~ std::clog << "Not a div\n"<<std::endl;
-    }
-    
-    //~ for(auto it:vect_color){
-        //~ for(std::vector<float>::iterator it2=it.begin();it2!=it.end();++it2){
-            //~ std::clog << *it2 << " , ";
-        //~ }
-        //~ std::clog << std::endl;
-    //~ }
-    
-    //~ newMDE->new_vMDE_element("font","color");
-    //~ int index=0;
-    //~ MDE *ptBack;
-    //~ ptBack = newMDE->vMDE.back();
-    //~ for(auto it:vect_color){
-        //~ ptBack->new_vMDE_element();
-        //~ ptBack->vMDE.back()->name = "index"; 
-        //~ ptBack->vMDE.back()->data = std::to_string(index);
-        
-        //~ std::ostringstream ssRed;        
-        //~ ssRed << it[0];
-        //~ std::string red(ssRed.str());
-        //~ std::clog << "red: " << red << std::endl;
-        //~ ptBack->vMDE.back()->new_vMDE_element("red",red);
-        
-        
-        //~ std::ostringstream ssGreen;        
-        //~ ssGreen << it[1];
-        //~ std::string green(ssGreen.str());
-        //~ std::clog << "green: " << green << std::endl;
-        //~ ptBack->vMDE.back()->new_vMDE_element("green",green);
-        
-        
-        //~ std::ostringstream ssBlue;        
-        //~ ssBlue << it[2];
-        //~ std::string blue(ssBlue.str());
-        //~ std::clog << "blue: " << blue << std::endl;
-        //~ ptBack->vMDE.back()->new_vMDE_element("blue",blue);
-        
-        
-        //~ std::ostringstream ssAlpha;        
-        //~ ssAlpha << it[3];
-        //~ std::string alpha(ssAlpha.str());
-        //~ std::clog << "alpha: " << alpha << std::endl;
-        //~ ptBack->vMDE.back()->new_vMDE_element("alpha",alpha);
-        
-        //~ index++;
-    //~ }
-    //~ delete ptBack;
-    
-    return newMDE;
-}
-
- MDE * htmlParser_very_very_old(MDE & MDE_source, std::vector<std::vector<float>> &vect_color){
-    fprintf(stderr,"MDE_source name %s, data %s: \n", (MDE_source.name).c_str(),MDE_source.data.c_str());
-    if (MDE_source.vMDE.size()==0){
-        std::clog<<"No tag to parse" <<std::endl;
-        return nullptr;
-    }
-    bool subtags;
-    bool displayTag;
-    bool display;
-    bool attributes;
-    bool hasStyle;
-    bool hasColor;
-    
-    MDE * newMDE = new MDE();
-    newMDE->name=MDE_source.name;
-    newMDE->data = MDE_source.data;
-    //~ MDE * newMDE;
-    //~ newMDE->name = MDE_source.name;
-    //~ newMDE->data = MDE_source.data;
-    
-    std::string color;
-
-    // a vector for the colors
-    //~ std::vector<std::vector<float>> vect_color;
-    // default (font) color
-    std::vector<float> defaultColor = {0.0,0.0,0.0,1.0};
-
-    for(auto it:MDE_source.vMDE){
-        // check all tags for a 'p' or ul or li 
-        if (checkHtmlTag(*it,"p") || checkHtmlTag(*it,"li")){
-            subtags = false;
-            displayTag = false;
-            display = false;
-            attributes = false;
-            hasStyle = false; 
-            hasColor =false;            
-            std::clog << "Checking:" << it->name << std::endl;
-            std::clog << "Does it have a style?: " << hasCssStyle(*it,true)<< std::endl ;
-            if (it->vMDE.size()>0){
-                subtags = true;
-                for(auto it2:it->vMDE){
-                    std::clog << "Now Checking:" << it2->name << std::endl;
-                    if (checkHtmlTag(*it2,"attributes")){
-                        attributes = true;
-                        for(auto it3:it2->vMDE){
-                            std::clog << "And now Checking:" << (it3)->name << std::endl;
-                            if (checkHtmlTag(*it3,"style")){
-                                hasStyle = true;
-                                for(auto it4:it3->vMDE){
-                                    std::clog << "And further Checking:" << it4->name << std::endl;
-                                    if (checkHtmlTag(*it4,"display")){
-                                        displayTag = true;
-                                        display = rawDisplayContent(*it4);
-                                        //~ break;
-                                    }
-                                    else if (checkHtmlTag(*it4,"color")){
-                                        std::clog << "Found some font color style! " << std::endl;
-                                        hasColor = true;
-                                        color = it4->data;
-                                        std::clog << "color: " << color << std::endl;
-
-                                    }
-                                }
-                            }
-                            
-                        }
-                        if (display)break;
-                    }
-                }
-            }
-            if (!subtags || !attributes || !displayTag || display){
-                //~ newMDE->new_vMDE_element((*it)->name,(*it)->data);              
-                newMDE->new_vMDE_element(it->name,it->data);
-                std::clog << "Tag is to be displayed: " << it->name << std::endl;
-                if(hasColor){
-                    std::clog << "has color: " << color << std::endl;
-                    processCssColor(color, vect_color);
-                }
-                else{
-                    // use default color for font
-                    vect_color.push_back(defaultColor);
-                }
-            }
-        }
-    }
-    
-    for(auto it:vect_color){
-        for(std::vector<float>::iterator it2=it.begin();it2!=it.end();++it2){
-            std::clog << *it2 << " , ";
-        }
-        std::clog << std::endl;
-    }
-    //~ newMDE->new_vMDE_element("font","color");
-    //~ int index=0;
-    //~ MDE *ptBack;
-    //~ ptBack = newMDE->vMDE.back();
-    //~ for(auto it:vect_color){
-        //~ ptBack->new_vMDE_element();
-        //~ ptBack->vMDE.back()->name = "index"; 
-        //~ ptBack->vMDE.back()->data = std::to_string(index);
-        
-        //~ std::ostringstream ssRed;        
-        //~ ssRed << it[0];
-        //~ std::string red(ssRed.str());
-        //~ std::clog << "red: " << red << std::endl;
-        //~ ptBack->vMDE.back()->new_vMDE_element("red",red);
-        
-        
-        //~ std::ostringstream ssGreen;        
-        //~ ssGreen << it[1];
-        //~ std::string green(ssGreen.str());
-        //~ std::clog << "green: " << green << std::endl;
-        //~ ptBack->vMDE.back()->new_vMDE_element("green",green);
-        
-        
-        //~ std::ostringstream ssBlue;        
-        //~ ssBlue << it[2];
-        //~ std::string blue(ssBlue.str());
-        //~ std::clog << "blue: " << blue << std::endl;
-        //~ ptBack->vMDE.back()->new_vMDE_element("blue",blue);
-        
-        
-        //~ std::ostringstream ssAlpha;        
-        //~ ssAlpha << it[3];
-        //~ std::string alpha(ssAlpha.str());
-        //~ std::clog << "alpha: " << alpha << std::endl;
-        //~ ptBack->vMDE.back()->new_vMDE_element("alpha",alpha);
-        
-        //~ index++;
-    //~ }
-    //~ delete ptBack;
     return newMDE;
 }
 
@@ -2354,11 +1875,31 @@ MDE * getCssStyle(MDE & MDE_source, bool isInline){
     
 }
 
+void PRINT_LOG(const std::string text, uint target_level){
+    if(utils_log_level == target_level)std::clog<<text<<std::endl;
+}
+
+void set_utils_log_level(uint &_log_level)
+{
+    utils_log_level = _log_level;
+};
+
 //~ cssParser
         //~ std::string key;
         //~ std::string value;        
         //~ keyValuePairParser((*it)->data, key,value);
         //~ MDE_target->new_vMDE_element(key,value);
-
+//~ template <typename T>
+//~ void PRINT_VECTOR(const std::vector<T> &vecc, uint target_level){
+    //~ if(log_level == target_level)
+    //~ {
+        //~ for(auto it:vec)
+        //~ {
+            //~ std::clog<<it<<", ";
+        //~ }
+        
+        //~ std::clog<<std::endl;
+    //~ }
+//~ }
 
 #endif /*UTILS_CPP*/
