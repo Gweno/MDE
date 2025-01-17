@@ -68,29 +68,20 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Methods to clear the strings 'name' and 'data' in instance of Objects of Class <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a>.  
+<p>Methods to clear the strings 'name' and 'data' in instance of Objects of Class <a class="el" href="classMDE.html">MDE</a>.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:gad832700663a9577adea73d14aee5011f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__clear.html#gad832700663a9577adea73d14aee5011f">MDE::destructor_MDE</a> ()</td></tr>
-<tr class="memdesc:gad832700663a9577adea73d14aee5011f"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is the destructor member function simply deleteing each pointers from private member vMDE, vector of pointers to <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a>.  <a href="group__group__clear.html#gad832700663a9577adea73d14aee5011f">More...</a><br /></td></tr>
+<tr class="memdesc:gad832700663a9577adea73d14aee5011f"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is function member doing is calling delete_all_pt() to delete all pointers in private member vMDE and clearing members of the instance of object class <a class="el" href="classMDE.html">MDE</a>.  <a href="group__group__clear.html#gad832700663a9577adea73d14aee5011f">More...</a><br /></td></tr>
 <tr class="separator:gad832700663a9577adea73d14aee5011f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga92cc6f749d56f5d462380ef4234704e7"><td class="memItemLeft" align="right" valign="top"><a id="ga92cc6f749d56f5d462380ef4234704e7"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>MDE::destructor_Search_results</b> (std::vector&lt; <a class="el" href="classMDE.html">MDE</a> ** &gt; vsr)</td></tr>
 <tr class="separator:ga92cc6f749d56f5d462380ef4234704e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadbf3b51fb09dc33b02f0d27f0c25a3c9"><td class="memItemLeft" align="right" valign="top"><a id="gadbf3b51fb09dc33b02f0d27f0c25a3c9"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>MDE::delete_all_pt</b> ()</td></tr>
-<tr class="separator:gadbf3b51fb09dc33b02f0d27f0c25a3c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0fba8c09b749b5e450bc6b411c591e95"><td class="memItemLeft" align="right" valign="top"><a id="ga0fba8c09b749b5e450bc6b411c591e95"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>MDE::delete_all_pt2_old</b> ()</td></tr>
-<tr class="separator:ga0fba8c09b749b5e450bc6b411c591e95"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga50b6bc940f3d1ff4443b7f2ee1fbe71a"><td class="memItemLeft" align="right" valign="top"><a id="ga50b6bc940f3d1ff4443b7f2ee1fbe71a"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>MDE::deleteAllPt</b> (bool manual=false, int sizeRef=0)</td></tr>
+<tr class="memitem:ga50b6bc940f3d1ff4443b7f2ee1fbe71a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__clear.html#ga50b6bc940f3d1ff4443b7f2ee1fbe71a">MDE::deleteAllPt</a> (bool manual=false, int sizeRef=0)</td></tr>
+<tr class="memdesc:ga50b6bc940f3d1ff4443b7f2ee1fbe71a"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is another destructor member doing exactely the same as~MDE()  <a href="group__group__clear.html#ga50b6bc940f3d1ff4443b7f2ee1fbe71a">More...</a><br /></td></tr>
 <tr class="separator:ga50b6bc940f3d1ff4443b7f2ee1fbe71a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga82d6481a106a26c9a35cdec4bed62511"><td class="memItemLeft" align="right" valign="top"><a id="ga82d6481a106a26c9a35cdec4bed62511"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>MDE::deleteAllPt_old</b> ()</td></tr>
-<tr class="separator:ga82d6481a106a26c9a35cdec4bed62511"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga68c78defb40b8faa9bc9593068874f75"><td class="memItemLeft" align="right" valign="top"><a id="ga68c78defb40b8faa9bc9593068874f75"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>MDE::deleteAll</b> ()</td></tr>
 <tr class="separator:ga68c78defb40b8faa9bc9593068874f75"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -98,14 +89,14 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>MDE::deleteAll</b> ()
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>MDE::isFirstRef</b> ()</td></tr>
 <tr class="separator:gae5c6a2466d11225c420329a01b13889f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7068c4189f10a89e6a8192c1419f069f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__clear.html#ga7068c4189f10a89e6a8192c1419f069f">MDE::clear_all_vMDE</a> ()</td></tr>
-<tr class="memdesc:ga7068c4189f10a89e6a8192c1419f069f"><td class="mdescLeft">&#160;</td><td class="mdescRight">This member function is to clear all entries for the private member vector vMDE elements of an instance of a class <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a> object recursively.  <a href="group__group__clear.html#ga7068c4189f10a89e6a8192c1419f069f">More...</a><br /></td></tr>
+<tr class="memdesc:ga7068c4189f10a89e6a8192c1419f069f"><td class="mdescLeft">&#160;</td><td class="mdescRight">This member function is to clear all entries for the private member vector vMDE elements of an instance of a class <a class="el" href="classMDE.html">MDE</a> object recursively.  <a href="group__group__clear.html#ga7068c4189f10a89e6a8192c1419f069f">More...</a><br /></td></tr>
 <tr class="separator:ga7068c4189f10a89e6a8192c1419f069f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa2d2adff677862aa8a12fbde8df0f781"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__clear.html#gaa2d2adff677862aa8a12fbde8df0f781">MDE::clear_all_vMDE_by_index</a> (std::vector&lt; int &gt; &amp;vect_index)</td></tr>
-<tr class="memdesc:gaa2d2adff677862aa8a12fbde8df0f781"><td class="mdescLeft">&#160;</td><td class="mdescRight">This member function is to clear all entries of the element of the private member vector vMDE of an instance of a class <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a> object recursively using a vector of index pointing to the parent element.  <a href="group__group__clear.html#gaa2d2adff677862aa8a12fbde8df0f781">More...</a><br /></td></tr>
+<tr class="memdesc:gaa2d2adff677862aa8a12fbde8df0f781"><td class="mdescLeft">&#160;</td><td class="mdescRight">This member function is to clear all entries of the element of the private member vector vMDE of an instance of a class <a class="el" href="classMDE.html">MDE</a> object recursively using a vector of index pointing to the parent element.  <a href="group__group__clear.html#gaa2d2adff677862aa8a12fbde8df0f781">More...</a><br /></td></tr>
 <tr class="separator:gaa2d2adff677862aa8a12fbde8df0f781"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Methods to clear the strings 'name' and 'data' in instance of Objects of Class <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a>. </p>
+<p>Methods to clear the strings 'name' and 'data' in instance of Objects of Class <a class="el" href="classMDE.html">MDE</a>. </p>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="ga7068c4189f10a89e6a8192c1419f069f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga7068c4189f10a89e6a8192c1419f069f">&#9670;&nbsp;</a></span>clear_all_vMDE()</h2>
@@ -122,8 +113,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>MDE::isFirstRef</b> (
       </table>
 </div><div class="memdoc">
 
-<p>This member function is to clear all entries for the private member vector vMDE elements of an instance of a class <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a> object recursively. </p>
-<h2><a class="anchor" id="autotoc_md9"></a>
+<p>This member function is to clear all entries for the private member vector vMDE elements of an instance of a class <a class="el" href="classMDE.html">MDE</a> object recursively. </p>
+<h2><a class="anchor" id="autotoc_md8"></a>
 name: clear_all_vMDE()</h2>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -160,8 +151,8 @@ clear_data(). </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>This member function is to clear all entries of the element of the private member vector vMDE of an instance of a class <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a> object recursively using a vector of index pointing to the parent element. </p>
-<h2><a class="anchor" id="autotoc_md10"></a>
+<p>This member function is to clear all entries of the element of the private member vector vMDE of an instance of a class <a class="el" href="classMDE.html">MDE</a> object recursively using a vector of index pointing to the parent element. </p>
+<h2><a class="anchor" id="autotoc_md9"></a>
 name: clear_all_vMDE_by_index(std::vector&lt;int&gt;&amp; vect_index)</h2>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -171,6 +162,52 @@ name: clear_all_vMDE_by_index(std::vector&lt;int&gt;&amp; vect_index)</h2>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Nothing is returned (void). </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="group__group__clear.html#ga7068c4189f10a89e6a8192c1419f069f" title="This member function is to clear all entries for the private member vector vMDE elements of an instan...">clear_all_vMDE()</a>. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">No</td><td>exception handling. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga50b6bc940f3d1ff4443b7f2ee1fbe71a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga50b6bc940f3d1ff4443b7f2ee1fbe71a">&#9670;&nbsp;</a></span>deleteAllPt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MDE::deleteAllPt </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>manual</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>sizeRef</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This is another destructor member doing exactely the same as~MDE() </p>
+<h2><a class="anchor" id="autotoc_md5"></a>
+name: delete_all_pt()</h2>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">No</td><td>arguments. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Nothing is returned (void). </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__group__clear.html#gad832700663a9577adea73d14aee5011f" title="This is function member doing is calling delete_all_pt() to delete all pointers in private member vMD...">destructor_MDE()</a>. </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
     <tr><td class="paramname">No</td><td>exception handling. </td></tr>
@@ -195,24 +232,8 @@ name: clear_all_vMDE_by_index(std::vector&lt;int&gt;&amp; vect_index)</h2>
       </table>
 </div><div class="memdoc">
 
-<p>This is the destructor member function simply deleteing each pointers from private member vMDE, vector of pointers to <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a>. </p>
+<p>This is function member doing is calling delete_all_pt() to delete all pointers in private member vMDE and clearing members of the instance of object class <a class="el" href="classMDE.html">MDE</a>. </p>
 <h2><a class="anchor" id="autotoc_md4"></a>
-name: ~MDE()</h2>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">No</td><td>arguments. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Nothing is returned (void). </dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="classMDE.html#a149c182b2578cc172f7bb1fc6f228a70" title="This is the basic constructor. Do nothing, apart from creating an empty instance of class MDE.">MDE()</a>. </dd></dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">No</td><td>exception handling. </td></tr>
-  </table>
-  </dd>
-</dl>
-<h2><a class="anchor" id="autotoc_md5"></a>
 name: destructor_MDE()</h2>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -224,11 +245,10 @@ name: destructor_MDE()</h2>
 <dl class="section see"><dt>See also</dt><dd>delete_all_pt(). </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">No</td><td>exception handling.</td></tr>
+    <tr><td class="paramname">No</td><td>exception handling. </td></tr>
   </table>
   </dd>
 </dl>
-<p>This is function member doing is calling delete_all_pt() to delete all pointers in private member vMDE and clearing members of the instance of object class <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a>. </p>
 
 </div>
 </div>

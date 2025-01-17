@@ -34,7 +34,7 @@ Searching methods and associated tools that are used to search for members or in
 
 This member function is to search an entire Entity recursively all instances that has their name equal to the standard string search\+Name in parameter. It stores all the results in the static (class) member search\+\_\+result which is a standard vector of pointers to pointers of \mbox{\hyperlink{classMDE}{M\+DE}}. The results of the search can be displayed with method fetch\+\_\+search\+\_\+result. 
 
-\hypertarget{group__group__search_autotoc_md47}{}\doxysubsubsection{name\+: search\+\_\+\+For(int \& index, int \& level,}\label{group__group__search_autotoc_md47}
+\hypertarget{group__group__search_autotoc_md46}{}\doxysubsubsection{name\+: search\+\_\+\+For(int \& index, int \& level,}\label{group__group__search_autotoc_md46}
 std\+::string search\+Name) 
 \begin{DoxyParams}{Parameters}
 {\em \&} & index is a reference to an integer. \\
@@ -62,7 +62,7 @@ fetch\+\_\+search\+\_\+result()
 \begin{DoxyNote}{Note}
 The process can be optimised and simplified. 
 \end{DoxyNote}
-\hypertarget{group__group__search_autotoc_md48}{}\doxysubsubsection{name\+: simple\+\_\+loop\+\_\+\+V\+M\+D\+E(std\+::string search\+Name)}\label{group__group__search_autotoc_md48}
+\hypertarget{group__group__search_autotoc_md47}{}\doxysubsubsection{name\+: simple\+\_\+loop\+\_\+\+V\+M\+D\+E(std\+::string search\+Name)}\label{group__group__search_autotoc_md47}
 
 \begin{DoxyParams}{Parameters}
 {\em search\+Name} & is a standard string. \\
@@ -81,7 +81,7 @@ simple\+\_\+loop\+\_\+\+V\+M\+D\+E\+\_\+next\+\_\+level()
 {\em No} & exception handling.\\
 \hline
 \end{DoxyExceptions}
-This member function is to part of the recursive algorhythm in the search\+\_\+for method. It recursively stores pointers to pointer to \mbox{\hyperlink{classMDE}{M\+DE}} in the static (class) member search\+\_\+result when the search is successful. It calls a similar methods called simple\+\_\+loop\+\_\+\+V\+M\+D\+E\+\_\+next\+\_\+level in its recursive process to separate scopes of the different sub-\/entities of an entity. \hypertarget{group__group__search_autotoc_md49}{}\doxysubsubsection{name\+: simple\+\_\+loop\+\_\+\+V\+M\+D\+E\+\_\+next\+\_\+level(std\+::string search\+Name)}\label{group__group__search_autotoc_md49}
+This member function is to part of the recursive algorhythm in the search\+\_\+for method. It recursively stores pointers to pointer to \mbox{\hyperlink{classMDE}{M\+DE}} in the static (class) member search\+\_\+result when the search is successful. It calls a similar methods called simple\+\_\+loop\+\_\+\+V\+M\+D\+E\+\_\+next\+\_\+level in its recursive process to separate scopes of the different sub-\/entities of an entity. \hypertarget{group__group__search_autotoc_md48}{}\doxysubsubsection{name\+: simple\+\_\+loop\+\_\+\+V\+M\+D\+E\+\_\+next\+\_\+level(std\+::string search\+Name)}\label{group__group__search_autotoc_md48}
 
 \begin{DoxyParams}{Parameters}
 {\em search\+Name} & is a standard string. \\
@@ -100,7 +100,7 @@ simple\+\_\+loop\+\_\+\+V\+M\+D\+E()
 {\em No} & exception handling.\\
 \hline
 \end{DoxyExceptions}
-This member function is to part of the recursive algorhythm in the search\+\_\+for method. It is used to separate scopes of the different sub-\/entities of an entity to perform the search. \hypertarget{group__group__search_autotoc_md50}{}\doxysubsubsection{name\+: fetch\+\_\+search\+\_\+result(std\+::vector$<$\+M\+D\+E$\ast$$\ast$$>$ \&search\+\_\+result)}\label{group__group__search_autotoc_md50}
+This member function is to part of the recursive algorhythm in the search\+\_\+for method. It is used to separate scopes of the different sub-\/entities of an entity to perform the search. \hypertarget{group__group__search_autotoc_md49}{}\doxysubsubsection{name\+: fetch\+\_\+search\+\_\+result(std\+::vector$<$\+M\+D\+E$\ast$$\ast$$>$ \&search\+\_\+result)}\label{group__group__search_autotoc_md49}
 
 \begin{DoxyParams}{Parameters}
 {\em \&search\+\_\+result} & is a reference to a standard vector of pointers to pointer of \mbox{\hyperlink{classMDE}{M\+DE}}. \\

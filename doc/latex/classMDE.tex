@@ -2,11 +2,6 @@
 \label{classMDE}\index{MDE@{MDE}}
 
 
-This is public structure \textquotesingle{}\mbox{\hyperlink{structGLdata}{G\+Ldata}}\textquotesingle{}. It is used for transferring information to GL functions.  
-
-
-
-
 {\ttfamily \#include $<$M\+D\+E.\+h$>$}
 
 \doxysubsection*{Public Member Functions}
@@ -17,17 +12,11 @@ This is public structure \textquotesingle{}\mbox{\hyperlink{structGLdata}{G\+Lda
 \mbox{\hyperlink{classMDE_ac3555da40cf708004ebf675878c72a53}{M\+DE}} (std\+::string init\+\_\+name, std\+::string \mbox{\hyperlink{group__group__init_ga3b42d3bd68c5200393c1f0809ed1facf}{init\+\_\+data}})
 \begin{DoxyCompactList}\small\item\em Create an instance of class \mbox{\hyperlink{classMDE}{M\+DE}} and sets its private member \textquotesingle{}name\textquotesingle{} to standard string init\+\_\+name, its public member \textquotesingle{}data\textquotesingle{} to standard string init\+\_\+data and its private member v\+M\+DE, vector of pointers to instance of \mbox{\hyperlink{classMDE}{M\+DE}}, to the vector init\+\_\+v\+M\+DE, standard vector of pointer to instance of \mbox{\hyperlink{classMDE}{M\+DE}}. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{group__group__clear_gad832700663a9577adea73d14aee5011f}{destructor\+\_\+\+M\+DE}} ()
-\begin{DoxyCompactList}\small\item\em This is the destructor member function simply deleteing each pointers from private member v\+M\+DE, vector of pointers to \mbox{\hyperlink{classMDE}{M\+DE}}. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em This is function member doing is calling delete\+\_\+all\+\_\+pt() to delete all pointers in private member v\+M\+DE and clearing members of the instance of object class \mbox{\hyperlink{classMDE}{M\+DE}}. \end{DoxyCompactList}\item 
 void {\bfseries destructor\+\_\+\+Search\+\_\+results} (std\+::vector$<$ \mbox{\hyperlink{classMDE}{M\+DE}} $\ast$$\ast$ $>$ vsr)
 \item 
-void {\bfseries delete\+\_\+all\+\_\+pt} ()
-\item 
-void {\bfseries delete\+\_\+all\+\_\+pt2\+\_\+old} ()
-\item 
-void {\bfseries delete\+All\+Pt} (bool manual=false, int size\+Ref=0)
-\item 
-bool {\bfseries delete\+All\+Pt\+\_\+old} ()
-\item 
+void \mbox{\hyperlink{group__group__clear_ga50b6bc940f3d1ff4443b7f2ee1fbe71a}{delete\+All\+Pt}} (bool manual=false, int size\+Ref=0)
+\begin{DoxyCompactList}\small\item\em This is another destructor member doing exactely the same as$\sim$\+M\+DE() \end{DoxyCompactList}\item 
 void {\bfseries delete\+All} ()
 \item 
 bool {\bfseries is\+First\+Ref} ()
@@ -36,7 +25,7 @@ void \mbox{\hyperlink{group__group__clear_ga7068c4189f10a89e6a8192c1419f069f}{cl
 \begin{DoxyCompactList}\small\item\em This member function is to clear all entries for the private member vector v\+M\+DE elements of an instance of a class \mbox{\hyperlink{classMDE}{M\+DE}} object recursively. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{group__group__clear_gaa2d2adff677862aa8a12fbde8df0f781}{clear\+\_\+all\+\_\+v\+M\+D\+E\+\_\+by\+\_\+index}} (std\+::vector$<$ int $>$ \&vect\+\_\+index)
 \begin{DoxyCompactList}\small\item\em This member function is to clear all entries of the element of the private member vector v\+M\+DE of an instance of a class \mbox{\hyperlink{classMDE}{M\+DE}} object recursively using a vector of index pointing to the parent element. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{classMDE_a704d8e22220381ade306f9f6f471cdf7}{new\+\_\+v\+M\+D\+E\+\_\+element}} (std\+::string name=\char`\"{}\char`\"{}, std\+::string \mbox{\hyperlink{classMDE_a4b1eec75c370b8906e7b203bfb231308}{data}}=\char`\"{}\char`\"{})
+void \mbox{\hyperlink{classMDE_a704d8e22220381ade306f9f6f471cdf7}{new\+\_\+v\+M\+D\+E\+\_\+element}} (std\+::string \mbox{\hyperlink{classMDE_ad95110e630e701439298c31d1283e02e}{name}}=\char`\"{}\char`\"{}, std\+::string \mbox{\hyperlink{classMDE_a4b1eec75c370b8906e7b203bfb231308}{data}}=\char`\"{}\char`\"{})
 \begin{DoxyCompactList}\small\item\em This member function is to create a new pointer to \mbox{\hyperlink{classMDE}{M\+DE}} with a push\+\_\+back on private member v\+M\+DE. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{classMDE_a40d3ef3996a2eb3654cbc0d5e77b0fec}\label{classMDE_a40d3ef3996a2eb3654cbc0d5e77b0fec}} 
 void {\bfseries new\+\_\+v\+M\+D\+E\+\_\+element} (\mbox{\hyperlink{classMDE}{M\+DE}} $\ast$a\+M\+DE)
@@ -106,30 +95,15 @@ std\+::vector$<$ \mbox{\hyperlink{classMDE}{M\+DE}} $\ast$ $>$ {\bfseries loop\+
 \item 
 std\+::string \mbox{\hyperlink{classMDE_a4b1eec75c370b8906e7b203bfb231308}{data}}
 \begin{DoxyCompactList}\small\item\em This is the public member \textquotesingle{}data\textquotesingle{}. It is holding the information that can be displayed for users. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{classMDE_ad95110e630e701439298c31d1283e02e}\label{classMDE_ad95110e630e701439298c31d1283e02e}} 
-std\+::string {\bfseries name}
-\item 
+std\+::string \mbox{\hyperlink{classMDE_ad95110e630e701439298c31d1283e02e}{name}}
+\begin{DoxyCompactList}\small\item\em This is the public member \textquotesingle{}name\textquotesingle{}. It is holding the information the internal name for the data element. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{classMDE_a4c93e4e14503e6a9bb3f37ffc0a95857}\label{classMDE_a4c93e4e14503e6a9bb3f37ffc0a95857}} 
 std\+::vector$<$ \mbox{\hyperlink{classMDE}{M\+DE}} $\ast$ $>$ {\bfseries v\+M\+DE}
 \end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
-This is public structure \textquotesingle{}\mbox{\hyperlink{structGLdata}{G\+Ldata}}\textquotesingle{}. It is used for transferring information to GL functions. 
-
-\hypertarget{classMDE_autotoc_md0}{}\doxysubsubsection{name\+: G\+Ldata}\label{classMDE_autotoc_md0}
-
-\begin{DoxyParams}{Parameters}
-{\em level} & is an integer. It holds the depth level of an instance of \mbox{\hyperlink{classMDE}{M\+DE}} within another instance of \mbox{\hyperlink{classMDE}{M\+DE}}. \\
-\hline
-{\em index} & is an integer. It holds the index of the element within the private member v\+M\+DE standard vector of pointer to \mbox{\hyperlink{classMDE}{M\+DE}}. \\
-\hline
-{\em mde\+\_\+member} & is an enum M\+D\+E\+\_\+member\{name,data\}. It holds the about the nature of the data, name for private member \textquotesingle{}name\textquotesingle{}, \textquotesingle{}data for public member \textquotesingle{}data\textquotesingle{}. \\
-\hline
-{\em M\+D\+E\+\_\+data} & is standard string. it holds the data itself. This is class \mbox{\hyperlink{classMDE}{M\+DE}}. \\
-\hline
-\end{DoxyParams}
-
+This is class \mbox{\hyperlink{classMDE}{M\+DE}}. 
 
 \doxysubsection{Constructor \& Destructor Documentation}
 \mbox{\Hypertarget{classMDE_a149c182b2578cc172f7bb1fc6f228a70}\label{classMDE_a149c182b2578cc172f7bb1fc6f228a70}} 
@@ -202,7 +176,7 @@ $\sim$\+M\+D\+E().
 
 This member function is to create a new pointer to \mbox{\hyperlink{classMDE}{M\+DE}} with a push\+\_\+back on private member v\+M\+DE. 
 
-\hypertarget{classMDE_autotoc_md11}{}\doxysubsubsection{name\+: new\+\_\+v\+M\+D\+E\+\_\+element()}\label{classMDE_autotoc_md11}
+\hypertarget{classMDE_autotoc_md10}{}\doxysubsubsection{name\+: new\+\_\+v\+M\+D\+E\+\_\+element()}\label{classMDE_autotoc_md10}
 
 \begin{DoxyParams}{Parameters}
 {\em No} & arguments. \\
@@ -229,7 +203,7 @@ Nothing is returned (void).
 
 This function member is to display all elements of a standard vector of struct \mbox{\hyperlink{structGLdata}{G\+Ldata}}. For example it can displays a vector of offset values for coordinates. 
 
-\hypertarget{classMDE_autotoc_md30}{}\doxysubsubsection{name\+: display\+\_\+v\+\_\+\+M\+D\+E\+\_\+data(std\+::vector$<$\+G\+Ldata$>$ \& v\+\_\+\+M\+D\+E\+\_\+data)}\label{classMDE_autotoc_md30}
+\hypertarget{classMDE_autotoc_md29}{}\doxysubsubsection{name\+: display\+\_\+v\+\_\+\+M\+D\+E\+\_\+data(std\+::vector$<$\+G\+Ldata$>$ \& v\+\_\+\+M\+D\+E\+\_\+data)}\label{classMDE_autotoc_md29}
 
 \begin{DoxyParams}{Parameters}
 {\em \&} & v\+\_\+\+M\+D\+E\+\_\+data reference to a standard vector of type struct \mbox{\hyperlink{structGLdata}{G\+Ldata}}. \\
@@ -248,7 +222,7 @@ Nothing is returned (void).
 {\em No} & exception handling. \\
 \hline
 \end{DoxyExceptions}
-\hypertarget{classMDE_autotoc_md31}{}\doxysubsubsection{name\+: user\+\_\+input\+\_\+v\+M\+D\+E()}\label{classMDE_autotoc_md31}
+\hypertarget{classMDE_autotoc_md30}{}\doxysubsubsection{name\+: user\+\_\+input\+\_\+v\+M\+D\+E()}\label{classMDE_autotoc_md30}
 
 \begin{DoxyParams}{Parameters}
 {\em No} & arguments. \\
@@ -280,11 +254,22 @@ This function member is for user to enter manually \textquotesingle{}name\textqu
 
 This is the public member \textquotesingle{}data\textquotesingle{}. It is holding the information that can be displayed for users. 
 
-\hypertarget{classMDE_autotoc_md1}{}\doxysubsubsection{name\+: data}\label{classMDE_autotoc_md1}
+\hypertarget{classMDE_autotoc_md0}{}\doxysubsubsection{name\+: data}\label{classMDE_autotoc_md0}
+\mbox{\Hypertarget{classMDE_ad95110e630e701439298c31d1283e02e}\label{classMDE_ad95110e630e701439298c31d1283e02e}} 
+\index{MDE@{MDE}!name@{name}}
+\index{name@{name}!MDE@{MDE}}
+\doxysubsubsection{\texorpdfstring{name}{name}}
+{\footnotesize\ttfamily std\+::string M\+D\+E\+::name}
+
+
+
+This is the public member \textquotesingle{}name\textquotesingle{}. It is holding the information the internal name for the data element. 
+
+\hypertarget{classMDE_autotoc_md1}{}\doxysubsubsection{name\+: name}\label{classMDE_autotoc_md1}
 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-/home/gweno/\+Documents/\+Projects/\+Cpp/\+M\+D\+E/source/M\+D\+E.\+h\item 
-/home/gweno/\+Documents/\+Projects/\+Cpp/\+M\+D\+E/source/M\+D\+E.\+cpp\item 
-/home/gweno/\+Documents/\+Projects/\+Cpp/\+M\+D\+E/source/M\+D\+E.\+old.\+cpp\end{DoxyCompactItemize}
+/media/gweno/biggy/\+Documents/\+Projects/\+Cpp/\+M\+D\+E/source/M\+D\+E.\+h\item 
+/media/gweno/biggy/\+Documents/\+Projects/\+Cpp/\+M\+D\+E/source/M\+D\+E.\+cpp\item 
+/media/gweno/biggy/\+Documents/\+Projects/\+Cpp/\+M\+D\+E/source/M\+D\+E.\+old.\+cpp\end{DoxyCompactItemize}

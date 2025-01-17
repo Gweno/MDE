@@ -74,7 +74,7 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ga0c8f522a601514bd8927e08a50c91487"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__search.html#ga0c8f522a601514bd8927e08a50c91487">MDE::get_vMDE_test2</a> (int index, std::vector&lt; <a class="el" href="classMDE.html">MDE</a> ** &gt; &amp;pt_vMDE=MDE::search_result)</td></tr>
-<tr class="memdesc:ga0c8f522a601514bd8927e08a50c91487"><td class="mdescLeft">&#160;</td><td class="mdescRight">This member function is to search an entire Entity recursively all instances that has their name equal to the standard string searchName in parameter. It stores all the results in the static (class) member search_result which is a standard vector of pointers to pointers of <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a>. The results of the search can be displayed with method fetch_search_result.  <a href="group__group__search.html#ga0c8f522a601514bd8927e08a50c91487">More...</a><br /></td></tr>
+<tr class="memdesc:ga0c8f522a601514bd8927e08a50c91487"><td class="mdescLeft">&#160;</td><td class="mdescRight">This member function is to search an entire Entity recursively all instances that has their name equal to the standard string searchName in parameter. It stores all the results in the static (class) member search_result which is a standard vector of pointers to pointers of <a class="el" href="classMDE.html">MDE</a>. The results of the search can be displayed with method fetch_search_result.  <a href="group__group__search.html#ga0c8f522a601514bd8927e08a50c91487">More...</a><br /></td></tr>
 <tr class="separator:ga0c8f522a601514bd8927e08a50c91487"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaca6d0787d009452258351b782365484f"><td class="memItemLeft" align="right" valign="top"><a id="gaca6d0787d009452258351b782365484f"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>MDE::loop_test2</b> (std::vector&lt; int &gt; &amp;vect_index, int &amp;index, std::vector&lt; <a class="el" href="classMDE.html">MDE</a> ** &gt; &amp;pt_vMDE=MDE::search_result)</td></tr>
@@ -112,8 +112,8 @@ std::vector&lt; <a class="el" href="classMDE.html">MDE</a> * &gt;&#160;</td><td 
       </table>
 </div><div class="memdoc">
 
-<p>This member function is to search an entire Entity recursively all instances that has their name equal to the standard string searchName in parameter. It stores all the results in the static (class) member search_result which is a standard vector of pointers to pointers of <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a>. The results of the search can be displayed with method fetch_search_result. </p>
-<h2><a class="anchor" id="autotoc_md47"></a>
+<p>This member function is to search an entire Entity recursively all instances that has their name equal to the standard string searchName in parameter. It stores all the results in the static (class) member search_result which is a standard vector of pointers to pointers of <a class="el" href="classMDE.html">MDE</a>. The results of the search can be displayed with method fetch_search_result. </p>
+<h2><a class="anchor" id="autotoc_md46"></a>
 name: search_For(int &amp; index, int &amp; level,</h2>
 <p>std::string searchName) </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -136,7 +136,7 @@ fetch_search_result() </dd></dl>
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>The process can be optimised and simplified. </dd></dl>
-<h2><a class="anchor" id="autotoc_md48"></a>
+<h2><a class="anchor" id="autotoc_md47"></a>
 name: simple_loop_VMDE(std::string searchName)</h2>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -154,8 +154,8 @@ simple_loop_VMDE_next_level() </dd></dl>
   </table>
   </dd>
 </dl>
-<p>This member function is to part of the recursive algorhythm in the search_for method. It recursively stores pointers to pointer to <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a> in the static (class) member search_result when the search is successful. It calls a similar methods called simple_loop_VMDE_next_level in its recursive process to separate scopes of the different sub-entities of an entity. </p>
-<h2><a class="anchor" id="autotoc_md49"></a>
+<p>This member function is to part of the recursive algorhythm in the search_for method. It recursively stores pointers to pointer to <a class="el" href="classMDE.html">MDE</a> in the static (class) member search_result when the search is successful. It calls a similar methods called simple_loop_VMDE_next_level in its recursive process to separate scopes of the different sub-entities of an entity. </p>
+<h2><a class="anchor" id="autotoc_md48"></a>
 name: simple_loop_VMDE_next_level(std::string searchName)</h2>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -174,11 +174,11 @@ simple_loop_VMDE() </dd></dl>
   </dd>
 </dl>
 <p>This member function is to part of the recursive algorhythm in the search_for method. It is used to separate scopes of the different sub-entities of an entity to perform the search. </p>
-<h2><a class="anchor" id="autotoc_md50"></a>
+<h2><a class="anchor" id="autotoc_md49"></a>
 name: fetch_search_result(std::vector&lt;MDE**&gt; &amp;search_result)</h2>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">&amp;search_result</td><td>is a reference to a standard vector of pointers to pointer of <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a>. </td></tr>
+    <tr><td class="paramname">&amp;search_result</td><td>is a reference to a standard vector of pointers to pointer of <a class="el" href="classMDE.html">MDE</a>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -190,7 +190,7 @@ name: fetch_search_result(std::vector&lt;MDE**&gt; &amp;search_result)</h2>
   </table>
   </dd>
 </dl>
-<p>This member function is to fetch the searching results store a vector of pointers to pointer of <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a>, typically in the static (class) member search_result after running method search_for() to search for all Entities with a given member 'name'. </p>
+<p>This member function is to fetch the searching results store a vector of pointers to pointer of <a class="el" href="classMDE.html">MDE</a>, typically in the static (class) member search_result after running method search_for() to search for all Entities with a given member 'name'. </p>
 
 </div>
 </div>

@@ -69,11 +69,15 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Functions Utils is not a class but a collection of utilitary functions to manipulate <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a> instances, like loading from an XML file, or saving to an XML file.  
+<p>Functions Utils is not a class but a collection of utilitary functions to manipulate <a class="el" href="classMDE.html">MDE</a> instances, like loading from an XML file, or saving to an XML file.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsingleMember.html">singleMember</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpairKeyValue.html">pairKeyValue</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGLdata.html">GLdata</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is public structure '<a class="el" href="structGLdata.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">GLdata</a>'. It is used for transferring information to GL functions.  <a href="structGLdata.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -84,7 +88,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:gaba1bb76120cd8f14987e635e63e7d0db"><td class="mdescLeft">&#160;</td><td class="mdescRight">This member function is to process a token extracted from a file as a tag and checks if it is an 'opening_tag' or a 'closing_tag'. It changes the parameter element accordingly.  <a href="group__group__utils.html#gaba1bb76120cd8f14987e635e63e7d0db">More...</a><br /></td></tr>
 <tr class="separator:gaba1bb76120cd8f14987e635e63e7d0db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf98bdbbd73032fd57b977a116c0a32b6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__utils.html#gaf98bdbbd73032fd57b977a116c0a32b6">strTokenTag</a> (std::string &amp;buffer_Input, std::string &amp;output_Tag, std::string &amp;buffer_Output, char delimiter1, char delimiter2)</td></tr>
-<tr class="memdesc:gaf98bdbbd73032fd57b977a116c0a32b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">This member function is to read an XML file and store it into an instance of class <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a>.  <a href="group__group__utils.html#gaf98bdbbd73032fd57b977a116c0a32b6">More...</a><br /></td></tr>
+<tr class="memdesc:gaf98bdbbd73032fd57b977a116c0a32b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">This member function is to read an XML file and store it into an instance of class <a class="el" href="classMDE.html">MDE</a>.  <a href="group__group__utils.html#gaf98bdbbd73032fd57b977a116c0a32b6">More...</a><br /></td></tr>
 <tr class="separator:gaf98bdbbd73032fd57b977a116c0a32b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga62fbfa9829d0a2584921d108478edc09"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__utils.html#ga62fbfa9829d0a2584921d108478edc09">trimLeadingSpace</a> (std::string &amp;io_string)</td></tr>
 <tr class="memdesc:ga62fbfa9829d0a2584921d108478edc09"><td class="mdescLeft">&#160;</td><td class="mdescRight">This member function is to trim the leading space (space charaters at the start) of the io_string parameter passed as argument for this member function.  <a href="group__group__utils.html#ga62fbfa9829d0a2584921d108478edc09">More...</a><br /></td></tr>
@@ -93,16 +97,16 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga446038c741f58e6719c14db850ee722e"><td class="mdescLeft">&#160;</td><td class="mdescRight">This member function is to extract data from an xml file and store it in an Entity with all sub-entities at the same level and the 'name' member sets to 'name' or 'data' accordingly to wether it's a 'name' or 'data' member. (space charaters at the start) of the io_string parameter.  <a href="group__group__utils.html#ga446038c741f58e6719c14db850ee722e">More...</a><br /></td></tr>
 <tr class="separator:ga446038c741f58e6719c14db850ee722e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga50247340f34dc1e6ec74fc3c0164f773"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMDE.html">MDE</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__utils.html#ga50247340f34dc1e6ec74fc3c0164f773">processFlatMDEToMDE</a> (<a class="el" href="classMDE.html">MDE</a> &amp;MDE_source, <a class="el" href="classMDE.html">MDE</a> &amp;MDE_target, std::vector&lt; <a class="el" href="classMDE.html">MDE</a> * &gt;::iterator &amp;it, std::stack&lt; <a class="el" href="classMDE.html">MDE</a> ** &gt; &amp;stack_MDE_pt)</td></tr>
-<tr class="memdesc:ga50247340f34dc1e6ec74fc3c0164f773"><td class="mdescLeft">&#160;</td><td class="mdescRight">This member function is to process an instance of a 'flat' Entity and return a pointer to a new instance of <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a> that has nested sub-entities. The algorithm checks what is the data, if it is a structural data like an opening tag or closing tag it creates or ends the sub-entities accordingly.  <a href="group__group__utils.html#ga50247340f34dc1e6ec74fc3c0164f773">More...</a><br /></td></tr>
+<tr class="memdesc:ga50247340f34dc1e6ec74fc3c0164f773"><td class="mdescLeft">&#160;</td><td class="mdescRight">This member function is to process an instance of a 'flat' Entity and return a pointer to a new instance of <a class="el" href="classMDE.html">MDE</a> that has nested sub-entities. The algorithm checks what is the data, if it is a structural data like an opening tag or closing tag it creates or ends the sub-entities accordingly.  <a href="group__group__utils.html#ga50247340f34dc1e6ec74fc3c0164f773">More...</a><br /></td></tr>
 <tr class="separator:ga50247340f34dc1e6ec74fc3c0164f773"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabf8ed2e1ace04a1236a050f512b22dcb"><td class="memItemLeft" align="right" valign="top"><a id="gabf8ed2e1ace04a1236a050f512b22dcb"></a>
 <a class="el" href="classMDE.html">MDE</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>processFlatMDEToMDE_old</b> (<a class="el" href="classMDE.html">MDE</a> &amp;MDE_source, <a class="el" href="classMDE.html">MDE</a> &amp;MDE_target, std::vector&lt; <a class="el" href="classMDE.html">MDE</a> * &gt;::iterator &amp;it, std::stack&lt; <a class="el" href="classMDE.html">MDE</a> ** &gt; &amp;stack_MDE_pt)</td></tr>
 <tr class="separator:gabf8ed2e1ace04a1236a050f512b22dcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5b0926b8281516b1639284daaf33f41f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__utils.html#ga5b0926b8281516b1639284daaf33f41f">loadXMLFileTovMDE</a> (<a class="el" href="classMDE.html">MDE</a> &amp;MDE_source, int &amp;index, const std::string &amp;full_filename)</td></tr>
-<tr class="memdesc:ga5b0926b8281516b1639284daaf33f41f"><td class="mdescLeft">&#160;</td><td class="mdescRight">This member function is to read an XML file using the reference to the string full_filename and to store the data from the file into an element at a given index of the private member vMDE of the instance of a class of <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a>.  <a href="group__group__utils.html#ga5b0926b8281516b1639284daaf33f41f">More...</a><br /></td></tr>
+<tr class="memdesc:ga5b0926b8281516b1639284daaf33f41f"><td class="mdescLeft">&#160;</td><td class="mdescRight">This member function is to read an XML file using the reference to the string full_filename and to store the data from the file into an element at a given index of the private member vMDE of the instance of a class of <a class="el" href="classMDE.html">MDE</a>.  <a href="group__group__utils.html#ga5b0926b8281516b1639284daaf33f41f">More...</a><br /></td></tr>
 <tr class="separator:ga5b0926b8281516b1639284daaf33f41f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa9e264dadf6e6ccd1187bd8229b4ebea"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__utils.html#gaa9e264dadf6e6ccd1187bd8229b4ebea">loadXMLFileToMDE</a> (<a class="el" href="classMDE.html">MDE</a> &amp;MDE_source, const std::string &amp;full_filename)</td></tr>
-<tr class="memdesc:gaa9e264dadf6e6ccd1187bd8229b4ebea"><td class="mdescLeft">&#160;</td><td class="mdescRight">This member function is to read an XML file using the reference to the string full_filename and to store the data from the file into an instance of class <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a>.  <a href="group__group__utils.html#gaa9e264dadf6e6ccd1187bd8229b4ebea">More...</a><br /></td></tr>
+<tr class="memdesc:gaa9e264dadf6e6ccd1187bd8229b4ebea"><td class="mdescLeft">&#160;</td><td class="mdescRight">This member function is to read an XML file using the reference to the string full_filename and to store the data from the file into an instance of class <a class="el" href="classMDE.html">MDE</a>.  <a href="group__group__utils.html#gaa9e264dadf6e6ccd1187bd8229b4ebea">More...</a><br /></td></tr>
 <tr class="separator:gaa9e264dadf6e6ccd1187bd8229b4ebea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0197eefe9cd5cbcae561aaa6549ac50b"><td class="memItemLeft" align="right" valign="top"><a id="ga0197eefe9cd5cbcae561aaa6549ac50b"></a>
 <a class="el" href="classMDE.html">MDE</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>loadXMLFileToPtMDE</b> (<a class="el" href="classMDE.html">MDE</a> &amp;xmlMDE, const std::string &amp;full_filename, bool destructAll=true)</td></tr>
@@ -111,16 +115,16 @@ Functions</h2></td></tr>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>loadXML</b> (<a class="el" href="classMDE.html">MDE</a> &amp;sourceMDE, <a class="el" href="classMDE.html">MDE</a> &amp;xmlMDE, std::vector&lt; int &gt; &amp;vectIndex, const std::string &amp;filename)</td></tr>
 <tr class="separator:ga4156e515c001e6b0cbd478863dceb3d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad8f7ca1f04faf6a3699a198fda05dce5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__utils.html#gad8f7ca1f04faf6a3699a198fda05dce5">formatDisplay</a> (<a class="el" href="classMDE.html">MDE</a> &amp;MDE_source, int n_indent, const int &amp;n_space, std::string start_opening_tag, std::string end_opening_tag, std::string start_closing_tag, std::string end_closing_tag)</td></tr>
-<tr class="memdesc:gad8f7ca1f04faf6a3699a198fda05dce5"><td class="mdescLeft">&#160;</td><td class="mdescRight">This member function is to display the instance of a class object <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a> with a defined format using opening and closing tags (for example like an XML file).  <a href="group__group__utils.html#gad8f7ca1f04faf6a3699a198fda05dce5">More...</a><br /></td></tr>
+<tr class="memdesc:gad8f7ca1f04faf6a3699a198fda05dce5"><td class="mdescLeft">&#160;</td><td class="mdescRight">This member function is to display the instance of a class object <a class="el" href="classMDE.html">MDE</a> with a defined format using opening and closing tags (for example like an XML file).  <a href="group__group__utils.html#gad8f7ca1f04faf6a3699a198fda05dce5">More...</a><br /></td></tr>
 <tr class="separator:gad8f7ca1f04faf6a3699a198fda05dce5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2ef005513f02b4c036e5158e84823ca5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__utils.html#ga2ef005513f02b4c036e5158e84823ca5">extractMDEdataForVoffset</a> (<a class="el" href="classMDE.html">MDE</a> &amp;MDE_source, std::vector&lt; <a class="el" href="structGLdata.html">GLdata</a> &gt; &amp;v_MDE_data, int &amp;level, int &amp;index, bool displayDataOnly=false, bool hideParent=false)</td></tr>
-<tr class="memdesc:ga2ef005513f02b4c036e5158e84823ca5"><td class="mdescLeft">&#160;</td><td class="mdescRight">This member function is to recursively fill-in a standard vector of struct <a class="el" href="structGLdata.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">GLdata</a> by extracting data from public member 'name' and public member 'data', and setting the level and index of each Entities and sub-entities of an instance of object class <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a>. The vector of <a class="el" href="structGLdata.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">GLdata</a> my_v_MDE_data is used to set offset coordinates for displaying <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a> and further up in the pipeline to process other coordinates input like rules and padding. This function has a wrapper <a class="el" href="group__group__init.html#ga3b42d3bd68c5200393c1f0809ed1facf" title="This method is a wrapper, and is used to call extractMDEdataForVoffset without any arguments passed f...">init_data()</a>, called from main.cpp without any arguments. The two booleans variables displayDataOnly and hideparents are used as their names clearly state, for an end display of only data, and without the parent <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a>. This is typically for HTML rendering.  <a href="group__group__utils.html#ga2ef005513f02b4c036e5158e84823ca5">More...</a><br /></td></tr>
+<tr class="memdesc:ga2ef005513f02b4c036e5158e84823ca5"><td class="mdescLeft">&#160;</td><td class="mdescRight">This member function is to recursively fill-in a standard vector of struct <a class="el" href="structGLdata.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">GLdata</a> by extracting data from public member 'name' and public member 'data', and setting the level and index of each Entities and sub-entities of an instance of object class <a class="el" href="classMDE.html">MDE</a>. The vector of <a class="el" href="structGLdata.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">GLdata</a> my_v_MDE_data is used to set offset coordinates for displaying <a class="el" href="classMDE.html">MDE</a> and further up in the pipeline to process other coordinates input like rules and padding. This function has a wrapper <a class="el" href="group__group__init.html#ga3b42d3bd68c5200393c1f0809ed1facf" title="This method is a wrapper, and is used to call extractMDEdataForVoffset without any arguments passed f...">init_data()</a>, called from main.cpp without any arguments. The two booleans variables displayDataOnly and hideparents are used as their names clearly state, for an end display of only data, and without the parent <a class="el" href="classMDE.html">MDE</a>. This is typically for HTML rendering.  <a href="group__group__utils.html#ga2ef005513f02b4c036e5158e84823ca5">More...</a><br /></td></tr>
 <tr class="separator:ga2ef005513f02b4c036e5158e84823ca5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9452896a5e14c435556a6af0b9da1a09"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__utils.html#ga9452896a5e14c435556a6af0b9da1a09">searchFor</a> (<a class="el" href="classMDE.html">MDE</a> &amp;MDE_source, int &amp;index, int &amp;level, std::string searchName, std::vector&lt; <a class="el" href="classMDE.html">MDE</a> ** &gt; &amp;search_result)</td></tr>
-<tr class="memdesc:ga9452896a5e14c435556a6af0b9da1a09"><td class="mdescLeft">&#160;</td><td class="mdescRight">This member function is to search an entire Entity recursively all instances that has their name equal to the standard string searchName in parameter. It stores all the results in the static (class) member search_result which is a standard vector of pointers to pointers of <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a>. The results of the search can be displayed with method fetch_search_result.  <a href="group__group__utils.html#ga9452896a5e14c435556a6af0b9da1a09">More...</a><br /></td></tr>
+<tr class="memdesc:ga9452896a5e14c435556a6af0b9da1a09"><td class="mdescLeft">&#160;</td><td class="mdescRight">This member function is to search an entire Entity recursively all instances that has their name equal to the standard string searchName in parameter. It stores all the results in the static (class) member search_result which is a standard vector of pointers to pointers of <a class="el" href="classMDE.html">MDE</a>. The results of the search can be displayed with method fetch_search_result.  <a href="group__group__utils.html#ga9452896a5e14c435556a6af0b9da1a09">More...</a><br /></td></tr>
 <tr class="separator:ga9452896a5e14c435556a6af0b9da1a09"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga874012995833d90a578771c83ebf7d4a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__utils.html#ga874012995833d90a578771c83ebf7d4a">simpleLoopVMDE</a> (<a class="el" href="classMDE.html">MDE</a> &amp;MDE_source, std::string searchName, std::vector&lt; <a class="el" href="classMDE.html">MDE</a> ** &gt; &amp;search_result)</td></tr>
-<tr class="memdesc:ga874012995833d90a578771c83ebf7d4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">This member function is to part of the recursive algorithm in the search_for method. It recursively stores pointers to pointer to <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a> in the static (class) member search_result when the search is successful. It calls a similar methods called simple_loop_VMDE_next_level in its recursive process to separate scopes of the different sub-entities of an entity.  <a href="group__group__utils.html#ga874012995833d90a578771c83ebf7d4a">More...</a><br /></td></tr>
+<tr class="memdesc:ga874012995833d90a578771c83ebf7d4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">This member function is to part of the recursive algorithm in the search_for method. It recursively stores pointers to pointer to <a class="el" href="classMDE.html">MDE</a> in the static (class) member search_result when the search is successful. It calls a similar methods called simple_loop_VMDE_next_level in its recursive process to separate scopes of the different sub-entities of an entity.  <a href="group__group__utils.html#ga874012995833d90a578771c83ebf7d4a">More...</a><br /></td></tr>
 <tr class="separator:ga874012995833d90a578771c83ebf7d4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5c5c1a1553762cfd4cdbd6f51d0bc715"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__group__utils.html#ga5c5c1a1553762cfd4cdbd6f51d0bc715">simpleLoopVMDEnextLevel</a> (<a class="el" href="classMDE.html">MDE</a> &amp;MDE_source, std::string searchName, std::vector&lt; <a class="el" href="classMDE.html">MDE</a> ** &gt; &amp;search_result)</td></tr>
 <tr class="memdesc:ga5c5c1a1553762cfd4cdbd6f51d0bc715"><td class="mdescLeft">&#160;</td><td class="mdescRight">This member function is to part of the recursive algorithm in the search_for method. It is used to separate scopes of the different sub-entities of an entity to perform the search.  <a href="group__group__utils.html#ga5c5c1a1553762cfd4cdbd6f51d0bc715">More...</a><br /></td></tr>
@@ -130,7 +134,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>loadXML</b> (<a class
 <tr class="separator:ga2be8fc00486d267f1073ef904a33210b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Functions Utils is not a class but a collection of utilitary functions to manipulate <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a> instances, like loading from an XML file, or saving to an XML file. </p>
+<p>Functions Utils is not a class but a collection of utilitary functions to manipulate <a class="el" href="classMDE.html">MDE</a> instances, like loading from an XML file, or saving to an XML file. </p>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="gaba1bb76120cd8f14987e635e63e7d0db"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gaba1bb76120cd8f14987e635e63e7d0db">&#9670;&nbsp;</a></span>checkToken()</h2>
@@ -250,7 +254,7 @@ set_data_vMDE_index(). </dd></dl>
 name: extractFileToFlatMDE(MDE &amp; MDE_source,</h2>
 <p>const std::string &amp; full_filename) </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">&amp;</td><td>MDE_source is a reference to the <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a> instance that holds the the file's data </td></tr>
+    <tr><td class="paramname">&amp;</td><td>MDE_source is a reference to the <a class="el" href="classMDE.html">MDE</a> instance that holds the the file's data </td></tr>
     <tr><td class="paramname">&amp;</td><td>full_filename is a reference to a standard string that holds the the name of a file to extract. </td></tr>
   </table>
   </dd>
@@ -319,12 +323,12 @@ str_token_tag(). </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>This member function is to recursively fill-in a standard vector of struct <a class="el" href="structGLdata.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">GLdata</a> by extracting data from public member 'name' and public member 'data', and setting the level and index of each Entities and sub-entities of an instance of object class <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a>. The vector of <a class="el" href="structGLdata.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">GLdata</a> my_v_MDE_data is used to set offset coordinates for displaying <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a> and further up in the pipeline to process other coordinates input like rules and padding. This function has a wrapper <a class="el" href="group__group__init.html#ga3b42d3bd68c5200393c1f0809ed1facf" title="This method is a wrapper, and is used to call extractMDEdataForVoffset without any arguments passed f...">init_data()</a>, called from main.cpp without any arguments. The two booleans variables displayDataOnly and hideparents are used as their names clearly state, for an end display of only data, and without the parent <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a>. This is typically for HTML rendering. </p>
+<p>This member function is to recursively fill-in a standard vector of struct <a class="el" href="structGLdata.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">GLdata</a> by extracting data from public member 'name' and public member 'data', and setting the level and index of each Entities and sub-entities of an instance of object class <a class="el" href="classMDE.html">MDE</a>. The vector of <a class="el" href="structGLdata.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">GLdata</a> my_v_MDE_data is used to set offset coordinates for displaying <a class="el" href="classMDE.html">MDE</a> and further up in the pipeline to process other coordinates input like rules and padding. This function has a wrapper <a class="el" href="group__group__init.html#ga3b42d3bd68c5200393c1f0809ed1facf" title="This method is a wrapper, and is used to call extractMDEdataForVoffset without any arguments passed f...">init_data()</a>, called from main.cpp without any arguments. The two booleans variables displayDataOnly and hideparents are used as their names clearly state, for an end display of only data, and without the parent <a class="el" href="classMDE.html">MDE</a>. This is typically for HTML rendering. </p>
 <h2><a class="anchor" id="autotoc_md85"></a>
 name: void extractMDEdataForVoffset(MDE &amp; MDE_source,</h2>
 <p>std::vector&lt;GLdata&gt; &amp; v_MDE_data, int &amp; level, int &amp; index = 0, bool displayDataOnly = false, bool hideParent = false); </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">&amp;MDE_source</td><td>is a reference to a <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a> instance </td></tr>
+    <tr><td class="paramname">&amp;MDE_source</td><td>is a reference to a <a class="el" href="classMDE.html">MDE</a> instance </td></tr>
     <tr><td class="paramname">&amp;v_MDE_data</td><td>is a reference to a standard vector of struct <a class="el" href="structGLdata.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">GLdata</a>. </td></tr>
     <tr><td class="paramname">&amp;level</td><td>is a reference to an int. </td></tr>
     <tr><td class="paramname">&amp;index</td><td>is a reference to an int. </td></tr>
@@ -401,14 +405,14 @@ name: void extractMDEdataForVoffset(MDE &amp; MDE_source,</h2>
       </table>
 </div><div class="memdoc">
 
-<p>This member function is to display the instance of a class object <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a> with a defined format using opening and closing tags (for example like an XML file). </p>
+<p>This member function is to display the instance of a class object <a class="el" href="classMDE.html">MDE</a> with a defined format using opening and closing tags (for example like an XML file). </p>
 <h2><a class="anchor" id="autotoc_md84"></a>
 name: formatDisplay(MDE &amp; MDE_source,int n_indent,</h2>
 <p>const int &amp; n_space, std::string start_opening_tag, std::string end_opening_tag, std::string start_closing_tag, std::string end_closing_tag) </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">&amp;</td><td>MDE_source is a reference to the <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a> instance to display </td></tr>
+    <tr><td class="paramname">&amp;</td><td>MDE_source is a reference to the <a class="el" href="classMDE.html">MDE</a> instance to display </td></tr>
     <tr><td class="paramname">n_indent</td><td>is an integer passed to initialised the position of the first line to display, then to be incremented locally recursively. </td></tr>
-    <tr><td class="paramname">n_space</td><td>is an address of a constant integer used to indent each lines to separates elements of intances of object of class <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a> from their own sub-elements recursively. </td></tr>
+    <tr><td class="paramname">n_space</td><td>is an address of a constant integer used to indent each lines to separates elements of intances of object of class <a class="el" href="classMDE.html">MDE</a> from their own sub-elements recursively. </td></tr>
     <tr><td class="paramname">start_opening_tag</td><td>is a standard string corresponding to the start of the opening tag ("&lt;" for xml). </td></tr>
     <tr><td class="paramname">end_opening_tag</td><td>is a standard string corresponding to the end of the opening tag ("&gt;" for xml). </td></tr>
     <tr><td class="paramname">start_closing_tag</td><td>is a standard string corresponding to the start of the closing tag ("&lt;\" for xml). </td></tr>
@@ -454,12 +458,12 @@ name: formatDisplay(MDE &amp; MDE_source,int n_indent,</h2>
       </table>
 </div><div class="memdoc">
 
-<p>This member function is to read an XML file using the reference to the string full_filename and to store the data from the file into an instance of class <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a>. </p>
+<p>This member function is to read an XML file using the reference to the string full_filename and to store the data from the file into an instance of class <a class="el" href="classMDE.html">MDE</a>. </p>
 <h2><a class="anchor" id="autotoc_md83"></a>
 name: loadXMLFileToMDE(MDE &amp; MDE_source,</h2>
 <p>const std::string &amp; full_filename) </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">&amp;</td><td>MDE_source is a reference to the <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a> instance that holds the the file's data </td></tr>
+    <tr><td class="paramname">&amp;</td><td>MDE_source is a reference to the <a class="el" href="classMDE.html">MDE</a> instance that holds the the file's data </td></tr>
     <tr><td class="paramname">full_filename</td><td>is a standard string. </td></tr>
   </table>
   </dd>
@@ -471,7 +475,7 @@ name: loadXMLFileToMDE(MDE &amp; MDE_source,</h2>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>The process is using a standard stack of pointers to pointers of Instances of Objects Class <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a> (std::stack&lt;MDE**&gt;). </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The process is using a standard stack of pointers to pointers of Instances of Objects Class <a class="el" href="classMDE.html">MDE</a> (std::stack&lt;MDE**&gt;). </dd></dl>
 
 </div>
 </div>
@@ -507,12 +511,12 @@ name: loadXMLFileToMDE(MDE &amp; MDE_source,</h2>
       </table>
 </div><div class="memdoc">
 
-<p>This member function is to read an XML file using the reference to the string full_filename and to store the data from the file into an element at a given index of the private member vMDE of the instance of a class of <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a>. </p>
+<p>This member function is to read an XML file using the reference to the string full_filename and to store the data from the file into an element at a given index of the private member vMDE of the instance of a class of <a class="el" href="classMDE.html">MDE</a>. </p>
 <h2><a class="anchor" id="autotoc_md82"></a>
 name: loadXMLFileTovMDE(MDE &amp; MDE_source, int &amp; index,</h2>
 <p>const std::string &amp; full_filename) </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">&amp;</td><td>MDE_source is a reference to the <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a> instance that holds the the file's data </td></tr>
+    <tr><td class="paramname">&amp;</td><td>MDE_source is a reference to the <a class="el" href="classMDE.html">MDE</a> instance that holds the the file's data </td></tr>
     <tr><td class="paramname">&amp;</td><td>index is a reference to an integer that holds the vector index of the private member vMDE where to load the XML file. struct <a class="el" href="structGLdata.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">GLdata</a>. </td></tr>
     <tr><td class="paramname">&amp;</td><td>full_filename is a reference to the path and name of the file to load. </td></tr>
   </table>
@@ -569,19 +573,19 @@ replace_vMDE_with_XML() </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>This member function is to process an instance of a 'flat' Entity and return a pointer to a new instance of <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a> that has nested sub-entities. The algorithm checks what is the data, if it is a structural data like an opening tag or closing tag it creates or ends the sub-entities accordingly. </p>
+<p>This member function is to process an instance of a 'flat' Entity and return a pointer to a new instance of <a class="el" href="classMDE.html">MDE</a> that has nested sub-entities. The algorithm checks what is the data, if it is a structural data like an opening tag or closing tag it creates or ends the sub-entities accordingly. </p>
 <h2><a class="anchor" id="autotoc_md81"></a>
 name: processFlatMDEToMDE(MDE &amp; MDE_source,MDE &amp; MDE_target</h2>
-<p>,std::vector&lt;MDE*&gt;::iterator &amp; it, <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a> &amp; MDE_source, std::stack&lt;MDE**&gt; &amp; stack_MDE_pt) </p><dl class="params"><dt>Parameters</dt><dd>
+<p>,std::vector&lt;MDE*&gt;::iterator &amp; it, <a class="el" href="classMDE.html">MDE</a> &amp; MDE_source, std::stack&lt;MDE**&gt; &amp; stack_MDE_pt) </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">&amp;</td><td>MDE_source is a reference to the <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a> instance that contains the 'flat' data as one Entity </td></tr>
-    <tr><td class="paramname">&amp;</td><td>MDE_target is a reference to the <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a> instance to transfer the data to with sub Entities </td></tr>
-    <tr><td class="paramname">&amp;</td><td>it is a reference to an iterator of a standard vector of pointers to instances of <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a>. </td></tr>
-    <tr><td class="paramname">&amp;</td><td>stack_MDE_pt is a reference to an standard stack of pointers to instances of <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a>. </td></tr>
+    <tr><td class="paramname">&amp;</td><td>MDE_source is a reference to the <a class="el" href="classMDE.html">MDE</a> instance that contains the 'flat' data as one Entity </td></tr>
+    <tr><td class="paramname">&amp;</td><td>MDE_target is a reference to the <a class="el" href="classMDE.html">MDE</a> instance to transfer the data to with sub Entities </td></tr>
+    <tr><td class="paramname">&amp;</td><td>it is a reference to an iterator of a standard vector of pointers to instances of <a class="el" href="classMDE.html">MDE</a>. </td></tr>
+    <tr><td class="paramname">&amp;</td><td>stack_MDE_pt is a reference to an standard stack of pointers to instances of <a class="el" href="classMDE.html">MDE</a>. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>&amp; MDE_target a reference to the target instance of <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a>. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>&amp; MDE_target a reference to the target instance of <a class="el" href="classMDE.html">MDE</a>. </dd></dl>
 <dl class="section see"><dt>See also</dt><dd>load_XML_File_to_MDE() </dd>
 <dd>
 proc_it() </dd></dl>
@@ -591,7 +595,7 @@ proc_it() </dd></dl>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>This function could be optimised. This function is complex and does contain a key algorithm for returning an Entity <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a> from a flat source. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This function could be optimised. This function is complex and does contain a key algorithm for returning an Entity <a class="el" href="classMDE.html">MDE</a> from a flat source. </dd></dl>
 
 </div>
 </div>
@@ -639,12 +643,12 @@ proc_it() </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>This member function is to search an entire Entity recursively all instances that has their name equal to the standard string searchName in parameter. It stores all the results in the static (class) member search_result which is a standard vector of pointers to pointers of <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a>. The results of the search can be displayed with method fetch_search_result. </p>
+<p>This member function is to search an entire Entity recursively all instances that has their name equal to the standard string searchName in parameter. It stores all the results in the static (class) member search_result which is a standard vector of pointers to pointers of <a class="el" href="classMDE.html">MDE</a>. The results of the search can be displayed with method fetch_search_result. </p>
 <h2><a class="anchor" id="autotoc_md86"></a>
 name: searchFor(MDE &amp; MDE_source,int &amp; index, int &amp; level,</h2>
 <p>std::string searchName) </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">&amp;</td><td>MDE_source is a reference to a <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a> instance </td></tr>
+    <tr><td class="paramname">&amp;</td><td>MDE_source is a reference to a <a class="el" href="classMDE.html">MDE</a> instance </td></tr>
     <tr><td class="paramname">&amp;</td><td>index is a reference to an integer. </td></tr>
     <tr><td class="paramname">&amp;</td><td>level is a reference to an integer. </td></tr>
     <tr><td class="paramname">searchName</td><td>is a standard string. </td></tr>
@@ -699,12 +703,12 @@ fetch_search_result() </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>This member function is to part of the recursive algorithm in the search_for method. It recursively stores pointers to pointer to <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a> in the static (class) member search_result when the search is successful. It calls a similar methods called simple_loop_VMDE_next_level in its recursive process to separate scopes of the different sub-entities of an entity. </p>
+<p>This member function is to part of the recursive algorithm in the search_for method. It recursively stores pointers to pointer to <a class="el" href="classMDE.html">MDE</a> in the static (class) member search_result when the search is successful. It calls a similar methods called simple_loop_VMDE_next_level in its recursive process to separate scopes of the different sub-entities of an entity. </p>
 <h2><a class="anchor" id="autotoc_md87"></a>
 name: simpleLoopVMDE(MDE &amp; MDE_source,</h2>
 <p>std::string searchName) </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">&amp;</td><td>MDE_source is a reference to a <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a> instance </td></tr>
+    <tr><td class="paramname">&amp;</td><td>MDE_source is a reference to a <a class="el" href="classMDE.html">MDE</a> instance </td></tr>
     <tr><td class="paramname">searchName</td><td>is a standard string. </td></tr>
   </table>
   </dd>
@@ -759,7 +763,7 @@ simple_loop_VMDE_next_level() </dd></dl>
 name: simpleLoopVMDEnextLevel(MDE &amp; MDE_source,</h2>
 <p>std::string searchName) </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">&amp;</td><td>MDE_source is a reference to a <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a> instance </td></tr>
+    <tr><td class="paramname">&amp;</td><td>MDE_source is a reference to a <a class="el" href="classMDE.html">MDE</a> instance </td></tr>
     <tr><td class="paramname">searchName</td><td>is a standard string. </td></tr>
   </table>
   </dd>
@@ -821,7 +825,7 @@ simple_loop_VMDE() </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>This member function is to read an XML file and store it into an instance of class <a class="el" href="classMDE.html" title="This is public structure &#39;GLdata&#39;. It is used for transferring information to GL functions.">MDE</a>. </p>
+<p>This member function is to read an XML file and store it into an instance of class <a class="el" href="classMDE.html">MDE</a>. </p>
 <h2><a class="anchor" id="autotoc_md78"></a>
 name: strTokenTag(std::string &amp; buffer_Input</h2>
 <p>, std::string &amp; output_Tag, std::string &amp; buffer_Output , char delimiter1, char delimiter2) </p><dl class="params"><dt>Parameters</dt><dd>
