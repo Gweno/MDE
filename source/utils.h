@@ -168,8 +168,6 @@ bool extractFileToFlatMDE(MDE & MDE_source, std::string & full_filename);
          * Entity MDE from a flat source.
          */
 MDE * processFlatMDEToMDE(MDE & MDE_source,MDE & MDE_target,std::vector<MDE*>::iterator & it, std::stack<MDE**> & stack_MDE_pt);
-MDE * processFlatMDEToMDE_old(MDE & MDE_source,MDE & MDE_target,std::vector<MDE*>::iterator & it, std::stack<MDE**> & stack_MDE_pt);
-
 
         /**
          * 
@@ -366,7 +364,7 @@ void simpleLoopVMDEnextLevel(MDE & MDE_source, std::string searchName,  std::vec
          * standard vector of struct GLdata. For example it can displays
          * a vector of offset values for coordinates.
          */
-void displayVMDEdata(std::vector<GLdata> & v_offset);
+void displayVMDEdata(std::vector<GLdata> & v_offset, uint target_log_level=1);
 
         /** @} */ // end of group_X
 
@@ -414,16 +412,6 @@ MDE * processFlatMdeToMde(std::vector<MDE*>::iterator & it, MDE & MDE_source, st
 void set_utils_log_level(uint &_log_level);
 
 // Templates
-//~ template <typename T>
-//~ void PRINT_VECTOR(const std::vector<T> &vec, uint target_level){
-    //~ if(log_level == target_level)
-    //~ {
-        //~ for(auto it:vec)
-        //~ {
-            //~ std::clog<<std::to_string(it)<<", ";
-        //~ }
-        
-        //~ std::clog<<std::endl;
-    //~ }
-//~ }
+template <typename T>
+void PRINT_VECTOR(const std::vector<T> &vec, uint target_level);
 #endif /*UTILS_CPP*/

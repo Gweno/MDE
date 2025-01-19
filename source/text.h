@@ -435,15 +435,10 @@ void displayV2D(std::vector<vertex2D> &vector_2D, uint log_level = 1);
 void displayV3D(std::vector<vertex3D> &vector_3D, uint log_level = 1);
 //~ void displayV3Dalpha(std::vector<vertex3Dalpha> &vector_3Dalpha);
 void displayColorRGBA(std::vector<colorRGBA> &vector_rgba, uint log_level = 1);
-void displayVuint(std::vector<unsigned int> &vector_uint);
 void displayVGLfloat(std::vector<GLfloat> &vector_glf);
 void text_display();
 void draw_box();
 
-
-
-
-void create_coord_vector_text_old(const char *text, atlas * a, vertex3D &origin, vertex2D &window_coord_scale);
 void onIdle();
 void camera();
 void display();
@@ -510,30 +505,13 @@ void init_font_color(std::vector<GLfloat> &color);
  */
 void init_options(bool move_it, bool display_box, bool display2d=false, bool singleColor=true, uint nlines=1, uint log_level=0);
 
-//~ void init_v_font_color_old(std::vector<vertex3Dalpha> &font_color, uint &nlines, bool singleColor=true, bool displayDataOnly=false);
-//~ void init_v_font_color(std::vector<vertex3Dalpha> &font_color,std::vector<vertex3Dalpha> &v_font_color, uint &nlines, bool singleColor, bool displayDataOnly);
 void init_v_font_color(std::vector<colorRGBA> &font_color,std::vector<colorRGBA> &v_font_color, uint &nlines, bool singleColor, bool displayDataOnly);
-
-//~ template <typename T>
-//~ void displayVec(std::vector<T> &vect)
 
 ////
 void onReshape(int width, int height);
-//~ int init_resources();
-//~ void init_color_box(vertex3Dalpha &color_alpha);
 void init_color_box(colorRGBA &color_alpha);
-void onDisplay();
 //~ void init_ibo_elements_box(std::vector<vertex3D> &vectors_boxes);
 void resetCameraMatrices();
-
-
-
-
-
-
-//~ void render_text(atlas * a, const void * pointer);
-//~ void render_text(atlas * a, std::vector<vertex3Dalpha> &vector_font_color_part,
-             //~ std::vector<vertex3D> &glyphs_box_part, std::vector<vertex2D> &glyphs_vertex_part );
 
 void render_text(atlas * a, std::vector<colorRGBA> &vector_font_color_part,
             std::vector<vertex3D> &glyphs_box_part,
@@ -541,8 +519,5 @@ void render_text(atlas * a, std::vector<colorRGBA> &vector_font_color_part,
             int nbChars,
             int startIndex
             );
-void render_text_old(atlas * a, std::vector<colorRGBA> &vector_font_color_part,
-             std::vector<vertex3D> &glyphs_box_part, std::vector<vertex2D> &glyphs_vertex_part );
-void render_text_very_old(atlas * a);
 
 #endif /*text.h*/
