@@ -959,7 +959,7 @@ if (checkHtmlTag(*it3,"style")){
 }
 
 */
- MDE * htmlParser(MDE & MDE_source, std::vector<std::vector<float>> &vect_color, std::vector<int> &vect_size){
+ MDE * htmlParser(MDE & MDE_source, std::vector<std::vector<float>> &vect_color, std::vector<int> &vect_size, std::vector<float> &vect_line_height){
     PRINT_LOG("In html Parser",5);
     //~ fprintf(stderr,"MDE_source name %s, data %s: \n", (MDE_source.name).c_str(),MDE_source.data.c_str());
     PRINT_LOG("MDE_source name: "+MDE_source.name+ ", data: " + MDE_source.data, 5);
@@ -996,11 +996,12 @@ if (checkHtmlTag(*it3,"style")){
         for(auto it:MDE_source.vMDE){
             PRINT_LOG("Name/Data: " + (*it).name + " / " + (*it).data, 5);
             if (checkHtmlTag(*it,"h3")){
-                if(utils_test_log>1) std::clog <<"It's a h3\n"<<std::endl;
-                PRINT_LOG("It's a h3\n", 5);
+                PRINT_LOG("It's a h3", 5);
                 newMDE->new_vMDE_element(it->name,it->data);
                 vect_color.push_back(defaultColor);
-                vect_size.push_back(96);
+                //~ vect_size.push_back(96);
+                vect_size.push_back(19); // it's actually 18.72px
+                vect_line_height.push_back(19*1.2);
             }
             else if (checkHtmlTag(*it,"ul"))
             {
@@ -1032,16 +1033,117 @@ if (checkHtmlTag(*it3,"style")){
                             if(utils_test_log==5) std::clog<<"(In htmplParser) Checking hasStyle, displayTag, display , hasColor, fontcolor: " << 
                             hasStyle << ", "  << displayTag << ", " << display << ", " << hasColor << ", " << fontcolor << std::endl;
                             if (!subtags || !attributes || !displayTag || display){
-                                //~ newMDE->new_vMDE_element(it1->name,it1->data);
                                 newMDE->new_vMDE_element(it1->name,it1->data);
-                                //~ std::clog << "Tag is to be displayed: " << it->name << std::endl;
+                                // testing font size
+                                vect_size.push_back(defaultSize);
+                                vect_line_height.push_back(defaultSize*1.2);
+
                                 
+                                if(hasColor){
+                                    processCssColor(fontcolor, vect_color);
+                                }
+                                else{
+                                    // use default color for font
+                                    vect_color.push_back(defaultColor);
+                                }
+                            }
+                        }
+                        
+                        
+                        //
+                                                
+                    }
+                    }
+            else
+            {
+                        //~ std::clog << "Not a ul\n"<<std::endl;
+                    }
+                }
+            }
+    else{
+        //~ std::clog << "Not a div\n"<<std::endl;
+    }
+    return newMDE;
+}
+
+ MDE * htmlParser_previous(MDE & MDE_source, std::vector<std::vector<float>> &vect_color, std::vector<int> &vect_size){
+    PRINT_LOG("In html Parser",5);
+    //~ fprintf(stderr,"MDE_source name %s, data %s: \n", (MDE_source.name).c_str(),MDE_source.data.c_str());
+    PRINT_LOG("MDE_source name: "+MDE_source.name+ ", data: " + MDE_source.data, 5);
+    if (MDE_source.vMDE.size()==0){
+        //~ std::clog<<"No tag to parse" <<std::endl;
+        return nullptr;
+    }
+    
+    // set default value for (global) booleans for recursive algorithm 
+    container = false;
+    subtags = false;
+    displayTag = false;
+    display = true;
+    attributes = false;
+    hasStyle = false; 
+    hasColor =false;
+
+    
+    MDE * newMDE = new MDE();
+    newMDE->name = MDE_source.name;
+    newMDE->data = MDE_source.data;
+    
+    // a vector for the colors
+    std::vector<float> defaultColor = {0.0,0.0,0.0,1.0};
+    
+    // font size
+    uint defaultSize = 16;
+    
+    
+    // Checking if MDE name is a Div -> later will add further MDE above , like <HTML>, <body>...
+    container = false;
+    if (checkHtmlTag(MDE_source,"div")){
+        container = true;
+        for(auto it:MDE_source.vMDE){
+            PRINT_LOG("Name/Data: " + (*it).name + " / " + (*it).data, 5);
+            if (checkHtmlTag(*it,"h3")){
+                PRINT_LOG("It's a h3", 5);
+                newMDE->new_vMDE_element(it->name,it->data);
+                vect_color.push_back(defaultColor);
+                //~ vect_size.push_back(96);
+                vect_size.push_back(19); // it's actually 18.72px
+            }
+            else if (checkHtmlTag(*it,"ul"))
+            {
+                container = true;
+                // check all tags for a 'p' or ul or li 
+                    for(auto it1:it->vMDE){
+                        PRINT_LOG("Name/Data: " + (*it1).name + " / " + (*it1).data, 5);
+                        if (checkHtmlTag(*it1,"p") || checkHtmlTag(*it1,"li")){
+                            container = false;
+                            //~ subtags = false;
+                            //~ displayTag = false;
+                            //~ display = false;
+                            //~ attributes = false;
+                            //~ hasStyle = false; 
+                            //~ hasColor =false;
+                            
+
+                                        
+                            if (it1->vMDE.size()>0){
+                                subtags = true;
+                                for(auto it2:it1->vMDE){
+                                    PRINT_LOG("Name/Data: " + (*it2).name + " / " + (*it2).data, 5);;
+                                    checkHtmlTag2(*it2);
+                                    //~ if(checkHtmlTag(*it2,"display")){
+                                        //~ std::clog<<"Display Tag"<<std::endl;
+                                    //~ }
+                                }
+                            }
+                            if(utils_test_log==5) std::clog<<"(In htmplParser) Checking hasStyle, displayTag, display , hasColor, fontcolor: " << 
+                            hasStyle << ", "  << displayTag << ", " << display << ", " << hasColor << ", " << fontcolor << std::endl;
+                            if (!subtags || !attributes || !displayTag || display){
+                                newMDE->new_vMDE_element(it1->name,it1->data);
                                 // testing font size
                                 vect_size.push_back(defaultSize);
                                 
                                 if(hasColor){
-                                    //~ std::clog << "has color: " << color << std::endl;
-                                    //~ processCssColor(color, vect_color);
                                     processCssColor(fontcolor, vect_color);
                                 }
                                 else{

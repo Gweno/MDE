@@ -381,7 +381,8 @@ void keyValuePairParser(std::string expression, std::string &key, std::string &v
 MDE * htmlParser_attributes(MDE & MDE_source);
 
 bool checkAttribute(MDE & MDE_source, std::string attribute);
-MDE * htmlParser(MDE & MDE_source, std::vector<std::vector<float>> &vect_color, std::vector<int> &vect_size);
+MDE * htmlParser(MDE & MDE_source, std::vector<std::vector<float>> &vect_color, std::vector<int> &vect_size, std::vector<float> &vect_line_height);
+MDE * htmlParser_previous(MDE & MDE_source, std::vector<std::vector<float>> &vect_color, std::vector<int> &vect_size);
 bool checkHtmlTag(MDE & MDE_source, std::string tag);
 bool  htmlTagHasAttributes(MDE & MDE_source);
 /*

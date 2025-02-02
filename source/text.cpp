@@ -15,6 +15,7 @@
 #include <vector>
 #include <array>
 #include <math.h>
+#include <map>
 
 #include <GL/glew.h>
 #include <GL/freeglut.h>
@@ -120,7 +121,9 @@ GLfloat bg_r = 1, bg_g = 1, bg_b = 1, bg_a =1;
 
 float x_pos = 0, y_pos = 0, z_pos = 0, x_rot = 0, y_rot = 0;
 float lastx, lasty;
-float multiply = 4.0f;
+//~ float multiply = 4.0f;
+float default_multiply = 1.5f;
+float multiply = default_multiply;
 float unit = 1;
 
 // for testing
@@ -149,6 +152,9 @@ std::vector<vertex3D> *offset = nullptr;
 std::vector<vertex3D> *offset_rule = nullptr;
 colorRGBA *color_alpha = nullptr;
 colorRGBA *bg_color_alpha = nullptr;
+
+// initialize vector to hold line og height for html parse
+std::vector<float> *html_vect_line_height = nullptr;
 
 // Vectors color, font size and nb chars
 std::vector<colorRGBA> *font_color  = nullptr;
@@ -189,17 +195,29 @@ bool display_box = false;
 bool left_click=false;
 bool right_click=false;
 
-glm::vec3 cameraPos   = glm::vec3(0.0f, 0.0f,  3.0f);
-glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-glm::vec3 cameraUp    = glm::vec3(0.0f, 1.0f,  0.0f);
+//~ glm::vec3 cameraPos   = glm::vec3(0.0f, 0.0f,  3.0f);
+//~ glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+//~ glm::vec3 cameraUp    = glm::vec3(0.0f, 1.0f,  0.0f);
+glm::vec3 defaut_cameraPos   = glm::vec3(0.0f, 0.0f,  0.9f);
+glm::vec3 default_cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+glm::vec3 default_cameraUp    = glm::vec3(0.0f, 1.0f,  0.0f);
+glm::vec3 cameraPos   = defaut_cameraPos;
+glm::vec3 cameraFront = default_cameraFront;
+glm::vec3 cameraUp    = default_cameraUp;
 
 // variables to control orthographic view
-float orthoX = -0.6f;
-//~ float orthoXmax = 1.0;
-float orthoY = -0.5f;
-//~ float orthoYmax = 1.0;
-float orthoZ = 0.0;
-//~ float orthoZmax = 1.0;
+//float orthoX = -0.6f;
+////~ float orthoXmax = 1.0;
+//float orthoY = -0.5f;
+////~ float orthoYmax = 1.0;
+//float orthoZ = 0.0;
+////~ float orthoZmax = 1.0;
+float default_orthoX = 0.6f;
+float default_orthoY = -0.8f;
+float default_orthoZ = 0.0f;
+float orthoX = default_orthoX;
+float orthoY = default_orthoY;
+float orthoZ = default_orthoZ;
 
 
 //~ const float cameraSpeed = 0.05f; // adjust accordingly
@@ -268,7 +286,6 @@ struct atlas {
 		int error = FT_Set_Pixel_Sizes(face, 0, height);
         fprintf(stderr,"FT_set_Pixel_Sizes:%d\n",error);
 		FT_GlyphSlot g = face->glyph;
-        PRINT_LOG("Check point 0",1);
 		unsigned int roww = 0;
 		unsigned int rowh = 0;
 		 w = 0;
@@ -369,7 +386,12 @@ atlas *a40;
 atlas *a24;
 atlas *a12;
 
+atlas *aH3;
+
 atlas *a_any_size;
+
+// map of atlas
+std::map<int,atlas*> map_font_size;
 
 uint nb_indices=0;
 
@@ -394,9 +416,7 @@ void create_coord_vector_text(const char *text, atlas * a, vertex3D &origin, ver
     const uint8_t *p;
     uint c = 0;
 
-    PRINT_LOG("In create_coord_vector_text",5);
     std::string str(text);
-    PRINT_LOG("text: " + str , 5);
     /* Loop through all characters */
 
     for (p = (const uint8_t *)text; *p; p++) {
@@ -448,8 +468,6 @@ void create_coord_vector_text(const char *text, atlas * a, vertex3D &origin, ver
     //~ displayV3D(a_glyphs_box);
     nb_glyphs_per_text.push_back(c);
     nb_indices+=c;
-    PRINT_LOG(" size of glyphs_vertex "+ std::to_string(glyphs_vertex.size()),1);
-    PRINT_LOG(" size of nb_chars " + std::to_string(nb_chars.size()),1);
     if(log_level>=1){
         displayV2D(glyphs_vertex);
     }
@@ -459,7 +477,7 @@ void create_coord_vector_text(const char *text, atlas * a, vertex3D &origin, ver
 void text_frame(std::vector<vertex3D> &vector_input, std::vector<uint> &nb_glyphs, std::vector<vertex3D> &vector_origin, vertex2D &padding){
     
     
-    PRINT_LOG("##### text_frame #####", 1);
+    PRINT_LOG("##### text_frame #####");
     std::vector<vertex3D> vertex_3D;
     std::vector<vertex3D>::iterator it=vector_input.begin();
     std::vector<uint>::iterator it2=nb_glyphs.begin();
@@ -495,7 +513,7 @@ void text_frame(std::vector<vertex3D> &vector_input, std::vector<uint> &nb_glyph
     create_vector(vertex_3D, vector_origin, bottom_left_front, top_right_back, padding);
     
     init_box(vertex_3D);
-    PRINT_LOG("##### End text_frame #####", 1);
+    PRINT_LOG("##### End text_frame #####");
     
     
 }
@@ -507,39 +525,30 @@ void render_text(atlas * a,
             int nbChars,
             int startChar
             ) {
-    PRINT_LOG("Total nb of characters: " +  std::to_string(glyphs_vertex_part.size()/6),5);
-    displayColorRGBA(vector_font_color);
     /* test color per block*/
     glEnableVertexAttribArray(attribute_font_color);
     glGenBuffers(1,&vbo_font_color);
     glBindBuffer(GL_ARRAY_BUFFER,vbo_font_color);
     glVertexAttribPointer(attribute_font_color, 4, GL_FLOAT, GL_FALSE, 0, 0);
-    //~ glBufferData(GL_ARRAY_BUFFER, nFontColorIndex * 6 * sizeof(colorRGBA),&vector_font_color_part.front(),GL_STATIC_DRAW);
     glBufferData(GL_ARRAY_BUFFER, nbChars * 6 * sizeof(colorRGBA),&vector_font_color_part[startChar * 6],GL_STATIC_DRAW);
-    //~ glBufferData(GL_ARRAY_BUFFER,(nFontColorIndex + 1) * sizeof(colorRGBA),&vector_font_color_part,GL_STATIC_DRAW);
  
-    //~ /* Use the texture containing the atlas */
+    /* Use the texture containing the atlas */
     glBindTexture(GL_TEXTURE_2D, a->tex);
     
     /* Set up the VBO for our vertex data */
+    // Not used ?!?
     glEnableVertexAttribArray(attribute_coord);
     glBindBuffer(GL_ARRAY_BUFFER, vbo_coord);
     glVertexAttribPointer(attribute_coord, 3, GL_FLOAT, GL_FALSE, 0, 0);
     /* Draw the character on the screen */
-    //~ glBufferData(GL_ARRAY_BUFFER, glyphs_box_part.size() * sizeof(vertex3D), &glyphs_box_part.front(), GL_STATIC_DRAW);
-    //~ glBufferData(GL_ARRAY_BUFFER, nGlyphBoxIndex * 6 * sizeof(vertex3D), &glyphs_box_part.front(), GL_STATIC_DRAW);
     glBufferData(GL_ARRAY_BUFFER, nbChars * 6 * sizeof(vertex3D), &glyphs_box_part[startChar * 6], GL_STATIC_DRAW);
-    //~ displayV3D(glyphs_box);
     
     /* Set up the VBO for our vertex data */
     glEnableVertexAttribArray(attribute_tex_coord);
     glBindBuffer(GL_ARRAY_BUFFER, vbo_tex_coord);
     glVertexAttribPointer(attribute_tex_coord, 2, GL_FLOAT, GL_FALSE, 0, 0);
     
-    //~ displayV2D(glyphs_vertex);
     /* Draw all the character on the screen in one go */
-    //~ glBufferData(GL_ARRAY_BUFFER,glyphs_vertex_part.size() * sizeof(vertex2D),&glyphs_vertex_part.front(),GL_STATIC_DRAW);
-    //~ glBufferData(GL_ARRAY_BUFFER,nGlyphVertexIndex * 6 * sizeof(vertex2D),&glyphs_vertex_part.front(),GL_STATIC_DRAW);
     glBufferData(GL_ARRAY_BUFFER,nbChars * 6 * sizeof(vertex2D),&glyphs_vertex_part[startChar * 6],GL_STATIC_DRAW);
     glDrawArrays(GL_TRIANGLES, 0, nb_indices);
 
@@ -550,19 +559,25 @@ void render_text(atlas * a,
 }
 
 bool init_size(uint uFontSize, std::vector<int> &sizes){
+    
+    PRINT_LOG("###### init_size ######");
+
     /*Set the font size from argument */
     fontSize = uFontSize;
     font_size = &sizes;
+    
+    PRINT_LOG("###### End init_size ######");
+    
     return 1;
 }
 
 bool init_font(const char *uFontFilename) {
     
-    /*Set the font size from argument */
-    //~ fontSize=uFontSize;
+    PRINT_LOG("###### init_font ######");
     
     /*Set the font Filename from argument*/
     fontfilename = uFontFilename;
+    
     
     /* Initialize the FreeType2 library */
     if (FT_Init_FreeType(&ft)) {
@@ -588,6 +603,8 @@ bool init_font(const char *uFontFilename) {
     // Create the vertex buffer object for 2d display
 	glGenBuffers(1, &vbo_coord2d);
 	glGenBuffers(1, &vbo_tex_coord2d);
+    
+    PRINT_LOG("###### init_font ######");
     
     return 1;
 }
@@ -623,7 +640,7 @@ bool init_program(){
     
     attribute_coord_text = get_attrib(program_text, "coord");
     attribute_tex_coord = get_attrib(program_text,"tex_coord");
-    attribute_font_color = get_attrib(program_text,"fontcolor");
+    attribute_font_color = get_attrib(program_text,"fontcolor"); // ok
     uniform_tex_text = get_uniform(program_text, "tex");
     //~ uniform_color_text = get_uniform(program_text, "color");
     uniform_bgcolor_text = get_uniform(program_text, "bgcolor");
@@ -716,17 +733,7 @@ void init_color(colorRGBA &color_alpha, colorRGBA &bg_color_alpha,
     };
     
     std::vector<GLfloat> vect_color3;
-    PRINT_LOG("(before) Size of output_font_color" + std::to_string(output_font_color.size()) ,5);
-    PRINT_LOG("size of nb_glyphs_per_text: "+std::to_string(nb_glyphs_per_text.size()),5);
-    PRINT_LOG("nb_glyphs_per_text[0]: "+std::to_string(nb_glyphs_per_text[0]),5);
-    PRINT_LOG("output_font_color: ",5);
-    displayColorRGBA(output_font_color, 5);
-
-    fprintf(stderr,"whd.size: %lu\n",whd.size());
-    fprintf(stderr,"font_color_alpha.size: %lu\n",font_color_alpha.size());
-    //~ int max_loop = whd.size();
     int max_loop = font_color_alpha.size();
-    //~ int max_loop = 6;
     for(int i=0;i<max_loop;i++){
         vect_color3.insert (vect_color3.end(), box_vertices_color3, box_vertices_color3+32);
         }
@@ -740,19 +747,11 @@ void init_color(colorRGBA &color_alpha, colorRGBA &bg_color_alpha,
     for(std::vector<unsigned int>::iterator it=nb_glyphs_per_text.begin(); it!=nb_glyphs_per_text.end();it++){
         for(unsigned int i=0;i<(*it);i++){
             output_font_color.push_back(font_color_alpha[ind]);
-            PRINT_LOG("(*it):" + std::to_string((*it)) + " i:" + std::to_string(i) + " ind:" + std::to_string(ind)
-            + " output_font_color: | " + std::to_string(output_font_color.back().r)
-             + ", "  + std::to_string(output_font_color.back().g)
-            + ", "  + std::to_string(output_font_color.back().b)
-            + ", "  + std::to_string(output_font_color.back().a) + " |", 5);
         }
         ind++;
     }
-    PRINT_LOG("(After) Size of output_font_color" + 
-    std::to_string(output_font_color.size()), 5);
-    PRINT_LOG("output_font_color: ",5);
-    displayColorRGBA(output_font_color, 5);
-    PRINT_LOG("######## End init_color #######", 5);
+
+    PRINT_LOG("######## End init_color #######");
 }
 
 // bypassing singlecolor for testing
@@ -760,15 +759,13 @@ void init_color(colorRGBA &color_alpha, colorRGBA &bg_color_alpha,
 void init_v_font_color(std::vector<colorRGBA> &font_color,
                     std::vector<colorRGBA> &v_font_color, uint &nlines,
                     bool singleColor, bool displayDataOnly){
-    PRINT_LOG("####### init_v_font_color ########",5);
+    PRINT_LOG("####### init_v_font_color ########");
 
 
 
     if(singleColor)
     {
         // add same color for each glyph
-        PRINT_LOG("Check number of indices: " + std::to_string(nb_indices),5);
-        PRINT_LOG("Check number of lines: " + std::to_string(nlines),5);
         for(uint i=0;i<nb_indices;i++)
         {
             for(std::vector<colorRGBA>::iterator it=font_color.begin();it!=font_color.end();++it){
@@ -780,11 +777,7 @@ void init_v_font_color(std::vector<colorRGBA> &font_color,
         }
     }
 
-    PRINT_LOG("Size of  font_color: " + std::to_string((font_color).size()),5);
-    PRINT_LOG("Size of v_font_color: " + std::to_string((v_font_color).size()),5);
-    displayColorRGBA(v_font_color);    
-    
-    PRINT_LOG("####### End init_v_font_color #######",5);
+    PRINT_LOG("####### End init_v_font_color #######");
     
 }
 
@@ -793,7 +786,8 @@ void displayV3D(std::vector<vertex3D> &vector_3D, uint log_level){
     PRINT_LOG("Size: " + std::to_string(vector_3D.size()), log_level);
     for(std::vector<vertex3D>::iterator it=vector_3D.begin();it!=vector_3D.end();++it)
     {
-        PRINT_LOG("| " + std::to_string((*it).x) + ", " + std::to_string((*it).y) + ", " + std::to_string((*it).z) + " |" ,log_level);
+        //~ PRINT_LOG("| " + std::to_string((*it).x) + ", " + std::to_string((*it).y) + ", " + std::to_string((*it).z) + " |" ,log_level);
+        PRINT_LOG(std::to_string((*it).x) + "," + std::to_string((*it).y) + "," + std::to_string((*it).z),log_level);
     }
     
 }
@@ -816,7 +810,7 @@ void displayColorRGBA(std::vector<colorRGBA> &vector_rgba, uint log_level){
  // blf: bottom-left-front, trb: top-right-back
 void create_vector(std::vector<vertex3D> &vector3D,std::vector<vertex3D> &vector_origin, std::vector<vertex3D> &vector_blf, std::vector<vertex3D> &vector_trb, vertex2D &padding)
 {
-    PRINT_LOG("######## create_vector #######", 1);
+    PRINT_LOG("######## create_vector #######");
 
     std::vector<vertex3D>::iterator vector_origin_it;
     std::vector<vertex3D>::iterator v_blf_it;   // bottom left front
@@ -860,26 +854,26 @@ void create_vector(std::vector<vertex3D> &vector3D,std::vector<vertex3D> &vector
             vector3D.back().z});
 
             }
-        PRINT_LOG("######## End create_vector #######", 1);
+        PRINT_LOG("######## End create_vector #######");
 
 }
 
 void init_vbo_box(std::vector<vertex3D> &vectors_boxes)
 {
-    PRINT_LOG("######## init_vbo_box #######", 1);
+    PRINT_LOG("######## init_vbo_box #######");
 
     glGenBuffers(1,&vbo_vertices_box);
     glBindBuffer(GL_ARRAY_BUFFER,vbo_vertices_box);
     glBufferData(GL_ARRAY_BUFFER,vectors_boxes.size() * sizeof(vertex3D),&vectors_boxes.front(),GL_STATIC_DRAW);
     
-    PRINT_LOG("######## End init_vbo_box #######", 1);
+    PRINT_LOG("######## End init_vbo_box #######");
 
 }
 
 //~ void init_ibo_elements_box(std::vector<vertex3D> &vectors_boxes)
 void init_ibo_elements_box(int size_of_vectors_boxes)
 {
-    PRINT_LOG("######## init_ibo_elements_box #######", 1);
+    PRINT_LOG("######## init_ibo_elements_box #######");
     
     // set the array of indexes for a rectangle
     std::array<GLushort,36> box_elements3 = {
@@ -914,32 +908,32 @@ void init_ibo_elements_box(int size_of_vectors_boxes)
             vect_index.push_back((*it)+8*i);
         }
     }
-    PRINT_LOG("vect_index size: " + std::to_string(vect_index.size()), 1);
-    
 
     glGenBuffers(1, &ibo_box_elements);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_box_elements);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, vect_index.size() * sizeof(GLushort), &vect_index.front(), GL_STATIC_DRAW);
 
-    PRINT_LOG("######## End init_ibo_elements_box #######", 1);
+    PRINT_LOG("######## End init_ibo_elements_box #######");
     
 }
 
 //~ void init_box(std::vector<vertex3D> &vectors_boxes, vertex3Dalpha &color_alpha)
 void init_box(std::vector<vertex3D> &vectors_boxes)
 {
-    PRINT_LOG("######## init_box #######", 1);
+    PRINT_LOG("######## init_box #######",6);
 
     init_vbo_box(vectors_boxes);
     init_ibo_elements_box(vectors_boxes.size());
+    
+    displayV3D(vectors_boxes,6);
 
-    PRINT_LOG("######## End init_box #######", 1);
+    PRINT_LOG("######## End init_box #######",6);
 }
 
 //~ void init_vectors(std::vector<vertex3D> &vectors_boxes)
 void init_vectors()
 {
-    PRINT_LOG("######## init_vectors #######", 1);
+    PRINT_LOG("######## init_vectors #######");
 
     // set the array of indexes for a rectangle
     GLushort box_elements3[] = {
@@ -1012,7 +1006,7 @@ void draw_box(){
 void init_user_input(MDE &user_input_MDE, vertex3D &user_input_origin, std::vector<vertex3D> &user_input_offset,
                     std::vector<vertex3D> &user_input_offset_rule, vertex2D &user_input_padding, colorRGBA &user_input_color_alpha,
                     colorRGBA &user_input_bg_color_alpha, std::vector<colorRGBA> &user_input_font_color,
-                    bool _displayDataOnly, bool _hideParent, bool &user_parse_html){
+                    bool _displayDataOnly, bool _hideParent, bool &user_parse_html, std::vector<float> &vect_line_height){
                         
                         
     PRINT_LOG("######## init_user_input #######");
@@ -1043,6 +1037,9 @@ void init_user_input(MDE &user_input_MDE, vertex3D &user_input_origin, std::vect
     // boolean for html parsing
     parse_html_file = user_parse_html;
     
+    // vector holding line height for html parser
+    html_vect_line_height = &vect_line_height;
+    
     PRINT_LOG("######## End init_user_input #######");
 }
 
@@ -1062,7 +1059,9 @@ void init_offset_rules()
 {
     PRINT_LOG("######## init_offset_rules #######");
     
-    process_v_MDE_data(my_v_MDE_data,*offset, *offset_rule);
+    //~ process_v_MDE_data(my_v_MDE_data,*offset, *offset_rule);
+    if(!parse_html_file) process_v_MDE_data(my_v_MDE_data,*offset, *offset_rule);
+    else process_v_MDE_data_html(my_v_MDE_data,*offset, *html_vect_line_height);
 
     PRINT_LOG("######## End init_offset_rules #######");
 }
@@ -1099,10 +1098,27 @@ void init_glyphs(){
     /* Create texture atlasses for a given font size */
     a_any_size = new atlas(face,(int)fontSize);
     a96 = new atlas(face2,96);
+    aH3 = new atlas(face2,19);
     //~ a48 = new atlas(face,48);
     //~ a40;
     //~ a24;
     //~ a12;    
+    
+    for(auto fs:(*font_size))
+    {
+        PRINT_LOG("Font size: " + std::to_string(fs),6);
+        if (map_font_size.find(fs) == map_font_size.end())
+        {
+            PRINT_LOG(std::to_string(fs) + " not in map_font_size",6);
+            map_font_size[fs]= new atlas(face,(int)fs);
+        }
+        else
+        {
+            PRINT_LOG(std::to_string(fs) + " already in map_font_size",6);
+        }
+    }
+    
+    
     uint index_v_origin=0;
     
     for (std::vector<GLdata>::iterator it_v_MDE_data=my_v_MDE_data.begin(); it_v_MDE_data!=my_v_MDE_data.end();++it_v_MDE_data)
@@ -1111,7 +1127,10 @@ void init_glyphs(){
                 create_coord_vector_text(((*it_v_MDE_data).MDE_data).c_str(), a_any_size, v_origin[index_v_origin], window_scale, glyphs_box, glyphs_vertex );
             }
             else{
-                create_coord_vector_text(((*it_v_MDE_data).MDE_data).c_str(), ((*font_size)[index_v_origin]==16)?a_any_size:a96, v_origin[index_v_origin], window_scale, glyphs_box, glyphs_vertex );
+                //~ create_coord_vector_text(((*it_v_MDE_data).MDE_data).c_str(), ((*font_size)[index_v_origin]==16)?a_any_size:a96, v_origin[index_v_origin], window_scale, glyphs_box, glyphs_vertex );
+                //~ create_coord_vector_text(((*it_v_MDE_data).MDE_data).c_str(), ((*font_size)[index_v_origin]==16)?a_any_size:aH3, v_origin[index_v_origin], window_scale, glyphs_box, glyphs_vertex );
+                
+                create_coord_vector_text(((*it_v_MDE_data).MDE_data).c_str(),map_font_size[(*font_size)[index_v_origin]], v_origin[index_v_origin], window_scale, glyphs_box, glyphs_vertex );
                 
             }
         
@@ -1148,6 +1167,23 @@ void init_color_scheme(){
     
     PRINT_LOG("###### End init_color_scheme ######");    
 }
+
+void process_v_MDE_data_html(std::vector<GLdata> & v_MDE_data,std::vector<vertex3D> & v_offset, std::vector<float> &vect_line_height)
+{
+    int index=0;
+    float coef = -0.002604167;
+    for(auto it:vect_line_height)
+    {
+        v_offset.push_back(
+        {
+            0,
+            index*it*coef,
+            0
+        });
+        index++;
+    }
+}
+
 
 void process_v_MDE_data(std::vector<GLdata> & v_MDE_data,std::vector<vertex3D> & v_offset, std::vector<vertex3D> & v_offset_rule){
     
@@ -1189,20 +1225,33 @@ void text_display() {
 
     if(!parse_html_file){
         // testing with dynamic number of characters
+        // same color for all so no loop
         render_text(a_any_size, vector_font_color, glyphs_box, glyphs_vertex, glyphs_vertex.size()/6 ,0 );
     }
     else{
+        // parsing html, so there can be different and need to loop on each line
         int it0 = 0;
         uint previous = 0;
-        for(auto it:nb_chars){
-           if((*font_size)[it0]==96){
-               render_text(a96, vector_font_color, glyphs_box, glyphs_vertex,it, previous );
-           }
-           else{
-               render_text(a_any_size, vector_font_color, glyphs_box, glyphs_vertex,it,  previous);
-           }
-           previous+= it;
-           it0++;
+        //~ for(auto it:nb_chars){
+           //~ if((*font_size)[it0]==96){
+               //~ render_text(a96, vector_font_color, glyphs_box, glyphs_vertex,it, previous );
+           //~ }
+           //~ else if((*font_size)[it0]==19){
+               //~ render_text(aH3, vector_font_color, glyphs_box, glyphs_vertex,it, previous );
+           //~ }
+           //~ else{
+               //~ render_text(a_any_size, vector_font_color, glyphs_box, glyphs_vertex,it,  previous);
+           //~ }
+           //~ previous+= it;
+           //~ it0++;
+        //~ }
+        //~ int previous_index=0;
+        uint fs_it=0;
+        for(auto it:nb_chars)
+        {
+            render_text(map_font_size[(*font_size)[fs_it]], vector_font_color, glyphs_box, glyphs_vertex,it,previous);
+            previous+=it;
+            fs_it++;
         }
     }
 
@@ -1343,157 +1392,6 @@ void init_matrices(){
  
     PRINT_LOG("###### End init_matrices ######");
 }
-
-/*
-int init_resources()
-{
-  //~ GLfloat cube_vertices[] = {
-    //~ // front
-    //~ -1.0, -1.0,  1.0,
-     //~ 1.0, -1.0,  1.0,
-     //~ 1.0,  1.0,  1.0,
-    //~ -1.0,  1.0,  1.0,
-    //~ // back
-    //~ -1.0, -1.0, -1.0,
-     //~ 1.0, -1.0, -1.0,
-     //~ 1.0,  1.0, -1.0,
-    //~ -1.0,  1.0, -1.0,
-  //~ };
-  GLfloat cube_vertices[] = {
-
-    //~ 0,0,0,
-    //~ 0.41666633,0.322222,0,
-    //~ 0.41666633,0.404444,0,
-    //~ 0,0.404444,0.0822222,
-    //~ 0,0.322222,0.0822222,
-    //~ 0.41666633,0.322222,0.0822222,
-    //~ 0.41666633,0.404444,0.0822222
-
-      
-    //~ 0,0,0,
-    //~ 0.41666633,0,0,
-    //~ 0.41666633,0.082222,0,
-    //~ 0,0.082222,0.0822222,
-    //~ 0,0,0.0822222,
-    //~ 0.41666633,0,0.0822222,
-    //~ 0.41666633,0.082222,0.0822222
-      
-    0.00166667, -0.404444, 0,
-    0.00166667, -0.322222, 0,
-    0.418333, -0.322222, 0,
-    0.418333, -0.404444, 0,
-    
-    0.00166667, -0.404444, -0.0822222,
-    0.00166667, -0.322222, -0.0822222,
-    0.418333, -0.322222, -0.0822222,
-    0.418333, -0.404444, -0.0822222      
-
-    //~ // front
-    //~ -1.0, -1.0,  1.0,
-     //~ 1.0, -1.0,  1.0,
-     //~ 1.0,  1.0,  1.0,
-    //~ -1.0,  1.0,  1.0,
-    //~ // back
-    //~ -1.0, -1.0, -1.0,
-     //~ 1.0, -1.0, -1.0,
-     //~ 1.0,  1.0, -1.0,
-    //~ -1.0,  1.0, -1.0,
-  };
-  glGenBuffers(1, &vbo_cube_vertices);
-  glBindBuffer(GL_ARRAY_BUFFER, vbo_cube_vertices);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(cube_vertices), cube_vertices, GL_STATIC_DRAW);
-
-  GLfloat cube_colors[] = {
-    //~ // front colors
-    //~ 1.0, 0.0, 0.0,
-    //~ 0.0, 1.0, 0.0,
-    //~ 0.0, 0.0, 1.0,
-    //~ 1.0, 1.0, 1.0,
-    //~ // back colors
-    //~ 1.0, 0.0, 0.0,
-    //~ 0.0, 1.0, 0.0,
-    //~ 0.0, 0.0, 1.0,
-    //~ 1.0, 1.0, 1.0,
-    // front colors
-    0.5,0.5,0.5,0.5,
-    0.5,0.5,0.5,0.5,
-    0.5,0.5,0.5,0.5,
-    0.5,0.5,0.5,0.5,
-    // back colors
-    0.5,0.5,0.5,0.5,
-    0.5,0.5,0.5,0.5,
-    0.5,0.5,0.5,0.5,
-    0.5,0.5,0.5,0.5
-  };
-  glGenBuffers(1, &vbo_cube_colors);
-  glBindBuffer(GL_ARRAY_BUFFER, vbo_cube_colors);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(cube_colors), cube_colors, GL_STATIC_DRAW);
-
-  GLushort cube_elements[] = {
-    // front
-    0, 1, 2,
-    2, 3, 0,
-    // top
-    1, 5, 6,
-    6, 2, 1,
-    // back
-    7, 6, 5,
-    5, 4, 7,
-    // bottom
-    4, 0, 3,
-    3, 7, 4,
-    // left
-    4, 5, 1,
-    1, 0, 4,
-    // right
-    3, 2, 6,
-    6, 7, 3,
-  };
-  glGenBuffers(1, &ibo_cube_elements);
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_cube_elements);
-  glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(cube_elements), cube_elements, GL_STATIC_DRAW);
-
-  GLint link_ok = GL_FALSE;
-
-  GLuint vs, fs;
-  if ((vs = create_shader("../source/shaders/cube.v.glsl", GL_VERTEX_SHADER))   == 0) return 0;
-  if ((fs = create_shader("../source/shaders/cube.f.glsl", GL_FRAGMENT_SHADER)) == 0) return 0;
-
-  program = glCreateProgram();
-  glAttachShader(program, vs);
-  glAttachShader(program, fs);
-  glLinkProgram(program);
-  glGetProgramiv(program, GL_LINK_STATUS, &link_ok);
-  if (!link_ok) {
-    fprintf(stderr, "glLinkProgram:");
-    print_log(program);
-    return 0;
-  }
-
-  const char* attribute_name;
-  attribute_name = "coord3d";
-  attribute_coord3d = glGetAttribLocation(program, attribute_name);
-  if (attribute_coord3d == -1) {
-    fprintf(stderr, "Could not bind attribute %s\n", attribute_name);
-    return 0;
-  }
-  attribute_name = "v_color";
-  attribute_v_color = glGetAttribLocation(program, attribute_name);
-  if (attribute_v_color == -1) {
-    fprintf(stderr, "Could not bind attribute %s\n", attribute_name);
-    return 0;
-  }
-  const char* uniform_name;
-  uniform_name = "mvp";
-  uniform_mvp = glGetUniformLocation(program, uniform_name);
-  if (uniform_mvp == -1) {
-    fprintf(stderr, "Could not bind uniform %s\n", uniform_name);
-    return 0;
-  }
-
-  return 1;
-}
-*/
 
 void onDisplay()
 {
@@ -1687,10 +1585,12 @@ void keyboard(unsigned char key, int x, int y)
         case 'w':
             cameraPos += cameraSpeed * cameraFront;
             if(ortho_mode)orthoZ -= 1.0;
+            PRINT_LOG("w orthoZ down: " + std::to_string(orthoZ),6);
             break;
         case 's':
             cameraPos -= cameraSpeed * cameraFront;
             if(ortho_mode)orthoZ += 1.0;
+            PRINT_LOG("s orthoZ up: " + std::to_string(orthoZ),6);
             break;
         case 'a':
             cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
@@ -1699,14 +1599,17 @@ void keyboard(unsigned char key, int x, int y)
         case 'd':
             cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
             if(ortho_mode)orthoX += 0.1;
+            PRINT_LOG("d orthoX up: " + std::to_string(orthoX),6);
             break;
         case 'q':
             cameraPos += cameraSpeed * cameraUp;
             if(ortho_mode)orthoY += 0.1;
+            PRINT_LOG("q orthoY up: " + std::to_string(orthoY),6);
             break;
         case 'z':
             cameraPos -= cameraSpeed * cameraUp;
             if(ortho_mode)orthoY -= 0.1;
+            PRINT_LOG("z orthoY down: " + std::to_string(orthoY),6);
             break;
         case 'b':
             display_box = !display_box;
@@ -1721,10 +1624,14 @@ void keyboard(unsigned char key, int x, int y)
             display3d = !display3d;
             break;
         case '<':
-            multiply -=1.0;
+            //~ multiply -=1.0;
+            multiply -=0.5;
+            PRINT_LOG("< multiply down: " + std::to_string(multiply), 6);
             break; 
         case '>':
-            multiply +=1.0;
+            //~ multiply +=1.0;
+            multiply +=0.5;
+            PRINT_LOG("> multiply up: " + std::to_string(multiply), 6);
             break; 
         case ',':
             unit /=10.0;
@@ -1754,13 +1661,20 @@ void keyboard(unsigned char key, int x, int y)
 }
 
 void resetCameraMatrices(){
-    cameraPos   = glm::vec3(0.0f, 0.0f,  3.0f);
-    cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-    cameraUp    = glm::vec3(0.0f, 1.0f,  0.0f);
+    //~ cameraPos   = glm::vec3(0.0f, 0.0f,  3.0f);
+    //~ cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+    //~ cameraUp    = glm::vec3(0.0f, 1.0f,  0.0f);
+    cameraPos   = defaut_cameraPos;
+    cameraFront = default_cameraFront;
+    cameraUp    = default_cameraUp;
     if(ortho_mode){
-        orthoX = -0.6f;
-        orthoY = -0.5f;
-        orthoZ = 0.0f;
-        multiply = 4.0; 
+        //~ orthoX = -0.6f;
+        //~ orthoY = -0.5f;
+        //~ orthoZ = 0.0f;
+        //~ multiply = 4.0; 
+        orthoX = default_orthoX;
+        orthoY = default_orthoY;
+        orthoZ = default_orthoZ;
+        multiply = default_multiply; 
     }        
 }

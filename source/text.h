@@ -230,7 +230,8 @@ void init_color(colorRGBA &color_alpha, colorRGBA &bg_color_alpha,
 void init_user_input(MDE &user_input_MDE, vertex3D &origin, std::vector<vertex3D> &offset,
                     std::vector<vertex3D> &offset_rule, vertex2D &padding, colorRGBA &color_alpha,
                     colorRGBA &bg_color_alpha, std::vector<colorRGBA> &font_color,
-                    bool displayDataOnly, bool hideParent, bool &user_parse_html);
+                    bool displayDataOnly, bool hideParent, bool &user_parse_html,
+                    std::vector<float> &vect_line_height);
 
 /**
  *##name: init_offset_rules();
@@ -463,6 +464,7 @@ void free_resources();
  * distance indexes of the same level of vMDE;
  */
 void process_v_MDE_data(std::vector<GLdata> & v_MDE_data,std::vector<vertex3D> & v_offset, std::vector<vertex3D> & v_offset_rule);
+void process_v_MDE_data_html(std::vector<GLdata> & v_MDE_data,std::vector<vertex3D> & v_offset, std::vector<float> &vect_line_height);
 
 void keyboard(unsigned char key, int x, int y);
 void special_key(int key, int x, int y);

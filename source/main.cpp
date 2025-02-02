@@ -134,7 +134,7 @@ int main (int argc, char **argv){
     std::vector<vertex3D> offset_rule;
     vertex3D off_rule_name_data = {0.5,0.2,0.0};
     vertex3D off_rule_index = {0.0,0.0,-0.2};
-    vertex3D off_rule_level = {0.0,0.0,0.0};
+    vertex3D off_rule_level = {0.0,0.0,-0.5};
     std::vector<colorRGBA> user_v_font_color;
 
     // initialize vector of indexes and iterator for vMDE
@@ -143,6 +143,9 @@ int main (int argc, char **argv){
     
     // initialize the vector of font size for html parser
     std::vector<int> vect_sizes;
+    
+    // initialuze the vector of line height for html parser
+    std::vector<float> vect_line_height;
     
     uint log_level=0;
     
@@ -1242,6 +1245,7 @@ int main (int argc, char **argv){
                                     // and offset rule for index as 0,-0.2,0
                                     off_rule_index.x = 0;
                                     off_rule_index.y = -0.2;
+                                    //~ off_rule_index.y = -0.05;
                                     off_rule_index.z = 0;
                                     displayDataOnly = true;
                                     
@@ -1270,9 +1274,10 @@ int main (int argc, char **argv){
                         // because we already have a pointer to it
                         std::vector<std::vector<float>> vect_colors;
                         
+                        
                         // parsing html file
                         parse_html_file = true;
-                        ptParser = htmlParser(*ptMenu, vect_colors, vect_sizes);
+                        ptParser = htmlParser(*ptMenu, vect_colors, vect_sizes, vect_line_height);
                         // checking sizes
                         PRINT_LOG("Checking vector of sizes:");
                         for(auto s:vect_sizes){
@@ -1401,11 +1406,17 @@ int main (int argc, char **argv){
                 ortho_mode,singleColor,nlines,log_level);
                 if(tempTest)
                 {
-                    init_user_input(*ptRender, user_origin, offset, offset_rule, user_padding, user_color,user_bg_color, user_v_font_color, displayDataOnly, hideParent, parse_html_file);
+                    init_user_input(*ptRender, user_origin, offset,
+                    offset_rule, user_padding, user_color,user_bg_color,
+                    user_v_font_color, displayDataOnly, hideParent,
+                    parse_html_file, vect_line_height);
                 }
                 else
                 {
-                    init_user_input(newMDE, user_origin, offset, offset_rule, user_padding, user_color,user_bg_color, user_v_font_color, displayDataOnly, hideParent, parse_html_file);
+                    init_user_input(newMDE, user_origin, offset,
+                    offset_rule, user_padding, user_color,user_bg_color,
+                    user_v_font_color, displayDataOnly, hideParent,
+                    parse_html_file, vect_line_height);
                 }
                 init_data();
                 init_offset_rules();
