@@ -1018,8 +1018,6 @@ if (checkHtmlTag(*it3,"style")){
                             //~ hasStyle = false; 
                             //~ hasColor =false;
                             
-
-                                        
                             if (it1->vMDE.size()>0){
                                 subtags = true;
                                 for(auto it2:it1->vMDE){
