@@ -1277,7 +1277,11 @@ int main (int argc, char **argv){
                         
                         // parsing html file
                         parse_html_file = true;
-                        ptParser = htmlParser(*ptMenu, vect_colors, vect_sizes, vect_line_height);
+                        // ptParser = htmlParser(*ptMenu, vect_colors, vect_sizes, vect_line_height);
+
+                        HtmlParseState state;
+                        ptParser = htmlParser(*ptMenu, vect_colors, vect_sizes, vect_line_height, state);
+
                         // checking sizes
                         PRINT_LOG("Checking vector of sizes:");
                         for(auto s:vect_sizes){

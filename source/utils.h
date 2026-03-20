@@ -35,6 +35,17 @@ struct pairKeyValue{
     singleMember value;
 };
 
+// Struct for htmlParser state management
+struct HtmlParseState {
+    bool container = false;
+    bool subtags = false;
+    bool displayTag = false;
+    bool display = true;
+    bool attributes = false;
+    bool hasStyle = false;
+    bool hasColor = false;
+    std::string fontcolor = "";
+};
 
 
 /**
@@ -381,7 +392,7 @@ void keyValuePairParser(std::string expression, std::string &key, std::string &v
 MDE * htmlParser_attributes(MDE & MDE_source);
 
 bool checkAttribute(MDE & MDE_source, std::string attribute);
-MDE * htmlParser(MDE & MDE_source, std::vector<std::vector<float>> &vect_color, std::vector<int> &vect_size, std::vector<float> &vect_line_height);
+MDE * htmlParser(MDE & MDE_source, std::vector<std::vector<float>> &vect_color, std::vector<int> &vect_size, std::vector<float> &vect_line_height, HtmlParseState &state);
 MDE * htmlParser_previous(MDE & MDE_source, std::vector<std::vector<float>> &vect_color, std::vector<int> &vect_size);
 bool checkHtmlTag(MDE & MDE_source, std::string tag);
 bool  htmlTagHasAttributes(MDE & MDE_source);
